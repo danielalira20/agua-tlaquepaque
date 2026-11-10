@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Hex, Tarjeta, Badge } from "@/components/ui";
+import { Tarjeta, Badge } from "@/components/ui";
+import PanalHero from "@/components/PanalHero";
 
 export default function Inicio() {
   return (
@@ -14,9 +15,7 @@ export default function Inicio() {
             <Link href="/mi-casa" className="rounded-full bg-slate-100 px-5 py-2.5 font-medium">¿Cuánto aguanta tu casa?</Link>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-1 justify-self-center">
-          {Array.from({ length: 16 }, (_, i) => <Hex key={i} className={`h-12 w-12 ${i % 5 === 0 ? "text-slate-200" : i % 3 === 0 ? "text-blue-300" : "text-blue-700"}`} />)}
-        </div>
+        <div className="justify-self-center"><PanalHero /></div>
       </section>
 
       <section className="grid gap-4 md:grid-cols-3">
