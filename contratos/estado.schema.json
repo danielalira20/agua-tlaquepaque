@@ -1,24 +1,47 @@
 {
-  "descripcion": "Salida del motor de autonomia. Un renglon por manzana y por dia del ciclo semanal.",
+  "descripcion": "Salida del motor. Un renglon por manzana y por dia del ciclo semanal. La manzana NO tiene una autonomia unica: tiene una composicion de viviendas con distinta capacidad de aguantar.",
   "formato": "Parquet",
   "llave": [
     "cvegeo",
     "dia_ciclo"
   ],
-  "version": "v2 — alineado con el plan v2. Sustituye al enum anterior que usaba sin_cloro y cloro_mg_l.",
+  "version": "v3 — la unidad de analisis pasa de la manzana a los estratos de vivienda dentro de la manzana.",
+  "por_que": "Una vivienda sin tinaco no puede usar el tinaco de su vecino. Promediar el almacenamiento de la manzana borra justo la desigualdad que el proyecto denuncia.",
+  "estratos": {
+    "descripcion": "Cada manzana se parte en cuatro estratos. El censo no cruza tinaco con cisterna, asi que su tamano solo se conoce en rango.",
+    "con_ambos": "tinaco + cisterna",
+    "solo_tinaco": "tinaco",
+    "solo_cisterna": "cisterna",
+    "sin_almacenamiento": "cero litros: se queda sin agua al momento del corte",
+    "traslape": "ambos pertenece al intervalo [max(0, T+C-V), min(T,C)], donde V=viviendas, T=viv_tinaco, C=viv_cisterna"
+  },
   "campos": {
-    "cvegeo": "string(13)",
+    "cvegeo": "string(16)",
     "dia_ciclo": "enum lunes|martes|miercoles|jueves|viernes|sabado|domingo",
-    "estado": "enum segura | agua_guardada_desinfectar | sin_agua | fuente_riesgosa",
-    "autonomia_h": "float horas restantes de agua almacenada ese dia",
-    "rango_autonomia": "enum <12h | 12-48h | >48h",
-    "horas_guardada": "float horas que lleva el agua almacenada desde el ultimo turno",
-    "riesgo_sanitario": "float 0..1",
-    "severidad": "float 0..1 incluye el peso de marginacion (dataset 17, nivel AGEB)"
+    "viviendas": "int total de la manzana, de referencia",
+    "horas_desde_turno": "float horas transcurridas desde el ultimo turno de agua",
+    "viv_sin_agua_min": "int cota baja de viviendas sin agua ese dia",
+    "viv_sin_agua_max": "int cota alta",
+    "pct_sin_agua_min": "float",
+    "pct_sin_agua_max": "float",
+    "personas_sin_agua_min": "float viv_sin_agua_min x ocupantes_prom",
+    "personas_sin_agua_max": "float",
+    "viv_agua_guardada_min": "int viviendas CON agua pero almacenada mas de U horas",
+    "viv_agua_guardada_max": "int",
+    "estado": "enum con_agua | quiebre_parcial | quiebre_mayoritario — derivado de pct_sin_agua_min, solo para el color del mapa",
+    "requiere_desinfeccion": "bool eje independiente del estado: hay agua, pero lleva mas de U horas guardada",
+    "severidad": "float 0..1, incluye el peso de marginacion (dataset 17, nivel AGEB)"
+  },
+  "umbral_estado": {
+    "con_agua": "pct_sin_agua_min < 10",
+    "quiebre_parcial": "10 a 50",
+    "quiebre_mayoritario": "mayor a 50"
   },
   "notas": [
+    "El mapa colorea por pct_sin_agua, escala continua. El enum es la leyenda, no el dato.",
+    "sin_agua_sin_respaldo desaparece como estado: con proporciones, esa informacion ya esta en pct_sin_agua.",
     "No modelamos mg/L de cloro: no hay datos publicos de cloro en la llave ni de presion.",
-    "El riesgo sanitario se deriva del TIEMPO que el agua lleva guardada, calibrado con literatura.",
-    "Referencia de contexto: NOM-127-SSA1-2021 fija el cloro residual libre entre 0.2 y 1.5 mg/L."
+    "Referencia de contexto: NOM-127-SSA1-2021 fija el cloro residual libre entre 0.2 y 1.5 mg/L.",
+    "U (horas para marcar agua guardada) vive en configuracion, no en el codigo. Default 48 h."
   ]
 }
