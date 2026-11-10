@@ -10,8 +10,8 @@ cerrar antes de programar. Después se comparan en la junta y se elige.
 
 ## Las 4 decisiones
 
-1. **`mediciones.schema.json` y el formulario.** La más urgente: la encuesta se
-   publica hoy y despues ya no se puede corregir.
+1. **La evidencia propia.** Se cancela la encuesta. Qué la sustituye y cómo se
+   declara en el reporte. El contrato `mediciones` pasa a ser `evidencia`.
 2. **`estado.schema.json`.** El enum de estados y el umbral de horas a partir del
    cual el agua guardada se marca.
 3. **Granularidad del ciclo.** Por dia o por hora.

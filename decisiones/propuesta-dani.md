@@ -10,102 +10,91 @@ un requisito obligatorio del kit sin que nadie se dé cuenta.
 
 ---
 
-## Decisión 1 · `mediciones.schema.json` y el formulario de la encuesta
+## Decisión 1 · La evidencia propia: se cancela la encuesta
 
-**Por qué esta va primero:** es la única irreversible del día. El formulario se
-publica hoy y las respuestas llegan hasta el viernes a mediodía. Si sale con campos
-distintos a los del contrato, el sábado tenemos respuestas que no se pueden cruzar
-con nada y ya no hay tiempo de volver a preguntar. Las otras tres decisiones se
-pueden corregir el miércoles; esta no.
+**Decisión: no hacemos encuesta.** La evidencia propia sale de dos cosas que no
+dependen de conseguir gente que responda.
 
-### Primero hay que decidir para qué sirve la encuesta
+### Por qué se cancela
 
-Puede servir para tres cosas distintas, y no se optimizan igual:
+**El kit no la pide.** Revisadas las 7 indicaciones generales y los 5 criterios de
+éxito del Reto 01, ninguno pide prueba con usuarios. El que sí la pide es el
+**Reto 04** (Educación): *"muestra evidencia de que les sirve: una prueba con
+usuarios, una encuesta corta o una revisión de accesibilidad"*. El Reto 01 pide otra
+cosa: *"análisis de viabilidad que contemple el contexto institucional y
+presupuestal de un municipio real"*.
 
-| Uso | Qué necesita | Qué tan realista es |
-|---|---|---|
-| **A. Calibrar supuestos** (litros de tinaco, consumo, frecuencia real) | n ≈ 30 basta para una tendencia central | Alto. Es el uso más robusto con muestra chica |
-| **B. Validar el modelo** (¿el % sin almacenamiento se parece al Censo?) | n alto y muestra no autoseleccionada | Bajo. Es el uso que un jurado puede desarmar |
-| **C. Testimonio cualitativo** (qué hace la gente, cuánto gasta) | n pequeño sirve | Alto, y es lo que da la frase del pitch |
+**Y hay una razón más fuerte que "no es obligatoria": una encuesta contestada por la
+gente equivocada es peor que ninguna encuesta.** Si quienes responden no viven en las
+zonas 3 y 4 de Tlaquepaque, los datos no describen a la población que delimitamos, y
+meterlos al reporte sería un error metodológico que el jurado puede señalar. Con el
+tiempo y el alcance que tenemos, la probabilidad de llegar a residentes de esas
+colonias en tres días es baja.
 
-**Propuesta: diseñar el formulario para A y C, y tratar B como bono con advertencia
-explícita.** Que una encuesta por redes sea autoseleccionada no es un defecto que
-haya que esconder: es una característica que hay que declarar. Declararla suma
-credibilidad; esconderla y que el jurado la encuentre la destruye.
+Más vale no tener evidencia propia que tener evidencia que no describe a nadie.
 
-### La decisión técnica que más pesa: cómo preguntamos la ubicación
+### Qué la reemplaza
 
-Esto determina si las respuestas se pueden cruzar con el modelo o no.
+**A. Contraste contra las 60 cisternas que el municipio ya colocó.**
 
-| Opción | Se puede cruzar con | Costo en respuestas |
-|---|---|---|
-| Texto libre de colonia | Casi nada. "Las Juntas", "las juntas", "juntas" no empatan | Bajo |
-| **Lista cerrada de colonias** | Calendario (zona y días) y, por mayoría, AGEB | Bajo |
-| Dirección o código postal | Manzana | Alto. La gente no da su dirección |
-| Ubicación GPS | Manzana exacta | Muy alto. Mata la tasa de respuesta |
+Tlaquepaque publicó un mapa interactivo con la ubicación de sus 60 cisternas
+comunitarias. Eso habilita una prueba mejor que una encuesta:
 
-**Recomendación: lista cerrada (desplegable) con las colonias de las zonas 3 y 4,
-más una opción "otra / no está en la lista".** Permite cruzar con el calendario sin
-pedir un solo dato personal.
+> ¿Las cisternas que el municipio ya colocó coinciden con donde nuestro modelo dice
+> que está el riesgo?
 
-> **Problema de orden que hay que resolver hoy:** la lista de colonias sale del
-> calendario, y el calendario es la tarea lenta de Magui. **Se desacopla así:** el
-> desplegable solo necesita los *nombres* de las colonias, que ya están en la lista
-> pública de las 627; el mapeo colonia → `cvegeo` es lo lento y puede llegar después.
-> Magui saca los nombres en media hora y el formulario sale hoy.
+Las dos respuestas posibles son un resultado:
 
-### Diseño del formulario
-
-Regla: **8 preguntas máximo, 90 segundos.** Cada pregunta extra cuesta respuestas, y
-las respuestas son el recurso más escaso que tenemos.
-
-| # | Pregunta | Tipo | Por qué está |
-|---|---|---|---|
-| 0 | Consentimiento | Obligatoria, al inicio | Sin esto no se usa ningún dato |
-| 1 | Tu colonia | Lista cerrada | Única llave de cruce |
-| 2 | ¿Dónde guardas agua? | Opción múltiple: tinaco / cisterna / ambos / tambos o cubetas / nada | El corazón del modelo |
-| 3 | Tamaño del tinaco | El común (1,100 L) / más chico / más grande / **no sé** | Calibra el supuesto de litros |
-| 4 | ¿Cada cuántos días les toca el agua? | 1-2 / 3-4 / 5 o más / no hay horario fijo | Contrasta con el calendario |
-| 5 | Cuando no llega, ¿qué hacen? | Selección múltiple | Alimenta el escenario de afrontamiento |
-| 6 | ¿Cuánto gastan a la semana en garrafones o pipas? | Rangos en pesos | Área de economía + número para el pitch |
-| 7 | ¿Algo que quieras contarnos? | Texto libre, opcional | De aquí sale la cita humana del pitch |
-
-**Detalles que parecen menores y no lo son:**
-
-- **"No sé" tiene que ser una opción en la pregunta 3.** Forzar un número produce
-  basura. Un "no sé" es un dato honesto; un número inventado contamina la calibración.
-- **Preguntar en días, no en horas.** La gente piensa en días. Convertir es nuestro
-  trabajo, no el suyo.
-- **Rangos de dinero, no cifra exacta.** Sube la tasa de respuesta y nadie recuerda
-  el monto exacto.
-- **La pregunta 5 es selección múltiple**, porque la gente hace varias cosas a la vez.
-- **Ningún campo pide nombre, teléfono, dirección ni edad.** No los necesitamos y
-  pedirlos nos obligaría a justificar su manejo.
-
-### Escenarios y qué hacemos en cada uno
-
-Esto hay que decidirlo **ahora**, no el sábado, porque el sábado la tentación de
-estirar los datos va a ser enorme.
-
-| Escenario | Qué hacemos |
+| Resultado | Qué significa |
 |---|---|
-| **n ≥ 50** | Se usa para calibrar y se reporta la comparación con el Censo, siempre etiquetada como muestra por conveniencia |
-| **20 ≤ n < 50** | Solo calibración y testimonio. **No** se presenta comparación porcentual con el Censo |
-| **n < 20** | Solo testimonio cualitativo. Se dice el número de respuestas tal cual y se presenta como ilustración del mecanismo, no como evidencia |
-| **Todas de una sola colonia** | Se reporta la distribución por colonia y no se generaliza al municipio |
-| **Respuestas con datos personales en el texto libre** | Se eliminan antes de subir cualquier archivo al Drive |
+| **Coinciden** | El modelo reproduce el juicio de quien ya opera el sistema. Queda calibrado contra decisiones reales |
+| **No coinciden** | Estas son las manzanas de alto riesgo que hoy no tienen cisterna cerca. Eso **es** la propuesta |
 
-**Umbral comprometido por escrito: por debajo de 20 respuestas, la palabra
-"validación" no aparece en el reporte.** Se dice "ilustra" o "es consistente con".
+Es validación contra decisiones que alguien ya tomó con presupuesto y camiones, no
+contra lo que unas cuantas personas contestaron en un formulario.
 
-### Campos del contrato
+**B. Análisis de sensibilidad en lugar de calibración.**
 
-Deben mapear 1 a 1 con las preguntas, más tres campos de control:
+Los supuestos inciertos son la capacidad del tinaco (750 a 1,100 L), el consumo por
+persona (50 a 100 L/día) y el umbral U (24 a 72 h). Ante parámetros inciertos, la
+respuesta correcta no es muestrear veinte personas: es demostrar que el resultado
+aguanta todo el rango plausible.
 
-- `fuente`: `encuesta` | `estudio_rubino` | `imdec` — para que `evidencia.csv` pueda
-  cargar también datos de literatura y no solo de la encuesta
-- `fecha_registro`
-- `consentimiento`: sin `si`, el renglón no entra al análisis
+Si el orden de prioridad de las manzanas casi no cambia entre los extremos, entonces
+**la conclusión no depende de los supuestos**. Eso es más fuerte que calibrar con una
+muestra chica, y se calcula sin salir del repo.
+
+### Qué se pierde y con qué se cubre
+
+| Se pierde | Se cubre con |
+|---|---|
+| Calibrar los litros del tinaco | Literatura citada más el análisis de sensibilidad |
+| El área de economía (gasto en garrafones) | El análisis de costo del operativo de pipas, que ya se hace para el criterio 5. Queda **mejor**: es dinero público verificable |
+| La cita humana para el pitch | Cobertura de prensa y el estudio de Guadalajara |
+
+### El contrato cambia de nombre y de contenido
+
+`mediciones.schema.json` pasa a ser **`evidencia.schema.json`**. Ya no carga
+respuestas de encuesta, sino renglones de evidencia de distinto origen:
+
+- `fuente`: `cisternas_municipio` | `estudio_rubino` | `imdec` | `prensa`
+- Las ubicaciones de las 60 cisternas, para el contraste
+- Los valores de literatura usados en la calibración, cada uno con su cita
+
+### Lo único que no se puede hacer
+
+Quitarla en silencio y aun así escribir "validamos". En el reporte va una línea
+diciendo qué se hizo en su lugar y por qué. Eso es defendible; lo otro no.
+
+### Efecto en el plan
+
+Esto **quita** trabajo, no lo agrega:
+
+- Se libera la tarea de Fase 0 de tener la encuesta lista y publicada.
+- Se libera la tarea de difundirla en grupos de colonias.
+- **"Encuesta publicada el martes" sale del mapa de bloqueos.**
+- La Fase 3 cambia "validar con la encuesta" por "sensibilidad más contraste con
+  las cisternas".
 
 ---
 
@@ -157,7 +146,7 @@ Campos que acompañan y que conservan todo lo demás:
 **Por qué `sin_agua_sin_respaldo` es mejor que `fuente_riesgosa`:** dice exactamente
 lo que el Censo nos permite afirmar — que no tienen dónde guardar — y deja la
 inferencia sobre a dónde van para el texto del reporte, donde puede ir acompañada de
-la literatura y de la encuesta. El nombre de una categoría no debe contener una
+la literatura y del contraste con las cisternas. El nombre de una categoría no debe contener una
 hipótesis.
 
 ### El umbral U
@@ -298,29 +287,34 @@ Lo que gana cada quien:
 caminable de **300 metros** o, en su defecto, manzanas adyacentes. Es un supuesto y
 se declara.
 
-### El baseline, que es donde se gana o se pierde el argumento
+### El baseline: las 60 cisternas que ya están puestas
 
 Sin baseline bien definido, el delta de impacto no significa nada.
 
-**Lo que no podemos hacer:** afirmar que el reparto actual es inequitativo. **No
-tenemos el registro de a dónde fueron las 565 pipas.** Decirlo sin dato es
+**Lo que no podemos hacer:** afirmar que el reparto actual de pipas es inequitativo.
+**No tenemos el registro de a dónde fueron las 565 pipas**, y decirlo sin dato es
 exactamente el tipo de afirmación que hunde un proyecto en preguntas.
 
-**Lo que sí podemos hacer, y es más fuerte:** comparar contra un **reparto
-proporcional a la población**, que es un baseline neutral y **favorable al estado
-actual**. Si nuestra priorización gana incluso contra el supuesto más generoso
-posible sobre cómo reparte hoy el municipio, el argumento es mucho más difícil de
-atacar que si eligiéramos un baseline que haga quedar mal al ayuntamiento.
+**Lo que sí tenemos, y es mejor que cualquier supuesto:** las **60 cisternas
+comunitarias ya colocadas**, con ubicación pública. Esas cisternas **son** el mapa de
+prioridades actual del municipio, revelado por sus propias decisiones. El baseline
+deja de ser inventado y pasa a ser observado.
 
-Y por separado, claramente etiquetado como **escenario hipotético**, se puede
-mostrar qué pasaría si las solicitudes por TlaqueChat se concentraran en las zonas
-con menos marginación. Eso ilustra el riesgo de un sistema por demanda **sin
-acusar a nadie de nada**.
+La comparación queda así:
 
-> **Acción barata que puede volver real el baseline:** pedir por transparencia el
-> registro de viajes de pipa de octubre y noviembre. Es un correo. La probabilidad
-> de que llegue en cinco días es baja, pero si llega, el baseline deja de ser
-> supuesto y se vuelve dato. Cuesta quince minutos.
+| | Qué mide |
+|---|---|
+| **Cobertura actual** | Personas-hora sin agua considerando solo las 60 cisternas donde están hoy |
+| **Cobertura priorizada** | Las mismas 60 cisternas más las pipas asignadas por riesgo |
+
+Y por separado, claramente etiquetado como **escenario hipotético**, se puede mostrar
+qué pasaría si las solicitudes por TlaqueChat se concentraran en las zonas con menos
+marginación. Eso ilustra el riesgo de un sistema por demanda **sin acusar a nadie de
+nada**.
+
+> **Acción barata que sigue valiendo:** pedir por transparencia el registro de viajes
+> de pipa de octubre y noviembre. Es un correo. Si llega, el baseline de pipas
+> también deja de ser supuesto.
 
 ### Dos horizontes, no uno
 
@@ -393,7 +387,7 @@ Lista inicial:
 | Consumo por persona | 50 L/día | Nivel básico OMS. Reportar también a 100 |
 | Umbral U de agua guardada | 48 h | Literatura. Sensibilidad a 24/48/72 |
 | Radio de cobertura de pipa | 300 m | Supuesto nuestro |
-| Baseline de reparto | Proporcional a población | No tenemos el registro real |
+| Baseline de cobertura | Las 60 cisternas ya colocadas | Ubicación publicada por el municipio |
 | Traslape tinaco/cisterna | Desconocido | Por eso todo va en rango min–max |
 
 ### 🟡 Riesgo 3 — Las tres citas sin verificar
@@ -421,10 +415,10 @@ que se cambia un contrato, nunca después.**
 
 | # | Decisión | Propuesta |
 |---|---|---|
-| 1 | Encuesta | Para calibrar y testimoniar, no para validar. Colonia en lista cerrada. 8 preguntas. Umbral de 20 respuestas comprometido por escrito |
+| 1 | Evidencia propia | **Se cancela la encuesta.** En su lugar: contraste contra las 60 cisternas ya colocadas y análisis de sensibilidad. `mediciones` pasa a ser `evidencia` |
 | 2 | Enum de estado | Escalera de 4 niveles con `sin_agua_sin_respaldo` en vez de `fuente_riesgosa`. U = 48 h como configuración, con sensibilidad |
 | 3 | Granularidad | Día en el contrato y la interfaz, horas en el cálculo interno. Campo opcional de hora para el futuro |
-| 4 | Salida del plan | Punto de entrega como unidad de decisión, manzanas cubiertas como justificación. Baseline proporcional a población. Agregar `propuesta_cisternas` |
+| 4 | Salida del plan | Punto de entrega como unidad de decisión, manzanas cubiertas como justificación. **Baseline observado: las 60 cisternas actuales.** Agregar `propuesta_cisternas` |
 
 Y lo que pido que no se nos pase: **usar el dataset 17 en dos lugares**, y abrir
 `supuestos.md` hoy.
