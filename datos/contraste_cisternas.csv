@@ -1,0 +1,238 @@
+geocol,colonia,cp,manzanas,pob,viviendas,sin_almacen_min,colonia_norm,n_cisternas,n_propuestas,tiene_cisterna,rank_riesgo
+98021,El Sauz,45080,28,11889,3546,2950,el sauz,0,0,False,1
+98154,Villa Fontana,45615,53,8163,2510,1298,villa fontana,1,0,True,2
+98250,Parques de La Victoria,45620,29,5305,1487,1198,parques de la victoria,1,0,True,3
+98156,Fovissste Miravalle,44990,77,7733,2190,1168,fovissste miravalle,2,0,True,4
+98158,Balcones de Santa María,45530,49,6211,2150,980,balcones de santa maria,0,0,False,5
+98148,Parques del Palmar,45615,33,3597,1182,854,parques del palmar,0,0,False,6
+98147,Parques de Sta. Cruz del Valle,45618,46,6888,2004,818,parques de sta cruz del valle,0,0,False,7
+98248,San Martin de Las Flores de Abajo,45620,52,10017,2391,700,san martin de las flores de abajo,0,0,False,8
+98079,Haciendas del Real,45610,13,4358,1285,694,haciendas del real,1,0,True,9
+98205,Las Juntas,45590,74,9750,2604,667,las juntas,1,0,True,10
+98164,El Vergel,45595,95,12681,3214,566,el vergel,1,0,True,11
+98157,Las Terrazas,45610,62,2610,963,554,las terrazas,0,0,False,12
+98212,Paseos del Prado,45610,19,2955,829,530,paseos del prado,0,0,False,13
+98040,Parques del Bosque,45610,60,6905,2335,499,parques del bosque,0,0,False,14
+98210,Geo Villas Los Olivos III,45610,34,2846,908,392,geo villas los olivos iii,0,0,False,15
+98068,Miraflores,45601,12,1906,624,387,miraflores,0,0,False,16
+98028,Miravalle,44990,31,3290,884,343,miravalle,0,0,False,17
+98011,Nueva Santa María,45530,126,16965,3939,261,nueva santa maria,3,1,True,18
+98012,Guayabitos,45530,66,9763,2200,243,guayabitos,1,0,True,19
+98143,San Martin de Las Flores de Arriba,45620,21,3954,871,215,san martin de las flores de arriba,0,0,False,20
+98036,Terralta,44490,20,2472,757,198,terralta,0,0,False,21
+98171,El Campesino,45590,51,6530,1478,191,el campesino,1,0,True,22
+98009,Francisco I Madero,45530,48,6558,1434,191,francisco i madero,1,0,True,22
+98209,Artesanos,45598,58,5536,1378,189,artesanos,0,0,False,24
+98160,Felipe Ángeles,45590,28,4263,969,184,felipe angeles,1,0,True,25
+98049,Lomas del Tesoro,44860,2,841,238,184,lomas del tesoro,0,0,False,25
+98115,Revolución,45500,14,1626,456,176,revolucion,1,0,True,27
+98124,El Mirador,45620,14,3096,677,175,el mirador,0,0,False,28
+98081,Geo Villas Los Olivos II,45610,11,1225,401,169,geo villas los olivos ii,0,0,False,29
+98246,La Cofradía,45630,36,2348,574,159,la cofradia,3,0,True,30
+98010,Francisco I Madero 2a Sección,45530,61,7278,1576,145,francisco i madero 2a seccion,0,0,False,31
+98172,El Cerrito,45625,61,7479,1754,145,el cerrito,0,0,False,31
+98175,La Duraznera,45623,37,3384,811,136,la duraznera,0,0,False,33
+98261,Geo Villas del Real,46500,9,882,285,133,geo villas del real,0,0,False,34
+98254,San Pedrito,45625,94,14177,3487,125,san pedrito,1,0,True,35
+98195,Las Juntas,45590,39,5730,1310,125,las juntas,1,0,True,35
+98020,Mirador del Tesoro,45081,44,4323,1331,122,mirador del tesoro,0,0,False,37
+98031,Arroyo Las Flores,45530,48,5891,1479,112,arroyo las flores,0,0,False,38
+98089,Lomas del Cuatro,45996,100,9125,2199,111,lomas del cuatro,0,1,False,39
+98053,Prados de Santa María,45601,9,1598,488,111,prados de santa maria,0,0,False,39
+98235,Las Huertas,45589,134,16622,4131,110,las huertas,0,0,False,41
+98227,Francisco Silva Romero,45630,51,4084,1044,108,francisco silva romero,0,0,False,42
+98006,Buenos Aires,45530,102,11620,2614,100,buenos aires,1,0,True,43
+98083,Residencial Amaneceres,45610,9,1292,445,94,residencial amaneceres,0,0,False,44
+98024,El Sauz,45630,14,701,174,93,el sauz,0,0,False,45
+98161,La Guadalupana,45595,21,3342,808,90,la guadalupana,0,0,False,46
+98267,Toluquilla,45610,59,5097,1561,87,toluquilla,0,0,False,47
+98144,La Llave,45618,4,1497,451,85,la llave,0,0,False,48
+98136,Los Santibáñez,45630,9,1079,251,84,los santibanez,1,1,True,49
+98233,Portillo López (Salvador Portillo López),45580,25,3549,903,83,portillo lopez salvador portillo lopez,0,0,False,50
+98052,Lomas de Santa María,45530,9,1245,292,83,lomas de santa maria,0,0,False,50
+98268,Valle de La Misericordia,45618,9,770,215,81,valle de la misericordia,0,0,False,52
+98131,El Órgano,45588,53,4141,992,79,el organo,1,1,True,53
+98108,Álvaro Obregón,45629,17,1717,421,71,alvaro obregon,0,0,False,54
+98185,Lomas de Tlaquepaque,45559,40,5635,1537,68,lomas de tlaquepaque,0,0,False,55
+98249,Las Liebres,45623,92,9273,2231,67,las liebres,0,0,False,56
+98155,Paseo de Los Parques,45615,4,530,151,66,paseo de los parques,0,0,False,57
+98003,Cerro del Cuatro,45599,51,7571,1870,65,cerro del cuatro,0,0,False,58
+98251,Emiliano Zapata,45620,9,1458,337,64,emiliano zapata,0,0,False,59
+98073,Solidaridad,45581,25,1880,411,63,solidaridad,0,0,False,60
+98151,Senderos de Tlaquepaque,45618,5,376,122,63,senderos de tlaquepaque,0,0,False,60
+98135,San Juan,45630,7,558,137,61,san juan,2,0,True,62
+98058,San Sebastianito,45610,38,4534,1163,61,san sebastianito,0,0,False,62
+98039,Rincón del Bosque,45601,5,491,176,58,rincon del bosque,0,0,False,64
+98123,Alfredo Barba,45580,36,4618,1110,56,alfredo barba,1,0,True,65
+98004,Guadalupe Ejidal,45596,7,564,173,54,guadalupe ejidal,0,0,False,66
+98162,La Micailita,45595,9,1191,293,52,la micailita,0,0,False,67
+98245,Plan de Oriente,45620,8,794,176,52,plan de oriente,0,0,False,67
+98127,Las Flores,45580,11,989,249,50,las flores,0,0,False,69
+98013,Jardines de Santa María,45530,46,5312,1382,49,jardines de santa maria,0,0,False,70
+98269,Verde Valle,45610,12,2315,632,48,verde valle,0,0,False,71
+98182,Lomas del Tapatío,45580,60,6033,1436,47,lomas del tapatio,1,1,True,72
+98102,Juan de La Barrera,45618,29,2226,565,47,juan de la barrera,0,0,False,72
+98044,Pedregal del Bosque,45610,12,1057,363,43,pedregal del bosque,0,0,False,74
+98069,Geo Villas Los Olivos I,45610,7,614,184,39,geo villas los olivos i,0,0,False,75
+98149,Misión Magnolia,45610,11,1638,452,38,mision magnolia,0,0,False,76
+98055,Alborada,45530,5,827,192,37,alborada,0,0,False,77
+98007,La Mezquitera,45983,19,1897,462,36,la mezquitera,0,0,False,78
+98086,Las Liebres 2da Sección,45623,3,417,101,35,las liebres 2da seccion,0,0,False,79
+98045,La Loma,45601,1,1335,332,32,la loma,0,0,False,80
+98253,Los Puestos,45630,64,5898,1474,32,los puestos,0,1,False,80
+98101,Ojo de Agua,45618,14,1734,385,30,ojo de agua,0,0,False,82
+98105,El Morito,45625,12,1892,482,29,el morito,2,0,True,83
+98048,Buenos Aires Segunda Sección,45530,3,186,43,27,buenos aires segunda seccion,0,0,False,84
+98238,De San Martin,45628,7,759,199,27,de san martin,0,0,False,84
+98234,López Mateos,45580,15,2580,654,26,lopez mateos,0,0,False,86
+98218,El Tapatío,45580,115,9911,2434,26,el tapatio,7,0,True,86
+98119,Jardines de San Martin,45580,15,1557,341,24,jardines de san martin,0,2,False,88
+98090,Prado de La Luna,45610,4,781,246,24,prado de la luna,0,0,False,88
+98146,Coto del Carmen,45610,2,243,82,23,coto del carmen,0,0,False,90
+98252,Lindavista Country,45623,2,215,58,23,lindavista country,0,0,False,90
+98221,Tateposco (San José de Tateposco),45630,20,3123,709,22,tateposco san jose de tateposco,0,0,False,92
+98100,San Clemente,45618,5,711,163,21,san clemente,0,0,False,93
+98026,Loma Bonita Ejidal,45085,42,6474,1594,20,loma bonita ejidal,0,0,False,94
+98008,Tepeyac,45530,9,1143,273,20,tepeyac,0,0,False,94
+98065,Paisajes del Tesoro,45080,11,1062,352,17,paisajes del tesoro,0,0,False,96
+98174,Hidalgo,45540,28,2675,740,17,hidalgo,0,0,False,96
+98050,San Francisco,45500,9,1674,477,16,san francisco,0,0,False,98
+98059,Indígena,45601,5,593,134,16,indigena,0,0,False,98
+98122,Jardines del Órgano,45629,3,267,69,15,jardines del organo,0,0,False,100
+98067,Santa María Tequepexpan,45601,42,4337,1090,15,santa maria tequepexpan,0,0,False,100
+98255,Alfareros,45625,4,353,80,14,alfareros,0,0,False,102
+98142,Centro,45500,64,8630,2437,13,centro,4,0,True,103
+98070,Paseo del Bosque,45615,1,76,26,13,paseo del bosque,0,0,False,103
+98163,Romita,45598,4,387,102,13,romita,0,0,False,103
+98239,Ladrillera,45620,3,503,101,12,ladrillera,0,0,False,106
+98150,Los Almendros,45610,1,139,37,11,los almendros,0,0,False,107
+98118,Jardines del Tapatío,45580,17,1314,307,10,jardines del tapatio,2,0,True,108
+98080,La Gigantera,45610,13,710,175,10,la gigantera,0,0,False,108
+98114,San Francisco,45500,6,1336,359,10,san francisco,0,0,False,108
+98051,San Juan,45500,5,1107,302,9,san juan,2,0,True,111
+98204,La Capacha,45560,24,3902,1073,8,la capacha,0,0,False,112
+98071,Vistas del Cuatro,44985,19,1062,234,8,vistas del cuatro,0,0,False,112
+98170,Canal 58,45580,13,1801,490,8,canal 58,0,1,False,112
+98133,Santa María,45500,9,1861,531,7,santa maria,0,1,False,115
+98074,Arroyo Seco,45601,17,1198,398,7,arroyo seco,0,0,False,115
+98176,Altos Norte,45529,17,2554,715,6,altos norte,0,0,False,117
+98228,La Arena,45630,16,667,172,6,la arena,0,0,False,117
+98241,San Juan,45630,10,440,105,6,san juan,2,0,True,117
+98141,Quintero,45550,22,3016,797,6,quintero,1,0,True,117
+98110,Cerro del Jagüey,45419,3,294,70,6,cerro del jaguey,0,0,False,117
+98072,Manantial,45623,3,402,92,5,manantial,0,0,False,122
+98196,El Álamo,45560,16,2147,755,5,el alamo,1,0,True,122
+98113,La Coyotera,45620,2,99,26,5,la coyotera,0,0,False,122
+98094,Rancho Blanco,44890,25,2759,774,4,rancho blanco,0,0,False,125
+98188,Lázaro Cárdenas,45590,13,1137,298,4,lazaro cardenas,0,0,False,125
+98256,Hacienda de Vidrio,45580,11,1066,288,4,hacienda de vidrio,0,0,False,125
+98022,El Mante,45080,3,235,57,4,el mante,0,0,False,125
+98166,La Ladrillera,45618,14,1435,367,4,la ladrillera,0,0,False,125
+98240,Plan de Las Flores,45620,4,220,52,4,plan de las flores,0,0,False,125
+98243,Arboledas de San Martin,45638,12,1643,425,4,arboledas de san martin,0,0,False,125
+98224,Valle del Paraíso,45630,4,311,87,3,valle del paraiso,0,0,False,132
+98112,Tempisque,45623,1,28,9,3,tempisque,0,0,False,132
+98103,El Trigo,45618,1,42,12,3,el trigo,0,0,False,132
+98223,Residencial Arrayanes,45630,5,340,182,2,residencial arrayanes,0,0,False,135
+98262,Santa Anita,45600,77,10383,2729,2,santa anita,0,0,False,135
+98116,Los Meseros,45510,17,1718,505,2,los meseros,0,0,False,135
+98088,El Refugio,45596,34,4064,933,1,el refugio,0,0,False,138
+98159,Lomas de San Pedrito,45625,5,369,98,1,lomas de san pedrito,0,0,False,138
+98137,San Juan,45630,11,789,173,1,san juan,2,0,True,138
+98076,Parques de Santa María,45601,49,7977,2452,1,parques de santa maria,0,0,False,138
+98244,Plan del Rio,45638,5,604,152,1,plan del rio,0,0,False,138
+98237,Hacienda de San Martin,45628,6,701,188,1,hacienda de san martin,0,0,False,138
+98222,Cantera Colorada,45630,3,1696,562,0,cantera colorada,0,0,False,144
+98075,Ojo de Agua,45600,27,1834,474,0,ojo de agua,0,0,False,144
+98097,San Juan,45500,14,1568,454,0,san juan,2,0,True,144
+98001,Jardines de La Paz,45519,15,2011,627,0,jardines de la paz,0,0,False,144
+98258,Haciendas La Candelaria,45600,14,2013,608,0,haciendas la candelaria,0,0,False,144
+98132,De Santiago,45500,9,1838,531,0,de santiago,0,0,False,144
+98198,El Álamo,45560,10,2043,647,0,el alamo,1,0,True,144
+98194,Hacienda de Tlaquepaque,45580,10,2190,660,0,hacienda de tlaquepaque,2,0,True,144
+98145,López Cotilla,45615,24,2209,586,0,lopez cotilla,0,0,False,144
+98018,Lomas de La Victoria,45085,10,1680,591,0,lomas de la victoria,0,0,False,144
+98173,Altos Oriente,45526,15,1790,456,0,altos oriente,0,0,False,144
+98203,Álamo Oriente,45560,18,2756,822,0,alamo oriente,0,0,False,144
+98231,La Calerilla,45610,33,2502,800,0,la calerilla,0,0,False,144
+98099,Vista Hermosa,45618,20,2474,693,0,vista hermosa,0,0,False,144
+98180,Los Altos,45520,28,3265,996,0,los altos,0,0,False,144
+98033,Loreto,45603,35,3330,1234,0,loreto,0,0,False,144
+98202,Lomas de San Miguel,45570,16,3475,1092,0,lomas de san miguel,0,0,False,144
+98178,La Soledad,45525,27,3029,873,0,la soledad,0,0,False,144
+98236,Los Portales,45580,30,3966,1268,0,los portales,0,0,False,144
+98201,Colonial Tlaquepaque,45570,36,4079,1180,0,colonial tlaquepaque,1,0,True,144
+98014,Haciendas de San José,45601,34,3927,1243,0,haciendas de san jose,0,0,False,144
+98184,Lindavista,45520,38,4231,1196,0,lindavista,0,0,False,144
+98181,Camichines,45407,69,8484,2412,0,camichines,0,0,False,144
+98193,Revolución,45580,54,5772,1828,0,revolucion,1,0,True,144
+98200,El Tapatío,45580,39,4856,1434,0,el tapatio,7,0,True,144
+98169,Villas Los Cantaros,45625,8,2295,679,0,villas los cantaros,0,0,False,144
+98019,Parques Colon,45081,14,2960,951,0,parques colon,0,0,False,144
+98272,El Real,45601,17,1019,270,0,el real,0,0,False,144
+98047,Prados Tlaquepaque,45500,4,960,259,0,prados tlaquepaque,1,0,True,144
+98179,La Asunción,45527,8,1015,286,0,la asuncion,0,0,False,144
+98120,Villas del Tapatío,45580,6,561,166,0,villas del tapatio,0,0,False,144
+98275,La Tijera,45640,3,562,133,0,la tijera,0,0,False,144
+98126,Super Manzana El Álamo,45560,12,585,218,0,super manzana el alamo,0,0,False,144
+98042,Tlaquepaque Pueblito,44870,1,579,173,0,tlaquepaque pueblito,0,0,False,144
+98187,Las Vegas,45590,6,586,139,0,las vegas,0,0,False,144
+98056,Valle de Las Heras,45610,10,634,186,0,valle de las heras,0,0,False,144
+98165,Paseos del Lago,45618,9,604,161,0,paseos del lago,0,0,False,144
+98167,Villas San Miguel,45625,5,599,162,0,villas san miguel,0,0,False,144
+98225,Las Lomas,45630,8,661,201,0,las lomas,0,0,False,144
+98191,Puerta del Prado,45590,11,617,192,0,puerta del prado,0,0,False,144
+98219,Villas del Tapatío,45588,5,700,174,0,villas del tapatio,0,0,False,144
+98134,Jardines de La Paz,45519,7,694,213,0,jardines de la paz,0,0,False,144
+98060,San Arturo,45430,1,894,307,0,san arturo,0,0,False,144
+98017,España,45600,7,761,215,0,espana,0,0,False,144
+98092,Ponciano Arriaga,45600,5,943,255,0,ponciano arriaga,0,0,False,144
+98125,Álamo Lomas,45560,10,926,303,0,alamo lomas,0,0,False,144
+98197,Brisas de Chapala,45590,8,1072,261,0,brisas de chapala,0,0,False,144
+98208,Villas del Prado,45590,7,1133,359,0,villas del prado,0,0,False,144
+98128,Real Patria,45403,6,1125,315,0,real patria,0,0,False,144
+98005,Tepeyac,45596,18,1305,332,0,tepeyac,0,0,False,144
+98273,Valle del Sur,45601,9,1261,416,0,valle del sur,0,0,False,144
+98046,Misión San Francisco,45600,13,1418,427,0,mision san francisco,0,0,False,144
+98183,Hacienda San Pedro,45588,18,1418,415,0,hacienda san pedro,0,0,False,144
+98199,Álamo Industrial,45580,13,1085,372,0,alamo industrial,0,0,False,144
+98096,La Floresta,45419,9,396,157,0,la floresta,0,0,False,144
+98063,Los Portales Tlaquepaque,44890,5,421,127,0,los portales tlaquepaque,0,0,False,144
+98177,Parques de Tlaquepaque,45520,2,458,126,0,parques de tlaquepaque,0,0,False,144
+98016,El Mirador,45600,8,520,134,0,el mirador,0,0,False,144
+98129,Coto Florencia,45501,2,517,156,0,coto florencia,0,0,False,144
+98229,El Roble,45630,6,489,183,0,el roble,0,0,False,144
+98027,Agua Blanca Industrial,45235,1,486,150,0,agua blanca industrial,0,0,False,144
+98259,España (Pintores Españoles),45600,9,462,143,0,espana pintores espanoles,0,0,False,144
+98232,Villas de La Loma,45580,3,235,75,0,villas de la loma,0,0,False,144
+98217,Horizonte El Tapatío,45550,5,254,77,0,horizonte el tapatio,0,0,False,144
+98263,Santa Anita Camino Real,45600,5,295,101,0,santa anita camino real,0,0,False,144
+98095,Tinajitas,45630,3,306,71,0,tinajitas,0,0,False,144
+98030,Valle Balcones de Santa María,45530,5,346,102,0,valle balcones de santa maria,0,0,False,144
+98140,Pblo. San Martin de Las Flores de Abajo,45620,1,361,87,0,pblo san martin de las flores de abajo,0,0,False,144
+98220,Los Naranjos,45630,2,345,81,0,los naranjos,0,0,False,144
+98037,Residencial Delicias,45560,2,323,105,0,residencial delicias,0,0,False,144
+98061,Santa María,45630,3,182,54,0,santa maria,0,1,False,144
+98207,Meridiano,44490,2,175,53,0,meridiano,0,0,False,144
+98192,Canto de Luna,44490,2,166,54,0,canto de luna,0,0,False,144
+98111,Bosques de San Martin,45620,3,170,56,0,bosques de san martin,0,0,False,144
+98025,Club de Golf Atlas,45623,3,191,57,0,club de golf atlas,0,0,False,144
+98035,Pinares del Vergel,45595,1,188,49,0,pinares del vergel,0,0,False,144
+98015,La Caridad,45600,4,187,52,0,la caridad,0,0,False,144
+98190,Coto Juan Diego,44490,3,231,69,0,coto juan diego,0,0,False,144
+98084,Potrero Los Amador,45600,3,142,38,0,potrero los amador,0,0,False,144
+98091,Los Naranjos,45600,4,143,39,0,los naranjos,0,0,False,144
+98034,La Huerta,45596,2,145,52,0,la huerta,0,0,False,144
+98032,Villas del Bosque,45618,2,154,40,0,villas del bosque,0,0,False,144
+98265,Las Pomas,45610,3,116,27,0,las pomas,0,0,False,144
+98054,Riveras de San Sebastianito,45610,1,137,40,0,riveras de san sebastianito,0,0,False,144
+98189,Meridiano (Hogares del Álamo),44490,1,125,40,0,meridiano hogares del alamo,0,0,False,144
+98087,Las Liebres 2da Sección,45323,2,135,30,0,las liebres 2da seccion,0,0,False,144
+98130,Cumbres del Nilo,45501,2,81,27,0,cumbres del nilo,0,0,False,144
+98062,Las Brisas,45630,2,90,30,0,las brisas,0,0,False,144
+98098,Antares II,46500,3,107,30,0,antares ii,0,0,False,144
+98247,Nuevo Amanecer,45620,1,68,15,0,nuevo amanecer,0,0,False,144
+98082,Residencial Los Olivos,45610,1,47,11,0,residencial los olivos,0,0,False,144
+98064,San Francisco,45600,1,32,10,0,san francisco,0,0,False,144
+98139,Potrero El Zalate,45620,1,17,5,0,potrero el zalate,0,0,False,144
+98242,Rincón de La Cofradía,45630,1,17,4,0,rincon de la cofradia,0,0,False,144

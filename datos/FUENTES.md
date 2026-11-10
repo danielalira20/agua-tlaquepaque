@@ -90,6 +90,27 @@ python3 scripts/match_colonias.py nombres_del_calendario.txt > cruce.csv
 **Todo lo que salga como `revisar` o `sin_match` se revisa a mano.** El script
 acota el trabajo, no lo sustituye.
 
+## `cisternas_tlaquepaque.csv` y `contraste_cisternas.csv`
+
+| Campo | Valor |
+|---|---|
+| **Fuente** | Mapa público "CISTERNAS TLAQUEPAQUE PUB", Google My Maps |
+| **Institución** | Gobierno de San Pedro Tlaquepaque |
+| **Año** | 2026 |
+| **Qué se tomó** | Ubicación y domicilio de cisternas comunitarias, puntos del SIAPA y 10 ubicaciones propuestas |
+| **Para qué** | Contrastar el modelo contra decisiones reales del municipio. Es la evidencia propia que sustituye a la encuesta |
+
+**Capas del mapa:** `MUNICIPAL 1.kmz` (59 placemarks, cisternas del municipio),
+`SIAPA.kmz` (3), `PROPUESTAS` (10), más dos capas de polígonos que no se usaron
+(`SIAPA TLQ` con 8 y `DIVISIÓN TERRITORIAL TLQ` con 233 secciones del INE).
+
+**Procesamiento:** se descargó el KML, se eliminaron 12 duplicados exactos, se
+recuperó la colonia desde el domicilio postal para las 14 cisternas sin
+coordenada, y se ubicaron por unión espacial las que sí la tienen. Quedaron 47
+cisternas ubicadas de 50, y 3 sin resolver que están declaradas.
+
+Los resultados del contraste están en `HALLAZGOS_cisternas.md`.
+
 ## ⚠️ Advertencia sobre dos campos derivados
 
 `litros_almacen_est` y `horas_autonomia_50Lpd` **son indicativos y no deben usarse
