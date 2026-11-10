@@ -40,6 +40,56 @@ calcular el radio de cobertura de las pipas sin cargar los polígonos.
 
 ---
 
+## `manzana_colonia.csv` y `colonias_tlaquepaque.csv`
+
+**El puente que faltaba.** El calendario de tandeo viene por **colonia** y el censo
+viene por **manzana**, y el INEGI no publica colonias. Sin este cruce, el calendario
+no se puede unir con el modelo y el motor se queda sin insumo.
+
+| Campo | Valor |
+|---|---|
+| **Producto** | Información Sociodemográfica por colonia, Jalisco 2020. Colonias INE 2024 |
+| **Institución** | IIEG Jalisco |
+| **Cobertura** | 6,624 colonias en Jalisco; 276 en San Pedro Tlaquepaque |
+| **CRS original** | EPSG:32613 (UTM 13N) |
+| **Método** | Unión espacial: el centroide de cada manzana cae dentro de un polígono de colonia |
+
+**Cobertura del cruce:** 4,841 de 4,863 manzanas quedaron con colonia (99.5%),
+equivalentes a 585,921 de 587,874 personas (99.7%). Se alcanzaron 218 de las 276
+colonias; las 58 restantes no tienen manzanas urbanas con datos del censo.
+
+**Archivos:**
+
+- `manzana_colonia.csv` — una fila por manzana: `cvegeo`, `geocol`, `colonia`, `cp`
+- `colonias_tlaquepaque.csv` — una fila por colonia, con su población, viviendas,
+  número de manzanas, total sin almacenamiento y el nombre normalizado
+
+> **Advertencia del propio IIEG:** la capa se construyó con el marco de colonias del
+> INE, y el instituto señala que no puede asegurarse que sea equivalente a la capa de
+> colonias que usan en la práctica los municipios. Hay que declararlo en el reporte.
+
+### El problema de los nombres, y cómo se resuelve
+
+Los nombres del calendario no empatan textualmente con los de la capa. De diez
+nombres de prueba, tres fallaron:
+
+| En el calendario | En la capa |
+|---|---|
+| Barrio de Santiago | De Santiago |
+| Villas El Tapatio | Villas del Tapatío |
+| Tateposco | Real de Tateposco (por confirmar) |
+
+Para eso está **`scripts/match_colonias.py`**. Normaliza acentos, mayúsculas y
+palabras de ruido ("col", "fracc", "barrio", "infonavit"), y clasifica cada nombre
+en `exacto`, `probable`, `revisar` o `sin_match`.
+
+```
+python3 scripts/match_colonias.py nombres_del_calendario.txt > cruce.csv
+```
+
+**Todo lo que salga como `revisar` o `sin_match` se revisa a mano.** El script
+acota el trabajo, no lo sustituye.
+
 ## ⚠️ Advertencia sobre dos campos derivados
 
 `litros_almacen_est` y `horas_autonomia_50Lpd` **son indicativos y no deben usarse
