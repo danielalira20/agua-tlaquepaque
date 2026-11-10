@@ -58,6 +58,38 @@ igual que U). La red tarda horas en recuperar presión, así que un día de susp
 dura más de 24 h en la llave. Sin este parámetro, U nunca se cruza; con él, el
 análisis de sensibilidad tiene algo que mover. Se declara como supuesto.
 
+### ⚠️ Actualización: el calendario cambió el 4 de noviembre
+
+Revisando el portal oficial (`rotaciondeserviciosiapa.jalisco.gob.mx`) y la prensa que
+lo cita, el SIAPA **modificó el esquema el 4 de noviembre** por problemas de bombeo y
+presión: seis de las siete zonas pasan de **2 a 3 o 4 días de suspensión por semana**,
+y ya aparecen días seguidos (por ejemplo, la zona 3 aparece el 5 y el 6 de noviembre).
+Además hay notas que ubican colonias de Tlaquepaque en zonas distintas (3 y 4), y el
+restablecimiento "no ocurre de forma simultánea ni uniforme".
+
+Qué cambia y qué no de este hallazgo:
+
+| | Con el calendario original (2 días) | Con el calendario de noviembre (3–4 días) |
+|---|---|---|
+| Días seguidos sin agua | Máximo 1 | 2 o más |
+| ¿Se activa U = 48 h? | Casi nunca | **Sí**, en las rachas de 2 días |
+| ¿El promedio por manzana esconde a los sin almacenamiento? | Sí | **Sí, igual** |
+
+Es decir: el punto 1 (U no se activa) **depende del calendario vigente** y ya no es
+tan fuerte, pero el punto 2 (separar en dos grupos) **sigue igual**. Y aparece algo
+nuevo para el contrato:
+
+- **`calendario.json` no puede ser un patrón semanal fijo.** El SIAPA lo cambia sobre
+  la marcha. Debe ir **por fecha** (`fecha → zona → con/sin servicio`) y traer la
+  **versión y fecha de consulta**. El motor y la demo deben poder correr con el
+  calendario original y con el de noviembre, y comparar: "cuando el SIAPA pasó de 2 a
+  4 días, las personas sin respaldo en riesgo pasaron de X a Y". Eso es un resultado
+  para el reporte, gratis.
+- **Las zonas del portal resuelven el Hallazgo 2.** El portal ubica un domicilio y
+  dice su zona, así que detrás del mapa tiene que haber polígonos de zonas. Si se
+  pueden descargar (pestaña Red del navegador, filtrar por `json`/`geojson`), el cruce
+  manzana → zona sale directo, sin pasar por colonias.
+
 ---
 
 ## 🔴 Hallazgo 2 · Sigue sin resolverse el cruce manzana → colonia → zona
