@@ -156,7 +156,7 @@ Es el número que define cuándo el agua pasa de `con_agua` a `agua_guardada`.
 | Anclaje | Qué dice | Estado |
 |---|---|---|
 | Estudio de Guadalajara (51 casas) | Remidieron cloro a las **120 horas** | Citable, con enlace |
-| Estudio de Maputo | Caída de hasta 85% del cloro en **2 a 3 días** | ⚠️ **sin verificar** |
+| Estudio de Maputo (VATTEN 2014) | Caída de ~60% del cloro durante almacenamiento, y tiempos de retención de **0.4 a 6.3 días** en tinacos | ✅ **verificado en la fuente** (ver `verificacion-citas.md`) |
 | NOM-127-SSA1-2021 | Cloro residual libre entre 0.2 y 1.5 mg/L | Norma mexicana, citable |
 
 **Recomendación: U = 48 horas, como parámetro de configuración, no como número
