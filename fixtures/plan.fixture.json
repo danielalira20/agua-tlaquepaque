@@ -1,0 +1,52 @@
+{
+  "calendario_optimizado": [
+    {
+      "zona": 3,
+      "suspension": [
+        "martes",
+        "viernes"
+      ]
+    },
+    {
+      "zona": 4,
+      "suspension": [
+        "lunes",
+        "jueves"
+      ]
+    }
+  ],
+  "asignacion_pipas": [
+    {
+      "dia": "miercoles",
+      "cvegeo": "140980001338A013",
+      "viajes": 1,
+      "litros": 10000
+    },
+    {
+      "dia": "miercoles",
+      "cvegeo": "1409800012432019",
+      "viajes": 1,
+      "litros": 10000
+    },
+    {
+      "dia": "miercoles",
+      "cvegeo": "1409800012432059",
+      "viajes": 1,
+      "litros": 10000
+    },
+    {
+      "dia": "miercoles",
+      "cvegeo": "1409800013214025",
+      "viajes": 1,
+      "litros": 10000
+    },
+    {
+      "dia": "miercoles",
+      "cvegeo": "140980001320A054",
+      "viajes": 1,
+      "litros": 10000
+    }
+  ],
+  "delta_personas_hora": 128400.0,
+  "restriccion": "volumen total constante; 32 pipas; 10000 L por viaje; 200 L por hogar"
+}

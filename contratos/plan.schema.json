@@ -1,0 +1,10 @@
+{
+  "descripcion": "Salida del optimizador.",
+  "formato": "JSON",
+  "estructura": {
+    "calendario_optimizado": "[{zona, suspension:[dias]}]",
+    "asignacion_pipas": "[{dia, cvegeo, viajes, litros}]",
+    "delta_personas_hora": "float personas-hora en estado inseguro evitadas vs el calendario oficial",
+    "restriccion": "volumen total de agua constante; flota de 32 pipas; 10000 L por viaje; ~200 L por hogar"
+  }
+}

@@ -1,0 +1,22 @@
+# datos crudos pesados (se descargan, no se versionan)
+datos/raw/
+*.zip
+*.shp
+*.dbf
+*.shx
+
+# salidas del motor y del optimizador
+*.parquet
+salidas/
+
+# entornos
+__pycache__/
+.venv/
+venv/
+node_modules/
+.next/
+.env
+.env.local
+
+# sistema
+.DS_Store

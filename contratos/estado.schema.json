@@ -1,0 +1,24 @@
+{
+  "descripcion": "Salida del motor de autonomia. Un renglon por manzana y por dia del ciclo semanal.",
+  "formato": "Parquet",
+  "llave": [
+    "cvegeo",
+    "dia_ciclo"
+  ],
+  "version": "v2 — alineado con el plan v2. Sustituye al enum anterior que usaba sin_cloro y cloro_mg_l.",
+  "campos": {
+    "cvegeo": "string(13)",
+    "dia_ciclo": "enum lunes|martes|miercoles|jueves|viernes|sabado|domingo",
+    "estado": "enum segura | agua_guardada_desinfectar | sin_agua | fuente_riesgosa",
+    "autonomia_h": "float horas restantes de agua almacenada ese dia",
+    "rango_autonomia": "enum <12h | 12-48h | >48h",
+    "horas_guardada": "float horas que lleva el agua almacenada desde el ultimo turno",
+    "riesgo_sanitario": "float 0..1",
+    "severidad": "float 0..1 incluye el peso de marginacion (dataset 17, nivel AGEB)"
+  },
+  "notas": [
+    "No modelamos mg/L de cloro: no hay datos publicos de cloro en la llave ni de presion.",
+    "El riesgo sanitario se deriva del TIEMPO que el agua lleva guardada, calibrado con literatura.",
+    "Referencia de contexto: NOM-127-SSA1-2021 fija el cloro residual libre entre 0.2 y 1.5 mg/L."
+  ]
+}

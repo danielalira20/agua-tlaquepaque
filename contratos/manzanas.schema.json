@@ -1,0 +1,30 @@
+{
+  "descripcion": "Tabla base por manzana. Fuente: INEGI Censo 2020, Principales resultados por AGEB y manzana urbana, Jalisco.",
+  "formato": "CSV",
+  "llave": "cvegeo",
+  "campos": {
+    "cvegeo": "string(13) ENTIDAD+MUN+LOC+AGEB+MZA",
+    "municipio": "string",
+    "localidad": "string",
+    "ageb": "string(4)",
+    "mza": "string(3)",
+    "pob": "int POBTOT",
+    "viviendas": "int TVIVHAB",
+    "ocupantes_prom": "float",
+    "viv_agua_dentro": "int VPH_AGUADV",
+    "viv_agua_terreno": "int VPH_AGUAFV",
+    "viv_tinaco": "int VPH_TINACO",
+    "viv_cisterna": "int VPH_CISTER",
+    "viv_drenaje": "int VPH_DRENAJ",
+    "sin_almacen_min": "int cota BAJA de viviendas sin tinaco ni cisterna (= viviendas - min(tinaco+cisterna, viviendas))",
+    "sin_almacen_max": "int cota ALTA (= viviendas - max(tinaco, cisterna))",
+    "litros_almacen_est": "int SUPUESTO: tinaco=1100 L, cisterna=5000 L. Calibrar con encuesta.",
+    "horas_autonomia_50Lpd": "float SUPUESTO: 50 L/persona/dia (nivel basico OMS)"
+  },
+  "notas": [
+    "El Censo no cruza tinaco con cisterna: por eso hay cota min y max, nunca un solo numero.",
+    "Valores 1 y 2 vienen enmascarados con asterisco; el 0 es un cero real.",
+    "Censo 2020: declarar la antiguedad en el reporte."
+  ],
+  "sector_tandeo": "PENDIENTE: lo agrega Magui al cruzar colonia -> zona del SIAPA"
+}

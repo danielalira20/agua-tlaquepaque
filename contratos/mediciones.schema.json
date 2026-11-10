@@ -1,0 +1,20 @@
+{
+  "descripcion": "Evidencia propia. Encuesta remota y, si se puede, tiras de cloro.",
+  "formato": "CSV",
+  "campos": {
+    "id": "string",
+    "cvegeo": "string o vacio si solo hay colonia",
+    "colonia": "string",
+    "fecha": "YYYY-MM-DD",
+    "hora": "HH:MM",
+    "tiene_tinaco": "si|no|nd",
+    "tiene_cisterna": "si|no|nd",
+    "litros_tinaco": "int o vacio",
+    "cada_cuanto_llega_h": "int horas entre turnos segun el vecino",
+    "que_hace_sin_agua": "garrafon|pipa|pozo|vecino|otro|nada",
+    "gasto_semanal_mxn": "int",
+    "cloro_mg_l": "float o vacio",
+    "llego_el_agua": "si|no|nd",
+    "consentimiento": "si|no"
+  }
+}

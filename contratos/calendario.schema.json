@@ -1,0 +1,15 @@
+{
+  "descripcion": "Calendario oficial de tandeo del SIAPA, 627 colonias, 15-oct-2026 a marzo-2027.",
+  "formato": "JSON",
+  "estructura": {
+    "zona": "int",
+    "municipios": "[string]",
+    "suspension": "[string] dias de la semana sin servicio",
+    "colonias": "[string]"
+  },
+  "notas": [
+    "Zona 3 suspende miercoles y sabado. Zona 4 suspende lunes y jueves. VERIFICADO en prensa, falta confirmar contra la fuente oficial del SIAPA.",
+    "Tlaquepaque cae en zonas 3 y 4.",
+    "Falta: hora de inicio y duracion del corte. Si el SIAPA no las publica, se declara como supuesto."
+  ]
+}
