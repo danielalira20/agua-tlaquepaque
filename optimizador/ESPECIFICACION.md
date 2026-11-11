@@ -1,6 +1,6 @@
 # Especificación del priorizador de pipas
 
-Versión 0.4, borrador. Es el documento que manda: cualquier implementación (la de
+Versión 0.5, borrador. Es el documento que manda: cualquier implementación (la de
 referencia en Python y, si se acuerda, una en TypeScript dentro de la app) se escribe
 **a partir de esto**, no una de la otra.
 
@@ -194,8 +194,14 @@ Si no queda ninguna cisterna en los turnos, todos los viajes del día quedan sin
 
 Se llena desde el punto de la cisterna: las manzanas con viviendas sin agua a `radio` o
 menos de ese punto, ordenadas por (distancia, cvegeo), con `llenar` de la sección 5. Si
-no hay ninguna, el viaje cuenta como usado y **vacío**. `cvegeo_centro` es la manzana
-más cercana a la cisterna (para dibujarlo) y `punto_id` es la clave `id@tipo`.
+no hay ninguna, el viaje cuenta como usado y **vacío**. En la salida, `punto_id` es la
+clave `id@tipo`, `cvegeo_centro` es `null` y `lon`, `lat` son el punto de la cisterna. La
+colonia de la cisterna es `colonia_capa` o, si viene vacía, la de la manzana más cercana.
+
+Las cisternas que no entran se reportan con su motivo: `sin coordenada ni colonia`,
+`coordenada fuera del municipio`, `colonia ambigua`, `colonia no encontrada`,
+`colonia sin manzanas ubicadas` o, con `baseline_cisternas = exactas`,
+`sensibilidad: solo cisternas con coordenada exacta`.
 
 ## 8. Métricas
 
@@ -235,38 +241,38 @@ vivienda de un día al siguiente.
 
 ## 9. Salidas
 
-`salidas/plan.json`. `prioridad_score` es el `ponderado` del viaje. La forma definitiva la fija `contratos/plan.schema.json` en la rama
-`feat/plan-contrato`. Mientras tanto, los nombres siguen la opción C de la decisión 4 del
-equipo (`decisiones/propuesta-dani.md`):
+`salidas/plan.json`, con la forma de `contratos/plan.schema.json` v2. Una sola corrida del
+comando produce todo:
 
-```
-{
-  "parametros": { ...los valores de la sección 3 que se usaron },
-  "fechas": [{
-    "fecha": "2026-11-09",
-    "viajes": [{
-      "orden_eleccion": 1,
-      "tipo": "pipa",
-      "cvegeo_centro": "...",
-      "colonia": "...",
-      "manzanas_cubiertas": [{"cvegeo": "...", "viviendas": 12}],
-      "viviendas_objetivo": 50,
-      "litros": 10000,
-      "personas_beneficiadas": 186.0,
-      "prioridad_score": 150.0
-    }],
-    "resumen": { ...métricas por fecha de la sección 8 }
-  }],
-  "semana": { ...métricas de la semana }
-}
-```
+| Parte | Contenido |
+|---|---|
+| `parametros` | Los de la sección 3 y `hogares_por_viaje`. `cota_para_ordenar` es la configurada; las corridas usan las dos |
+| `baseline` | Descripción, cisternas usadas (`id`, `tipo`, `ubicacion`: `coordenada_exacta` o `centro_de_colonia`, `lon`, `lat`, `colonia`) y excluidas con su motivo |
+| `corridas` | Cuatro, en este orden: priorizado y baseline con cota mínima, luego priorizado y baseline con cota máxima. Cada una con sus fechas (viajes y resumen) y la semana |
+| `comparacion` | Por cota, cada métrica de la semana como `{priorizado, baseline, diferencia}`, con diferencia = priorizado − baseline |
+| `propuesta_cisternas` | `null`: reservado para una versión posterior |
 
-- `viviendas_objetivo` cuenta solo viviendas sin agua ese día, nunca el total de la
-  manzana.
-- `orden_eleccion` es el orden en que el algoritmo eligió los viajes. **No es una ruta**:
-  no hay datos de calles ni de tiempos.
-- En el baseline, `tipo` es `"cisterna"`, cada viaje lleva además `punto_id` (el `id` de la
-  cisterna, `id@tipo`) y el archivo por defecto es `salidas/baseline.json`.
+Cada viaje:
+
+| Campo | Priorizado | Baseline |
+|---|---|---|
+| `tipo` | `pipa` | `cisterna` |
+| `punto_id` | `null` | `id@tipo` de la cisterna |
+| `cvegeo_centro` | manzana donde se estaciona | `null` |
+| `lon`, `lat` | centroide de esa manzana | punto de la cisterna |
+| `colonia` | la de la manzana | la de la cisterna |
+| `manzanas_cubiertas` | `[{cvegeo, viviendas}]` de la más cercana a la más lejana | igual |
+| `viviendas_objetivo` | viviendas sin agua de ese día que recibe el viaje; 0 si va vacío | igual |
+| `litros` | `viviendas_objetivo × litros_por_hogar` | igual |
+| `personas_beneficiadas`, `prioridad_score` | suma de viviendas × ocupantes; suma de viviendas × peso | igual |
+
+- `orden_eleccion` es el orden en que se eligieron los viajes. **No es una ruta**: no hay
+  datos de calles ni de tiempos.
+- Además del contrato, la salida trae `parametros.baseline_cisternas`,
+  `parametros.baseline_turnos` y `viajes_vacios` en cada resumen. Hay que proponer
+  agregarlos al contrato.
+- `pruebas/test_salida.py` compara la forma de la salida contra
+  `fixtures/plan.fixture.json`: si el contrato cambia, esa prueba falla.
 
 ## 10. Casos resueltos a mano
 
@@ -349,7 +355,7 @@ Hay que declararlo en el reporte:
 | 1 | Baseline | **Acordada con Dani:** baseline estilizado, mismos viajes por turnos entre las cisternas (sección 7) | Jass y Dani |
 | 2 | Modo de la racha | `desempate` por defecto; `peso` como escenario de equidad | Jass |
 | 3 | Si un centro puede estar en una manzana sin necesidad | No | Jass |
-| 4 | Forma definitiva de `plan.json` | Sección 9, en `feat/plan-contrato` | Jass, Dani y Migue |
+| 4 | Campos extra de `plan.json` (`viajes_vacios`, `baseline_cisternas`, `baseline_turnos`) | Agregarlos al contrato v2 | Jass y Dani |
 | 5 | Dónde vive la implementación oficial (Python o TypeScript) | Por acordar | Jass y Migue |
 
 ## 13. Implementaciones
@@ -363,8 +369,9 @@ La de referencia está en `priorizador/` (Python, solo biblioteca estándar):
 | `asignacion.py` | 6: el voraz diario con los tres modos de racha |
 | `metricas.py` | 8: métricas por fecha y por semana, con los máximos posibles |
 | `baseline.py` | 7: ubicación de cisternas y reparto por turnos |
-| `salida.py` | 9: forma provisional de `plan.json` |
-| `__main__.py` | Corre todo: `python3 -m optimizador.priorizador --estado <csv del motor> [--regla baseline]` |
+| `plan.py` | Las cuatro corridas: priorizado y baseline, con cota mínima y máxima |
+| `salida.py` | 9: `plan.json` con la forma del contrato v2 y la comparación |
+| `__main__.py` | Corre todo: `python3 -m optimizador.priorizador --estado <csv del motor>` |
 
 Las pruebas están en `pruebas/`: los casos A a I en `test_casos.py` y propiedades
 generales con datos al azar en `test_propiedades.py`, y los casos J a M en

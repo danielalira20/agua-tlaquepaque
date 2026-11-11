@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (versión 0.4, borrador). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.5, borrador). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
@@ -14,14 +14,13 @@ con los recursos reales del municipio, y mide cuánto mejora eso frente al repar
 | Entrada | `datos/manzanas_tlaquepaque.csv` (ocupantes por vivienda) | Datos del equipo |
 | Entrada | `datos/cisternas_tlaquepaque.csv` (cisternas del municipio y del SIAPA) | Datos del equipo |
 | Entrada | `supuestos.json` (recursos y parámetros) | Este carril |
-| Salida | `salidas/plan.json` con la forma de `contratos/plan.schema.json` | Este carril |
-| Salida | `salidas/baseline.json`, con la misma forma, para el baseline estilizado | Este carril |
+| Salida | `salidas/plan.json` con la forma de `contratos/plan.schema.json` v2: priorizado y baseline, con cota mínima y máxima, y su comparación | Este carril |
 
 `salidas/` no se versiona (está en `.gitignore`). Las tablas finales que cita el reporte
 van en `resultados/`.
 
-> `contratos/plan.schema.json` todavía es la versión del plan v1. Se actualiza en la rama
-> `feat/plan-contrato`, junto con su fixture.
+> `pruebas/test_salida.py` compara la salida contra `fixtures/plan.fixture.json`: si el
+> contrato cambia, esa prueba avisa.
 
 ## Estructura
 
@@ -63,7 +62,7 @@ van en `resultados/`.
 | Rama | Qué entrega | Estado |
 |---|---|---|
 | `feat/priorizador-especificacion` | Esqueleto, supuestos, decisiones, `ESPECIFICACION.md` | Hecho |
-| `feat/plan-contrato` | `plan.schema.json` v2 y su fixture | Pendiente (coordinar con Dani) |
+| `feat/plan-contrato` | `plan.schema.json` v2 y su fixture | Hecho por Dani, ya en `dev` |
 | `feat/priorizador-referencia` | Cobertura, asignación diaria, métricas y `plan.json`, con pruebas | Hecho |
 | `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | En curso |
 | `feat/priorizador-comparador` | Baseline contra priorizado, sensibilidad | Pendiente |
@@ -82,17 +81,19 @@ Desde la raíz del repo, con el estado que produce el motor:
 
     python3 -m optimizador.priorizador --estado salidas/referencia.csv
 
-Escribe `salidas/plan.json` e imprime un resumen por fecha. Para la sensibilidad, sin
+Escribe `salidas/plan.json` con las cuatro corridas (priorizado y baseline, cota mínima y
+máxima) e imprime un resumen y la comparación. Para la sensibilidad, sin
 tocar `supuestos.json`:
 
     python3 -m optimizador.priorizador --estado salidas/referencia.csv --set modo_racha=peso
     python3 -m optimizador.priorizador --estado salidas/referencia.csv --set radio_cobertura_m=500
 
-Baseline estilizado (escribe `salidas/baseline.json`):
+Cada corrida incluye el baseline estilizado. Sus variantes:
 
-    python3 -m optimizador.priorizador --estado salidas/referencia.csv --regla baseline
-    python3 -m optimizador.priorizador --estado salidas/referencia.csv --regla baseline --set baseline_turnos=con_necesidad
-    python3 -m optimizador.priorizador --estado salidas/referencia.csv --regla baseline --set baseline_cisternas=exactas
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv --set baseline_turnos=con_necesidad
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv --set baseline_cisternas=exactas
+
+`--detalle` imprime cada fecha de cada corrida.
 
 Pruebas:
 
