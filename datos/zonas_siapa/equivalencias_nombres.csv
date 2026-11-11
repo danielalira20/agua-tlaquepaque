@@ -1,0 +1,18 @@
+nombre_portal,municipio_portal,nombre_lista,municipio_lista,motivo
+FOVISSSTE MIRAVALLE,San Pedro Tlaquepaque,MIRAVALLE FOVISSSTE,San Pedro Tlaquepaque,Mismo nombre con las palabras en otro orden
+PARQUES DE STA CRUZ DEL VALLE,San Pedro Tlaquepaque,PARQUES SANTA CRUZ DEL VALLE,San Pedro Tlaquepaque,Abreviatura de santa
+ARROYO LAS FLORES,San Pedro Tlaquepaque,ARROYO DE LAS FLORES*,San Pedro Tlaquepaque,Falta la preposicion de
+LINDAVISTA,San Pedro Tlaquepaque,LINDA VISTA,San Pedro Tlaquepaque,Espacio entre las palabras
+FRANCISCO I MADERO 2a SECCION,San Pedro Tlaquepaque,FRANCISCO I MADERO,San Pedro Tlaquepaque,Seccion de la misma colonia; las zonas coinciden
+TOLUQUILLA,San Pedro Tlaquepaque,JARDINES TOLUQUILLA,San Pedro Tlaquepaque,Prefijo jardines; las zonas se traslapan
+DE SANTIAGO,San Pedro Tlaquepaque,BARRIO DE SANTIAGO,San Pedro Tlaquepaque,Barrio omitido; la capa del IIEG la llama De Santiago
+MERIDIANO (HOGARES DEL ALAMO),San Pedro Tlaquepaque,FRACCIONAMIENTO MERIDIANO/HOGARES DEL ALAMO,San Pedro Tlaquepaque,Mismo fraccionamiento con distinta puntuacion
+TLAQUEPAQUE PUEBLITO,San Pedro Tlaquepaque,TLAQUEPAQUE PUEBLITO CONDOMINIO,San Pedro Tlaquepaque,Falta la palabra condominio; las zonas coinciden
+LAS TERRAZAS,San Pedro Tlaquepaque,FRACCIONAMIENTO LAS TERRAZAS,San Pedro Tlaquepaque,Prefijo fraccionamiento; las zonas coinciden
+TATEPOSCO (SAN JOSE DE TATEPOSCO),San Pedro Tlaquepaque,TATEPOSCO,San Pedro Tlaquepaque,Nombre completo de la localidad; las zonas coinciden
+REVOLUCION,San Pedro Tlaquepaque,FRACCIONAMIENTO INFONAVIT REVOLUCION,San Pedro Tlaquepaque,El poligono abarca las dos colonias de la lista (zonas 3 y 4)
+REVOLUCION,San Pedro Tlaquepaque,FRACCIONAMIENTO REVOLUCION,San Pedro Tlaquepaque,El poligono abarca las dos colonias de la lista (zonas 3 y 4)
+LAS HUERTAS,San Pedro Tlaquepaque,LAS HUERTAS,Tonalá,Colonia que cruza el limite municipal; el poligono del portal coincide con la zona de la lista
+HACIENDAS DEL REAL,San Pedro Tlaquepaque,HACIENDAS DEL REAL,Zapopan,Colonia que cruza el limite municipal; el poligono del portal coincide con la zona de la lista
+LOMA BONITA EJIDAL,San Pedro Tlaquepaque,LOMA BONITA EJIDAL,Zapopan,Colonia que cruza el limite municipal; el poligono del portal coincide con la zona de la lista
+PARQUES COLON,San Pedro Tlaquepaque,PARQUES COLON,Guadalajara,Colonia que cruza el limite municipal; el poligono del portal coincide con la zona de la lista
