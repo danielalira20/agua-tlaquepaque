@@ -25,19 +25,20 @@ def construir_plan(
         viajes = []
         for v in res.viajes:
             ll = v.llenado
-            viajes.append(
-                {
-                    "orden_eleccion": v.orden_eleccion,
-                    "tipo": "pipa",
-                    "cvegeo_centro": v.cvegeo_centro,
-                    "colonia": colonias.get(v.cvegeo_centro, ""),
-                    "manzanas_cubiertas": [{"cvegeo": m, "viviendas": n} for m, n in ll.entregas],
-                    "viviendas_objetivo": ll.atendidas,
-                    "litros": ll.atendidas * p.litros_por_hogar,
-                    "personas_beneficiadas": round(sum(n * ocupantes[m] for m, n in ll.entregas), 2),
-                    "prioridad_score": round(ll.ponderado, 4),
-                }
-            )
+            viaje = {
+                "orden_eleccion": v.orden_eleccion,
+                "tipo": v.tipo,
+                "cvegeo_centro": v.cvegeo_centro,
+                "colonia": colonias.get(v.cvegeo_centro, ""),
+                "manzanas_cubiertas": [{"cvegeo": m, "viviendas": n} for m, n in ll.entregas],
+                "viviendas_objetivo": ll.atendidas,
+                "litros": ll.atendidas * p.litros_por_hogar,
+                "personas_beneficiadas": round(sum(n * ocupantes[m] for m, n in ll.entregas), 2),
+                "prioridad_score": round(ll.ponderado, 4),
+            }
+            if v.punto_id:
+                viaje["punto_id"] = v.punto_id
+            viajes.append(viaje)
         resumen = {k: v for k, v in resumen.items() if k != "fecha"}
         fechas.append({"fecha": res.fecha, "viajes": viajes, "resumen": _redondear(resumen)})
     return {"parametros": p.como_dict(), "fechas": fechas, "semana": _redondear(semana)}
