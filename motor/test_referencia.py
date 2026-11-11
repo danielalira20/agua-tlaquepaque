@@ -315,5 +315,21 @@ class TestContratos(unittest.TestCase):
         self.assertEqual((self.RAIZ / "fixtures" / "plan.fixture.json").read_text(encoding="utf-8"), antes)
 
 
+    def test_cisternas_con_id_unico(self):
+        with open(self.RAIZ / "datos" / "cisternas_tlaquepaque.csv", newline="", encoding="utf-8") as fh:
+            filas = list(csv.DictReader(fh))
+        ids = [f["id"] for f in filas]
+        self.assertEqual(len(filas), 60)
+        self.assertEqual(len(ids), len(set(ids)), "hay ids de cisterna repetidos")
+        self.assertEqual(sorted(f["id"] for f in filas if f["tipo"] == "cisterna_siapa"), ["SIAPA001", "SIAPA002", "SIAPA003"])
+        # una fila 'coordenada_exacta' debe traer una coordenada dentro de Tlaquepaque, no un valor vacio como (-180, 90)
+        for f in filas:
+            if f["fuente_ubicacion"] == "coordenada_exacta":
+                self.assertTrue(-104 < float(f["lon"]) < -103 and 20 < float(f["lat"]) < 21, f["id"])
+        plan = self._json(self.RAIZ / "fixtures" / "plan.fixture.json")
+        pid = [c["id"] for c in plan["baseline"]["cisternas"]]
+        self.assertEqual(len(pid), len(set(pid)), "el baseline del plan tiene ids repetidos")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)
