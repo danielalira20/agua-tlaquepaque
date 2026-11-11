@@ -53,6 +53,19 @@ def vecinas_por_manzana(
     return vecinas
 
 
+def vecinas_de_punto(
+    punto: tuple[float, float], ubicaciones: dict[str, tuple[float, float]], radio_m: float
+) -> list[tuple[float, str]]:
+    """Manzanas a `radio_m` o menos de un punto que no es manzana, ordenadas por (distancia, cvegeo)."""
+    cerca = []
+    for c, u in ubicaciones.items():
+        d = haversine_m(punto, u)
+        if d <= radio_m + TOLERANCIA_M:
+            cerca.append((d, c))
+    cerca.sort()
+    return cerca
+
+
 @dataclass(frozen=True)
 class Llenado:
     """Lo que entrega un viaje: (cvegeo, viviendas) en orden de cercania."""

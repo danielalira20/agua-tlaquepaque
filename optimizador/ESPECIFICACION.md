@@ -1,6 +1,6 @@
 # Especificación del priorizador de pipas
 
-Versión 0.3, borrador. Es el documento que manda: cualquier implementación (la de
+Versión 0.5, borrador. Es el documento que manda: cualquier implementación (la de
 referencia en Python y, si se acuerda, una en TypeScript dentro de la app) se escribe
 **a partir de esto**, no una de la otra.
 
@@ -21,7 +21,7 @@ de cobertura.
 El objetivo es **atender a la mayor cantidad posible de viviendas sin agua**. Entre
 opciones que atienden a las mismas viviendas, va primero quien lleva más tiempo sin agua
 (la racha). El modo de usar la racha es un parámetro (sección 4). El resultado se compara contra un reparto de referencia
-(baseline, sección 7) con **los mismos viajes**.
+(baseline estilizado, sección 7) con **los mismos viajes**.
 
 ## 2. Entradas
 
@@ -31,7 +31,8 @@ opciones que atienden a las mismas viviendas, va primero quien lleva más tiempo
 | Ubicación | `datos/manzanas_centroides.csv` | `cvegeo`, `lon`, `lat` |
 | Ocupantes | `datos/manzanas_tlaquepaque.csv` | `cvegeo`, `ocupantes_prom` (trae las 4,871 manzanas, también las que no tienen centroide) |
 | Colonia | `datos/manzana_colonia.csv` | `cvegeo`, `colonia` (solo para mostrar) |
-| Cisternas | `datos/cisternas_tlaquepaque.csv` | solo para el baseline (sección 7) |
+| Cisternas | `datos/cisternas_tlaquepaque.csv` | solo para el baseline (sección 7): `id`, `tipo`, `fuente_ubicacion`, `lon`, `lat`, `colonia_capa`, `geocol` |
+| Colonia por manzana | `datos/manzana_colonia.csv` | `geocol` y `colonia`, para ubicar cisternas por colonia |
 | Parámetros | `supuestos.json` | sección 3 |
 
 - Las fechas que se procesan son las que trae el estado.
@@ -49,6 +50,8 @@ opciones que atienden a las mismas viviendas, va primero quien lleva más tiempo
 | `radio_cobertura_m` | 300 | Distancia máxima entre el centro y una manzana atendida |
 | `cota_para_ordenar` | `min` | Qué cota del estado se usa (`min` o `max`) |
 | `modo_racha` | `desempate` | Cómo pesa el tiempo sin servicio: `desempate`, `peso` o `no` (sección 4) |
+| `baseline_cisternas` | `todas` | Qué cisternas usa el baseline: `todas` (47) o solo `exactas` (35) |
+| `baseline_turnos` | `todas` | Por qué cisternas pasan los turnos: `todas` o `con_necesidad` (sección 7) |
 
 Valor derivado:
 
@@ -140,23 +143,65 @@ para k = 1 .. viajes_por_dia:
 - Un viaje que atiende menos de `hogares_por_viaje` viviendas entrega solo
   `n · litros_por_hogar`. El resto del tanque no se cuenta como entregado.
 
-## 7. Baseline
+## 7. Baseline estilizado
 
-**Pendiente de la decisión 01** (`docs/decisiones/`), en revisión con Dani. Propuesta:
+**No es lo que hace el municipio.** Según la prensa, el llenado de cisternas responde a
+reportes ciudadanos, y no hay registro de a dónde fueron las pipas. El baseline es un
+reparto de referencia con las mismas reglas físicas que el priorizado, para medir cuánto
+aporta elegir el destino por necesidad. En el reporte se llama **baseline estilizado**.
+La decisión está en `docs/decisiones/01-baseline-cisternas.md`.
 
-- Los **mismos** `viajes_por_dia`, con las mismas reglas de las secciones 5 y 6, pero el
-  centro no se elige por necesidad: los viajes van a las **cisternas que ya colocó el
-  municipio**, por turnos y en orden de `id` (el viaje `k` va a la cisterna
-  `(k − 1) mod N`).
-- El punto de cada cisterna es su coordenada. Las que solo tienen colonia se ubican en
-  el promedio de los centroides de las manzanas de esa colonia. Las 3 que no se pudieron
-  ubicar quedan fuera. Las 10 propuestas no cuentan.
-- Si alrededor de una cisterna no hay viviendas sin agua dentro del radio, el viaje se
-  cuenta como usado y sin atender a nadie. Eso es justo lo que se quiere medir: cuánto
-  coincide la ubicación actual con la necesidad.
+Usa los mismos `viajes_por_dia`, la misma capacidad, el mismo radio y el mismo llenado
+(sección 5). Solo cambia **dónde se estaciona cada viaje**: en una cisterna instalada.
 
-Así la diferencia entre baseline y priorizado sale de **la regla**, no de tener más
-recursos.
+### Qué cisternas entran
+
+Las de tipo `cisterna_municipal` y `cisterna_siapa`. Las 3 del SIAPA se incluyen y se
+declaran. Las 10 propuestas no cuentan.
+
+Cada cisterna se ubica con la primera regla que aplique:
+
+1. **Exacta:** `fuente_ubicacion = coordenada_exacta` y la coordenada cae dentro del
+   rectángulo de los centroides del municipio, con un margen de 0.02°.
+2. **Por colonia:** si `colonia_capa` no está vacía. La colonia es `geocol` si viene, o la
+   única colonia con ese nombre en `manzana_colonia.csv`. El punto es el promedio de los
+   centroides de sus manzanas.
+3. Si ninguna aplica, la cisterna queda fuera.
+
+Con los datos actuales: 35 exactas, 12 por colonia y 3 fuera (CIST014, CIST021 y CIST022),
+igual que `datos/HALLAZGOS_cisternas.md`. Con `baseline_cisternas = exactas` solo entran
+las 35.
+
+### Turnos
+
+Cada cisterna se identifica con `id@tipo` (`CIST001@municipal`, `CIST001@siapa`), porque
+el archivo repite ids entre el municipio y el SIAPA. Las cisternas se ordenan por esa
+clave. En la fecha con índice `i` (0 para la primera), el
+viaje `k` va a la cisterna `(i · viajes_por_dia + k − 1) mod N`. Los turnos siguen de un
+día al otro, así que el punto de arranque rota y ninguna cisterna recibe siempre el viaje
+extra.
+
+`baseline_turnos` decide qué cisternas forman los `N` turnos de cada fecha:
+
+| Valor | Turnos | Qué mide |
+|---|---|---|
+| `todas` (por defecto) | Todas las cisternas que entran | Reparto parejo sin ver el calendario. Es la cota alta de la ventaja del priorizado |
+| `con_necesidad` | Solo las que, al empezar el día, tienen viviendas sin agua dentro del radio | Como si se supiera qué zona está sin agua. La ventaja que queda sale solo de elegir dónde |
+
+Si no queda ninguna cisterna en los turnos, todos los viajes del día quedan sin usar.
+
+### Cada viaje
+
+Se llena desde el punto de la cisterna: las manzanas con viviendas sin agua a `radio` o
+menos de ese punto, ordenadas por (distancia, cvegeo), con `llenar` de la sección 5. Si
+no hay ninguna, el viaje cuenta como usado y **vacío**. En la salida, `punto_id` es la
+clave `id@tipo`, `cvegeo_centro` es `null` y `lon`, `lat` son el punto de la cisterna. La
+colonia de la cisterna es `colonia_capa` o, si viene vacía, la de la manzana más cercana.
+
+Las cisternas que no entran se reportan con su motivo: `sin coordenada ni colonia`,
+`coordenada fuera del municipio`, `colonia ambigua`, `colonia no encontrada`,
+`colonia sin manzanas ubicadas` o, con `baseline_cisternas = exactas`,
+`sensibilidad: solo cisternas con coordenada exacta`.
 
 ## 8. Métricas
 
@@ -174,6 +219,7 @@ Por fecha:
 | `eficiencia_ponderada_pct` | `100 · valor_ponderado / maximo_ponderado` (100 si el máximo es 0) |
 | `cobertura_pct` | `100 · viviendas_atendidas / necesidad_total` (0 si no hay necesidad) |
 | `viajes_usados`, `viajes_sin_usar` | Sección 6 |
+| `viajes_vacios` | Viajes usados que no atendieron a nadie (solo pasa en el baseline) |
 
 En la semana: la suma de cada métrica, más
 
@@ -195,36 +241,38 @@ vivienda de un día al siguiente.
 
 ## 9. Salidas
 
-`salidas/plan.json`. `prioridad_score` es el `ponderado` del viaje. La forma definitiva la fija `contratos/plan.schema.json` en la rama
-`feat/plan-contrato`. Mientras tanto, los nombres siguen la opción C de la decisión 4 del
-equipo (`decisiones/propuesta-dani.md`):
+`salidas/plan.json`, con la forma de `contratos/plan.schema.json` v2. Una sola corrida del
+comando produce todo:
 
-```
-{
-  "parametros": { ...los valores de la sección 3 que se usaron },
-  "fechas": [{
-    "fecha": "2026-11-09",
-    "viajes": [{
-      "orden_eleccion": 1,
-      "tipo": "pipa",
-      "cvegeo_centro": "...",
-      "colonia": "...",
-      "manzanas_cubiertas": [{"cvegeo": "...", "viviendas": 12}],
-      "viviendas_objetivo": 50,
-      "litros": 10000,
-      "personas_beneficiadas": 186.0,
-      "prioridad_score": 150.0
-    }],
-    "resumen": { ...métricas por fecha de la sección 8 }
-  }],
-  "semana": { ...métricas de la semana }
-}
-```
+| Parte | Contenido |
+|---|---|
+| `parametros` | Los de la sección 3 y `hogares_por_viaje`. `cota_para_ordenar` es la configurada; las corridas usan las dos |
+| `baseline` | Descripción, cisternas usadas (`id`, `tipo`, `ubicacion`: `coordenada_exacta` o `centro_de_colonia`, `lon`, `lat`, `colonia`) y excluidas con su motivo |
+| `corridas` | Cuatro, en este orden: priorizado y baseline con cota mínima, luego priorizado y baseline con cota máxima. Cada una con sus fechas (viajes y resumen) y la semana |
+| `comparacion` | Por cota, cada métrica de la semana como `{priorizado, baseline, diferencia}`, con diferencia = priorizado − baseline |
+| `propuesta_cisternas` | `null`: reservado para una versión posterior |
 
-- `viviendas_objetivo` cuenta solo viviendas sin agua ese día, nunca el total de la
-  manzana.
-- `orden_eleccion` es el orden en que el algoritmo eligió los viajes. **No es una ruta**:
-  no hay datos de calles ni de tiempos.
+Cada viaje:
+
+| Campo | Priorizado | Baseline |
+|---|---|---|
+| `tipo` | `pipa` | `cisterna` |
+| `punto_id` | `null` | `id@tipo` de la cisterna |
+| `cvegeo_centro` | manzana donde se estaciona | `null` |
+| `lon`, `lat` | centroide de esa manzana | punto de la cisterna |
+| `colonia` | la de la manzana | la de la cisterna |
+| `manzanas_cubiertas` | `[{cvegeo, viviendas}]` de la más cercana a la más lejana | igual |
+| `viviendas_objetivo` | viviendas sin agua de ese día que recibe el viaje; 0 si va vacío | igual |
+| `litros` | `viviendas_objetivo × litros_por_hogar` | igual |
+| `personas_beneficiadas`, `prioridad_score` | suma de viviendas × ocupantes; suma de viviendas × peso | igual |
+
+- `orden_eleccion` es el orden en que se eligieron los viajes. **No es una ruta**: no hay
+  datos de calles ni de tiempos.
+- Además del contrato, la salida trae `parametros.baseline_cisternas`,
+  `parametros.baseline_turnos` y `viajes_vacios` en cada resumen. Hay que proponer
+  agregarlos al contrato.
+- `pruebas/test_salida.py` compara la forma de la salida contra
+  `fixtures/plan.fixture.json`: si el contrato cambia, esa prueba falla.
 
 ## 10. Casos resueltos a mano
 
@@ -253,6 +301,20 @@ En la tabla, «atendidas / ponderado» de cada candidata.
 | **H.** Los días son independientes | M1: 0, 10 el día 1 y 10 el día 2, horas 24 y 48 | 1 por día | Día 1: M1 atiende 10 / 10. Día 2: M1 atiende 10 / 20 |
 | **I.** Comparación contra el máximo | Las de D | 1 | `maximo_viviendas` = min(10, 14) = 10. `maximo_ponderado` = 4 · 4 + 6 · 1 = 22. Con `desempate`: eficiencias 100% y 45.5%. Con `peso`: 40% y 72.7% |
 
+### Baseline
+
+Mismos valores por defecto. Cada cisterna se coloca en el meridiano igual que las
+manzanas.
+
+| Caso | Escenario | Viajes | Resultado esperado |
+|---|---|---|---|
+| **J.** Los turnos siguen de un día al otro | Cisternas C1, C2, C3 a 0, 5,000 y 10,000 m, cada una con una manzana de 30 viviendas sin agua en su punto. Tres fechas | 2 por día | Día 1: C1, C2. Día 2: C3, C1. Día 3: C2, C3 |
+| **K.** Viaje vacío | Cisterna C1 a 0 m. M1 a 1,000 m con 10 viviendas sin agua | 1 | Baseline: atiende 0, `viajes_vacios` = 1. Priorizado con la misma necesidad: atiende 10 en M1 |
+| **L.** Se llena desde el punto de la cisterna | Cisterna a 50 m. M1 a 0 m (4), M2 a 200 m (8), M3 a 400 m (5) | 1 | Distancias 50, 150 y 350 m: M3 queda fuera. Atiende M1 4 y M2 6 |
+| **M.** Turnos con necesidad | C1 a 0 m y C2 a 5,000 m. M1 a 100 m con 30 viviendas sin agua | 2 | Con `todas`: C1 atiende 10, C2 atiende 0. Con `con_necesidad`: C1 y C1, 10 cada uno |
+
+### Lo que muestran los casos
+
 Los casos D e I muestran el costo de cada modo, y hay que declararlo en el reporte. Con
 `peso`, el priorizador puede atender a menos viviendas para llegar a las que llevan más
 días sin agua; con `desempate` no pierde ninguna vivienda, pero la racha solo cuenta
@@ -268,18 +330,32 @@ Hay que declararlo en el reporte:
   distancia caminable, en línea recta.
 - Que una vivienda guarde agua de la entrega para el día siguiente.
 - Las solicitudes reales por TlaqueChat y a dónde fueron las pipas de verdad.
-- La capacidad real de las cisternas comunitarias (decisión 01).
-- La marginación: `severidad` del motor aún no la incluye, porque falta el archivo por
-  AGEB.
+- **El reparto real.** El baseline es estilizado: según la prensa, el llenado de
+  cisternas responde a reportes ciudadanos, y no hay registro de a dónde fueron los 565
+  viajes.
+- **Que las pipas rellenen las cisternas es un supuesto.** La prensa dice que el llenado
+  es con agua de pozos municipales conforme llegan reportes, pero no que los 565 viajes
+  lo incluyan. Cada viaje a una cisterna se trata como un viaje de pipa: 10,000 L, unos 50
+  hogares. Los 28,296 hogares que reporta el municipio coinciden casi con 565 × 50 =
+  28,250: es una cifra derivada de los viajes, no medida.
+- **Una cisterna es un almacén.** En el baseline, un viaje a una cisterna sin viviendas
+  sin agua cerca ese día cuenta como perdido, aunque en la realidad el agua quedaría
+  guardada para el siguiente día de racionamiento de esa zona. Esto favorece al
+  priorizado: con `baseline_turnos = todas` su ventaja es una cota alta, y
+  `con_necesidad` es la comparación más conservadora.
+- **La ubicación de 12 cisternas** es el centro de su colonia, no su punto real. La
+  sensibilidad con `baseline_cisternas = exactas` usa solo las 35 con coordenada.
+- **La marginación** no entra en la prioridad. El estado del cruce por AGEB está en
+  `datos/HALLAZGOS_marginacion.md`.
 
 ## 12. Decisiones abiertas
 
 | # | Qué | Propuesta | Quién decide |
 |---|---|---|---|
-| 1 | Baseline | Mismos viajes, centros en las cisternas actuales (sección 7) | Jass y Dani |
+| 1 | Baseline | **Acordada con Dani:** baseline estilizado, mismos viajes por turnos entre las cisternas (sección 7) | Jass y Dani |
 | 2 | Modo de la racha | `desempate` por defecto; `peso` como escenario de equidad | Jass |
 | 3 | Si un centro puede estar en una manzana sin necesidad | No | Jass |
-| 4 | Forma definitiva de `plan.json` | Sección 9, en `feat/plan-contrato` | Jass, Dani y Migue |
+| 4 | Campos extra de `plan.json` (`viajes_vacios`, `baseline_cisternas`, `baseline_turnos`) | Agregarlos al contrato v2 | Jass y Dani |
 | 5 | Dónde vive la implementación oficial (Python o TypeScript) | Por acordar | Jass y Migue |
 
 ## 13. Implementaciones
@@ -292,9 +368,12 @@ La de referencia está en `priorizador/` (Python, solo biblioteca estándar):
 | `cobertura.py` | 5: haversine, vecinas dentro del radio (con una rejilla) y `llenar` |
 | `asignacion.py` | 6: el voraz diario con los tres modos de racha |
 | `metricas.py` | 8: métricas por fecha y por semana, con los máximos posibles |
-| `salida.py` | 9: forma provisional de `plan.json` |
+| `baseline.py` | 7: ubicación de cisternas y reparto por turnos |
+| `plan.py` | Las cuatro corridas: priorizado y baseline, con cota mínima y máxima |
+| `salida.py` | 9: `plan.json` con la forma del contrato v2 y la comparación |
 | `__main__.py` | Corre todo: `python3 -m optimizador.priorizador --estado <csv del motor>` |
 
 Las pruebas están en `pruebas/`: los casos A a I en `test_casos.py` y propiedades
-generales con datos al azar en `test_propiedades.py`. Si se acuerda portarla a la app, la
+generales con datos al azar en `test_propiedades.py`, y los casos J a M en
+`test_baseline.py`. Si se acuerda portarla a la app, la
 versión en TypeScript debe pasar los mismos casos.

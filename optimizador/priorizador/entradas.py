@@ -7,6 +7,8 @@ from dataclasses import asdict, dataclass
 
 COTAS = ("min", "max")
 MODOS_RACHA = ("desempate", "peso", "no")
+BASELINE_CISTERNAS = ("todas", "exactas")
+BASELINE_TURNOS = ("todas", "con_necesidad")
 CAMPOS_PARAMETROS = (
     "pipas",
     "viajes_por_dia",
@@ -15,6 +17,8 @@ CAMPOS_PARAMETROS = (
     "radio_cobertura_m",
     "cota_para_ordenar",
     "modo_racha",
+    "baseline_cisternas",
+    "baseline_turnos",
 )
 
 
@@ -29,6 +33,8 @@ class Parametros:
     radio_cobertura_m: float
     cota_para_ordenar: str
     modo_racha: str
+    baseline_cisternas: str = "todas"
+    baseline_turnos: str = "todas"
 
     @property
     def hogares_por_viaje(self) -> int:
@@ -39,6 +45,10 @@ class Parametros:
             raise ValueError(f"cota_para_ordenar debe ser una de {COTAS}: {self.cota_para_ordenar!r}")
         if self.modo_racha not in MODOS_RACHA:
             raise ValueError(f"modo_racha debe ser uno de {MODOS_RACHA}: {self.modo_racha!r}")
+        if self.baseline_cisternas not in BASELINE_CISTERNAS:
+            raise ValueError(f"baseline_cisternas debe ser uno de {BASELINE_CISTERNAS}: {self.baseline_cisternas!r}")
+        if self.baseline_turnos not in BASELINE_TURNOS:
+            raise ValueError(f"baseline_turnos debe ser uno de {BASELINE_TURNOS}: {self.baseline_turnos!r}")
         if self.viajes_por_dia < 0:
             raise ValueError("viajes_por_dia no puede ser negativo")
         if self.litros_por_hogar <= 0 or self.hogares_por_viaje < 1:
@@ -70,9 +80,12 @@ def leer_supuestos(ruta: str, cambios: dict[str, str] | None = None) -> Parametr
     for clave, texto in (cambios or {}).items():
         if clave not in CAMPOS_PARAMETROS:
             raise ValueError(f"parametro desconocido: {clave}")
-        actual = datos[clave]
+        actual = datos.get(clave, "")
         datos[clave] = texto if isinstance(actual, str) else type(actual)(texto)
-    return Parametros(**{c: datos[c] for c in CAMPOS_PARAMETROS}).validar()
+    try:
+        return Parametros(**{c: datos[c] for c in CAMPOS_PARAMETROS if c in datos}).validar()
+    except TypeError as e:
+        raise ValueError(f"faltan parametros en {ruta}: {e}") from None
 
 
 def leer_estado(ruta: str, cota: str) -> dict[str, dict[str, Necesidad]]:
@@ -119,5 +132,10 @@ def leer_ocupantes(ruta: str) -> dict[str, float]:
 
 def leer_colonias(ruta: str) -> dict[str, str]:
     """cvegeo -> nombre de la colonia (puede ser vacio)."""
+    return {c: nombre for c, (_, nombre) in leer_geocolonias(ruta).items()}
+
+
+def leer_geocolonias(ruta: str) -> dict[str, tuple[str, str]]:
+    """cvegeo -> (geocol, nombre de la colonia). Cualquiera de los dos puede ser vacio."""
     with open(ruta, newline="", encoding="utf-8") as f:
-        return {r["cvegeo"]: r["colonia"].strip() for r in csv.DictReader(f)}
+        return {r["cvegeo"]: (r["geocol"].strip(), r["colonia"].strip()) for r in csv.DictReader(f)}

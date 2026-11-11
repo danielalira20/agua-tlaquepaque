@@ -7,6 +7,8 @@
   "radio_cobertura_m": 300,
   "cota_para_ordenar": "min",
   "modo_racha": "desempate",
+  "baseline_cisternas": "todas",
+  "baseline_turnos": "todas",
   "sensibilidad": {
     "radio_cobertura_m": [
       200,
@@ -21,9 +23,14 @@
       "desempate",
       "peso",
       "no"
+    ],
+    "baseline_cisternas": [
+      "todas",
+      "exactas"
+    ],
+    "baseline_turnos": [
+      "todas",
+      "con_necesidad"
     ]
-  },
-  "_pendientes": [
-    "capacidad_cisterna_comunitaria_l: depende de la decision 01 (baseline), en revision con Dani"
-  ]
+  }
 }
