@@ -6,7 +6,7 @@ cerrar antes de programar. Después se comparan en la junta y se elige.
     propuesta-dani.md
     propuesta-jass.md      (pendiente)
     propuesta-magui.md     (pendiente)
-    propuesta-migue.md     (pendiente)
+    propuesta-migue.md
 
 ## Las 4 decisiones
 
