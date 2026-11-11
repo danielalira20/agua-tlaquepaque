@@ -65,6 +65,60 @@ class CasosResueltosAMano(unittest.TestCase):
         self.assertEqual(R.horas_sin_servicio(set(VIGENTE["3"]), dt.date(2026, 11, 9), 24), 0)
 
 
+class SuministroParcial(unittest.TestCase):
+    """Parámetro f: fracción del suministro normal que llega durante el racionamiento."""
+
+    def test_H_la_mitad_del_suministro_salva_al_tinaco(self):
+        self.assertEqual(calc(10, 10, 0, 96, consumo_l_persona_dia=100)[:2], (10, 10))
+        self.assertAlmostEqual(R.autonomia_h(1100, 4, 100, 0.5), 132.0)
+        self.assertEqual(calc(10, 10, 0, 96, consumo_l_persona_dia=100,
+                              fraccion_suministro_en_racionamiento=0.5)[:2], (0, 0))
+
+    def test_I_un_cuarto_no_alcanza(self):
+        self.assertAlmostEqual(R.autonomia_h(1100, 4, 100, 0.25), 88.0)
+        self.assertEqual(calc(10, 10, 0, 96, consumo_l_persona_dia=100,
+                              fraccion_suministro_en_racionamiento=0.25)[:2], (10, 10))
+
+    def test_J_sin_almacenamiento_sigue_sin_agua(self):
+        self.assertEqual(calc(10, 0, 0, 24, fraccion_suministro_en_racionamiento=0.5)[:2], (10, 10))
+
+    def test_con_f_cero_todo_queda_igual(self):
+        self.assertEqual(calc(10, 6, 0, 96, fraccion_suministro_en_racionamiento=0.0), calc(10, 6, 0, 96))
+
+    def test_f_fuera_de_rango_es_error(self):
+        for malo in (1.0, 1.5, -0.1):
+            with self.assertRaises(ValueError):
+                calc(10, 6, 0, 96, fraccion_suministro_en_racionamiento=malo)
+
+    def test_mas_suministro_nunca_aumenta_las_viviendas_sin_agua(self):
+        rnd = random.Random(5)
+        for _ in range(1500):
+            V = rnd.randint(1, 60)
+            T, C = rnd.randint(0, V), rnd.randint(0, V)
+            H = float(rnd.choice([24, 48, 72, 96, 120]))
+            previo = (10**9, 10**9)
+            for f in (0.0, 0.25, 0.5, 0.75, 0.9):
+                smin, smax, _, _ = R.calcular_manzana(V, T, C, 3.7, [H], dict(SUP, consumo_l_persona_dia=100,
+                                                      fraccion_suministro_en_racionamiento=f))
+                self.assertLessEqual(smin, previo[0])
+                self.assertLessEqual(smax, previo[1])
+                previo = (smin, smax)
+
+    def test_equivale_al_consumo_neto(self):
+        """c con fraccion f da lo mismo que c * (1 - f) con f = 0 (sección 5)."""
+        rnd = random.Random(9)
+        for _ in range(1500):
+            V = rnd.randint(1, 60)
+            T, C = rnd.randint(0, V), rnd.randint(0, V)
+            o = rnd.uniform(1.5, 6)
+            H = float(rnd.choice([24, 48, 72, 96, 120]))
+            c, f = rnd.choice([50, 100, 150]), rnd.choice([0.25, 0.5])
+            con_f = R.calcular_manzana(V, T, C, o, [H], dict(SUP, consumo_l_persona_dia=c,
+                                                             fraccion_suministro_en_racionamiento=f))
+            neto = R.calcular_manzana(V, T, C, o, [H], dict(SUP, consumo_l_persona_dia=c * (1 - f)))
+            self.assertEqual(con_f, neto, (V, T, C, o, H, c, f))
+
+
 class Bordes(unittest.TestCase):
     def test_sin_racionamiento_nadie_esta_sin_agua(self):
         self.assertEqual(calc(10, 0, 0, 0), (0, 0, 0, 0))

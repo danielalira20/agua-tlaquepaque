@@ -61,13 +61,19 @@ def horas_sin_servicio(dias_zona, fecha, horas_efectivas):
     return 0 if n == 0 else horas_efectivas + (n - 1) * 24
 
 
-def autonomia_h(litros, ocupantes, consumo):
-    """Sección 5. Horas que aguanta un estrato con `litros` almacenados."""
+def autonomia_h(litros, ocupantes, consumo, fraccion=0.0):
+    """
+    Sección 5. Horas que aguanta un estrato con `litros` almacenados.
+    `fraccion` es la parte del suministro normal que sigue llegando durante el
+    racionamiento (0 = nada). El déficit neto es (1 - fraccion) veces la demanda.
+    """
+    if not 0 <= fraccion < 1:
+        raise ValueError("fraccion_suministro_en_racionamiento debe estar en [0, 1)")
     if litros <= 0:
         return 0.0
     if ocupantes <= 0 or consumo <= 0:
         raise ValueError("ocupantes y consumo deben ser positivos")
-    return litros / (ocupantes * consumo) * 24
+    return litros / (ocupantes * consumo * (1 - fraccion)) * 24
 
 
 def rango_ambos(V, T, C):
@@ -85,11 +91,12 @@ def evaluar(V, T, C, ocupantes, H, sup):
     """
     lt, lc = sup["tinaco_l"], sup["cisterna_l"]
     c, U = sup["consumo_l_persona_dia"], sup["u_horas_agua_guardada"]
+    f = sup.get("fraccion_suministro_en_racionamiento", 0.0)
     aut = {
-        "ambos": autonomia_h(lt + lc, ocupantes, c),
-        "solo_t": autonomia_h(lt, ocupantes, c),
-        "solo_c": autonomia_h(lc, ocupantes, c),
-        "ninguno": 0.0,
+        "ambos": autonomia_h(lt + lc, ocupantes, c, f),
+        "solo_t": autonomia_h(lt, ocupantes, c, f),
+        "solo_c": autonomia_h(lc, ocupantes, c, f),
+        "ninguno": 0.0,   # sin colchon: sin agua mientras haya racionamiento (f < 1 esta garantizado arriba)
     }
     T, C, a_min, a_max = rango_ambos(V, T, C)
     pares = []

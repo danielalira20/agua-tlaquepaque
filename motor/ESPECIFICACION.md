@@ -46,6 +46,7 @@ la lista de esa zona.
 | `tinaco_l` (Lt) | 1,100 |
 | `cisterna_l` (Lc) | 5,000 |
 | `horas_efectivas_corte` (he) | 24 |
+| `fraccion_suministro_en_racionamiento` (f) | 0 (no llega nada), con sensibilidad a 0, 0.25 y 0.5 |
 | `u_horas_agua_guardada` (U) | 48 |
 | `umbral_estado_parcial_pct` | 10 |
 | `umbral_estado_mayoritario_pct` | 50 |
@@ -106,8 +107,24 @@ que el intervalo se ensancha en lugar de escoger una zona arbitraria.
 La autonomía de un estrato con `L` litros es:
 
 ```
-aut(L) = L / (o * c) * 24        horas      (aut = 0 si L = 0)
+aut(L) = L / (o * c * (1 - f)) * 24        horas      (aut = 0 si L = 0)
 ```
+
+`f` es la fracción del suministro normal que **sigue llegando** durante un día de
+racionamiento: 0 significa que no llega nada, 0.25 que llega una cuarta parte. El
+portal del SIAPA dice que el racionamiento es una baja de presión y no un corte
+total, y `f` es la forma de representarlo. El déficit neto por día es `(1 - f)`
+veces la demanda, así que la autonomía de los estratos con almacenamiento se
+multiplica por `1 / (1 - f)`.
+
+- `f` debe estar en `[0, 1)`. Con `f = 1` no habría racionamiento: es un error.
+- **El estrato `ninguno` no tiene colchón.** Se queda sin agua siempre que haya
+  racionamiento (`H > 0`) y `f < 1`: basta con que llegue menos del 100%.
+- Con `f = 0` (el valor por defecto) todo queda exactamente como antes.
+- Para los estratos con almacenamiento solo importa el consumo neto `c * (1 - f)`:
+  50 L con `f = 0.5` equivale a 25 L con `f = 0`. La sensibilidad se puede presentar
+  como una sola familia de curvas.
+- `f` afecta la autonomía, no la regla de agua guardada de la sección 6.
 
 Un estrato **se queda sin agua** en la fecha `d` si `aut < H(d)`, con desigualdad
 estricta. Ejemplos de los bordes:
@@ -165,6 +182,9 @@ he = 24, U = 48.
 | E | V=10, T=6, C=6, c=100, Lt=Lc=1,000 | 72 | a de 2 a 6. Sin agua: **mín 4, máx 8**. Es el caso en que el mínimo cae en `a_max` |
 | F | calendario vigente, zona 4, martes 10-nov-2026 | 96 | Cuatro días seguidos (sáb 7, dom 8, lun 9, mar 10): H = 24 + 3 × 24 |
 | G | calendario vigente, zona 3, lunes 9-nov-2026 | 0 | No es día de racionamiento de la zona 3 |
+| H | V=10, T=10, C=0, c=100 | 96 | Con f = 0: sin agua = 10 (aut = 66 h). Con **f = 0.5**: aut = 132 h, sin agua = **0** |
+| I | igual que H, con f = 0.25 | 96 | aut = 66 / 0.75 = 88 h, todavía menor que 96: sin agua = 10 |
+| J | V=10, T=0, C=0, f = 0.5 | 24 | Sin agua = 10. Los de `ninguno` no se salvan mientras f < 1 |
 
 El caso E es el que importa para probar que el rango está bien implementado: el
 mínimo no está en el extremo "obvio".
@@ -173,10 +193,11 @@ mínimo no está en el extremo "obvio".
 
 Hay que declararlo en el reporte (Anexo F):
 
-- **Un día de racionamiento equivale a cero agua en la llave.** El portal del SIAPA
-  dice que es una baja de presión y no un corte total, con efecto desigual según la
-  altura y la distancia. Es un supuesto, y `horas_efectivas_corte` y la sensibilidad
-  son la forma de moverlo.
+- **Por defecto, un día de racionamiento equivale a cero agua en la llave** (`f = 0`).
+  El portal del SIAPA dice que es una baja de presión y no un corte total. `f` y
+  `horas_efectivas_corte` son la forma de moverlo, y deben ir en la sensibilidad.
+- **El mismo `f` para toda la zona.** El portal dice que el efecto es desigual según
+  la altura y la distancia; el motor no lo distingue.
 - La capacidad de tinaco y cisterna: el Censo dice si existen, no de cuántos litros.
 - Que todas las viviendas de la manzana tienen los mismos ocupantes.
 - Presión, calidad del agua en la llave y cloro. No hay datos públicos.
@@ -192,6 +213,7 @@ Hay que declararlo en el reporte (Anexo F):
 | 3 | Manzanas con varias zonas | Ensanchar el intervalo (sección 4) | Tú |
 | 4 | Peso de marginación en `severidad` | Cuando llegue el archivo de AGEB. Hoy sin peso | Tú y Jass |
 | 5 | Desigualdad estricta en `aut < H` | Estricta | Tú |
+| 6 | Parámetro `f` (fracción del suministro que llega en racionamiento) | Valor por defecto 0, con sensibilidad a 0, 0.25 y 0.5. Los estratos sin almacenamiento cuentan sin agua mientras f < 1 | Propuesto por Migue y por Jass. Falta tu visto bueno |
 
 ## 11. Comparación entre implementaciones
 

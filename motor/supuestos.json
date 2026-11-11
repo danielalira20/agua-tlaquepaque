@@ -4,6 +4,7 @@
   "tinaco_l": 1100,
   "cisterna_l": 5000,
   "horas_efectivas_corte": 24,
+  "fraccion_suministro_en_racionamiento": 0.0,
   "u_horas_agua_guardada": 48,
   "umbral_estado_parcial_pct": 10,
   "umbral_estado_mayoritario_pct": 50
