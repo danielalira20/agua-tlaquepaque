@@ -26,7 +26,7 @@ viernes al mediodía no coinciden, gana la oficial y las diferencias se document
 
     python3 motor/referencia.py \
         --manzanas datos/manzanas_tlaquepaque.csv \
-        --zonas fixtures/zonas.fixture.csv \
+        --zonas datos/zonas_siapa/manzana_zona.csv \
         --calendario motor/calendarios/vigente-2026-11-03.json \
         --desde 2026-11-09 --hasta 2026-11-15 \
         --salida salidas/referencia.csv
@@ -39,8 +39,8 @@ Sensibilidad, sin tocar el archivo de supuestos:
 
 ## Qué falta
 
-- `fixtures/zonas.fixture.csv` es una asignación **sintética** para las pruebas. La
-  zona real de cada manzana llega con la rama de zonas del SIAPA.
+- La zona de cada manzana ya es real: `datos/zonas_siapa/manzana_zona.csv`. Los fixtures
+  usan filas reales de ese archivo, no zonas inventadas.
 - La implementación oficial hay que adaptarla: trabajar por manzana (no por colonia
   simulada), manejar los rangos mín–máx, y leer el calendario por fecha.
 - Las 5 decisiones abiertas de la sección 10 de la especificación.

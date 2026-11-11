@@ -1,0 +1,26 @@
+{
+  "descripcion": "Zona de racionamiento del SIAPA de cada manzana. Une el Censo (por manzana) con el calendario (por zona).",
+  "formato": "CSV",
+  "llave": "cvegeo",
+  "ubicacion": "datos/zonas_siapa/manzana_zona.csv, generado por scripts/asigna_zonas.py",
+  "campos": {
+    "cvegeo": "string(16)",
+    "zona": "string: \"4\" una zona; \"3,4\" varias (la manzana abarca mas de una, el motor ensancha el intervalo); vacio = fuera del programa de racionamiento",
+    "fuente": "string: de donde salio la zona (lista oficial, portal, ambas, ninguna)",
+    "confianza": "alta | media | baja | conflicto | ambiguo | ninguna | sin_poligono"
+  },
+  "campos_de_auditoria": "manzana_zona.csv trae ademas conflicto, ambiguo, poligono_portal, zona_portal, nombre_lista, zona_lista, tipo_cruce, pob, viviendas, sin_almacen_min/max. El motor solo lee cvegeo y zona.",
+  "confianza": {
+    "alta": "el portal y la lista oficial coinciden",
+    "media": "solo la lista da zona",
+    "baja": "solo el poligono del portal; la colonia no esta en la lista oficial",
+    "conflicto": "las dos fuentes se contradicen: zona = union de ambas",
+    "ambiguo": "la manzana toca 2 o mas poligonos: zona = union",
+    "ninguna": "fuera del programa segun las dos fuentes",
+    "sin_poligono": "la manzana no se pudo ubicar; se trata como fuera del programa"
+  },
+  "notas": [
+    "Una cvegeo ausente del archivo se trata como fuera del programa.",
+    "La cobertura del programa se reporta como rango: la que tiene respaldo de la lista oficial (alta + media + conflicto) y la que depende solo del portal (baja). Ver datos/zonas_siapa/LEEME.md."
+  ]
+}

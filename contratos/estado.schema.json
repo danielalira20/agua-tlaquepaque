@@ -1,36 +1,38 @@
 {
-  "descripcion": "Salida del motor. Un renglon por manzana y por dia del ciclo semanal. La manzana NO tiene una autonomia unica: tiene una composicion de viviendas con distinta capacidad de aguantar.",
-  "formato": "Parquet",
+  "descripcion": "Salida del motor. Un renglon por manzana y por fecha. La manzana NO tiene una autonomia unica: tiene una composicion de viviendas con distinta capacidad de aguantar.",
+  "formato": "CSV (Parquet cuando haya volumen)",
   "llave": [
     "cvegeo",
-    "dia_ciclo"
+    "fecha"
   ],
-  "version": "v3 — la unidad de analisis pasa de la manzana a los estratos de vivienda dentro de la manzana.",
+  "version": "v4 — la llave pasa de dia_ciclo a fecha: el calendario del SIAPA es por zona y por dia de la semana, y cambia en el tiempo (ver calendario.schema.json). La especificacion es motor/ESPECIFICACION.md.",
   "por_que": "Una vivienda sin tinaco no puede usar el tinaco de su vecino. Promediar el almacenamiento de la manzana borra justo la desigualdad que el proyecto denuncia.",
   "estratos": {
-    "descripcion": "Cada manzana se parte en cuatro estratos. El censo no cruza tinaco con cisterna, asi que su tamano solo se conoce en rango.",
-    "con_ambos": "tinaco + cisterna",
+    "descripcion": "Cada manzana se parte en cuatro estratos. El censo no cruza tinaco con cisterna, asi que el tamano de 'ambos' solo se conoce en rango.",
+    "ambos": "tinaco + cisterna",
     "solo_tinaco": "tinaco",
     "solo_cisterna": "cisterna",
-    "sin_almacenamiento": "cero litros: se queda sin agua al momento del corte",
-    "traslape": "ambos pertenece al intervalo [max(0, T+C-V), min(T,C)], donde V=viviendas, T=viv_tinaco, C=viv_cisterna"
+    "ninguno": "cero litros: se queda sin agua en cuanto hay racionamiento",
+    "traslape": "ambos pertenece a [max(0, T+C-V), min(T,C)], con V=viviendas, T=viv_tinaco, C=viv_cisterna. El conteo es lineal en ese valor, asi que el minimo y el maximo salen de evaluar los dos extremos"
   },
   "campos": {
     "cvegeo": "string(16)",
-    "dia_ciclo": "enum lunes|martes|miercoles|jueves|viernes|sabado|domingo",
-    "viviendas": "int total de la manzana, de referencia",
-    "horas_desde_turno": "float horas transcurridas desde el ultimo turno de agua",
+    "fecha": "YYYY-MM-DD",
+    "dia": "enum lunes|martes|miercoles|jueves|viernes|sabado|domingo",
+    "zona": "string: la zona usada, tal como viene de zonas.schema.json. Vacio = fuera del programa",
+    "horas_sin_servicio_min": "float: H de la zona con menos horas. Si la manzana tiene una sola zona, min = max",
+    "horas_sin_servicio_max": "float",
     "viv_sin_agua_min": "int cota baja de viviendas sin agua ese dia",
     "viv_sin_agua_max": "int cota alta",
-    "pct_sin_agua_min": "float",
+    "pct_sin_agua_min": "float, 100 * viv_sin_agua_min / viviendas, un decimal",
     "pct_sin_agua_max": "float",
-    "personas_sin_agua_min": "float viv_sin_agua_min x ocupantes_prom",
+    "personas_sin_agua_min": "float viv_sin_agua_min x ocupantes_prom, un decimal",
     "personas_sin_agua_max": "float",
     "viv_agua_guardada_min": "int viviendas CON agua pero almacenada mas de U horas",
     "viv_agua_guardada_max": "int",
-    "estado": "enum con_agua | quiebre_parcial | quiebre_mayoritario — derivado de pct_sin_agua_min, solo para el color del mapa",
-    "requiere_desinfeccion": "bool eje independiente del estado: hay agua, pero lleva mas de U horas guardada",
-    "severidad": "float 0..1, incluye el peso de marginacion (dataset 17, nivel AGEB)"
+    "requiere_desinfeccion": "bool: viv_agua_guardada_max > 0. Eje independiente del estado",
+    "estado": "enum con_agua | quiebre_parcial | quiebre_mayoritario, segun pct_sin_agua_min SIN redondear. Solo para el color del mapa",
+    "severidad": "float 0..1 = pct_sin_agua_min / 100. SIN peso de marginacion todavia (decision abierta 4 de la especificacion)"
   },
   "umbral_estado": {
     "con_agua": "pct_sin_agua_min < 10",
@@ -39,9 +41,10 @@
   },
   "notas": [
     "El mapa colorea por pct_sin_agua, escala continua. El enum es la leyenda, no el dato.",
-    "sin_agua_sin_respaldo desaparece como estado: con proporciones, esa informacion ya esta en pct_sin_agua.",
-    "No modelamos mg/L de cloro: no hay datos publicos de cloro en la llave ni de presion.",
-    "Referencia de contexto: NOM-127-SSA1-2021 fija el cloro residual libre entre 0.2 y 1.5 mg/L.",
-    "U (horas para marcar agua guardada) vive en configuracion, no en el codigo. Default 48 h."
+    "Fuera del programa (o sin racionamiento ese dia): H = 0 y todo en cero. Nadie esta 'sin agua' si no hay racionamiento.",
+    "Manzanas con varias zonas: el intervalo se ensancha (minimo de los minimos, maximo de los maximos), no se elige una zona.",
+    "Con zona = \"\" no es lo mismo que 'sin dato': es fuera del programa segun la lista oficial y el portal.",
+    "No modelamos mg/L de cloro: no hay datos publicos de cloro en la llave ni de presion. Referencia: NOM-127-SSA1-2021 fija el cloro residual libre entre 0.2 y 1.5 mg/L.",
+    "Parametros (consumo, litros por tinaco y cisterna, horas efectivas, f, U) viven en motor/supuestos.json, no en el codigo."
   ]
 }
