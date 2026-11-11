@@ -6,7 +6,7 @@
   "viajes_por_dia": 63,
   "radio_cobertura_m": 300,
   "cota_para_ordenar": "min",
-  "usar_racha": true,
+  "modo_racha": "desempate",
   "sensibilidad": {
     "radio_cobertura_m": [
       200,
@@ -17,9 +17,10 @@
       "min",
       "max"
     ],
-    "usar_racha": [
-      true,
-      false
+    "modo_racha": [
+      "desempate",
+      "peso",
+      "no"
     ]
   },
   "_pendientes": [
