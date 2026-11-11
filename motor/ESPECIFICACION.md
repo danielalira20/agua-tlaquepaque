@@ -1,6 +1,6 @@
 # Especificación del motor de autonomía
 
-Versión 0.1, borrador para aprobar. Es el único documento que mandan: la
+Versión 0.2. Decisión 6 aprobada; el resto sigue como borrador. Es el único documento que mandan: la
 implementación oficial (TypeScript, en la app) y la de referencia (Python,
 `motor/referencia.py`) se escriben **a partir de esto**, no una de la otra.
 
@@ -196,6 +196,14 @@ Hay que declararlo en el reporte (Anexo F):
 - **Por defecto, un día de racionamiento equivale a cero agua en la llave** (`f = 0`).
   El portal del SIAPA dice que es una baja de presión y no un corte total. `f` y
   `horas_efectivas_corte` son la forma de moverlo, y deben ir en la sensibilidad.
+  `f = 0` es la **cota alta** del daño, no una medición (decisión 6, aprobada).
+- **A 50 L/persona/día el resultado depende casi solo de las viviendas sin
+  almacenamiento** y de los días de racionamiento: un tinaco aguanta más que cualquier
+  racionamiento del calendario, así que `f` mueve menos del 1% (210,116 contra 208,426
+  personas-día en la semana del 9 al 15 de noviembre). Lo que sí lo mueve es el consumo.
+  **Redacción para el reporte:** no decir "se quedan sin agua" a secas, sino "sin agua o con
+  servicio insuficiente para almacenar, bajo el supuesto de corte total". Así el hallazgo se
+  sostiene aunque el SIAPA confirme que solo es baja de presión.
 - **El mismo `f` para toda la zona.** El portal dice que el efecto es desigual según
   la altura y la distancia; el motor no lo distingue.
 - La capacidad de tinaco y cisterna: el Censo dice si existen, no de cuántos litros.
@@ -213,7 +221,7 @@ Hay que declararlo en el reporte (Anexo F):
 | 3 | Manzanas con varias zonas | Ensanchar el intervalo (sección 4) | Tú |
 | 4 | Peso de marginación en `severidad` | Cuando llegue el archivo de AGEB. Hoy sin peso | Tú y Jass |
 | 5 | Desigualdad estricta en `aut < H` | Estricta | Tú |
-| 6 | Parámetro `f` (fracción del suministro que llega en racionamiento) | Valor por defecto 0, con sensibilidad a 0, 0.25 y 0.5. Los estratos sin almacenamiento cuentan sin agua mientras f < 1 | Propuesto por Migue y por Jass. Falta tu visto bueno |
+| 6 | Parámetro `f` (fracción del suministro que llega en racionamiento) | Valor por defecto 0, con sensibilidad a 0, 0.25 y 0.5. Los estratos sin almacenamiento cuentan sin agua mientras f < 1 | **Aprobada** (Dani, 11-nov-2026). Propuesta de Migue y de Jass. `f = 0` es el escenario de corte total y la cota alta del daño, no una medición: no hay dato público de cuánta agua llega en un día de baja presión |
 
 ## 11. Comparación entre implementaciones
 
