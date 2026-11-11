@@ -1,6 +1,6 @@
 # Especificación del priorizador de pipas
 
-Versión 0.1, borrador. Es el documento que manda: cualquier implementación (la de
+Versión 0.2, borrador. Es el documento que manda: cualquier implementación (la de
 referencia en Python y, si se acuerda, una en TypeScript dentro de la app) se escribe
 **a partir de esto**, no una de la otra.
 
@@ -18,8 +18,9 @@ manzana (el centro) y entrega agua a las viviendas sin agua de esa manzana y de 
 vecinas, de la más cercana a la más lejana, hasta agotar su capacidad o llegar al radio
 de cobertura.
 
-El objetivo es atender primero a quien más lo necesita: más viviendas sin agua, y que
-llevan más tiempo así. El resultado se compara contra un reparto de referencia
+El objetivo es **atender a la mayor cantidad posible de viviendas sin agua**. Entre
+opciones que atienden a las mismas viviendas, va primero quien lleva más tiempo sin agua
+(la racha). El modo de usar la racha es un parámetro (sección 4). El resultado se compara contra un reparto de referencia
 (baseline, sección 7) con **los mismos viajes**.
 
 ## 2. Entradas
@@ -46,7 +47,7 @@ llevan más tiempo así. El resultado se compara contra un reparto de referencia
 | `litros_por_hogar` | 200 | Lo que recibe cada vivienda atendida |
 | `radio_cobertura_m` | 300 | Distancia máxima entre el centro y una manzana atendida |
 | `cota_para_ordenar` | `min` | Qué cota del estado se usa (`min` o `max`) |
-| `usar_racha` | `true` | Si el tiempo sin servicio pesa en la prioridad |
+| `modo_racha` | `desempate` | Cómo pesa el tiempo sin servicio: `desempate`, `peso` o `no` (sección 4) |
 
 Valor derivado:
 
@@ -64,13 +65,21 @@ Para la manzana `m` en la fecha `d`, según `cota_para_ordenar`:
 necesidad(m, d) = viv_sin_agua_<cota>(m, d)                 viviendas sin agua
 horas(m, d)     = horas_sin_servicio_<cota>(m, d)
 
-peso(m, d) = horas(m, d) / 24     si usar_racha
-           = 1                    si no
+peso(m, d)      = horas(m, d) / 24                          días seguidos sin servicio
 ```
 
 - Con el valor por defecto del motor (`horas_efectivas_corte` = 24), `horas = 24 · n`
-  para `n` días seguidos de racionamiento, así que `peso = n`: una vivienda en su cuarto
-  día seguido sin agua vale cuatro veces lo que una en su primer día.
+  para `n` días seguidos de racionamiento, así que `peso = n`.
+
+`modo_racha` decide cómo se usa el peso al comparar dos viajes (sección 6):
+
+| Modo | Qué compara primero | Qué compara después | Para qué |
+|---|---|---|---|
+| `desempate` (por defecto) | Viviendas atendidas | Valor ponderado por racha | Atender al máximo de viviendas; entre iguales, a quien lleva más días |
+| `peso` | Valor ponderado por racha | Viviendas atendidas | Escenario de equidad: puede atender menos viviendas para llegar a las que llevan más días |
+| `no` | Viviendas atendidas | — | Referencia sin racha |
+
+La decisión y su evidencia están en `docs/decisiones/04-horizonte-dias.md`.
 - Si `necesidad > 0`, se espera `horas > 0`. Si no, es un error de entrada.
 - La cota mínima va con la cota mínima: no se mezclan `viv_sin_agua_min` con
   `horas_sin_servicio_max`.
@@ -92,7 +101,8 @@ para cada m en ese orden:
     n_m = min(resto(m), cupo)
     cupo = cupo - n_m
     si cupo = 0: terminar
-valor(c) = suma de n_m · peso(m, d)
+atendidas(c) = suma de n_m
+ponderado(c) = suma de n_m · peso(m, d)
 ```
 
 El reparto dentro del radio va **de la más cercana a la más lejana**, no de la más
@@ -109,10 +119,12 @@ resto(m) = necesidad(m, d) para toda m
 para k = 1 .. viajes_por_dia:
     candidatas = manzanas con centroide y resto(m) > 0
     si no hay candidatas: los viajes k .. viajes_por_dia quedan sin usar; terminar
-    para cada candidata c: calcular llenar(c, resto) y valor(c)
-    elegir c* con mayor valor(c)
-        desempate 1: más viviendas atendidas
-        desempate 2: cvegeo menor (orden de texto)
+    para cada candidata c: calcular llenar(c, resto), atendidas(c) y ponderado(c)
+    elegir c* con la mayor clave según modo_racha:
+        desempate:  (atendidas, ponderado)
+        peso:       (ponderado, atendidas)
+        no:         (atendidas)
+        si sigue el empate: cvegeo menor (orden de texto)
     restar a resto(m) lo que atendió el viaje
     registrar el viaje con orden_eleccion = k
 ```
@@ -120,8 +132,10 @@ para k = 1 .. viajes_por_dia:
 - **Solo pueden ser centro las manzanas que tienen viviendas sin agua.** La pipa se
   estaciona donde está la necesidad.
 - **Un mismo centro puede recibir varios viajes** si le sigue quedando necesidad.
-- **Es un algoritmo voraz:** elige el mejor viaje en cada paso, sin garantizar el mejor
-  reparto posible del día. Es determinista y se puede verificar a mano.
+- **Es un algoritmo voraz:** elige el mejor viaje en cada paso. No garantiza por
+  construcción el mejor reparto posible del día, así que la sección 8 lo compara contra
+  el máximo posible. Es determinista y se puede verificar a mano. La decisión está en
+  `docs/decisiones/05-algoritmo-voraz.md`.
 - Un viaje que atiende menos de `hogares_por_viaje` viviendas entrega solo
   `n · litros_por_hogar`. El resto del tanque no se cuenta como entregado.
 
@@ -153,6 +167,10 @@ Por fecha:
 | `viviendas_atendidas` | Suma de lo que atendieron los viajes |
 | `personas_atendidas` | Suma de `n_m · ocupantes_prom(m)`: personas-día sin agua evitadas |
 | `valor_ponderado` | Suma de `n_m · peso(m, d)` |
+| `maximo_viviendas` | `min(viajes_por_dia · hogares_por_viaje, necesidad de las manzanas con centroide)` |
+| `maximo_ponderado` | Suma de los `viajes_por_dia · hogares_por_viaje` pesos más altos, contando cada vivienda sin agua con el peso de su manzana |
+| `eficiencia_viviendas_pct` | `100 · viviendas_atendidas / maximo_viviendas` (100 si el máximo es 0) |
+| `eficiencia_ponderada_pct` | `100 · valor_ponderado / maximo_ponderado` (100 si el máximo es 0) |
 | `cobertura_pct` | `100 · viviendas_atendidas / necesidad_total` (0 si no hay necesidad) |
 | `viajes_usados`, `viajes_sin_usar` | Sección 6 |
 
@@ -163,6 +181,11 @@ En la semana: la suma de cada métrica, más
 | `manzanas_sin_entrega` | Manzanas con `necesidad > 0` en al menos una fecha y ningún viaje que las atendiera en toda la semana |
 | `personas_sin_entrega` | Suma en esas manzanas de `max_d necesidad(m, d) · ocupantes_prom(m)` |
 
+Los dos máximos **ignoran la geografía**: suponen que cualquier viaje podría llegar a
+cualquier vivienda. Son una cota superior, así que el mejor reparto real está entre lo
+que logra el algoritmo y ese máximo. Si la eficiencia es 100%, el algoritmo es óptimo
+para esa métrica.
+
 La comparación es la diferencia **priorizado − baseline** de cada métrica, con la cota
 mínima y con la máxima.
 
@@ -171,7 +194,7 @@ vivienda de un día al siguiente.
 
 ## 9. Salidas
 
-`salidas/plan.json`. La forma definitiva la fija `contratos/plan.schema.json` en la rama
+`salidas/plan.json`. `prioridad_score` es el `ponderado` del viaje. La forma definitiva la fija `contratos/plan.schema.json` en la rama
 `feat/plan-contrato`. Mientras tanto, los nombres siguen la opción C de la decisión 4 del
 equipo (`decisiones/propuesta-dani.md`):
 
@@ -206,7 +229,7 @@ equipo (`decisiones/propuesta-dani.md`):
 
 Salvo que el caso diga otra cosa: `litros_por_viaje` = 2,000 (para que
 `hogares_por_viaje` = 10 y las cuentas sean cortas), `litros_por_hogar` = 200,
-`radio_cobertura_m` = 300, `cota_para_ordenar` = `min`, `usar_racha` = `true`,
+`radio_cobertura_m` = 300, `cota_para_ordenar` = `min`, `modo_racha` = `desempate`,
 `ocupantes_prom` = 4 en todas las manzanas y una sola fecha.
 
 Las manzanas se colocan sobre un mismo meridiano, a la posición en metros que indica el
@@ -215,19 +238,24 @@ de ellas es exactamente la diferencia de posiciones.
 
 | Caso | Manzanas: posición (m), necesidad, horas | Viajes | Resultado esperado |
 |---|---|---|---|
-| **A.** Un viaje no alcanza | M1: 0, 30, 24 | 1 | Centro M1. Atiende 10 de M1. Valor 10, 40 personas, 2,000 L |
-| **B.** El radio es tope y se llena de cerca a lejos | M1: 0, 4, 24 · M2: 100, 3, 24 · M3: 400, 5, 24 | 1 | Valores: M1 = 7 (M3 queda fuera), M2 = 10, M3 = 8. Gana **M2**: atiende M2 3, M1 4, M3 3 (a 300 m, en el borde). Queda 2 en M3 |
-| **C.** La racha decide | M1: 0, 10, 24 · M2: 1000, 10, 96 | 1 | Con racha: M1 = 10, M2 = 40, gana **M2**. Sin racha: empate en valor y en viviendas, gana **M1** por cvegeo |
-| **D.** La racha puede preferir menos viviendas | M1: 0, 10, 24 · M2: 1000, 4, 96 | 1 | M1 = 10, M2 = 16: gana **M2** y atiende 4 viviendas, no 10. Con 2 viajes: el segundo va a M1 (10). Sin racha y 1 viaje: gana M1 |
-| **E.** Varios viajes al mismo centro | M1: 0, 25, 24 | 4 | Viajes a M1: 10, 10 y 5 (el tercero lleva 1,000 L). El cuarto queda sin usar |
-| **F.** Día sin racionamiento | M1: 0, 0, 0 · M2: 500, 0, 0 | 3 | Ningún viaje. 3 sin usar. Cobertura 0 |
-| **G.** La cota cambia el orden | M1: 0, min 2 · máx 12, 24 · M2: 1000, 6, 24 | 1 | Cota mínima: M1 = 2, M2 = 6, gana **M2**. Cota máxima: M1 = 10 (12 recortado al cupo), M2 = 6, gana **M1** |
-| **H.** Los días son independientes | M1: 0, 10 el día 1 y 10 el día 2, horas 24 y 48 | 1 por día | Día 1: M1 atiende 10, valor 10. Día 2: M1 atiende 10 otra vez, valor 20 |
+En la tabla, «atendidas / ponderado» de cada candidata.
 
-El caso D es la consecuencia buscada de usar la racha, y hay que declararla en el
-reporte: con pocos viajes, el priorizador puede atender a menos viviendas para llegar a
-las que llevan más días sin agua. La sensibilidad `usar_racha = false` muestra cuánto
-cambia el resultado.
+| Caso | Manzanas: posición (m), necesidad, horas | Viajes | Resultado esperado |
+|---|---|---|---|
+| **A.** Un viaje no alcanza | M1: 0, 30, 24 | 1 | Centro M1. Atiende 10 de M1: 10 / 10, 40 personas, 2,000 L |
+| **B.** El radio es tope y se llena de cerca a lejos | M1: 0, 4, 24 · M2: 100, 3, 24 · M3: 400, 5, 24 | 1 | M1 = 7 (M3 queda fuera), M2 = 10, M3 = 8. Gana **M2**: atiende M2 3, M1 4, M3 3 (a 300 m, en el borde). Queda 2 en M3 |
+| **C.** La racha desempata | M1: 0, 10, 24 · M2: 1000, 10, 96 | 1 | M1 = 10 / 10, M2 = 10 / 40. Empate en atendidas: gana **M2** con `desempate` y con `peso`. Con `no` gana **M1** por cvegeo |
+| **D.** Atendidas contra racha | M1: 0, 10, 24 · M2: 1000, 4, 96 | 1 | M1 = 10 / 10, M2 = 4 / 16. Con `desempate` gana **M1** (10 viviendas). Con `peso` gana **M2** (4 viviendas). Con `no` gana **M1**. Con 2 viajes, el segundo va a la otra manzana en los tres modos |
+| **E.** Varios viajes al mismo centro | M1: 0, 25, 24 | 4 | Viajes a M1: 10, 10 y 5 (el tercero lleva 1,000 L). El cuarto queda sin usar |
+| **F.** Día sin racionamiento | M1: 0, 0, 0 · M2: 500, 0, 0 | 3 | Ningún viaje. 3 sin usar. Cobertura 0. Eficiencias 100 (los máximos son 0) |
+| **G.** La cota cambia el orden | M1: 0, min 2 · máx 12, 24 · M2: 1000, 6, 24 | 1 | Cota mínima: M1 = 2, M2 = 6, gana **M2**. Cota máxima: M1 = 10 (12 recortado al cupo), M2 = 6, gana **M1** |
+| **H.** Los días son independientes | M1: 0, 10 el día 1 y 10 el día 2, horas 24 y 48 | 1 por día | Día 1: M1 atiende 10 / 10. Día 2: M1 atiende 10 / 20 |
+| **I.** Comparación contra el máximo | Las de D | 1 | `maximo_viviendas` = min(10, 14) = 10. `maximo_ponderado` = 4 · 4 + 6 · 1 = 22. Con `desempate`: eficiencias 100% y 45.5%. Con `peso`: 40% y 72.7% |
+
+Los casos D e I muestran el costo de cada modo, y hay que declararlo en el reporte. Con
+`peso`, el priorizador puede atender a menos viviendas para llegar a las que llevan más
+días sin agua; con `desempate` no pierde ninguna vivienda, pero la racha solo cuenta
+entre opciones iguales.
 
 ## 11. Lo que el priorizador NO modela
 
@@ -248,7 +276,7 @@ Hay que declararlo en el reporte:
 | # | Qué | Propuesta | Quién decide |
 |---|---|---|---|
 | 1 | Baseline | Mismos viajes, centros en las cisternas actuales (sección 7) | Jass y Dani |
-| 2 | Forma del peso de la racha | Lineal: `horas / 24` | Jass |
+| 2 | Modo de la racha | `desempate` por defecto; `peso` como escenario de equidad | Jass |
 | 3 | Si un centro puede estar en una manzana sin necesidad | No | Jass |
 | 4 | Forma definitiva de `plan.json` | Sección 9, en `feat/plan-contrato` | Jass, Dani y Migue |
 | 5 | Dónde vive la implementación oficial (Python o TypeScript) | Por acordar | Jass y Migue |
