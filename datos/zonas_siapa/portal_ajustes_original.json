@@ -1,0 +1,52 @@
+{
+  "_info": "Ajustes editados desde /admin: días de corte por zona (zonas) y zona de cada colonia (colonias; solo las cambiadas, las demás usan el cruce original del mapa).",
+  "actualizado": "2026-10-16T21:54:02.430Z",
+  "zonas": {
+    "1": {
+      "dias": [
+        "miercoles",
+        "viernes",
+        "domingo"
+      ]
+    },
+    "2": {
+      "dias": [
+        "martes",
+        "jueves",
+        "domingo"
+      ]
+    },
+    "3": {
+      "dias": [
+        "miercoles",
+        "sabado"
+      ]
+    },
+    "4": {
+      "dias": [
+        "lunes",
+        "jueves"
+      ]
+    },
+    "5": {
+      "dias": [
+        "martes",
+        "miercoles",
+        "sabado"
+      ]
+    },
+    "6": {
+      "dias": [
+        "lunes",
+        "viernes"
+      ]
+    },
+    "7": {
+      "dias": [
+        "sabado",
+        "domingo"
+      ]
+    }
+  },
+  "colonias": {}
+}

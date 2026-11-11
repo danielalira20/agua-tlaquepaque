@@ -1,52 +1,1005 @@
 {
-  "calendario_optimizado": [
+  "parametros": {
+    "pipas": 32,
+    "litros_por_viaje": 10000,
+    "litros_por_hogar": 200,
+    "viajes_por_dia": 5,
+    "radio_cobertura_m": 300,
+    "modo_racha": "desempate",
+    "hogares_por_viaje": 50,
+    "cota_para_ordenar": "min"
+  },
+  "nota_fixture": "Universo de 40 manzanas, una fecha (2026-11-12) y 5 viajes por dia. Generado por scripts/genera_fixture_plan.py con las secciones 5 a 8 de optimizador/ESPECIFICACION.md. El baseline atiende 0 viviendas aqui porque ninguna de sus primeras 5 cisternas tiene vecinas entre las 40 manzanas del universo; es un efecto del universo reducido, no un resultado.",
+  "baseline": {
+    "descripcion": "Baseline estilizado: los mismos viajes repartidos por turnos entre las cisternas ya instaladas (el viaje k va a la cisterna (k-1) mod N). No es el reparto real del municipio, que responde a reportes ciudadanos y del que no hay registro.",
+    "cisternas": [
+      {
+        "id": "CIST001",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.329417,
+        "lat": 20.598722,
+        "colonia": "Felipe Ángeles"
+      },
+      {
+        "id": "CIST001",
+        "tipo": "cisterna_siapa",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.3202837,
+        "lat": 20.6075846,
+        "colonia": "El Tapatío"
+      },
+      {
+        "id": "CIST002",
+        "tipo": "cisterna_siapa",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.3245296,
+        "lat": 20.6038774,
+        "colonia": "El Tapatío"
+      },
+      {
+        "id": "CIST003",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.33893,
+        "lat": 20.593079,
+        "colonia": "El Vergel"
+      },
+      {
+        "id": "CIST003",
+        "tipo": "cisterna_siapa",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.3085936,
+        "lat": 20.6061931,
+        "colonia": "Jardines del Tapatío"
+      },
+      {
+        "id": "CIST004",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.331798,
+        "lat": 20.602587,
+        "colonia": "El Campesino"
+      },
+      {
+        "id": "CIST005",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.351133,
+        "lat": 20.608422,
+        "colonia": "Fovissste Miravalle"
+      },
+      {
+        "id": "CIST006",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.322806,
+        "lat": 20.605917,
+        "colonia": "El Tapatío"
+      },
+      {
+        "id": "CIST007",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.324306,
+        "lat": 20.607583,
+        "colonia": "El Tapatío"
+      },
+      {
+        "id": "CIST008",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.327028,
+        "lat": 20.605083,
+        "colonia": "El Tapatío"
+      },
+      {
+        "id": "CIST009",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.317694,
+        "lat": 20.608194,
+        "colonia": "El Tapatío"
+      },
+      {
+        "id": "CIST010",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.309192,
+        "lat": 20.605942,
+        "colonia": "Jardines del Tapatío"
+      },
+      {
+        "id": "CIST011",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.308083,
+        "lat": 20.609444,
+        "colonia": "Lomas del Tapatío"
+      },
+      {
+        "id": "CIST012",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.313044,
+        "lat": 20.629682,
+        "colonia": "Hacienda de Tlaquepaque"
+      },
+      {
+        "id": "CIST013",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.307976,
+        "lat": 20.628361,
+        "colonia": "Colonial Tlaquepaque"
+      },
+      {
+        "id": "CIST015",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.313044,
+        "lat": 20.629682,
+        "colonia": "Hacienda de Tlaquepaque"
+      },
+      {
+        "id": "CIST016",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.318929,
+        "lat": 20.630723,
+        "colonia": "El Álamo"
+      },
+      {
+        "id": "CIST017",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.308402,
+        "lat": 20.63787,
+        "colonia": "Centro"
+      },
+      {
+        "id": "CIST018",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.369783,
+        "lat": 20.607839,
+        "colonia": "Buenos Aires"
+      },
+      {
+        "id": "CIST019",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.380069,
+        "lat": 20.606568,
+        "colonia": "Nueva Santa María"
+      },
+      {
+        "id": "CIST020",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "centro_de_colonia",
+        "lon": -103.358122,
+        "lat": 20.560484,
+        "colonia": "Villa Fontana"
+      },
+      {
+        "id": "CIST031",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.382151,
+        "lat": 20.598318,
+        "colonia": "Guayabitos"
+      },
+      {
+        "id": "CIST032",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.303442,
+        "lat": 20.634524,
+        "colonia": "Centro"
+      },
+      {
+        "id": "CIST036",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.32234,
+        "lat": 20.605376,
+        "colonia": "El Tapatío"
+      },
+      {
+        "id": "CIST037",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.313055,
+        "lat": 20.599075,
+        "colonia": "El Órgano"
+      },
+      {
+        "id": "CIST038",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.384803,
+        "lat": 20.607099,
+        "colonia": "Nueva Santa María"
+      },
+      {
+        "id": "CIST039",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.303333,
+        "lat": 20.636814,
+        "colonia": "Centro"
+      },
+      {
+        "id": "CIST040",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.305289,
+        "lat": 20.634001,
+        "colonia": "Quintero"
+      },
+      {
+        "id": "CIST041",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.260644,
+        "lat": 20.587785,
+        "colonia": "Los Santibáñez"
+      },
+      {
+        "id": "CIST042",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.264408,
+        "lat": 20.582222,
+        "colonia": "La Cofradía"
+      },
+      {
+        "id": "CIST043",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.262698,
+        "lat": 20.58167,
+        "colonia": "San Juan"
+      },
+      {
+        "id": "CIST044",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.299686,
+        "lat": 20.635855,
+        "colonia": "Centro"
+      },
+      {
+        "id": "CIST045",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.367828,
+        "lat": 20.602049,
+        "colonia": "Francisco I Madero"
+      },
+      {
+        "id": "CIST046",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.265271,
+        "lat": 20.580508,
+        "colonia": "La Cofradía"
+      },
+      {
+        "id": "CIST047",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.257841,
+        "lat": 20.584579,
+        "colonia": "San Juan"
+      },
+      {
+        "id": "CIST048",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.329556,
+        "lat": 20.604466,
+        "colonia": "Las Juntas"
+      },
+      {
+        "id": "CIST049",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.266582,
+        "lat": 20.580143,
+        "colonia": "La Cofradía"
+      },
+      {
+        "id": "CIST050",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.301434,
+        "lat": 20.629957,
+        "colonia": "Prados Tlaquepaque"
+      },
+      {
+        "id": "CIST051",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.267295,
+        "lat": 20.587779,
+        "colonia": "Parques de La Victoria"
+      },
+      {
+        "id": "CIST052",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.383361,
+        "lat": 20.577972,
+        "colonia": "Haciendas del Real"
+      },
+      {
+        "id": "CIST053",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.288886,
+        "lat": 20.607309,
+        "colonia": "El Morito"
+      },
+      {
+        "id": "CIST054",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.308918,
+        "lat": 20.607891,
+        "colonia": "Alfredo Barba"
+      },
+      {
+        "id": "CIST055",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.289761,
+        "lat": 20.605976,
+        "colonia": "El Morito"
+      },
+      {
+        "id": "CIST056",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.287828,
+        "lat": 20.609496,
+        "colonia": "San Pedrito"
+      },
+      {
+        "id": "CIST057",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.3779,
+        "lat": 20.60546,
+        "colonia": "Nueva Santa María"
+      },
+      {
+        "id": "CIST058",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.304757,
+        "lat": 20.639876,
+        "colonia": "Revolución"
+      },
+      {
+        "id": "CIST059",
+        "tipo": "cisterna_municipal",
+        "ubicacion": "coordenada_exacta",
+        "lon": -103.352956,
+        "lat": 20.61361,
+        "colonia": "Fovissste Miravalle"
+      }
+    ],
+    "excluidas": [
+      {
+        "id": "CIST014",
+        "motivo": "sin coordenada ni colonia"
+      },
+      {
+        "id": "CIST021",
+        "motivo": "sin coordenada ni colonia"
+      },
+      {
+        "id": "CIST022",
+        "motivo": "sin coordenada ni colonia"
+      }
+    ]
+  },
+  "corridas": [
     {
-      "zona": 3,
-      "suspension": [
-        "martes",
-        "viernes"
-      ]
+      "regla": "priorizado",
+      "cota_para_ordenar": "min",
+      "fechas": [
+        {
+          "fecha": "2026-11-12",
+          "viajes": [
+            {
+              "orden_eleccion": 1,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "1409800012447002",
+              "colonia": "Fovissste Miravalle",
+              "lon": -103.351667,
+              "lat": 20.611045,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "1409800012447002",
+                  "viviendas": 22
+                }
+              ],
+              "viviendas_objetivo": 22,
+              "litros": 4400,
+              "personas_beneficiadas": 77.2,
+              "prioridad_score": 88.0
+            },
+            {
+              "orden_eleccion": 2,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "1409800012199012",
+              "colonia": "Tepeyac",
+              "lon": -103.374922,
+              "lat": 20.610037,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "1409800012199012",
+                  "viviendas": 9
+                }
+              ],
+              "viviendas_objetivo": 9,
+              "litros": 1800,
+              "personas_beneficiadas": 36.5,
+              "prioridad_score": 36.0
+            },
+            {
+              "orden_eleccion": 3,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "1409800010671089",
+              "colonia": "Las Juntas",
+              "lon": -103.338443,
+              "lat": 20.600227,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "1409800010671089",
+                  "viviendas": 8
+                }
+              ],
+              "viviendas_objetivo": 8,
+              "litros": 1600,
+              "personas_beneficiadas": 25.0,
+              "prioridad_score": 16.0
+            }
+          ],
+          "resumen": {
+            "necesidad_total": 39,
+            "viviendas_atendidas": 39,
+            "personas_atendidas": 138.8,
+            "valor_ponderado": 140.0,
+            "maximo_viviendas": 39,
+            "maximo_ponderado": 140.0,
+            "eficiencia_viviendas_pct": 100.0,
+            "eficiencia_ponderada_pct": 100.0,
+            "cobertura_pct": 100.0,
+            "viajes_usados": 3,
+            "viajes_sin_usar": 2
+          }
+        }
+      ],
+      "semana": {
+        "necesidad_total": 39,
+        "viviendas_atendidas": 39,
+        "personas_atendidas": 138.8,
+        "valor_ponderado": 140.0,
+        "maximo_viviendas": 39,
+        "maximo_ponderado": 140.0,
+        "eficiencia_viviendas_pct": 100.0,
+        "eficiencia_ponderada_pct": 100.0,
+        "cobertura_pct": 100.0,
+        "viajes_usados": 3,
+        "viajes_sin_usar": 2,
+        "manzanas_sin_entrega": 0,
+        "personas_sin_entrega": 0
+      }
     },
     {
-      "zona": 4,
-      "suspension": [
-        "lunes",
-        "jueves"
-      ]
+      "regla": "baseline",
+      "cota_para_ordenar": "min",
+      "fechas": [
+        {
+          "fecha": "2026-11-12",
+          "viajes": [
+            {
+              "orden_eleccion": 1,
+              "tipo": "cisterna",
+              "punto_id": "CIST001",
+              "cvegeo_centro": null,
+              "colonia": "Felipe Ángeles",
+              "lon": -103.329417,
+              "lat": 20.598722,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 2,
+              "tipo": "cisterna",
+              "punto_id": "CIST001",
+              "cvegeo_centro": null,
+              "colonia": "El Tapatío",
+              "lon": -103.3202837,
+              "lat": 20.6075846,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 3,
+              "tipo": "cisterna",
+              "punto_id": "CIST002",
+              "cvegeo_centro": null,
+              "colonia": "El Tapatío",
+              "lon": -103.3245296,
+              "lat": 20.6038774,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 4,
+              "tipo": "cisterna",
+              "punto_id": "CIST003",
+              "cvegeo_centro": null,
+              "colonia": "El Vergel",
+              "lon": -103.33893,
+              "lat": 20.593079,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 5,
+              "tipo": "cisterna",
+              "punto_id": "CIST003",
+              "cvegeo_centro": null,
+              "colonia": "Jardines del Tapatío",
+              "lon": -103.3085936,
+              "lat": 20.6061931,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            }
+          ],
+          "resumen": {
+            "necesidad_total": 39,
+            "viviendas_atendidas": 0,
+            "personas_atendidas": 0,
+            "valor_ponderado": 0,
+            "maximo_viviendas": 39,
+            "maximo_ponderado": 140.0,
+            "eficiencia_viviendas_pct": 0.0,
+            "eficiencia_ponderada_pct": 0.0,
+            "cobertura_pct": 0.0,
+            "viajes_usados": 5,
+            "viajes_sin_usar": 0
+          }
+        }
+      ],
+      "semana": {
+        "necesidad_total": 39,
+        "viviendas_atendidas": 0,
+        "personas_atendidas": 0,
+        "valor_ponderado": 0,
+        "maximo_viviendas": 39,
+        "maximo_ponderado": 140.0,
+        "eficiencia_viviendas_pct": 0.0,
+        "eficiencia_ponderada_pct": 0.0,
+        "cobertura_pct": 0.0,
+        "viajes_usados": 5,
+        "viajes_sin_usar": 0,
+        "manzanas_sin_entrega": 3,
+        "personas_sin_entrega": 138.8
+      }
+    },
+    {
+      "regla": "priorizado",
+      "cota_para_ordenar": "max",
+      "fechas": [
+        {
+          "fecha": "2026-11-12",
+          "viajes": [
+            {
+              "orden_eleccion": 1,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "1409800012447002",
+              "colonia": "Fovissste Miravalle",
+              "lon": -103.351667,
+              "lat": 20.611045,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "1409800012447002",
+                  "viviendas": 25
+                }
+              ],
+              "viviendas_objetivo": 25,
+              "litros": 5000,
+              "personas_beneficiadas": 87.8,
+              "prioridad_score": 100.0
+            },
+            {
+              "orden_eleccion": 2,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "1409800012199012",
+              "colonia": "Tepeyac",
+              "lon": -103.374922,
+              "lat": 20.610037,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "1409800012199012",
+                  "viviendas": 23
+                }
+              ],
+              "viviendas_objetivo": 23,
+              "litros": 4600,
+              "personas_beneficiadas": 93.4,
+              "prioridad_score": 92.0
+            },
+            {
+              "orden_eleccion": 3,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "140980001085A037",
+              "colonia": "El Refugio",
+              "lon": -103.349927,
+              "lat": 20.598116,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "140980001085A037",
+                  "viviendas": 6
+                },
+                {
+                  "cvegeo": "140980001085A040",
+                  "viviendas": 10
+                }
+              ],
+              "viviendas_objetivo": 16,
+              "litros": 3200,
+              "personas_beneficiadas": 68.4,
+              "prioridad_score": 64.0
+            },
+            {
+              "orden_eleccion": 4,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "1409800010671089",
+              "colonia": "Las Juntas",
+              "lon": -103.338443,
+              "lat": 20.600227,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "1409800010671089",
+                  "viviendas": 8
+                }
+              ],
+              "viviendas_objetivo": 8,
+              "litros": 1600,
+              "personas_beneficiadas": 25.0,
+              "prioridad_score": 16.0
+            },
+            {
+              "orden_eleccion": 5,
+              "tipo": "pipa",
+              "punto_id": null,
+              "cvegeo_centro": "1409800011152018",
+              "colonia": "Las Juntas",
+              "lon": -103.337149,
+              "lat": 20.61062,
+              "manzanas_cubiertas": [
+                {
+                  "cvegeo": "1409800011152018",
+                  "viviendas": 8
+                }
+              ],
+              "viviendas_objetivo": 8,
+              "litros": 1600,
+              "personas_beneficiadas": 25.3,
+              "prioridad_score": 16.0
+            }
+          ],
+          "resumen": {
+            "necesidad_total": 84,
+            "viviendas_atendidas": 80,
+            "personas_atendidas": 299.8,
+            "valor_ponderado": 288.0,
+            "maximo_viviendas": 84,
+            "maximo_ponderado": 296.0,
+            "eficiencia_viviendas_pct": 95.2,
+            "eficiencia_ponderada_pct": 97.3,
+            "cobertura_pct": 95.2,
+            "viajes_usados": 5,
+            "viajes_sin_usar": 0
+          }
+        }
+      ],
+      "semana": {
+        "necesidad_total": 84,
+        "viviendas_atendidas": 80,
+        "personas_atendidas": 299.8,
+        "valor_ponderado": 288.0,
+        "maximo_viviendas": 84,
+        "maximo_ponderado": 296.0,
+        "eficiencia_viviendas_pct": 95.2,
+        "eficiencia_ponderada_pct": 97.3,
+        "cobertura_pct": 95.2,
+        "viajes_usados": 5,
+        "viajes_sin_usar": 0,
+        "manzanas_sin_entrega": 2,
+        "personas_sin_entrega": 15.6
+      }
+    },
+    {
+      "regla": "baseline",
+      "cota_para_ordenar": "max",
+      "fechas": [
+        {
+          "fecha": "2026-11-12",
+          "viajes": [
+            {
+              "orden_eleccion": 1,
+              "tipo": "cisterna",
+              "punto_id": "CIST001",
+              "cvegeo_centro": null,
+              "colonia": "Felipe Ángeles",
+              "lon": -103.329417,
+              "lat": 20.598722,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 2,
+              "tipo": "cisterna",
+              "punto_id": "CIST001",
+              "cvegeo_centro": null,
+              "colonia": "El Tapatío",
+              "lon": -103.3202837,
+              "lat": 20.6075846,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 3,
+              "tipo": "cisterna",
+              "punto_id": "CIST002",
+              "cvegeo_centro": null,
+              "colonia": "El Tapatío",
+              "lon": -103.3245296,
+              "lat": 20.6038774,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 4,
+              "tipo": "cisterna",
+              "punto_id": "CIST003",
+              "cvegeo_centro": null,
+              "colonia": "El Vergel",
+              "lon": -103.33893,
+              "lat": 20.593079,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            },
+            {
+              "orden_eleccion": 5,
+              "tipo": "cisterna",
+              "punto_id": "CIST003",
+              "cvegeo_centro": null,
+              "colonia": "Jardines del Tapatío",
+              "lon": -103.3085936,
+              "lat": 20.6061931,
+              "manzanas_cubiertas": [],
+              "viviendas_objetivo": 0,
+              "litros": 0,
+              "personas_beneficiadas": 0,
+              "prioridad_score": 0
+            }
+          ],
+          "resumen": {
+            "necesidad_total": 84,
+            "viviendas_atendidas": 0,
+            "personas_atendidas": 0,
+            "valor_ponderado": 0,
+            "maximo_viviendas": 84,
+            "maximo_ponderado": 296.0,
+            "eficiencia_viviendas_pct": 0.0,
+            "eficiencia_ponderada_pct": 0.0,
+            "cobertura_pct": 0.0,
+            "viajes_usados": 5,
+            "viajes_sin_usar": 0
+          }
+        }
+      ],
+      "semana": {
+        "necesidad_total": 84,
+        "viviendas_atendidas": 0,
+        "personas_atendidas": 0,
+        "valor_ponderado": 0,
+        "maximo_viviendas": 84,
+        "maximo_ponderado": 296.0,
+        "eficiencia_viviendas_pct": 0.0,
+        "eficiencia_ponderada_pct": 0.0,
+        "cobertura_pct": 0.0,
+        "viajes_usados": 5,
+        "viajes_sin_usar": 0,
+        "manzanas_sin_entrega": 8,
+        "personas_sin_entrega": 315.4
+      }
     }
   ],
-  "asignacion_pipas": [
+  "comparacion": [
     {
-      "dia": "miercoles",
-      "cvegeo": "140980001338A013",
-      "viajes": 1,
-      "litros": 10000
+      "cota_para_ordenar": "min",
+      "semana": {
+        "necesidad_total": {
+          "priorizado": 39,
+          "baseline": 39,
+          "diferencia": 0
+        },
+        "viviendas_atendidas": {
+          "priorizado": 39,
+          "baseline": 0,
+          "diferencia": 39
+        },
+        "personas_atendidas": {
+          "priorizado": 138.8,
+          "baseline": 0,
+          "diferencia": 138.8
+        },
+        "valor_ponderado": {
+          "priorizado": 140.0,
+          "baseline": 0,
+          "diferencia": 140.0
+        },
+        "maximo_viviendas": {
+          "priorizado": 39,
+          "baseline": 39,
+          "diferencia": 0
+        },
+        "maximo_ponderado": {
+          "priorizado": 140.0,
+          "baseline": 140.0,
+          "diferencia": 0.0
+        },
+        "eficiencia_viviendas_pct": {
+          "priorizado": 100.0,
+          "baseline": 0.0,
+          "diferencia": 100.0
+        },
+        "eficiencia_ponderada_pct": {
+          "priorizado": 100.0,
+          "baseline": 0.0,
+          "diferencia": 100.0
+        },
+        "cobertura_pct": {
+          "priorizado": 100.0,
+          "baseline": 0.0,
+          "diferencia": 100.0
+        },
+        "viajes_usados": {
+          "priorizado": 3,
+          "baseline": 5,
+          "diferencia": -2
+        },
+        "viajes_sin_usar": {
+          "priorizado": 2,
+          "baseline": 0,
+          "diferencia": 2
+        },
+        "manzanas_sin_entrega": {
+          "priorizado": 0,
+          "baseline": 3,
+          "diferencia": -3
+        },
+        "personas_sin_entrega": {
+          "priorizado": 0,
+          "baseline": 138.8,
+          "diferencia": -138.8
+        }
+      }
     },
     {
-      "dia": "miercoles",
-      "cvegeo": "1409800012432019",
-      "viajes": 1,
-      "litros": 10000
-    },
-    {
-      "dia": "miercoles",
-      "cvegeo": "1409800012432059",
-      "viajes": 1,
-      "litros": 10000
-    },
-    {
-      "dia": "miercoles",
-      "cvegeo": "1409800013214025",
-      "viajes": 1,
-      "litros": 10000
-    },
-    {
-      "dia": "miercoles",
-      "cvegeo": "140980001320A054",
-      "viajes": 1,
-      "litros": 10000
+      "cota_para_ordenar": "max",
+      "semana": {
+        "necesidad_total": {
+          "priorizado": 84,
+          "baseline": 84,
+          "diferencia": 0
+        },
+        "viviendas_atendidas": {
+          "priorizado": 80,
+          "baseline": 0,
+          "diferencia": 80
+        },
+        "personas_atendidas": {
+          "priorizado": 299.8,
+          "baseline": 0,
+          "diferencia": 299.8
+        },
+        "valor_ponderado": {
+          "priorizado": 288.0,
+          "baseline": 0,
+          "diferencia": 288.0
+        },
+        "maximo_viviendas": {
+          "priorizado": 84,
+          "baseline": 84,
+          "diferencia": 0
+        },
+        "maximo_ponderado": {
+          "priorizado": 296.0,
+          "baseline": 296.0,
+          "diferencia": 0.0
+        },
+        "eficiencia_viviendas_pct": {
+          "priorizado": 95.2,
+          "baseline": 0.0,
+          "diferencia": 95.2
+        },
+        "eficiencia_ponderada_pct": {
+          "priorizado": 97.3,
+          "baseline": 0.0,
+          "diferencia": 97.3
+        },
+        "cobertura_pct": {
+          "priorizado": 95.2,
+          "baseline": 0.0,
+          "diferencia": 95.2
+        },
+        "viajes_usados": {
+          "priorizado": 5,
+          "baseline": 5,
+          "diferencia": 0
+        },
+        "viajes_sin_usar": {
+          "priorizado": 0,
+          "baseline": 0,
+          "diferencia": 0
+        },
+        "manzanas_sin_entrega": {
+          "priorizado": 2,
+          "baseline": 8,
+          "diferencia": -6
+        },
+        "personas_sin_entrega": {
+          "priorizado": 15.6,
+          "baseline": 315.4,
+          "diferencia": -299.8
+        }
+      }
     }
   ],
-  "delta_personas_hora": 128400.0,
-  "restriccion": "volumen total constante; 32 pipas; 10000 L por viaje; 200 L por hogar"
+  "propuesta_cisternas": null
 }

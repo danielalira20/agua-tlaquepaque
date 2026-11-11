@@ -15,6 +15,26 @@ San Pedro Tlaquepaque en Google My Maps.
 Las dos respuestas posibles son un resultado: si coinciden, el modelo reproduce el
 juicio de quien opera el sistema; si no, señala lo que falta.
 
+## Actualización con las zonas reales del SIAPA
+
+Esta versión original comparaba contra **todas** las colonias. Ya con la zona de cada
+manzana (`zonas_siapa/`), el contraste se repitió dejando solo el riesgo que está
+**dentro del programa de racionamiento**. Las cifras y el método están en
+`HALLAZGOS_zonas.md`, sección 3; el detalle por colonia en `contraste_cisternas_programa.csv`.
+
+| | Antes (237 colonias) | Solo dentro del programa (107) | Solo con respaldo de la lista oficial (69) |
+|---|---:|---:|---:|
+| Rank mediano **con** cisterna | 62 | 37 | 24 |
+| Rank mediano **sin** cisterna | 125 | 59 | 38 |
+| De las 20 de mayor riesgo, con cisterna / sin | 8 / 12 | 9 / 11 | — |
+
+**La conclusión 1 se mantiene con las tres bases. La 2 también:** El Sauz sigue siendo
+la primera, sin cisterna ni propuesta. Cambia una cosa: cinco colonias de las 30 de mayor
+riesgo por almacenamiento no reciben racionamiento según las dos fuentes (entre ellas
+Parques de La Victoria, que sí tiene cisterna municipal). Y cuatro de las quince primeras
+dependen solo del polígono del portal. La tabla de abajo es la versión sobre todo el
+municipio y se conserva por transparencia.
+
 ## Resultado: coinciden en lo general, y discrepan en lo específico
 
 **1. El municipio sí está siguiendo el gradiente de riesgo.**
@@ -26,8 +46,9 @@ juicio de quien opera el sistema; si no, señala lo que falta.
 
 De 237 colonias con datos del censo, donde 1 es la de mayor riesgo. Las colonias
 que recibieron cisterna están, en mediana, al doble de riesgo que las que no.
-**El modelo coincide con el criterio del municipio**, y eso lo valida sin que
-nadie haya tenido que responder una encuesta.
+**El modelo coincide con el criterio del municipio.** Es consistente con él, no una
+prueba de que ambos estén bien (ver limitación 7), pero sin que nadie haya tenido que
+responder una encuesta.
 
 **2. Pero doce de las veinte colonias de mayor riesgo no tienen ninguna.**
 
@@ -82,7 +103,10 @@ aporta la herramienta es la segunda parte, que es ordenar lo que sigue.
    a partir del domicilio postal del propio mapa. Por eso **todo el contraste se
    hace a nivel colonia, no a nivel manzana.**
 3. **Tres cisternas no se pudieron ubicar** (CIST014, CIST021, CIST022) por falta
-   de datos suficientes. Quedan fuera del análisis y están marcadas en el archivo.
+   de datos suficientes. CIST022 venía con coordenadas (-180, 90), que son un valor
+   vacío y no una ubicación, y estaba marcada como `coordenada_exacta`; se corrigió a
+   `sin_coordenada` con `revisar=True`. Cualquier uso de las coordenadas debe excluir
+   las filas `sin_coordenada`. Quedan fuera del análisis y están marcadas en el archivo.
 4. **Una ubicación es inferida:** CIST020, cuyo domicilio es "Villa Fontana Norte
    #235", se asignó a la colonia Villa Fontana por el nombre de la calle. Está
    marcada con `revisar=True`.
@@ -100,3 +124,5 @@ aporta la herramienta es la segunda parte, que es ordenar lo que sigue.
   tipo, domicilio, coordenada cuando existe, colonia asignada y cómo se asignó
 - `contraste_cisternas.csv` — las 237 colonias con su riesgo, su rank, cuántas
   cisternas tiene y cuántas propuestas
+- `contraste_cisternas_programa.csv` — lo mismo, con el riesgo dentro del programa y con
+  respaldo de la lista oficial, y el porcentaje de la población en el programa

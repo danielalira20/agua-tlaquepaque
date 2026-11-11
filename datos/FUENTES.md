@@ -90,6 +90,45 @@ python3 scripts/match_colonias.py nombres_del_calendario.txt > cruce.csv
 **Todo lo que salga como `revisar` o `sin_match` se revisa a mano.** El script
 acota el trabajo, no lo sustituye.
 
+> **Actualización (zonas del SIAPA).** El SIAPA no raciona por colonia sino por **zona
+> (1 a 7)**, y esa zona sí se usa en el motor. Este cruce manzana → colonia sigue
+> sirviendo para nombrar y reportar, pero la zona de cada manzana sale de
+> `zonas_siapa/` (siguiente sección), que no depende de esta capa de colonias del IIEG.
+
+## `zonas_siapa/` y `../motor/calendarios/`
+
+| Campo | Valor |
+|---|---|
+| **Fuente 1: polígonos** | Portal oficial `rotaciondeserviciosiapa.jalisco.gob.mx`, archivo `/geo/rotacion-siapa.topo.json`: 2,303 polígonos de colonias, cada uno con una zona calculada por "cruce original del mapa", y 7 polígonos de zona |
+| **Fuente 2: lista** | `lista_oficial_colonias.csv`: colonias por zona del documento oficial del SIAPA (661 filas, 115 de Tlaquepaque). Documento oficial: `zonas_siapa/colonias_siapa.pdf` (`/pdf/colonias_siapa.pdf` del portal, descargado el 11-nov-2026). El archivo del equipo se verificó contra el PDF: las 115 colonias de Tlaquepaque coinciden en nombre y zona |
+| **Fuente 3: calendarios** | Portal, `/api/ajustes.php` (vigente, 3-nov-2026) y `/data/colonias-ajustes.json` (original, 15-oct-2026) |
+| **Institución** | SIAPA / Gobierno de Jalisco |
+| **Consultado** | 11-nov-2026 |
+| **Para qué** | Saber qué días racionan a cada manzana: une el Censo con el calendario |
+
+El método, la regla de cruce, los niveles de confianza y lo que queda por revisar están
+en `zonas_siapa/LEEME.md`. El resultado es `zonas_siapa/manzana_zona.csv`.
+
+**Cobertura del programa: se reporta como rango.** 462,194 personas (78.6% de
+Tlaquepaque) viven en manzanas con zona; 368,111 (62.6%) tienen respaldo de la lista
+oficial y 94,083 (16.0%) dependen solo del portal.
+
+## `marginacion_municipal.csv`, `marginacion_ageb_tlaquepaque.csv` y `marginacion_vs_riesgo.csv`
+
+| Campo | Valor |
+|---|---|
+| **Dataset del catálogo** | 17 — Índices de marginación |
+| **Nombre exacto** | Índice de marginación 2020 (municipal) e Índice de marginación urbana a nivel AGEB 2020 (`IMU_2020.zip`, "Indicadores sociodemográficos a nivel AGEB urbana, 2020") |
+| **Institución** | CONAPO, con estimaciones basadas en el Censo de Población y Vivienda 2020 (INEGI) |
+| **Año** | 2020 |
+| **Cobertura** | Municipal: los 4 municipios del calendario del SIAPA. AGEB: 214 AGEB urbanas de San Pedro Tlaquepaque, 678,283 personas |
+| **Qué se tomó** | Índice (`IM_2020`), grado (`GM_2020`) y los once indicadores. **Más alto = menos marginación** |
+| **Llave** | `CVE_AGEB`, 13 caracteres, igual a los primeros 13 del `cvegeo` de la manzana |
+| **Para qué** | Contrastar el índice oficial (mide el tubo) con el riesgo de almacenamiento, y la capa de vulnerabilidad social |
+| **Procesamiento** | `scripts/procesa_imu.py`. 9 manzanas (415 personas) sin AGEB en el IMU |
+
+Resultados y lectura: `HALLAZGOS_marginacion.md`.
+
 ## `cisternas_tlaquepaque.csv` y `contraste_cisternas.csv`
 
 | Campo | Valor |

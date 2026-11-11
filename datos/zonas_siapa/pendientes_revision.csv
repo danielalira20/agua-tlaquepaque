@@ -1,0 +1,71 @@
+tipo,poligono,municipio_poligono,zona_portal,homonimos_en_lista,manzanas,personas,viv_sin_almacen_min
+portal_sin_lista,CENTRO,San Pedro Tlaquepaque,3,,64,8630,13
+portal_sin_lista,CAMICHINES,San Pedro Tlaquepaque,4,,69,8484,0
+portal_sin_lista,PARQUES DEL BOSQUE,San Pedro Tlaquepaque,6,,61,7799,499
+portal_sin_lista,ALFREDO BARBA,San Pedro Tlaquepaque,4,,35,4523,56
+portal_sin_lista,SANTA MARIA TEQUEPEXPAN,San Pedro Tlaquepaque,5,,45,4519,15
+portal_sin_lista,GEO VILLAS LOS OLIVOS III,San Pedro Tlaquepaque,6,,36,4190,437
+portal_sin_lista,LOMAS DE SAN MIGUEL,San Pedro Tlaquepaque,4,,16,3475,0
+sin_zona_con_homonimo,LA DURAZNERA,San Pedro Tlaquepaque,,"LA DURAZNERA (Guadalajara, zona 7)",37,3384,136
+sin_zona_con_homonimo,LA GUADALUPANA,San Pedro Tlaquepaque,,"LA GUADALUPANA (Tonalá, zona 4)",21,3342,90
+portal_sin_lista_con_homonimo,EL MIRADOR,San Pedro Tlaquepaque,4,"EL MIRADOR (Guadalajara, zona 3)",14,3096,175
+portal_sin_lista_con_homonimo,MIRAVALLE,San Pedro Tlaquepaque,"3,5","MIRAVALLE* (Guadalajara, zona 5); MIRAVALLE* (Guadalajara, zona 7)",29,3020,314
+portal_sin_lista,LA CALERILLA,San Pedro Tlaquepaque,6,,33,2502,0
+portal_sin_lista,LA COFRADIA,San Pedro Tlaquepaque,4,,37,2459,159
+portal_sin_lista,LOPEZ COTILLA,San Pedro Tlaquepaque y Tlajomulco de Zúñiga,5,,23,2126,0
+portal_sin_lista_con_homonimo,MIRAFLORES,San Pedro Tlaquepaque,6,"MIRAFLORES (Guadalajara, zona 6)",12,1906,387
+portal_sin_lista_con_homonimo,LA MEZQUITERA,San Pedro Tlaquepaque,"5,6","LA MEZQUITERA (Guadalajara, zona 5)",19,1897,36
+portal_sin_lista_con_homonimo,SANTA MARIA,San Pedro Tlaquepaque,3,"SANTA MARIA (Guadalajara, zona 3)",9,1861,7
+portal_sin_lista_con_homonimo,VERDE VALLE,San Pedro Tlaquepaque,5,"VERDE VALLE (Guadalajara, zona 5)",11,1652,48
+portal_sin_lista,LA LLAVE,San Pedro Tlaquepaque,5,,5,1636,96
+portal_sin_lista,SAN FRANCISCO,San Pedro Tlaquepaque,3,,8,1606,16
+portal_sin_lista_con_homonimo,EMILIANO ZAPATA,San Pedro Tlaquepaque,4,"EMILIANO ZAPATA (Guadalajara, zona 6)",10,1517,64
+portal_sin_lista,JARDINES DEL TAPATIO,San Pedro Tlaquepaque,4,,18,1452,10
+portal_sin_lista,HACIENDA SAN PEDRO,San Pedro Tlaquepaque,4,,18,1418,0
+portal_sin_lista_con_homonimo,LA LOMA,San Pedro Tlaquepaque,6,"LA LOMA (Guadalajara, zona 3)",1,1335,32
+portal_sin_lista,GEO VILLAS LOS OLIVOS II,San Pedro Tlaquepaque,6,,11,1225,169
+portal_sin_lista,ARROYO SECO,San Pedro Tlaquepaque,6,,17,1198,7
+portal_sin_lista,TEPEYAC,San Pedro Tlaquepaque,5,,15,1192,0
+portal_sin_lista,HACIENDA DE VIDRIO,San Pedro Tlaquepaque,4,,12,1153,4
+portal_sin_lista,SAN FRANCISCO,San Pedro Tlaquepaque,3,,5,1152,10
+portal_sin_lista,TEPEYAC,San Pedro Tlaquepaque,5,,9,1143,20
+portal_sin_lista,VILLAS DEL PRADO,San Pedro Tlaquepaque,3,,7,1133,0
+portal_sin_lista_con_homonimo,LAZARO CARDENAS,San Pedro Tlaquepaque,3,"LAZARO CARDENAS (Guadalajara, zona 6)",12,1085,4
+portal_sin_lista,ALAMO LOMAS,San Pedro Tlaquepaque,3,,10,926,0
+sin_zona_con_homonimo,EL REAL,San Pedro Tlaquepaque,,"EL REAL (Guadalajara, zona 2)",16,907,0
+portal_sin_lista,INDIGENA,San Pedro Tlaquepaque,5,,6,788,21
+portal_sin_lista,PRADO DE LA LUNA,San Pedro Tlaquepaque,5,,4,781,24
+portal_sin_lista,DE SAN MARTIN,San Pedro Tlaquepaque,4,,7,759,27
+portal_sin_lista_con_homonimo,LA GIGANTERA,San Pedro Tlaquepaque,6,"LA GIGANTERA (Tonalá, zona 4)",13,710,10
+portal_sin_lista,VILLAS DEL TAPATIO,San Pedro Tlaquepaque,3,,5,700,0
+portal_sin_lista,HACIENDA DE SAN MARTIN,San Pedro Tlaquepaque,4,,5,642,1
+portal_sin_lista,ALBORADA,San Pedro Tlaquepaque,5,,4,632,32
+portal_sin_lista,SUPER MANZANA EL ALAMO,San Pedro Tlaquepaque,3,,12,585,0
+sin_zona_con_homonimo,LAS LOMAS,San Pedro Tlaquepaque,,"LAS LOMAS (Zapopan, zona 6)",7,571,0
+portal_sin_lista,PASEO DE LOS PARQUES,San Pedro Tlaquepaque,5,,4,530,66
+sin_zona_con_homonimo,EL MIRADOR,San Pedro Tlaquepaque,,"EL MIRADOR (Guadalajara, zona 3)",8,520,0
+portal_sin_lista,LADRILLERA,San Pedro Tlaquepaque,4,,3,503,12
+portal_sin_lista,EL ROBLE,San Pedro Tlaquepaque,4,,6,489,0
+portal_sin_lista_con_homonimo,AGUA BLANCA INDUSTRIAL,San Pedro Tlaquepaque,6,"AGUA BLANCA INDUSTRIAL (Zapopan, zona 6)",1,486,0
+portal_sin_lista,CERRO DEL JAGUEY,San Pedro Tlaquepaque,4,,6,450,6
+portal_sin_lista,LOS PORTALES TLAQUEPAQUE,San Pedro Tlaquepaque,3,,5,421,0
+portal_sin_lista,LOMAS DEL TESORO,San Pedro Tlaquepaque,6,,1,403,90
+portal_sin_lista,PBLO SAN MARTIN DE LAS FLORES DE ABAJO,San Pedro Tlaquepaque,4,,1,361,0
+portal_sin_lista,ALFAREROS,San Pedro Tlaquepaque,4,,4,353,14
+portal_sin_lista,VALLE BALCONES DE SANTA MARIA,San Pedro Tlaquepaque,6,,5,346,0
+portal_sin_lista,LOS NARANJOS,San Pedro Tlaquepaque,4,,2,345,0
+portal_sin_lista,RESIDENCIAL ARRAYANES,San Pedro Tlaquepaque y Tonalá,4,,5,340,2
+portal_sin_lista,TINAJITAS,San Pedro Tlaquepaque y Tonalá,4,,3,306,0
+portal_sin_lista,VILLAS DEL TAPATIO,San Pedro Tlaquepaque,4,,2,262,0
+portal_sin_lista,COTO DEL CARMEN,San Pedro Tlaquepaque,5,,2,243,23
+portal_sin_lista_con_homonimo,EL MANTE,San Pedro Tlaquepaque,5,"EL MANTE (Zapopan, zona 5)",3,235,4
+portal_sin_lista,COTO JUAN DIEGO,San Pedro Tlaquepaque,3,,3,231,0
+portal_sin_lista,BUENOS AIRES SEGUNDA SECCION,San Pedro Tlaquepaque,5,,3,186,27
+sin_zona_con_homonimo,SANTA MARIA,San Pedro Tlaquepaque,,"SANTA MARIA (Guadalajara, zona 3)",3,182,0
+portal_sin_lista,MERIDIANO,San Pedro Tlaquepaque,3,,2,175,0
+portal_sin_lista,CANTO DE LUNA,San Pedro Tlaquepaque,3,,2,166,0
+portal_sin_lista,LOS ALMENDROS,San Pedro Tlaquepaque,5,,1,139,11
+portal_sin_lista,RIVERAS DE SAN SEBASTIANITO,San Pedro Tlaquepaque,6,,1,137,0
+portal_sin_lista,LA COYOTERA,San Pedro Tlaquepaque,4,,2,99,5
+portal_sin_lista,NUEVO AMANECER,San Pedro Tlaquepaque,4,,1,68,0
+portal_sin_lista,RDCIAL DELICIAS,San Pedro Tlaquepaque,3,,1,41,0
