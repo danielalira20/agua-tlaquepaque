@@ -22,7 +22,7 @@ lograría si cualquier viaje pudiera llegar a cualquier vivienda (sección 8 de
 
 ## Por qué
 
-1. Con un prototipo sobre el estado real (cota mínima, `modo_racha = desempate`, 9 y 13
+1. Con el estado real (cota mínima, `modo_racha = desempate`, 9 y 13
    de noviembre), el voraz llena los 63 viajes y atiende 3,150 viviendas, que es
    exactamente el máximo posible. Para esa métrica es óptimo: un solver no podría
    atender más.
@@ -34,8 +34,10 @@ lograría si cualquier viaje pudiera llegar a cualquier vivienda (sección 8 de
 4. La comparación contra el máximo convierte "no garantiza el óptimo" en una cifra:
    cuánto se aleja del mejor resultado posible.
 
-Cifras preliminares de un prototipo desechable; se recalculan con la implementación de
-referencia.
+Las cifras salieron primero de un prototipo y la implementación de referencia
+(`python3 -m optimizador.priorizador`) las reproduce exactamente; con ella, el voraz llega
+al 100% del máximo de viviendas en las siete fechas del 9 al 15 de noviembre. Usan el
+estado del motor de referencia; se recalculan cuando esté el estado oficial.
 
 ## Cuándo revisar esta decisión
 

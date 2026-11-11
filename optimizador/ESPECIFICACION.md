@@ -1,6 +1,6 @@
 # Especificación del priorizador de pipas
 
-Versión 0.2, borrador. Es el documento que manda: cualquier implementación (la de
+Versión 0.3, borrador. Es el documento que manda: cualquier implementación (la de
 referencia en Python y, si se acuerda, una en TypeScript dentro de la app) se escribe
 **a partir de esto**, no una de la otra.
 
@@ -28,7 +28,8 @@ opciones que atienden a las mismas viviendas, va primero quien lleva más tiempo
 | Entrada | Archivo | Campos que se usan |
 |---|---|---|
 | Estado | salida del motor (`contratos/estado.schema.json`) | `cvegeo`, `fecha`, `viv_sin_agua_min`, `viv_sin_agua_max`, `horas_sin_servicio_min`, `horas_sin_servicio_max` |
-| Ubicación | `datos/manzanas_centroides.csv` | `cvegeo`, `lon`, `lat`, `ocupantes_prom` |
+| Ubicación | `datos/manzanas_centroides.csv` | `cvegeo`, `lon`, `lat` |
+| Ocupantes | `datos/manzanas_tlaquepaque.csv` | `cvegeo`, `ocupantes_prom` (trae las 4,871 manzanas, también las que no tienen centroide) |
 | Colonia | `datos/manzana_colonia.csv` | `cvegeo`, `colonia` (solo para mostrar) |
 | Cisternas | `datos/cisternas_tlaquepaque.csv` | solo para el baseline (sección 7) |
 | Parámetros | `supuestos.json` | sección 3 |
@@ -283,6 +284,17 @@ Hay que declararlo en el reporte:
 
 ## 13. Implementaciones
 
-La de referencia vive en `priorizador/` (Python, solo biblioteca estándar) y sus pruebas
-en `pruebas/`, empezando por los casos de la sección 10. Si se acuerda portarla a la app,
-la versión en TypeScript debe pasar los mismos casos.
+La de referencia está en `priorizador/` (Python, solo biblioteca estándar):
+
+| Módulo | Secciones |
+|---|---|
+| `entradas.py` | 2, 3 y 4: lee supuestos, estado, ubicaciones, ocupantes y colonias |
+| `cobertura.py` | 5: haversine, vecinas dentro del radio (con una rejilla) y `llenar` |
+| `asignacion.py` | 6: el voraz diario con los tres modos de racha |
+| `metricas.py` | 8: métricas por fecha y por semana, con los máximos posibles |
+| `salida.py` | 9: forma provisional de `plan.json` |
+| `__main__.py` | Corre todo: `python3 -m optimizador.priorizador --estado <csv del motor>` |
+
+Las pruebas están en `pruebas/`: los casos A a I en `test_casos.py` y propiedades
+generales con datos al azar en `test_propiedades.py`. Si se acuerda portarla a la app, la
+versión en TypeScript debe pasar los mismos casos.

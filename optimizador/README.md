@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (versión 0.2, borrador). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.3, borrador). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
@@ -11,6 +11,7 @@ con los recursos reales del municipio, y mide cuánto mejora eso frente al repar
 |---|---|---|
 | Entrada | Estado por manzana y fecha (`contratos/estado.schema.json`) | Motor de Dani |
 | Entrada | `datos/manzanas_centroides.csv` (ubicación de cada manzana) | Datos del equipo |
+| Entrada | `datos/manzanas_tlaquepaque.csv` (ocupantes por vivienda) | Datos del equipo |
 | Entrada | `datos/cisternas_tlaquepaque.csv` (cisternas del municipio) | Datos del equipo |
 | Entrada | `supuestos.json` (recursos y parámetros) | Este carril |
 | Salida | `salidas/plan.json` con la forma de `contratos/plan.schema.json` | Este carril |
@@ -27,8 +28,8 @@ van en `resultados/`.
     ESPECIFICACION.md    reglas del priorizador y casos resueltos a mano
     supuestos.json       recursos y parámetros compartidos
     docs/decisiones/     una decisión por archivo: contexto, opciones, qué se decidió y por qué
-    priorizador/         código: entradas, cobertura, asignación diaria, baseline
-    analisis/            comparación baseline contra priorizado y sensibilidad
+    priorizador/         código: entradas, cobertura, asignación diaria, métricas y salida
+    analisis/            comparación baseline contra priorizado y sensibilidad (pendiente)
     pruebas/             pruebas; casos/ tiene manzanas inventadas para los casos a mano
     resultados/          tablas y figuras finales (sí se versionan)
 
@@ -58,13 +59,32 @@ van en `resultados/`.
 
 | Rama | Qué entrega | Estado |
 |---|---|---|
-| `feat/priorizador-especificacion` | Esqueleto, supuestos, decisiones, `ESPECIFICACION.md` | En curso |
+| `feat/priorizador-especificacion` | Esqueleto, supuestos, decisiones, `ESPECIFICACION.md` | Hecho |
 | `feat/plan-contrato` | `plan.schema.json` v2 y su fixture | Pendiente (coordinar con Dani) |
-| `feat/priorizador-referencia` | Cobertura y asignación diaria, con pruebas | Pendiente |
+| `feat/priorizador-referencia` | Cobertura, asignación diaria, métricas y `plan.json`, con pruebas | En curso |
 | `feat/priorizador-baseline` | Reparto actual alrededor de las cisternas | Pendiente (decisión 01) |
 | `feat/priorizador-comparador` | Baseline contra priorizado, sensibilidad | Pendiente |
 | `feat/viabilidad-presupuestal` | Costo de un viaje de pipa, con fuente | Pendiente |
 
 ## Cómo correrlo
 
-Pendiente: se completa con `feat/priorizador-referencia`.
+Desde la raíz del repo, con el estado que produce el motor:
+
+    python3 motor/referencia.py \
+        --manzanas datos/manzanas_tlaquepaque.csv \
+        --zonas datos/zonas_siapa/manzana_zona.csv \
+        --calendario motor/calendarios/vigente-2026-11-03.json \
+        --desde 2026-11-09 --hasta 2026-11-15 \
+        --salida salidas/referencia.csv
+
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv
+
+Escribe `salidas/plan.json` e imprime un resumen por fecha. Para la sensibilidad, sin
+tocar `supuestos.json`:
+
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv --set modo_racha=peso
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv --set radio_cobertura_m=500
+
+Pruebas:
+
+    python3 -m unittest discover -s optimizador/pruebas -t .
