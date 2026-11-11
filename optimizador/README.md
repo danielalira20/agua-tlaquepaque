@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (en preparación). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.1, borrador). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
@@ -24,7 +24,7 @@ van en `resultados/`.
 ## Estructura
 
     README.md            este archivo
-    ESPECIFICACION.md    reglas del priorizador y casos resueltos a mano (pendiente)
+    ESPECIFICACION.md    reglas del priorizador y casos resueltos a mano
     supuestos.json       recursos y parámetros compartidos
     docs/decisiones/     una decisión por archivo: contexto, opciones, qué se decidió y por qué
     priorizador/         código: entradas, cobertura, asignación diaria, baseline
@@ -42,6 +42,7 @@ van en `resultados/`.
 | Viajes por día | 63 | Prensa: 565 viajes en 9 días (62.8 al día) |
 | Radio de cobertura | 300 m | Supuesto declarado; ver `docs/decisiones/03-radio-cobertura.md` |
 | Cota para ordenar | mínima | Ver `docs/decisiones/02-cota-min-max.md` |
+| Usar racha | sí | Ver `docs/decisiones/04-horizonte-dias.md` |
 | Capacidad de cisterna comunitaria | pendiente | Ver `docs/decisiones/01-baseline-cisternas.md` |
 
 200 L por hogar equivale a un día de consumo: 3.7 personas × 50 L ≈ 185 L.

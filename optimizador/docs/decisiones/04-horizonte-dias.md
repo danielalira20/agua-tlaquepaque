@@ -20,8 +20,9 @@ priorizador decide cada día por separado o planea la semana completa.
 
 **(a) con racha.** Se reparte cada fecha por separado. La prioridad de una manzana
 considera cuántas viviendas tiene sin agua y cuánto tiempo llevan así, con el dato
-`horas_sin_servicio` que ya entrega el motor. La fórmula exacta se fija en
-`ESPECIFICACION.md`.
+`horas_sin_servicio` que ya entrega el motor: `peso = horas_sin_servicio / 24`, es decir,
+los días seguidos sin servicio (sección 4 de `ESPECIFICACION.md`). Se corre también sin
+racha (`usar_racha = false`) para mostrar cuánto cambia el reparto.
 
 ## Por qué
 

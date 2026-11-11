@@ -6,12 +6,23 @@
   "viajes_por_dia": 63,
   "radio_cobertura_m": 300,
   "cota_para_ordenar": "min",
+  "usar_racha": true,
   "sensibilidad": {
-    "radio_cobertura_m": [200, 300, 500],
-    "cota_para_ordenar": ["min", "max"]
+    "radio_cobertura_m": [
+      200,
+      300,
+      500
+    ],
+    "cota_para_ordenar": [
+      "min",
+      "max"
+    ],
+    "usar_racha": [
+      true,
+      false
+    ]
   },
   "_pendientes": [
-    "capacidad_cisterna_comunitaria_l: depende de la decision 01 (baseline), en revision con Dani",
-    "peso de la racha de dias secos en la prioridad: se fija en ESPECIFICACION.md (decision 04)"
+    "capacidad_cisterna_comunitaria_l: depende de la decision 01 (baseline), en revision con Dani"
   ]
 }
