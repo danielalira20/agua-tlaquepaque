@@ -100,7 +100,7 @@ acota el trabajo, no lo sustituye.
 | Campo | Valor |
 |---|---|
 | **Fuente 1: polígonos** | Portal oficial `rotaciondeserviciosiapa.jalisco.gob.mx`, archivo `/geo/rotacion-siapa.topo.json`: 2,303 polígonos de colonias, cada uno con una zona calculada por "cruce original del mapa", y 7 polígonos de zona |
-| **Fuente 2: lista** | `lista_oficial_colonias.csv`: colonias por zona del documento oficial del SIAPA (661 filas, 115 de Tlaquepaque). **Archivo del equipo; el PDF original (`colonias_siapa.pdf`) no está en el repo y la extracción no está verificada** |
+| **Fuente 2: lista** | `lista_oficial_colonias.csv`: colonias por zona del documento oficial del SIAPA (661 filas, 115 de Tlaquepaque). Documento oficial: `zonas_siapa/colonias_siapa.pdf` (`/pdf/colonias_siapa.pdf` del portal, descargado el 11-nov-2026). El archivo del equipo se verificó contra el PDF: las 115 colonias de Tlaquepaque coinciden en nombre y zona |
 | **Fuente 3: calendarios** | Portal, `/api/ajustes.php` (vigente, 3-nov-2026) y `/data/colonias-ajustes.json` (original, 15-oct-2026) |
 | **Institución** | SIAPA / Gobierno de Jalisco |
 | **Consultado** | 11-nov-2026 |

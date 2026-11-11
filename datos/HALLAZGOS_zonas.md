@@ -91,9 +91,10 @@ primeras salen cinco. Dos lecturas, y hay que decidir cuál contar:
 - **El riesgo por almacenamiento no es lo mismo que el riesgo por racionamiento.** Estas
   colonias tienen poca capacidad pero, si de verdad no las raciona el SIAPA, no se quedan
   sin agua por el calendario.
-- **O la lista está incompleta.** Falta confirmar con el PDF original que no sean omisiones. Parques de La Victoria tiene
-  cisterna municipal pese a estar fuera del programa: el municipio la puso por otro motivo
-  o la lista está mal.
+- **O el programa abarca más que la lista.** Se verificó que el PDF oficial no nombra a estas colonias
+  (ni a Parques del Bosque ni a Geo Villas), y que el archivo del equipo es
+  fiel al PDF. Parques de La Victoria tiene cisterna municipal pese a estar fuera del programa:
+  el municipio la puso por otro motivo o el programa la incluye sin nombrarla.
 
 ### Propuestas de cisterna
 
@@ -142,8 +143,9 @@ Cómo leerlo:
 
 ## 5. Lo que sigue sin saberse
 
-1. El PDF original de la lista y la fuente del archivo que la extrajo.
-2. Si las colonias solo del portal (16%) y las que parecen omisiones de la lista (ver
-   `zonas_siapa/pendientes_revision.csv`) deben contarse dentro del programa.
+1. Si las colonias que el PDF oficial no nombra pero el mapa sí ubica en una zona (el 16% `baja`)
+   reciben racionamiento. La lista ya está verificada contra el PDF; esto solo lo responde el SIAPA.
+2. Si los polígonos sin zona que comparten nombre con colonias de otro municipio (ver
+   `zonas_siapa/pendientes_revision.csv`) son la misma colonia.
 3. Si un día de racionamiento es cero agua o baja de presión (`f`).
 4. Hasta cuándo rige el calendario vigente. El portal dice que se podrá ajustar.

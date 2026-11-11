@@ -17,7 +17,9 @@ Se regenera con:
 | `resumen_zonas.csv` | Manzanas, personas y viviendas por zona y nivel de confianza |
 | `pendientes_revision.csv` | Lo que hay que mirar contra el PDF original (ver abajo) |
 | `equivalencias_nombres.csv` | 17 emparejamientos de nombres revisados a mano, cada uno con su motivo |
-| `lista_oficial_colonias.csv`, `.json` | Colonias por zona, extraídas del documento oficial del SIAPA. **Archivo del equipo; el PDF original no está en el repo** |
+| `colonias_siapa.pdf` | **El documento oficial** (`rotaciondeserviciosiapa.jalisco.gob.mx/pdf/colonias_siapa.pdf`, descargado el 11-nov-2026). Colonias por zona y municipio, con los días de baja presión. Metadatos del archivo: creado el 30-oct-2026 |
+| `lista_oficial_pdf.csv` | Extracción propia del PDF (`scripts/extrae_lista_pdf.py`). Los nombres dudosos de otros municipios van marcados |
+| `lista_oficial_colonias.csv`, `.json` | La misma lista, extraída por el equipo. **Verificada contra el PDF para Tlaquepaque: las 115 filas coinciden en nombre y zona** (`scripts/verifica_lista_pdf.py`). Es la que usa `asigna_zonas.py` |
 | `portal_rotacion.topo.json` | Polígonos de colonias y zonas del portal oficial `rotaciondeserviciosiapa.jalisco.gob.mx`, leídos el 11-nov-2026 |
 | `portal_ajustes_vigente.json`, `portal_ajustes_original.json` | Días de racionamiento por zona, vigente (3-nov) y original (15-oct) |
 
@@ -77,13 +79,18 @@ cobertura del programa se debe presentar **como rango: entre 63% y 79%**.
 2. **Los conflictos son tres colonias:** El Tapatío (portal: zona 4; lista: zona 3), San
    Juan (portal 3; lista 4) y un pedazo de El Sauz (portal 4; lista 6). El Tapatío es una
    colonia grande y bien puede estar partida entre dos zonas.
-3. **Hay posibles omisiones de la lista.** Seis polígonos sin zona en el portal comparten
-   nombre con colonias de la lista bajo otro municipio (`La Duraznera`, `La Guadalupana`...).
-   Podrían ser la misma colonia o no. 8,906 personas. No se aceptaron sin corroboración.
+3. **Hay polígonos que el PDF no nombra.** Seis polígonos de Tlaquepaque sin zona en el portal
+   comparten nombre con colonias del PDF de otro municipio (`La Duraznera` está en Guadalajara,
+   `La Guadalupana` en Tonalá, `Miraflores` en Zapopan...). Podrían ser la misma colonia o no.
+   8,906 personas. No se aceptaron sin corroboración.
 4. **El conteo no cuadra con la prensa.** La lista trae 661 filas y 612 nombres únicos;
    la prensa reportó 627 colonias.
-5. **La extracción de la lista no está verificada.** Viene de un archivo del equipo que
-   dice haberse extraído del PDF oficial `colonias_siapa.pdf`. Ese PDF no está en el repo.
+5. **La lista ya está verificada contra el PDF oficial, y eso deja claro qué es el 16%.**
+   Las colonias de confianza `baja` **no aparecen en el PDF en ningún municipio** (se buscaron
+   `Centro` de Tlaquepaque, `Parques del Bosque`, `Geo Villas`, `Parques de La Victoria`, `Parques del Palmar`, `Paseos
+   del Prado`, `Artesanos` y `Felipe Ángeles`). Su zona del portal sale solo del cálculo
+   geométrico del mapa. No sabemos si el SIAPA las raciona; sabemos que su propio documento
+   de colonias no las nombra.
 6. **El calendario puede volver a cambiar.** El SIAPA lo modificó el 4 de noviembre y el
    portal dice que se "podrá ajustar". Los calendarios están versionados en `motor/calendarios/`.
 
@@ -94,7 +101,9 @@ cobertura del programa se debe presentar **como rango: entre 63% y 79%**.
 
 ## Lo que queda por hacer
 
-- Conseguir el PDF original y revisar `pendientes_revision.csv`, en particular las 12 filas
-  `portal_sin_lista_con_homonimo` y las 6 `sin_zona_con_homonimo`.
+- Preguntar al SIAPA (o a quien publicó el portal) si las colonias que el PDF no nombra pero el
+  mapa sí ubica en una zona reciben racionamiento. Es lo que decide si el 16% cuenta.
+- Revisar `pendientes_revision.csv`, en particular las 12 filas `portal_sin_lista_con_homonimo`
+  y las 6 `sin_zona_con_homonimo`.
 - Decidir qué hacer con las 8 manzanas del Censo que no tienen polígono en el Marco
   Geoestadístico: el motor las trata como fuera del programa.
