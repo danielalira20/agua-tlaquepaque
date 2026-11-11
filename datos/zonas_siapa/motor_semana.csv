@@ -1,0 +1,13 @@
+escenario,calendario,cambios,personas_dia_sin_agua_min,personas_dia_sin_agua_max,viv_dia_sin_agua_min,viv_dia_sin_agua_max
+base vigente,vigente-2026-11-03,,210116,490320,58906,128460
+base original,original-2026-10-15,,138992,321280,39472,84672
+consumo 100 L,vigente-2026-11-03,consumo_l_persona_dia=100,457643,690917,118390,177212
+consumo 150 L,vigente-2026-11-03,consumo_l_persona_dia=150,661437,863585,171823,222840
+"consumo 50 L, f=0.25",vigente-2026-11-03,consumo_l_persona_dia=50 fraccion_suministro_en_racionamiento=0.25,208426,489369,58622,128299
+"consumo 50 L, f=0.5",vigente-2026-11-03,consumo_l_persona_dia=50 fraccion_suministro_en_racionamiento=0.5,208426,489369,58622,128299
+"consumo 100 L, f=0.25",vigente-2026-11-03,consumo_l_persona_dia=100 fraccion_suministro_en_racionamiento=0.25,310684,565382,81729,145621
+"consumo 100 L, f=0.5",vigente-2026-11-03,consumo_l_persona_dia=100 fraccion_suministro_en_racionamiento=0.5,210116,490320,58906,128460
+"consumo 150 L, f=0.25",vigente-2026-11-03,consumo_l_persona_dia=150 fraccion_suministro_en_racionamiento=0.25,512353,739185,133202,190457
+"consumo 150 L, f=0.5",vigente-2026-11-03,consumo_l_persona_dia=150 fraccion_suministro_en_racionamiento=0.5,310684,565382,81729,145621
+horas efectivas 36,vigente-2026-11-03,horas_efectivas_corte=36,219821,496422,60787,129643
+horas efectivas 48,vigente-2026-11-03,horas_efectivas_corte=48,247540,516185,66712,133879

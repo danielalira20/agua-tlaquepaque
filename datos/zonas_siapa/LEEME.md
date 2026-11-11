@@ -87,6 +87,11 @@ cobertura del programa se debe presentar **como rango: entre 63% y 79%**.
 6. **El calendario puede volver a cambiar.** El SIAPA lo modificó el 4 de noviembre y el
    portal dice que se "podrá ajustar". Los calendarios están versionados en `motor/calendarios/`.
 
+## Qué sale de aquí
+
+`../HALLAZGOS_zonas.md` (riesgo por zona, contraste con cisternas, motor una semana) y
+`riesgo_por_zona.csv`, `motor_semana.csv`, generados por `scripts/recalcular_hallazgos.py`.
+
 ## Lo que queda por hacer
 
 - Conseguir el PDF original y revisar `pendientes_revision.csv`, en particular las 12 filas
