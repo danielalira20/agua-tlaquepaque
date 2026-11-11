@@ -27,6 +27,7 @@ import genera_fixture_plan as G  # noqa: E402
 COLUMNAS = ["id", "fuente", "tipo", "descripcion", "valor", "unidad", "ubicacion_calidad", "colonia", "lon", "lat",
             "archivo", "cita", "url_o_doi", "verificacion", "uso", "fecha_consulta", "nota"]
 CONSULTA = "2026-11-11"
+URL_MAPA = "https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U"
 MAPA = ("Gobierno de San Pedro Tlaquepaque (2026). Mapa público \"CISTERNAS TLAQUEPAQUE PUB\" [Google My Maps]. "
         "Gobierno de San Pedro Tlaquepaque.")
 RUBINO = ("Rubino, F., Corona, Y., Jiménez Pérez, J. G., & Smith, C. (2019). Bacterial contamination of drinking water in "
@@ -70,7 +71,7 @@ def cisternas():
                 id=c["id"], fuente="cisternas_municipio", tipo="ubicacion", descripcion=desc, ubicacion_calidad=q,
                 colonia=c["colonia_capa"], lon=c["lon"] if q == "coordenada_exacta" else "",
                 lat=c["lat"] if q == "coordenada_exacta" else "", archivo="datos/cisternas_tlaquepaque.csv",
-                cita=MAPA, verificacion="fuente_primaria", uso=uso,
+                cita=MAPA, url_o_doi=URL_MAPA, verificacion="fuente_primaria", uso=uso,
                 nota=("Revisar: ubicación inferida o incompleta" if c["revisar"] == "True" else "")))
     return filas
 

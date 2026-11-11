@@ -38,6 +38,6 @@
   "notas": [
     "El reporte debe decir, en una linea, que se cancelo la encuesta y por que: una encuesta contestada por quien no vive en las colonias delimitadas es peor que ninguna.",
     "Las referencias arbitradas que cuentan para el formato del reporte son las de fuente estudio_rubino o literatura con verificacion fuente_primaria, sin contar la OMS ni las normas (son autoridad, no articulos arbitrados). Hoy son Rubino 2019 y Matsinhe 2014, y esta ultima solo si VATTEN resulta arbitrada (por confirmar): hacen falta 5.",
-    "El URL del mapa de cisternas del municipio no esta registrado todavia en el repo."
+    "Mapa de cisternas del municipio: https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U (el identificador mid lo compartio Dani; es el mapa del que se descargo el KML)."
   ]
 }

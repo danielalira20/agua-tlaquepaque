@@ -133,7 +133,7 @@ Resultados y lectura: `HALLAZGOS_marginacion.md`.
 
 | Campo | Valor |
 |---|---|
-| **Fuente** | Mapa público "CISTERNAS TLAQUEPAQUE PUB", Google My Maps |
+| **Fuente** | Mapa público "CISTERNAS TLAQUEPAQUE PUB", Google My Maps: `https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U` |
 | **Institución** | Gobierno de San Pedro Tlaquepaque |
 | **Año** | 2026 |
 | **Qué se tomó** | Ubicación y domicilio de cisternas comunitarias, puntos del SIAPA y 10 ubicaciones propuestas |
