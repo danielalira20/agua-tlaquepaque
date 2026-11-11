@@ -56,8 +56,9 @@ contra las cisternas que el municipio ya colocó, y el análisis de sensibilidad
 datos de prensa, cada uno con su cita y su nivel de verificación (`fuente_primaria`, `solo_resumen`,
 `norma` o `no_verificada`).
 
-Ese campo es lo que impide citar algo que no se leyó. Hoy hay 5 renglones de prensa que solo se vieron
-en resumen y 2 sin verificar (incluido el factor 1.5 de decaimiento del cloro, marcado NO USAR).
+Ese campo es lo que impide citar algo que no se leyó. Tras la revisión del 11-nov (ver
+`referencias-y-prensa.md`) hay 6 referencias arbitradas leídas completas, 2 con resumen oficial, las notas
+de prensa leídas completas, y 1 sin verificar: el factor 1.5 de decaimiento del cloro, marcado NO USAR.
 
 **Lo único que no se puede hacer** sigue siendo lo que dice la propuesta: quitar la encuesta en silencio
 y aun así escribir "validamos". En el reporte va una línea que diga qué se hizo en su lugar y por qué.

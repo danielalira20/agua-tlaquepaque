@@ -141,7 +141,7 @@ priorizador de Jass produzca el número que la sostiene.
 | I3 | Demostrar cómo se usó cada dataset | 🟡 | `datos/FUENTES.md` documenta procedencia, cobertura y procesamiento de manzanas, colonias, zonas y calendarios del SIAPA, marginación y cisternas | No es la tabla del Anexo B. Falta la cita exacta de cada uno y la extracción del #02, que todavía no está en el repo | Magui |
 | I4 | Tres áreas de conocimiento | 🔴 | Hay material de las tres (ver abajo) | **No está escrito en ningún lado** | Dani |
 | I5 | Prototipo funcionando; lo simulado, declarado | 🟡 | `app/` compila (8 páginas estáticas). **`motor/` tiene especificación y una implementación de referencia en Python con 34 pruebas.** Los contratos `calendario`, `zonas`, `manzanas`, `estado` y `plan` están actualizados con fixtures. Jass tiene la especificación del priorizador en su rama | La app sigue con datos simulados y calendario simulado, distinto del oficial. Falta adaptar el motor oficial en TypeScript, y **el priorizador no tiene código** | Migue, Dani, Jass |
-| I6 | Fuentes citadas y uso de IA declarado | 🟡 | `decisiones/verificacion-citas.md` verifica tres citas | No hay bibliografía consolidada en APA. No hay declaración de IA | Dani |
+| I6 | Fuentes citadas y uso de IA declarado | 🟡 | `decisiones/verificacion-citas.md` verifica tres citas; `datos/evidencia.csv` registra cada fuente con su nivel de verificación | La bibliografía en APA ya está consolidada (`decisiones/referencias-y-prensa.md`). Falta la declaración de IA | Dani |
 | I7 | Revisar los criterios de éxito | 🟢 | Este documento | Repetirlo el sábado con el reporte ya escrito | Todos |
 
 ### Los 5 criterios de éxito del Reto 01
@@ -198,23 +198,34 @@ se usa a nivel AGEB.
 
 ---
 
-## 4. Referencias arbitradas: hoy hay 2 leídas, hacen falta 5
+## 4. Referencias arbitradas: ya hay 6 leídas completas
 
-El formato exige al menos 5 arbitradas. Estado real:
+Actualizado el 11 de noviembre. El formato exige al menos 5 arbitradas. El detalle, con las
+fechas de recepción y aceptación de cada artículo, las afirmaciones que sostiene y sus límites, está en
+`decisiones/referencias-y-prensa.md`; el registro, en `datos/evidencia.csv`.
 
 | Referencia | Estado |
 |---|---|
-| Rubino, F., Corona, Y., Jiménez Pérez, J. G., & Smith, C. (2019). Bacterial contamination of drinking water in Guadalajara, Mexico. *Int. J. Environ. Res. Public Health, 16*(1), 67. https://doi.org/10.3390/ijerph16010067 | ✅ Leída completa. Arbitrada |
-| Matsinhe, N. P., Juízo, D. L., & Persson, K. M. (2014). The effects of intermittent supply and household storage in the quality of drinking water in Maputo. *VATTEN, 70*, 51–60 | ✅ Leída completa. Confirmar que la revista es arbitrada |
-| Kumpel, E., & Nelson, K. L. (2014). Mechanisms affecting water quality in an intermittent piped water supply. *Environmental Science & Technology*. doi:10.1021/es405054u | ⚠️ **Solo vista por resumen de búsqueda.** Abrir, confirmar el umbral de 10 a 17 psi y completar volumen y páginas |
-| Kumpel, E., & Nelson, K. L. (2016). Intermittent water supply: prevalence, practice, and microbial water quality. *Environmental Science & Technology*. doi:10.1021/acs.est.5b03973 | ⚠️ Igual: abrir antes de citar |
-| Chlorine degradation in continuous and intermittent drinking water supply networks. *Urban Water Journal, 20*(1), 2022. doi:10.1080/1573062X.2022.2139275 | ⚠️ La frase "se sabe muy poco" y el factor 1.5 vienen de un resumen. Confirmar o quitar |
-| Abernethy et al. (Flint). arXiv:1707.01591 | ⚠️ Es un preprint. Solo cuenta si se confirma versión publicada |
+| Rubino et al. (2019), Guadalajara. *Int. J. Environ. Res. Public Health, 16*(1), 67 | ✅ Arbitrada, texto completo |
+| Ercumen et al. (2015), Hubli-Dharwad. *PLOS Medicine, 12*(10), e1001892 | ✅ Arbitrada, texto completo |
+| Taylor, Slocum y Whittle (2018). *PLOS ONE, 13*(5), e0196887 | ✅ Arbitrada, texto completo |
+| Sosa-Moreno et al. (2025). *PLOS Water, 4*(9), e0000439 | ✅ Arbitrada, texto completo |
+| Wu et al. (2023). *Frontiers in Public Health, 11*, 1054730 | ✅ Arbitrada, texto completo |
+| Leifels et al. (2025). *Scientific Reports, 15*, 22408 | ✅ Arbitrada, texto completo |
+| Kumpel y Nelson (2014). *Environ. Sci. Technol., 48*(5), 2766–2775 | 🟡 Arbitrada (MEDLINE). **Solo resumen oficial**: confirma los umbrales de 10 y 17 psi |
+| Kumpel y Nelson (2016). *Environ. Sci. Technol., 50*(2), 542–553 | 🟡 Igual: solo resumen oficial |
+| Matsinhe et al. (2014). *VATTEN, 70*, 51–60 | ⚠️ **No es arbitrada** (la revista dice que no aplica un sistema de arbitraje formal). Citable como fuente científica, no cuenta entre las 5 |
+| Vaidya et al. (2023). *Urban Water Journal, 20*(1), 60–73 | ⚠️ Autores confirmados. **Sin abrir**: el factor 1.5 sigue sin poder usarse |
+| Abernethy et al. (Flint). arXiv:1707.01591 | ⚠️ Preprint. No se usó |
 | OMS, *Guidelines for Drinking-water Quality*, 4.ª ed., cap. 4 | Leída. **Autoridad, no arbitrada.** Complemento |
 | NOM-127-SSA1-2021 | Norma. Complemento |
 
-**Para llegar a 5 arbitradas hay que abrir tres artículos más.** Es trabajo de una
-tarde y no se puede dejar al sábado: sin la fuente primaria no hay cita.
+**El requisito de 5 se cumple con margen**, pero el presupuesto de palabras manda: 5 referencias APA
+ocupan unas 170 palabras de las 190 que da el formato. Propuesta para el cuerpo: Rubino, Ercumen, Taylor,
+Sosa-Moreno, Kumpel y Nelson 2014 y la OMS (183 palabras); el resto, en los anexos.
+
+**Una advertencia de contenido:** Ercumen no encontró asociación significativa entre suministro continuo y
+diarrea en general. El reporte no debe afirmar que la intermitencia causa diarrea.
 
 ---
 
@@ -277,7 +288,7 @@ Una fecha sin confirmar por escrito: el kit dice que la presentación virtual es
 | Día | Qué | Responsables |
 |---|---|---|
 | **Mié 11** | Votar la delimitación (✅ Jass y Migue; falta Magui). Preguntar a SOLACYT por el dataset 01. Magui pasa a `dev`. Juntar credenciales para el Anexo A | Todos |
-| **Jue 12** | ✅ *Adelantado el 11:* calendario por fecha y zonas reales en el repo, motor de referencia contra datos reales, marginación por AGEB, contrato `plan`. **Sigue pendiente:** abrir las 3 referencias, Jass investiga costo de pipa y presupuesto municipal, y preguntar al SIAPA por las colonias que su PDF no nombra | Dani, Jass, Magui |
+| **Jue 12** | ✅ *Adelantado el 11:* calendario por fecha y zonas reales en el repo, motor de referencia contra datos reales, marginación por AGEB, contrato `plan`. **Referencias arbitradas: verificadas el 11** (ver sección 4). **Sigue pendiente:** Jass investiga costo de pipa y presupuesto municipal, con fuente, y preguntar al SIAPA por las colonias que su PDF no nombra | Dani, Jass, Magui |
 | **Vie 13** | Priorizador sobre el motor real. App con datos reales. Escribir RC secciones 1 a 3 | Jass, Migue, Dani |
 | **Sáb 14** | RC secciones 4 a 6, infografía, manual, pitch y video. Contar palabras del reporte completo | Todos |
 | **Dom 15** | Repasar las 12 casillas en voz alta. Subir **antes del mediodía** | Todos |

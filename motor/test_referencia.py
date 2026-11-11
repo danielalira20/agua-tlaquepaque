@@ -349,11 +349,17 @@ class TestContratos(unittest.TestCase):
         for f in fixture:  # el fixture son renglones reales del registro, no inventados
             self.assertEqual(f, por_id[f["id"]], f["id"])
         fuentes = {"cisternas_municipio", "estudio_rubino", "imdec", "prensa", "literatura"}
-        ver = {"fuente_primaria", "solo_resumen", "norma", "no_verificada"}
+        ver = {"fuente_primaria", "resumen_oficial", "solo_resumen", "norma", "no_verificada"}
         for d in datos:
             self.assertIn(d["fuente"], fuentes, d["id"])
             self.assertIn(d["tipo"], {"ubicacion", "valor", "cita_textual", "contexto"}, d["id"])
             self.assertIn(d["verificacion"], ver, d["id"])
+            self.assertIn(d["arbitrada"], {"si", "no", "nd", ""}, d["id"])
+            if d["arbitrada"] == "si":  # un articulo arbitrado se identifica por DOI y no puede estar sin leer
+                self.assertTrue(d["url_o_doi"].startswith("https://doi.org/"), d["id"])
+                self.assertIn(d["verificacion"], {"fuente_primaria", "resumen_oficial"}, d["id"])
+            if d["verificacion"] == "resumen_oficial":
+                self.assertEqual(d["arbitrada"], "si", d["id"])
             self.assertTrue(d["cita"], f"{d['id']} no tiene cita")
             if d["verificacion"] == "solo_resumen":
                 self.assertTrue(d["url_o_doi"], f"{d['id']}: solo_resumen sin enlace para abrirlo")
@@ -386,6 +392,17 @@ class TestContratos(unittest.TestCase):
         antes = [r.read_text(encoding="utf-8") for r in rutas]
         subprocess.run([sys.executable, "-I", str(self.RAIZ / "scripts" / "genera_evidencia.py")], check=True, capture_output=True)
         self.assertEqual([r.read_text(encoding="utf-8") for r in rutas], antes)
+
+
+    def test_hay_al_menos_5_referencias_arbitradas_leidas(self):
+        datos = self._csv(self.RAIZ / "datos" / "evidencia.csv")
+        leidas = {d["cita"] for d in datos if d["arbitrada"] == "si" and d["verificacion"] == "fuente_primaria"}
+        self.assertGreaterEqual(len(leidas), 5, "el formato del reporte exige al menos 5 referencias arbitradas")
+        # Matsinhe (VATTEN) no es arbitrada y no debe contarse; el factor 1.5 sin verificar no se puede usar
+        self.assertFalse(any("Matsinhe" in c for c in leidas))
+        e010 = next(d for d in datos if d["id"] == "E010")
+        self.assertEqual(e010["verificacion"], "no_verificada")
+        self.assertTrue(e010["uso"].startswith("NO USAR"))
 
 
 if __name__ == "__main__":

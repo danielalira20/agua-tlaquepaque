@@ -134,3 +134,18 @@ viviendas. No se contradicen: miden cosas distintas con alcances distintos.
 | Revisión 2026 | **Reatribuir** al artículo de 2022, y confirmarlo antes de usarlo. Si no, quitarlo |
 | Consumo de 50 L/p/día | Contrastarlo con los **120 L/p/día** de Maputo en el análisis de sensibilidad |
 | k del decaimiento | Considerar el factor **1.5×** de redes intermitentes, pendiente de confirmar |
+
+---
+
+## Actualización del 11 de noviembre
+
+Las acciones de la tabla anterior se cerraron o cambiaron. Detalle y fuentes en
+`referencias-y-prensa.md`.
+
+| Cita | Resultado |
+|---|---|
+| Maputo (Matsinhe 2014) | El 60% se confirmó y quedó corregido en `datos/evidencia.csv`. Pero VATTEN **no es arbitrada** ("A referee system is not applied in the formal meaning"): se cita como fuente científica, no entre las 5 arbitradas |
+| OMS, texto literal del capítulo 4 | Registrado tal cual (renglón E008) |
+| *Urban Water Journal* | Autores confirmados: Vaidya, Kumar, Mohan Kumar y Rao, volumen 20(1), 2023. **El texto sigue sin abrirse**; el factor 1.5 se marca NO USAR |
+| Kumpel y Nelson 2014 | El resumen oficial de PubMed confirma los umbrales de 10 y 17 psi |
+| Consumo de 120 L (Maputo) | Registrado para la sensibilidad (renglón E007) |
