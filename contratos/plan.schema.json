@@ -1,10 +1,56 @@
 {
-  "descripcion": "Salida del optimizador.",
+  "descripcion": "Salida del priorizador de pipas: a donde va cada viaje del dia, comparada contra un baseline con los MISMOS viajes. Especificacion: optimizador/ESPECIFICACION.md.",
   "formato": "JSON",
+  "version": "v2 — decision 4 aprobada: punto de entrega como unidad de decision, manzanas cubiertas como justificacion. Reemplaza al contrato v1 (calendario_optimizado, delta_personas_hora, asignacion por cvegeo).",
+  "cambios_acordados": [
+    "Baseline de 50 registros de cisterna, no 60: las 10 propuestas del municipio no cuentan como cobertura.",
+    "De las 50, 35 tienen coordenada exacta, 12 se ubican en el centro de su colonia y 3 quedan fuera (CIST014, CIST021, CIST022).",
+    "orden_del_dia y ruta quedan fuera de la primera version: no hay datos de calles ni de tiempos. orden_eleccion es el orden en que el algoritmo eligio los viajes, no una ruta.",
+    "El radio de 300 m es un parametro declarado (parametros.radio_cobertura_m), con sensibilidad a 200 y 500."
+  ],
   "estructura": {
-    "calendario_optimizado": "[{zona, suspension:[dias]}]",
-    "asignacion_pipas": "[{dia, cvegeo, viajes, litros}]",
-    "delta_personas_hora": "float personas-hora en estado inseguro evitadas vs el calendario oficial",
-    "restriccion": "volumen total de agua constante; flota de 32 pipas; 10000 L por viaje; ~200 L por hogar"
-  }
+    "parametros": "{pipas, litros_por_viaje, litros_por_hogar, hogares_por_viaje, viajes_por_dia, radio_cobertura_m, cota_para_ordenar, modo_racha}. pipas se reporta pero no restringe: restringen los viajes",
+    "baseline": "{descripcion, cisternas:[{id, tipo, ubicacion: coordenada_exacta|centro_de_colonia, lon, lat, colonia}], excluidas:[{id, motivo}]}",
+    "corridas": "[{regla: priorizado|baseline, cota_para_ordenar: min|max, fechas:[{fecha, viajes:[viaje], resumen}], semana}]. Una corrida por regla y por cota",
+    "comparacion": "[{cota_para_ordenar, semana:{<metrica>:{priorizado, baseline, diferencia}}}] con diferencia = priorizado - baseline",
+    "propuesta_cisternas": "null en la v1. Reservado: donde convendria colocar cisternas permanentes. No se calcula todavia"
+  },
+  "viaje": {
+    "orden_eleccion": "int, desde 1. NO es una ruta",
+    "tipo": "pipa (priorizado) | cisterna (baseline)",
+    "punto_id": "string id de la cisterna en el baseline, null en el priorizado",
+    "cvegeo_centro": "string(16) manzana donde se estaciona la pipa (priorizado), null en el baseline",
+    "colonia": "string, solo para mostrar",
+    "lon": "float",
+    "lat": "float",
+    "manzanas_cubiertas": "[{cvegeo, viviendas}] de la mas cercana a la mas lejana, dentro del radio",
+    "viviendas_objetivo": "int viviendas sin agua ESE DIA que recibe el viaje, nunca el total de la manzana. 0 si el viaje se uso sin atender a nadie",
+    "litros": "int = viviendas_objetivo x litros_por_hogar. El resto del tanque no se cuenta como entregado",
+    "personas_beneficiadas": "float",
+    "prioridad_score": "float suma de viviendas x peso"
+  },
+  "metricas": {
+    "necesidad_total": "int suma de viv_sin_agua_<cota> de todas las manzanas",
+    "viviendas_atendidas": "int",
+    "personas_atendidas": "float personas-dia sin agua evitadas: suma de viviendas atendidas x ocupantes_prom",
+    "valor_ponderado": "float suma de viviendas atendidas x peso, con peso = horas_sin_servicio / 24",
+    "maximo_viviendas": "int cota superior que ignora la geografia: min(viajes x hogares_por_viaje, necesidad de las manzanas con centroide)",
+    "maximo_ponderado": "float cota superior ponderada, ignora la geografia",
+    "eficiencia_viviendas_pct": "float 100 x viviendas_atendidas / maximo_viviendas (100 si el maximo es 0)",
+    "eficiencia_ponderada_pct": "float",
+    "cobertura_pct": "float 100 x viviendas_atendidas / necesidad_total (0 si no hay necesidad)",
+    "viajes_usados": "int viajes con una parada, atiendan o no a alguien",
+    "viajes_sin_usar": "int viajes que no se pudieron colocar porque no quedaba necesidad"
+  },
+  "metricas_de_semana_ademas": {
+    "manzanas_sin_entrega": "int manzanas con necesidad > 0 en alguna fecha y ningun viaje que las atendiera en toda la semana",
+    "personas_sin_entrega": "float suma en esas manzanas de max(necesidad) x ocupantes_prom"
+  },
+  "notas": [
+    "El baseline es ESTILIZADO: los mismos viajes repartidos por turnos entre las cisternas instaladas. No es el reparto real del municipio, que responde a reportes ciudadanos y del que no hay registro.",
+    "Los dos maximos ignoran la geografia: son una cota superior. Si la eficiencia es 100%, el algoritmo es optimo para esa metrica.",
+    "Cada fecha se resuelve sola: una entrega dura un dia. Una cisterna real guarda agua para el siguiente, asi que este supuesto favorece al priorizado.",
+    "Las cisternas ubicadas por centro de colonia tienen un error posible de varios cientos de metros frente a un radio de 300 m: correr tambien el baseline solo con las 35 de coordenada exacta.",
+    "Fuera de la v1: ruta, orden_del_dia y propuesta_cisternas."
+  ]
 }
