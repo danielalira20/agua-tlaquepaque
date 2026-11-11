@@ -1,0 +1,43 @@
+{
+  "descripcion": "Registro de evidencia propia. Reemplaza a `mediciones` (la encuesta, cancelada en la decision 1). Cada renglon es una pieza de evidencia con su procedencia y su nivel de verificacion; sirve para el contraste, para citar sin inventar y para la tabla de datasets del reporte (Anexos B y E).",
+  "formato": "CSV",
+  "llave": "id",
+  "ubicacion": "datos/evidencia.csv, generado por scripts/genera_evidencia.py",
+  "version": "v2 — decision 1 aprobada: se cancela la encuesta; la evidencia sale del contraste con las cisternas del municipio y de literatura citada, mas el analisis de sensibilidad.",
+  "campos": {
+    "id": "string unico. CIST### cisterna del municipio, SIAPA### cisterna del SIAPA, PROP### ubicacion propuesta, E### literatura, P### prensa",
+    "fuente": "cisternas_municipio | estudio_rubino | imdec | prensa | literatura. `imdec` esta en la decision 1 y todavia no tiene renglones. `literatura` agrupa lo que no es el estudio de Guadalajara (Maputo, OMS, normas, artículos)",
+    "tipo": "ubicacion | valor | cita_textual | contexto",
+    "descripcion": "string: que es, o la cita textual si tipo = cita_textual",
+    "valor": "string, vacio si no aplica. Numerico o cualitativo ('la mitad')",
+    "unidad": "string, vacio si no aplica",
+    "ubicacion_calidad": "solo tipo = ubicacion: coordenada_exacta | centro_de_colonia | sin_ubicar. Es la MISMA regla del baseline del priorizador",
+    "colonia": "string, solo para mostrar",
+    "lon": "float, solo si ubicacion_calidad = coordenada_exacta",
+    "lat": "float, solo si ubicacion_calidad = coordenada_exacta",
+    "archivo": "string: donde esta el dato completo en el repo, si lo hay",
+    "cita": "string en formato APA",
+    "url_o_doi": "string",
+    "verificacion": "fuente_primaria | solo_resumen | norma | no_verificada",
+    "uso": "string: para que se usa en el proyecto, o NO USAR",
+    "fecha_consulta": "YYYY-MM-DD",
+    "nota": "string: limitaciones o tensiones que hay que declarar"
+  },
+  "verificacion": {
+    "fuente_primaria": "se leyo el dato en la fuente original (el archivo del municipio, el articulo completo)",
+    "solo_resumen": "solo se vio un resumen o un fragmento de busqueda. Hay que abrir la fuente antes de citarlo",
+    "norma": "es una norma o reglamento",
+    "no_verificada": "viene de una fuente secundaria o sin identificar. No se debe citar tal cual"
+  },
+  "reglas": [
+    "No se cita en el reporte nada con verificacion distinta de fuente_primaria o norma sin abrir antes la fuente.",
+    "Un renglon con uso que empieza por NO USAR no entra a ningun calculo ni al reporte.",
+    "Las 10 propuestas del municipio (PROP###) no cuentan como cobertura ni entran al baseline.",
+    "La ubicacion_calidad de las cisternas coincide con el baseline del plan: 35 coordenada_exacta, 12 centro_de_colonia, 3 sin_ubicar."
+  ],
+  "notas": [
+    "El reporte debe decir, en una linea, que se cancelo la encuesta y por que: una encuesta contestada por quien no vive en las colonias delimitadas es peor que ninguna.",
+    "Las referencias arbitradas que cuentan para el formato del reporte son las de fuente estudio_rubino o literatura con verificacion fuente_primaria, sin contar la OMS ni las normas (son autoridad, no articulos arbitrados). Hoy son Rubino 2019 y Matsinhe 2014, y esta ultima solo si VATTEN resulta arbitrada (por confirmar): hacen falta 5.",
+    "El URL del mapa de cisternas del municipio no esta registrado todavia en el repo."
+  ]
+}

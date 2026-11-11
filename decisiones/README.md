@@ -43,3 +43,22 @@ recursos. Es un baseline **estilizado**, no el reparto real del municipio, del q
 Detalle en `optimizador/ESPECIFICACION.md`, sección 7 (rama `feat/priorizador-especificacion`).
 
 Pendiente: `propuesta_cisternas` queda reservada en el contrato y sin calcular.
+
+## Resolución de la decisión 1 (11-nov-2026)
+
+**Aprobada: se cancela la encuesta.** Propuesta de Dani; a favor Migue. No hay voto de Jass ni de
+Magui registrado en el repo sobre esta decisión.
+
+La evidencia propia sale de dos cosas que no dependen de conseguir gente que responda: el contraste
+contra las cisternas que el municipio ya colocó, y el análisis de sensibilidad. El contrato
+`mediciones` pasa a ser `evidencia` (`contratos/evidencia.schema.json`, v2) y el registro vive en
+`datos/evidencia.csv`: 60 renglones de cisternas (50 más 10 propuestas), valores de literatura y
+datos de prensa, cada uno con su cita y su nivel de verificación (`fuente_primaria`, `solo_resumen`,
+`norma` o `no_verificada`).
+
+Ese campo es lo que impide citar algo que no se leyó. Hoy hay 5 renglones de prensa que solo se vieron
+en resumen, 2 sin verificar (incluido el factor 1.5 de decaimiento del cloro, marcado NO USAR) y la URL
+del mapa de cisternas del municipio no está registrada.
+
+**Lo único que no se puede hacer** sigue siendo lo que dice la propuesta: quitar la encuesta en silencio
+y aun así escribir "validamos". En el reporte va una línea que diga qué se hizo en su lugar y por qué.
