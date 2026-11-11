@@ -1,15 +1,22 @@
 {
-  "descripcion": "Calendario oficial de tandeo del SIAPA, 627 colonias, 15-oct-2026 a marzo-2027.",
+  "descripcion": "Calendario de racionamiento del SIAPA, versionado. Un archivo por version en motor/calendarios/. El SIAPA ya lo cambio una vez (15-oct -> 3-nov) y puede volver a cambiarlo.",
   "formato": "JSON",
-  "estructura": {
-    "zona": "int",
-    "municipios": "[string]",
-    "suspension": "[string] dias de la semana sin servicio",
-    "colonias": "[string]"
+  "ubicacion": "motor/calendarios/<version>-<AAAA-MM-DD>.json",
+  "por_que": "El calendario es por zona (1 a 7), no por colonia. La zona de cada manzana vive en zonas.schema.json. Se expande a fechas concretas por dia de la semana: una fecha tiene racionamiento en una zona si su dia esta en la lista.",
+  "campos": {
+    "version": "string: original | vigente | ...",
+    "vigente_desde": "YYYY-MM-DD",
+    "vigente_hasta": "YYYY-MM-DD o null si sigue vigente",
+    "fuente": "string: URL o archivo del portal oficial",
+    "actualizado_por_siapa": "timestamp ISO 8601 que publica el portal",
+    "consultado": "YYYY-MM-DD: cuando lo leimos nosotros",
+    "esquema": "{ \"<zona>\": [dias con racionamiento] } con zona en \"1\"..\"7\" y dias en lunes|martes|miercoles|jueves|viernes|sabado|domingo",
+    "nota_vigencia": "string opcional"
   },
   "notas": [
-    "Zona 3 suspende miercoles y sabado. Zona 4 suspende lunes y jueves. VERIFICADO en prensa, falta confirmar contra la fuente oficial del SIAPA.",
-    "Tlaquepaque cae en zonas 3 y 4.",
-    "Falta: hora de inicio y duracion del corte. Si el SIAPA no las publica, se declara como supuesto."
+    "Una zona con racionamiento los 7 dias no esta soportada por el motor (error).",
+    "Racionamiento significa baja de presion, no corte total, segun el portal. El motor lo modela con el parametro f (fraccion que sigue llegando), ver motor/ESPECIFICACION.md.",
+    "Dos versiones conocidas: original (15-oct-2026) y vigente (3-nov-2026). vigente_desde de la vigente es un supuesto: el portal no dice desde cuando rige.",
+    "Reemplaza a datos/calendario_tlaquepaque.json, que tenia 10 colonias y solo las zonas 3 y 4."
   ]
 }

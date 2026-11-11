@@ -227,5 +227,46 @@ class HumoDeLaLineaDeComandos(unittest.TestCase):
             self.assertTrue(all(int(f["viv_sin_agua_min"]) <= int(f["viv_sin_agua_max"]) for f in filas))
 
 
+class TestContratos(unittest.TestCase):
+    """Los contratos y los fixtures no se pueden desfasar de lo que el motor escribe."""
+
+    RAIZ = AQUI.parent
+
+    def test_estado_contrato_igual_a_salida_del_motor(self):
+        import json
+        contrato = json.load(open(self.RAIZ / "contratos" / "estado.schema.json", encoding="utf-8"))
+        self.assertEqual(list(contrato["campos"].keys()), R.COLUMNAS)
+        with open(self.RAIZ / "fixtures" / "estado.fixture.csv", encoding="utf-8") as fh:
+            self.assertEqual(next(csv.reader(fh)), R.COLUMNAS)
+
+    def test_estado_fixture_se_regenera_igual(self):
+        with tempfile.TemporaryDirectory() as d:
+            salida = Path(d) / "s.csv"
+            R.main(["--manzanas", str(self.RAIZ / "fixtures" / "manzanas.fixture.csv"),
+                    "--zonas", str(self.RAIZ / "fixtures" / "zonas.fixture.csv"),
+                    "--calendario", str(AQUI / "calendarios" / "vigente-2026-11-03.json"),
+                    "--desde", "2026-11-09", "--hasta", "2026-11-15", "--salida", str(salida)])
+            self.assertEqual(salida.read_text(encoding="utf-8"),
+                             (self.RAIZ / "fixtures" / "estado.fixture.csv").read_text(encoding="utf-8"))
+
+    def test_zonas_fixture_son_reales_y_estan_en_el_calendario(self):
+        with open(self.RAIZ / "fixtures" / "zonas.fixture.csv", encoding="utf-8") as fh:
+            filas = list(csv.DictReader(fh))
+        self.assertEqual([c for c in filas[0].keys()][:2], ["cvegeo", "zona"])
+        for f in filas:
+            self.assertEqual(len(f["cvegeo"]), 16)
+            for z in R.parsear_zonas(f["zona"]):
+                self.assertIn(z, VIGENTE)
+
+    def test_calendarios_con_version_y_vigencia(self):
+        for nombre in ["original-2026-10-15.json", "vigente-2026-11-03.json"]:
+            cal = R.leer_json(AQUI / "calendarios" / nombre)
+            for k in ["version", "vigente_desde", "vigente_hasta", "fuente", "actualizado_por_siapa", "consultado", "esquema"]:
+                self.assertIn(k, cal, f"{nombre} no tiene {k}")
+            for zona, dias in cal["esquema"].items():
+                self.assertTrue(set(dias) <= set(R.DIAS))
+                self.assertLess(len(dias), 7)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)
