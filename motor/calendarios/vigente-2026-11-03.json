@@ -1,0 +1,15 @@
+{
+  "version": "vigente",
+  "fuente": "Portal oficial del SIAPA, rotaciondeserviciosiapa.jalisco.gob.mx, endpoint /api/ajustes.php",
+  "actualizado_por_siapa": "2026-11-03T21:26:28+00:00",
+  "consultado": "2026-11-11",
+  "esquema": {
+    "1": ["lunes", "jueves", "viernes", "domingo"],
+    "2": ["lunes", "martes", "jueves", "domingo"],
+    "3": ["miercoles", "jueves", "viernes"],
+    "4": ["lunes", "martes", "sabado", "domingo"],
+    "5": ["lunes", "martes", "miercoles", "jueves"],
+    "6": ["viernes", "sabado", "domingo"],
+    "7": ["sabado", "domingo"]
+  }
+}

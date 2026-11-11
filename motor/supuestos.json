@@ -1,0 +1,10 @@
+{
+  "_nota": "Parametros compartidos por la implementacion oficial (TypeScript) y la de referencia (Python). Si cambia un valor aqui, cambia en las dos.",
+  "consumo_l_persona_dia": 50,
+  "tinaco_l": 1100,
+  "cisterna_l": 5000,
+  "horas_efectivas_corte": 24,
+  "u_horas_agua_guardada": 48,
+  "umbral_estado_parcial_pct": 10,
+  "umbral_estado_mayoritario_pct": 50
+}
