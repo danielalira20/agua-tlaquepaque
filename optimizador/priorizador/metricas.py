@@ -13,6 +13,7 @@ SUMABLES = (
     "maximo_ponderado",
     "viajes_usados",
     "viajes_sin_usar",
+    "viajes_vacios",
 )
 
 
@@ -69,6 +70,7 @@ def metricas_dia(
             "maximo_ponderado": maximo_ponderado,
             "viajes_usados": len(res.viajes),
             "viajes_sin_usar": res.viajes_sin_usar,
+            "viajes_vacios": sum(1 for v in res.viajes if v.llenado.atendidas == 0),
         }
     )
 
