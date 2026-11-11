@@ -113,6 +113,22 @@ en `zonas_siapa/LEEME.md`. El resultado es `zonas_siapa/manzana_zona.csv`.
 Tlaquepaque) viven en manzanas con zona; 368,111 (62.6%) tienen respaldo de la lista
 oficial y 94,083 (16.0%) dependen solo del portal.
 
+## `marginacion_municipal.csv`, `marginacion_ageb_tlaquepaque.csv` y `marginacion_vs_riesgo.csv`
+
+| Campo | Valor |
+|---|---|
+| **Dataset del catálogo** | 17 — Índices de marginación |
+| **Nombre exacto** | Índice de marginación 2020 (municipal) e Índice de marginación urbana a nivel AGEB 2020 (`IMU_2020.zip`, "Indicadores sociodemográficos a nivel AGEB urbana, 2020") |
+| **Institución** | CONAPO, con estimaciones basadas en el Censo de Población y Vivienda 2020 (INEGI) |
+| **Año** | 2020 |
+| **Cobertura** | Municipal: los 4 municipios del calendario del SIAPA. AGEB: 214 AGEB urbanas de San Pedro Tlaquepaque, 678,283 personas |
+| **Qué se tomó** | Índice (`IM_2020`), grado (`GM_2020`) y los once indicadores. **Más alto = menos marginación** |
+| **Llave** | `CVE_AGEB`, 13 caracteres, igual a los primeros 13 del `cvegeo` de la manzana |
+| **Para qué** | Contrastar el índice oficial (mide el tubo) con el riesgo de almacenamiento, y la capa de vulnerabilidad social |
+| **Procesamiento** | `scripts/procesa_imu.py`. 9 manzanas (415 personas) sin AGEB en el IMU |
+
+Resultados y lectura: `HALLAZGOS_marginacion.md`.
+
 ## `cisternas_tlaquepaque.csv` y `contraste_cisternas.csv`
 
 | Campo | Valor |
