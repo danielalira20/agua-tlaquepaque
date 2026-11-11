@@ -171,8 +171,9 @@ def main():
         "parametros": dict(PARAM, hogares_por_viaje=HOGARES, cota_para_ordenar="min"),
         "nota_fixture": "Universo de 40 manzanas, una fecha (2026-11-12) y 5 viajes por dia. Generado por "
                         "scripts/genera_fixture_plan.py con las secciones 5 a 8 de optimizador/ESPECIFICACION.md. "
-                        "El baseline atiende 0 viviendas aqui porque ninguna de sus primeras 5 cisternas tiene vecinas "
-                        "entre las 40 manzanas del universo; es un efecto del universo reducido, no un resultado.",
+                        "Con solo 5 viajes el baseline usa las 5 primeras cisternas por id, y con un universo de 40 "
+                        "manzanas su resultado depende de cuales caen cerca de alguna: es un efecto del universo reducido, "
+                        "no un resultado.",
         "baseline": {
             "descripcion": "Baseline estilizado: los mismos viajes repartidos por turnos entre las cisternas ya instaladas "
                            "(el viaje k va a la cisterna (k-1) mod N). No es el reparto real del municipio, que responde a "

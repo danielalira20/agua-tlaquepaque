@@ -133,7 +133,7 @@ Resultados y lectura: `HALLAZGOS_marginacion.md`.
 
 | Campo | Valor |
 |---|---|
-| **Fuente** | Mapa público "CISTERNAS TLAQUEPAQUE PUB", Google My Maps |
+| **Fuente** | Mapa público "CISTERNAS TLAQUEPAQUE PUB", Google My Maps: `https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U` |
 | **Institución** | Gobierno de San Pedro Tlaquepaque |
 | **Año** | 2026 |
 | **Qué se tomó** | Ubicación y domicilio de cisternas comunitarias, puntos del SIAPA y 10 ubicaciones propuestas |
@@ -145,8 +145,10 @@ Resultados y lectura: `HALLAZGOS_marginacion.md`.
 
 **Procesamiento:** se descargó el KML, se eliminaron 12 duplicados exactos, se
 recuperó la colonia desde el domicilio postal para las 14 cisternas sin
-coordenada, y se ubicaron por unión espacial las que sí la tienen. Quedaron 47
-cisternas ubicadas de 50, y 3 sin resolver que están declaradas.
+coordenada (12 se lograron), y se ubicaron por unión espacial las que sí la tienen.
+Quedaron 47 cisternas ubicadas de 50 (35 con coordenada exacta y 12 por colonia), y 3 sin
+resolver que están declaradas: CIST014, CIST021 y CIST022, esta última con coordenadas
+vacías. Los ids de las 3 cisternas del SIAPA son `SIAPA001` a `SIAPA003`.
 
 Los resultados del contraste están en `HALLAZGOS_cisternas.md`.
 

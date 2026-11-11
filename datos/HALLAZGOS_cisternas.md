@@ -47,7 +47,7 @@ municipio y se conserva por transparencia.
 De 237 colonias con datos del censo, donde 1 es la de mayor riesgo. Las colonias
 que recibieron cisterna están, en mediana, al doble de riesgo que las que no.
 **El modelo coincide con el criterio del municipio.** Es consistente con él, no una
-prueba de que ambos estén bien (ver limitación 7), pero sin que nadie haya tenido que
+prueba de que ambos estén bien (ver limitación 8), pero sin que nadie haya tenido que
 responder una encuesta.
 
 **2. Pero doce de las veinte colonias de mayor riesgo no tienen ninguna.**
@@ -99,22 +99,26 @@ aporta la herramienta es la segunda parte, que es ordenar lo que sigue.
 1. **El mapa puede estar incompleto o desactualizado.** La prensa reporta 60
    cisternas; del mapa salen 50 registros únicos de cisterna tras eliminar
    duplicados. No sabemos si faltan o si la prensa contó distinto.
-2. **14 de las 50 cisternas no traen coordenada.** Se ubicaron a nivel de colonia
-   a partir del domicilio postal del propio mapa. Por eso **todo el contraste se
-   hace a nivel colonia, no a nivel manzana.**
+2. **15 de las 50 cisternas no traen coordenada** (14, más CIST022, cuyas coordenadas
+   eran un valor vacío). Doce se ubicaron a nivel de colonia a partir del domicilio postal
+   del propio mapa; las otras tres no se pudieron ubicar (ver 3). Por eso **todo el
+   contraste se hace a nivel colonia, no a nivel manzana.**
 3. **Tres cisternas no se pudieron ubicar** (CIST014, CIST021, CIST022) por falta
    de datos suficientes. CIST022 venía con coordenadas (-180, 90), que son un valor
    vacío y no una ubicación, y estaba marcada como `coordenada_exacta`; se corrigió a
    `sin_coordenada` con `revisar=True`. Cualquier uso de las coordenadas debe excluir
    las filas `sin_coordenada`. Quedan fuera del análisis y están marcadas en el archivo.
-4. **Una ubicación es inferida:** CIST020, cuyo domicilio es "Villa Fontana Norte
+4. **Los ids de las 3 cisternas del SIAPA se renombraron** a `SIAPA001` a `SIAPA003`: se llamaban
+   `CIST001` a `CIST003` y repetían dos ids de cisternas municipales (60 filas, 58 ids). El id ahora
+   es una llave única, que el baseline del priorizador necesita.
+5. **Una ubicación es inferida:** CIST020, cuyo domicilio es "Villa Fontana Norte
    #235", se asignó a la colonia Villa Fontana por el nombre de la calle. Está
    marcada con `revisar=True`.
-5. **El ranking usa `sin_almacen_min`**, la cota conservadora, porque el censo no
+6. **El ranking usa `sin_almacen_min`**, la cota conservadora, porque el censo no
    cruza tinaco con cisterna.
-6. **La capa de colonias es la del INE vía IIEG.** El propio IIEG advierte que
+7. **La capa de colonias es la del INE vía IIEG.** El propio IIEG advierte que
    puede no coincidir con la que usan en la práctica los municipios.
-7. **Coincidencia no es causa.** No conocemos los criterios con que el municipio
+8. **Coincidencia no es causa.** No conocemos los criterios con que el municipio
    eligió las ubicaciones; pueden incluir factores que el censo no ve, como
    disponibilidad de terreno, seguridad o acceso para la pipa.
 

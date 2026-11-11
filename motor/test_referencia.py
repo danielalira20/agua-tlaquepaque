@@ -315,5 +315,78 @@ class TestContratos(unittest.TestCase):
         self.assertEqual((self.RAIZ / "fixtures" / "plan.fixture.json").read_text(encoding="utf-8"), antes)
 
 
+    def test_cisternas_con_id_unico(self):
+        with open(self.RAIZ / "datos" / "cisternas_tlaquepaque.csv", newline="", encoding="utf-8") as fh:
+            filas = list(csv.DictReader(fh))
+        ids = [f["id"] for f in filas]
+        self.assertEqual(len(filas), 60)
+        self.assertEqual(len(ids), len(set(ids)), "hay ids de cisterna repetidos")
+        self.assertEqual(sorted(f["id"] for f in filas if f["tipo"] == "cisterna_siapa"), ["SIAPA001", "SIAPA002", "SIAPA003"])
+        # una fila 'coordenada_exacta' debe traer una coordenada dentro de Tlaquepaque, no un valor vacio como (-180, 90)
+        for f in filas:
+            if f["fuente_ubicacion"] == "coordenada_exacta":
+                self.assertTrue(-104 < float(f["lon"]) < -103 and 20 < float(f["lat"]) < 21, f["id"])
+        plan = self._json(self.RAIZ / "fixtures" / "plan.fixture.json")
+        pid = [c["id"] for c in plan["baseline"]["cisternas"]]
+        self.assertEqual(len(pid), len(set(pid)), "el baseline del plan tiene ids repetidos")
+
+
+    def _csv(self, ruta):
+        with open(ruta, newline="", encoding="utf-8") as fh:
+            return list(csv.DictReader(fh))
+
+    def test_evidencia_contrato_fixture_y_datos(self):
+        contrato = self._json(self.RAIZ / "contratos" / "evidencia.schema.json")
+        datos = self._csv(self.RAIZ / "datos" / "evidencia.csv")
+        fixture = self._csv(self.RAIZ / "fixtures" / "evidencia.fixture.csv")
+        self.assertEqual(list(datos[0].keys()), list(contrato["campos"].keys()))
+        self.assertEqual(list(fixture[0].keys()), list(contrato["campos"].keys()))
+        self.assertFalse((self.RAIZ / "contratos" / "mediciones.schema.json").exists())
+        self.assertFalse((self.RAIZ / "fixtures" / "mediciones.fixture.csv").exists())
+        ids = [d["id"] for d in datos]
+        self.assertEqual(len(ids), len(set(ids)))
+        por_id = {d["id"]: d for d in datos}
+        for f in fixture:  # el fixture son renglones reales del registro, no inventados
+            self.assertEqual(f, por_id[f["id"]], f["id"])
+        fuentes = {"cisternas_municipio", "estudio_rubino", "imdec", "prensa", "literatura"}
+        ver = {"fuente_primaria", "solo_resumen", "norma", "no_verificada"}
+        for d in datos:
+            self.assertIn(d["fuente"], fuentes, d["id"])
+            self.assertIn(d["tipo"], {"ubicacion", "valor", "cita_textual", "contexto"}, d["id"])
+            self.assertIn(d["verificacion"], ver, d["id"])
+            self.assertTrue(d["cita"], f"{d['id']} no tiene cita")
+            if d["verificacion"] == "solo_resumen":
+                self.assertTrue(d["url_o_doi"], f"{d['id']}: solo_resumen sin enlace para abrirlo")
+            if d["verificacion"] == "no_verificada":
+                self.assertTrue(d["nota"] or d["uso"], d["id"])
+
+    def test_evidencia_cisternas_coinciden_con_el_baseline_del_plan(self):
+        datos = self._csv(self.RAIZ / "datos" / "evidencia.csv")
+        cist = [d for d in datos if d["fuente"] == "cisternas_municipio"]
+        self.assertEqual(len(cist), 60)
+        reales = [d for d in cist if not d["id"].startswith("PROP")]
+        self.assertEqual(len(reales), 50)  # las 10 propuestas no cuentan como cobertura
+        calidad = {}
+        for d in reales:
+            calidad[d["ubicacion_calidad"]] = calidad.get(d["ubicacion_calidad"], 0) + 1
+            if d["ubicacion_calidad"] == "coordenada_exacta":
+                self.assertTrue(-104 < float(d["lon"]) < -103 and 20 < float(d["lat"]) < 21, d["id"])
+            else:
+                self.assertEqual((d["lon"], d["lat"]), ("", ""), d["id"])
+        self.assertEqual(calidad, {"coordenada_exacta": 35, "centro_de_colonia": 12, "sin_ubicar": 3})
+        plan = self._json(self.RAIZ / "fixtures" / "plan.fixture.json")
+        en_baseline = {c["id"] for c in plan["baseline"]["cisternas"]}
+        self.assertEqual(en_baseline, {d["id"] for d in reales if d["ubicacion_calidad"] != "sin_ubicar"})
+        self.assertEqual({e["id"] for e in plan["baseline"]["excluidas"]},
+                         {d["id"] for d in reales if d["ubicacion_calidad"] == "sin_ubicar"})
+
+    def test_evidencia_se_regenera_igual(self):
+        import subprocess
+        rutas = [self.RAIZ / "datos" / "evidencia.csv", self.RAIZ / "fixtures" / "evidencia.fixture.csv"]
+        antes = [r.read_text(encoding="utf-8") for r in rutas]
+        subprocess.run([sys.executable, "-I", str(self.RAIZ / "scripts" / "genera_evidencia.py")], check=True, capture_output=True)
+        self.assertEqual([r.read_text(encoding="utf-8") for r in rutas], antes)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)
