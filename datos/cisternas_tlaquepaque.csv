@@ -19,7 +19,7 @@ CIST018,cisterna_municipal,,MARIO MORENO #33,45606.0,Buenos Aires,,,sin_coordena
 CIST019,cisterna_municipal,,SAN JOSE PONIENTE #204,45530.0,Nueva Santa María,,,sin_coordenada,Nueva Santa María,98011.0,1.0,False
 CIST020,cisterna_municipal,,VILLA FONTANA NORTE #235,,,,,sin_coordenada,Villa Fontana,,0.9,True
 CIST021,cisterna_municipal,,CALLE ARBOLEDAS 11,45627.0,El Zalate,,,sin_coordenada,,98022.0,0.71,True
-CIST022,cisterna_municipal,,,,,-180.0,90.0,coordenada_exacta,,,0.0,False
+CIST022,cisterna_municipal,,,,,,,sin_coordenada,,,0.0,True
 CIST031,cisterna_municipal,,,,,-103.382151,20.598318,coordenada_exacta,Guayabitos,98012.0,0.0,False
 CIST032,cisterna_municipal,,,,,-103.303442,20.634524,coordenada_exacta,Centro,98142.0,0.0,False
 CIST036,cisterna_municipal,Porfirio Cortés Silva &amp; Calle Jorge,,,,-103.32234,20.605376,coordenada_exacta,El Tapatío,98218.0,0.0,False
