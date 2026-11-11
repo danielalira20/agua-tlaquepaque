@@ -15,7 +15,7 @@ from optimizador.pruebas.apoyo import LON, necesidad, parametros, ubicar
 
 def cisterna(id_, metros, ubicacion="exacta"):
     (punto,) = ubicar({id_: metros}).values()
-    return Cisterna(id_, "cisterna_municipal", punto, ubicacion, f"cerca-{id_}")
+    return Cisterna(id_, "cisterna_municipal", punto, ubicacion, f"colonia-{id_}")
 
 
 class CasosBaseline(unittest.TestCase):
@@ -87,9 +87,18 @@ class Ubicacion(unittest.TestCase):
         ubicadas, fuera = ubicar_cisternas(filas, self.ub, self.geo)
         por_id = {c.id: c for c in ubicadas}
         self.assertEqual(sorted(por_id), ["C01@municipal", "C03@municipal", "C04@municipal"])
-        self.assertEqual(fuera, ["C02@municipal", "C05@municipal", "C06@municipal", "C07@municipal"])
+        self.assertEqual(
+            fuera,
+            [
+                ("C02@municipal", "coordenada fuera del municipio"),
+                ("C05@municipal", "colonia ambigua"),
+                ("C06@municipal", "sin coordenada ni colonia"),
+                ("C07@municipal", "sin coordenada ni colonia"),
+            ],
+        )
         self.assertEqual(por_id["C01@municipal"].ubicacion, "exacta")
-        self.assertEqual(por_id["C01@municipal"].cvegeo_cercana, "b1")
+        self.assertEqual(por_id["C01@municipal"].colonia, "Beta", "sin colonia_capa, la de la manzana mas cercana")
+        self.assertEqual(por_id["C03@municipal"].colonia, "Alfa")
         self.assertEqual(por_id["C03@municipal"].ubicacion, "colonia")
         self.assertAlmostEqual(por_id["C03@municipal"].punto[1], (self.ub["a1"][1] + self.ub["a2"][1]) / 2)
         self.assertEqual(por_id["C04@municipal"].punto, por_id["C03@municipal"].punto)
@@ -101,7 +110,7 @@ class Ubicacion(unittest.TestCase):
             fila("C01", "coordenada_exacta", str(LON), lat_c, tipo="cisterna_siapa"),
         ]
         ubicadas, _ = ubicar_cisternas(filas, self.ub, self.geo)
-        self.assertEqual([(c.id, c.cvegeo_cercana) for c in ubicadas], [("C01@municipal", "a1"), ("C01@siapa", "c1")])
+        self.assertEqual([(c.id, c.colonia) for c in ubicadas], [("C01@municipal", "Alfa"), ("C01@siapa", "Beta")])
 
     def test_error_si_una_cisterna_esta_repetida_con_el_mismo_tipo(self):
         with self.assertRaises(ValueError):
@@ -109,8 +118,11 @@ class Ubicacion(unittest.TestCase):
 
     def test_seleccionar_solo_exactas(self):
         cis = [cisterna("C1", 0), cisterna("C2", 100, "colonia")]
-        self.assertEqual([c.id for c in seleccionar(cis, parametros())], ["C1", "C2"])
-        self.assertEqual([c.id for c in seleccionar(cis, parametros(baseline_cisternas="exactas"))], ["C1"])
+        usadas, fuera = seleccionar(cis, [("C9", "sin coordenada ni colonia")], parametros())
+        self.assertEqual(([c.id for c in usadas], fuera), (["C1", "C2"], [("C9", "sin coordenada ni colonia")]))
+        usadas, fuera = seleccionar(cis, [("C9", "sin coordenada ni colonia")], parametros(baseline_cisternas="exactas"))
+        self.assertEqual([c.id for c in usadas], ["C1"])
+        self.assertEqual([i for i, _ in fuera], ["C2", "C9"])
 
 
 if __name__ == "__main__":

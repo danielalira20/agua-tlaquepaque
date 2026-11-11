@@ -20,7 +20,7 @@ class Cisterna:
     tipo: str
     punto: tuple[float, float]
     ubicacion: str
-    cvegeo_cercana: str
+    colonia: str
 
 
 def leer_cisternas(ruta: str) -> list[dict]:
@@ -43,10 +43,10 @@ def ubicar_cisternas(
     filas: list[dict],
     ubicaciones: dict[str, tuple[float, float]],
     geocolonias: dict[str, tuple[str, str]],
-) -> tuple[list[Cisterna], list[str]]:
+) -> tuple[list[Cisterna], list[tuple[str, str]]]:
     """Ubica cada cisterna en su coordenada exacta o en el centro de su colonia.
 
-    Devuelve las cisternas ubicadas, ordenadas por clave, y las claves de las que quedan fuera.
+    Devuelve las cisternas ubicadas, ordenadas por clave, y (clave, motivo) de las que quedan fuera.
     """
     claves = [clave_cisterna(r) for r in filas]
     repetidas = sorted({c for c in claves if claves.count(c) > 1})
@@ -65,18 +65,22 @@ def ubicar_cisternas(
             geocols_de_nombre.setdefault(nombre, set()).add(geocol)
 
     ubicadas: list[Cisterna] = []
-    fuera: list[str] = []
+    fuera: list[tuple[str, str]] = []
     for r in sorted(filas, key=clave_cisterna):
-        punto, como = None, ""
+        punto, como, motivo = None, "", "sin coordenada ni colonia"
+        capa = r["colonia_capa"].strip()
         if r["fuente_ubicacion"] == "coordenada_exacta" and r["lon"].strip() and r["lat"].strip():
             lon, lat = float(r["lon"]), float(r["lat"])
             if caja[0] <= lon <= caja[1] and caja[2] <= lat <= caja[3]:
                 punto, como = (lon, lat), "exacta"
-        if punto is None and r["colonia_capa"].strip():
+            else:
+                motivo = "coordenada fuera del municipio"
+        if punto is None and capa:
             geocol = _geocol(r["geocol"])
             if not geocol:
-                candidatas = geocols_de_nombre.get(r["colonia_capa"].strip(), set())
+                candidatas = geocols_de_nombre.get(capa, set())
                 geocol = next(iter(candidatas)) if len(candidatas) == 1 else ""
+                motivo = "colonia ambigua" if len(candidatas) > 1 else "colonia no encontrada"
             mzs = manzanas_de.get(geocol)
             if mzs:
                 punto = (
@@ -84,18 +88,27 @@ def ubicar_cisternas(
                     sum(ubicaciones[m][1] for m in mzs) / len(mzs),
                 )
                 como = "colonia"
+            elif geocol:
+                motivo = "colonia sin manzanas ubicadas"
         if punto is None:
-            fuera.append(clave_cisterna(r))
+            fuera.append((clave_cisterna(r), motivo))
             continue
-        cercana = min(ubicaciones, key=lambda c: (haversine_m(punto, ubicaciones[c]), c))
-        ubicadas.append(Cisterna(clave_cisterna(r), r["tipo"], punto, como, cercana))
+        if not capa:
+            cercana = min(ubicaciones, key=lambda c: (haversine_m(punto, ubicaciones[c]), c))
+            capa = geocolonias.get(cercana, ("", ""))[1]
+        ubicadas.append(Cisterna(clave_cisterna(r), r["tipo"], punto, como, capa))
     return ubicadas, fuera
 
 
-def seleccionar(cisternas: list[Cisterna], p: Parametros) -> list[Cisterna]:
+def seleccionar(
+    cisternas: list[Cisterna], fuera: list[tuple[str, str]], p: Parametros
+) -> tuple[list[Cisterna], list[tuple[str, str]]]:
+    """Aplica baseline_cisternas. Las que no se usan se agregan a las excluidas con su motivo."""
     if p.baseline_cisternas == "exactas":
-        return [c for c in cisternas if c.ubicacion == "exacta"]
-    return list(cisternas)
+        usadas = [c for c in cisternas if c.ubicacion == "exacta"]
+        sobran = [(c.id, "sensibilidad: solo cisternas con coordenada exacta") for c in cisternas if c.ubicacion != "exacta"]
+        return usadas, sorted(fuera + sobran)
+    return list(cisternas), list(fuera)
 
 
 def asignar_dia_baseline(
@@ -127,7 +140,7 @@ def asignar_dia_baseline(
         llenado = llenar(vecinas[cis.id], resto, peso, p.hogares_por_viaje)
         for m, n in llenado.entregas:
             resto[m] -= n
-        viajes.append(Viaje(k, cis.cvegeo_cercana, llenado, tipo="cisterna", punto_id=cis.id))
+        viajes.append(Viaje(k, "", llenado, tipo="cisterna", punto_id=cis.id))
     return ResultadoDia(fecha, tuple(viajes), 0)
 
 

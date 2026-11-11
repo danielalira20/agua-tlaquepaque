@@ -9,7 +9,7 @@ from .entradas import Necesidad, Parametros
 
 @dataclass(frozen=True)
 class Viaje:
-    """Un viaje del dia. En el baseline, `punto_id` es la cisterna y `cvegeo_centro` la manzana mas cercana."""
+    """Un viaje del dia. En el baseline, `punto_id` es la cisterna y `cvegeo_centro` queda vacio."""
 
     orden_eleccion: int
     cvegeo_centro: str
