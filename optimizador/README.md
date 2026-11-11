@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (versión 0.3, borrador). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.4, borrador). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
@@ -12,9 +12,10 @@ con los recursos reales del municipio, y mide cuánto mejora eso frente al repar
 | Entrada | Estado por manzana y fecha (`contratos/estado.schema.json`) | Motor de Dani |
 | Entrada | `datos/manzanas_centroides.csv` (ubicación de cada manzana) | Datos del equipo |
 | Entrada | `datos/manzanas_tlaquepaque.csv` (ocupantes por vivienda) | Datos del equipo |
-| Entrada | `datos/cisternas_tlaquepaque.csv` (cisternas del municipio) | Datos del equipo |
+| Entrada | `datos/cisternas_tlaquepaque.csv` (cisternas del municipio y del SIAPA) | Datos del equipo |
 | Entrada | `supuestos.json` (recursos y parámetros) | Este carril |
 | Salida | `salidas/plan.json` con la forma de `contratos/plan.schema.json` | Este carril |
+| Salida | `salidas/baseline.json`, con la misma forma, para el baseline estilizado | Este carril |
 
 `salidas/` no se versiona (está en `.gitignore`). Las tablas finales que cita el reporte
 van en `resultados/`.
@@ -44,7 +45,9 @@ van en `resultados/`.
 | Radio de cobertura | 300 m | Supuesto declarado; ver `docs/decisiones/03-radio-cobertura.md` |
 | Cota para ordenar | mínima | Ver `docs/decisiones/02-cota-min-max.md` |
 | Modo de racha | desempate | Ver `docs/decisiones/04-horizonte-dias.md` |
-| Capacidad de cisterna comunitaria | pendiente | Ver `docs/decisiones/01-baseline-cisternas.md` |
+| Cisterna comunitaria | 1 viaje = 10,000 L | Supuesto; ver `docs/decisiones/01-baseline-cisternas.md` |
+| Cisternas del baseline | todas (47) | Sensibilidad con las 35 de coordenada exacta |
+| Turnos del baseline | todas | Sensibilidad con `con_necesidad` |
 
 200 L por hogar equivale a un día de consumo: 3.7 personas × 50 L ≈ 185 L.
 
@@ -61,8 +64,8 @@ van en `resultados/`.
 |---|---|---|
 | `feat/priorizador-especificacion` | Esqueleto, supuestos, decisiones, `ESPECIFICACION.md` | Hecho |
 | `feat/plan-contrato` | `plan.schema.json` v2 y su fixture | Pendiente (coordinar con Dani) |
-| `feat/priorizador-referencia` | Cobertura, asignación diaria, métricas y `plan.json`, con pruebas | En curso |
-| `feat/priorizador-baseline` | Reparto actual alrededor de las cisternas | Pendiente (decisión 01) |
+| `feat/priorizador-referencia` | Cobertura, asignación diaria, métricas y `plan.json`, con pruebas | Hecho |
+| `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | En curso |
 | `feat/priorizador-comparador` | Baseline contra priorizado, sensibilidad | Pendiente |
 | `feat/viabilidad-presupuestal` | Costo de un viaje de pipa, con fuente | Pendiente |
 
@@ -84,6 +87,12 @@ tocar `supuestos.json`:
 
     python3 -m optimizador.priorizador --estado salidas/referencia.csv --set modo_racha=peso
     python3 -m optimizador.priorizador --estado salidas/referencia.csv --set radio_cobertura_m=500
+
+Baseline estilizado (escribe `salidas/baseline.json`):
+
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv --regla baseline
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv --regla baseline --set baseline_turnos=con_necesidad
+    python3 -m optimizador.priorizador --estado salidas/referencia.csv --regla baseline --set baseline_cisternas=exactas
 
 Pruebas:
 
