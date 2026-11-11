@@ -8,7 +8,8 @@ raíz del repo; aquí solo van las internas de este carril.
 | 01 | Baseline: con qué se compara el priorizador | **Pendiente**, en revisión con Dani |
 | 02 | Cota mínima o máxima para ordenar | Propuesta |
 | 03 | Radio de cobertura de un punto de entrega | Propuesta |
-| 04 | Horizonte: día por día con racha | Propuesta |
+| 04 | Horizonte: día por día, racha como desempate | Propuesta |
+| 05 | Algoritmo voraz con comparación contra el máximo | Propuesta |
 
 ## Formato de cada archivo
 

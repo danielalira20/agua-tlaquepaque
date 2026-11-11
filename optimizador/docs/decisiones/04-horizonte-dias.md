@@ -18,11 +18,13 @@ priorizador decide cada día por separado o planea la semana completa.
 
 ## Decisión
 
-**(a) con racha.** Se reparte cada fecha por separado. La prioridad de una manzana
-considera cuántas viviendas tiene sin agua y cuánto tiempo llevan así, con el dato
-`horas_sin_servicio` que ya entrega el motor: `peso = horas_sin_servicio / 24`, es decir,
-los días seguidos sin servicio (sección 4 de `ESPECIFICACION.md`). Se corre también sin
-racha (`usar_racha = false`) para mostrar cuánto cambia el reparto.
+**(a) con racha, usando la racha como desempate.** Se reparte cada fecha por separado. Al
+elegir cada viaje, primero se busca atender al mayor número de viviendas sin agua; entre
+opciones que atienden a las mismas, va primero la que lleva más días seguidos sin
+servicio (`peso = horas_sin_servicio / 24`, sección 4 de `ESPECIFICACION.md`).
+
+La racha como **peso** (`modo_racha = peso`) se reporta como escenario de equidad, y sin
+racha (`modo_racha = no`) como referencia.
 
 ## Por qué
 
@@ -30,10 +32,19 @@ racha (`usar_racha = false`) para mostrar cuánto cambia el reparto.
    mejora algo si lo que se hace un día afecta al siguiente. Aquí nada pasa de un día a
    otro: la entrega dura un día, las viviendas en riesgo no tienen dónde guardar agua y
    los viajes se reponen cada día. Lo mejor de la semana es la suma de lo mejor de cada día.
-2. **La racha sí cambia el reparto.** Entre dos manzanas con las mismas viviendas sin agua,
-   se atiende primero la que lleva más días así. Conecta con la tesis: a más tiempo sin
-   agua, más riesgo para la salud.
-3. Se puede probar con casos resueltos a mano y no necesita bibliotecas externas.
+2. **La racha como peso tiene un costo real.** Con un prototipo sobre el estado real
+   (cota mínima, 63 viajes de 50 hogares), el 9 de noviembre la racha como peso atiende
+   2,794 viviendas en lugar de 3,150 (11% menos) para llegar antes a las que llevan más
+   días. El 13 de noviembre atiende 3,067 (3% menos).
+3. **Como desempate no cuesta nada.** Atiende las 3,150 viviendas, el máximo posible, en
+   los dos días, y aun así favorece a quien lleva más días cuando hay opciones iguales.
+4. Elegir entre atender a más gente o atender primero a quien lleva más tiempo es una
+   decisión de política pública, no algo que los datos resuelvan: no se sabe cuánto daño
+   extra causa cada día adicional. Por eso el modo es un parámetro y el reporte muestra
+   los dos.
+
+Las cifras son preliminares: salen de un prototipo desechable con dos fechas. Se
+recalculan con la implementación de referencia.
 
 La semana sigue presente en los resultados: además de las personas-día sin agua evitadas,
 se reporta cuántas viviendas no recibieron ninguna entrega en los siete días.
@@ -47,3 +58,4 @@ cisterna, una entrega podría durar más de un día y la opción (b) empezaría 
 
 - Que el reparto es diario y no planea a varios días, y por qué.
 - Que la racha usa las horas sin servicio del calendario vigente del SIAPA.
+- El costo en viviendas atendidas de usar la racha como peso.
