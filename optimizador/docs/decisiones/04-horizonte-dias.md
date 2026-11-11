@@ -32,7 +32,7 @@ racha (`modo_racha = no`) como referencia.
    mejora algo si lo que se hace un día afecta al siguiente. Aquí nada pasa de un día a
    otro: la entrega dura un día, las viviendas en riesgo no tienen dónde guardar agua y
    los viajes se reponen cada día. Lo mejor de la semana es la suma de lo mejor de cada día.
-2. **La racha como peso tiene un costo real.** Con un prototipo sobre el estado real
+2. **La racha como peso tiene un costo real.** Con el estado real
    (cota mínima, 63 viajes de 50 hogares), el 9 de noviembre la racha como peso atiende
    2,794 viviendas en lugar de 3,150 (11% menos) para llegar antes a las que llevan más
    días. El 13 de noviembre atiende 3,067 (3% menos).
@@ -43,8 +43,9 @@ racha (`modo_racha = no`) como referencia.
    extra causa cada día adicional. Por eso el modo es un parámetro y el reporte muestra
    los dos.
 
-Las cifras son preliminares: salen de un prototipo desechable con dos fechas. Se
-recalculan con la implementación de referencia.
+Las cifras salieron primero de un prototipo y la implementación de referencia
+(`python3 -m optimizador.priorizador`) las reproduce exactamente. Usan el estado del motor
+de referencia; se recalculan cuando esté el estado oficial.
 
 La semana sigue presente en los resultados: además de las personas-día sin agua evitadas,
 se reporta cuántas viviendas no recibieron ninguna entrega en los siete días.
