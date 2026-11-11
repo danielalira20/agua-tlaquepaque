@@ -232,9 +232,15 @@ class TestContratos(unittest.TestCase):
 
     RAIZ = AQUI.parent
 
+    @staticmethod
+    def _json(ruta):
+        import json
+        with open(ruta, encoding="utf-8") as fh:
+            return json.load(fh)
+
     def test_estado_contrato_igual_a_salida_del_motor(self):
         import json
-        contrato = json.load(open(self.RAIZ / "contratos" / "estado.schema.json", encoding="utf-8"))
+        contrato = self._json(self.RAIZ / "contratos" / "estado.schema.json")
         self.assertEqual(list(contrato["campos"].keys()), R.COLUMNAS)
         with open(self.RAIZ / "fixtures" / "estado.fixture.csv", encoding="utf-8") as fh:
             self.assertEqual(next(csv.reader(fh)), R.COLUMNAS)
@@ -266,6 +272,47 @@ class TestContratos(unittest.TestCase):
             for zona, dias in cal["esquema"].items():
                 self.assertTrue(set(dias) <= set(R.DIAS))
                 self.assertLess(len(dias), 7)
+
+
+    def test_plan_fixture_cuadra_con_su_contrato(self):
+        import json
+        contrato = self._json(self.RAIZ / "contratos" / "plan.schema.json")
+        plan = self._json(self.RAIZ / "fixtures" / "plan.fixture.json")
+        self.assertEqual(set(plan.keys()) - {"nota_fixture"}, set(contrato["estructura"].keys()) - set())
+        self.assertNotIn("orden_del_dia", json.dumps(plan))
+        self.assertNotIn("ruta", json.dumps(list(plan.keys())))
+        par = plan["parametros"]
+        self.assertEqual(par["radio_cobertura_m"], 300)
+        self.assertEqual(par["hogares_por_viaje"], par["litros_por_viaje"] // par["litros_por_hogar"])
+        b = plan["baseline"]
+        self.assertEqual(len(b["cisternas"]) + len(b["excluidas"]), 50)  # 50 cisternas; las 10 propuestas no cuentan
+        self.assertEqual(sorted(e["id"] for e in b["excluidas"]), ["CIST014", "CIST021", "CIST022"])
+        self.assertTrue(all(c["ubicacion"] in ("coordenada_exacta", "centro_de_colonia") for c in b["cisternas"]))
+        self.assertTrue(all(-104 < c["lon"] < -103 and 20 < c["lat"] < 21 for c in b["cisternas"]))
+        self.assertEqual({(c["regla"], c["cota_para_ordenar"]) for c in plan["corridas"]},
+                         {("priorizado", "min"), ("priorizado", "max"), ("baseline", "min"), ("baseline", "max")})
+        for corrida in plan["corridas"]:
+            for dia in corrida["fechas"]:
+                self.assertLessEqual(len(dia["viajes"]), par["viajes_por_dia"])
+                for v in dia["viajes"]:
+                    self.assertLessEqual(v["viviendas_objetivo"], par["hogares_por_viaje"])
+                    self.assertEqual(v["litros"], v["viviendas_objetivo"] * par["litros_por_hogar"])
+                    self.assertEqual(sum(m["viviendas"] for m in v["manzanas_cubiertas"]), v["viviendas_objetivo"])
+                    self.assertEqual(v["tipo"], "pipa" if corrida["regla"] == "priorizado" else "cisterna")
+                r = dia["resumen"]
+                self.assertEqual(r["viviendas_atendidas"], sum(v["viviendas_objetivo"] for v in dia["viajes"]))
+                self.assertLessEqual(r["viviendas_atendidas"], r["maximo_viviendas"])
+                self.assertEqual(r["viajes_usados"] + r["viajes_sin_usar"], par["viajes_por_dia"])
+        for c in plan["comparacion"]:
+            for k, v in c["semana"].items():
+                self.assertAlmostEqual(v["diferencia"], v["priorizado"] - v["baseline"], places=1, msg=k)
+
+    def test_plan_fixture_se_regenera_igual(self):
+        import subprocess
+        antes = (self.RAIZ / "fixtures" / "plan.fixture.json").read_text(encoding="utf-8")
+        subprocess.run([sys.executable, "-I", str(self.RAIZ / "scripts" / "genera_fixture_plan.py")], check=True,
+                       capture_output=True)
+        self.assertEqual((self.RAIZ / "fixtures" / "plan.fixture.json").read_text(encoding="utf-8"), antes)
 
 
 if __name__ == "__main__":

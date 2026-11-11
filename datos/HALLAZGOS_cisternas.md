@@ -103,7 +103,10 @@ aporta la herramienta es la segunda parte, que es ordenar lo que sigue.
    a partir del domicilio postal del propio mapa. Por eso **todo el contraste se
    hace a nivel colonia, no a nivel manzana.**
 3. **Tres cisternas no se pudieron ubicar** (CIST014, CIST021, CIST022) por falta
-   de datos suficientes. Quedan fuera del análisis y están marcadas en el archivo.
+   de datos suficientes. CIST022 venía con coordenadas (-180, 90), que son un valor
+   vacío y no una ubicación, y estaba marcada como `coordenada_exacta`; se corrigió a
+   `sin_coordenada` con `revisar=True`. Cualquier uso de las coordenadas debe excluir
+   las filas `sin_coordenada`. Quedan fuera del análisis y están marcadas en el archivo.
 4. **Una ubicación es inferida:** CIST020, cuyo domicilio es "Villa Fontana Norte
    #235", se asignó a la colonia Villa Fontana por el nombre de la calle. Está
    marcada con `revisar=True`.
