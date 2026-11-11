@@ -67,10 +67,13 @@ cobertura del programa se debe presentar **como rango: entre 63% y 79%**.
 
 ## Lo que hay que saber
 
-1. **Las dos fuentes no coinciden para una parte grande de la población.** El 30% de las
-   personas de Tlaquepaque vivía en polígonos con zona en el portal pero sin nombre exacto
-   en la lista. Tras la tabla de equivalencias, 16% sigue dependiendo solo del portal.
+1. **Las dos fuentes no coinciden para una parte grande de la población.** El 16% de
+   las personas de Tlaquepaque (confianza `baja`) vive en polígonos que tienen zona en el
+   portal pero ningún nombre en la lista, ni siquiera tras la tabla de equivalencias.
    Incluye `Centro` (8,630 personas), `Camichines` (8,484) y `Parques del Bosque` (7,799).
+   De las 15 colonias con más viviendas sin almacenamiento dentro del programa, 11 tienen
+   respaldo de la lista (10 con confianza alta y El Vergel con media) y 4 dependen solo
+   del portal (Parques del Bosque, Geo Villas Los Olivos III, Miraflores y Miravalle).
 2. **Los conflictos son tres colonias:** El Tapatío (portal: zona 4; lista: zona 3), San
    Juan (portal 3; lista 4) y un pedazo de El Sauz (portal 4; lista 6). El Tapatío es una
    colonia grande y bien puede estar partida entre dos zonas.
