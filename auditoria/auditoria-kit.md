@@ -1,7 +1,8 @@
 # Auditoría del proyecto contra el kit
 
-Estado revisado: rama `dev` en `56f473d`, miércoles 11 de noviembre de 2026.
-Entrega: a más tardar el domingo 15 de noviembre.
+Estado revisado: primera versión sobre `dev` en `56f473d`; **actualizada el miércoles 11 de
+noviembre de 2026 sobre `dev` en `6402f2a`**, después de cruzar zonas del SIAPA, procesar la
+marginación por AGEB y cerrar el contrato `plan`. Entrega: a más tardar el domingo 15 de noviembre.
 
 El kit tiene 7 indicaciones generales y 5 criterios de éxito del Reto 01. Esta
 auditoría los recorre uno por uno, dice qué evidencia existe hoy en el repo y qué
@@ -14,20 +15,45 @@ Semáforo: 🟢 cubierto con evidencia · 🟡 parcial · 🔴 sin cubrir o con 
 
 ## 0. Lectura rápida
 
-De las 12 casillas, 2 están en verde, 7 en amarillo y 3 en rojo. Pero varias se
-repiten (los criterios 2, 3 y 4 son las indicaciones 5, 2 y 4 dichas de otra forma),
-así que en realidad son **seis problemas distintos**:
+De las 12 casillas, **4 están en verde, 5 en amarillo y 3 en rojo**. Varias se repiten
+(los criterios 2, 3 y 4 son las indicaciones 5, 2 y 4 dichas de otra forma), así que
+siguen siendo **seis problemas distintos**:
 
 | # | Problema | Casillas | Gravedad |
 |---|---|---|---|
 | 1 | El reporte tiene un límite de 2,000 palabras en total | I6, entregable RC | 🔴 cambia cómo se escribe |
 | 2 | Falta la viabilidad institucional y presupuestal | C5 | 🔴 sin dueño ni datos |
 | 3 | Las tres áreas de conocimiento no están escritas | I4, C4 | 🔴 |
-| 4 | El dataset 01 del catálogo puede no ser el que usamos | I2, I3, C3 | 🟡 riesgo de interpretación |
-| 5 | El prototipo usa datos simulados y no hay motor ni optimizador en el repo | I5, C2 | 🟡 |
-| 6 | La delimitación está pendiente de votación y sin indicador formal | I1 | 🟡 |
+| 4 | El dataset 01 del catálogo puede no ser el que usamos | I3 | 🟡 mitigado: quedan #17 y #02. Falta preguntar a SOLACYT |
+| 5 | El prototipo usa datos simulados y el priorizador no tiene código | I5, C2 | 🟡 hay motor, contratos y especificación |
+| 6 | La delimitación espera el voto de Magui y tiene cifras con rango | I1 | 🟡 |
 
 La caracterización del problema con datos de Jalisco (C1) es nuestro punto fuerte.
+
+### Qué cambió el 11 de noviembre
+
+| Casilla | Antes | Ahora | Por qué |
+|---|:---:|:---:|---|
+| I2, C3 (≥ 2 datasets) | 🟡 | 🟢 | El #17 ya se usa a dos niveles (municipal y AGEB). El #02 está verificado como respaldo, así que aunque el #01 se cuestionara quedan dos. Condición: citar el #02 con un uso concreto |
+| I5, C2 (prototipo) | 🟡 | 🟡 | Ya hay motor de referencia con 34 pruebas, contratos con fixtures y la especificación del priorizador. La app sigue simulada y falta el código del priorizador |
+| I1 (delimitación) | 🟡 | 🟡 | Jass y Migue votaron B. Falta Magui. Las cifras se corrigieron (ver la advertencia 1) |
+
+### Cuatro advertencias nuevas para el reporte
+
+Salieron de los datos de hoy y cambian lo que se puede afirmar:
+
+1. **La cobertura del programa es un rango.** 63% a 79% de la población de Tlaquepaque: el 63%
+   tiene respaldo de la lista oficial del SIAPA y el 16% restante sale solo de los polígonos del
+   portal. El PDF oficial no nombra esas colonias (`datos/zonas_siapa/LEEME.md`).
+2. **No se puede decir que "el riesgo se concentra en los más pobres".** Dentro del programa, el 50%
+   de las viviendas sin tinaco ni cisterna está en AGEB de marginación "Muy bajo"
+   (`datos/HALLAZGOS_marginacion.md`). Sí se puede decir que el índice oficial mide el tubo y no el
+   almacenamiento. Hay que presentar exposición y vulnerabilidad social como dos dimensiones.
+3. **"Sin agua" va con el supuesto de corte total.** El portal del SIAPA dice que el racionamiento es
+   baja de presión. El valor por defecto `f = 0` es la cota alta, no una medición, y a 50 L/persona/día
+   casi no cambia el resultado, pero a 100 L lo multiplica por 2.2 (`motor/ESPECIFICACION.md`, sección 9).
+4. **El baseline del priorizador es estilizado**: los mismos viajes repartidos por turnos entre las
+   cisternas instaladas, no el reparto real del municipio, del que no hay registro.
 
 ---
 
@@ -110,11 +136,11 @@ priorizador de Jass produzca el número que la sostiene.
 
 | # | Indicación | Estado | Evidencia en el repo | Falta | Dueño sugerido |
 |---|---|:---:|---|---|---|
-| I1 | Delimitar: zona, por qué, quién usa, indicador | 🟡 | Municipio fijado; usuarios definidos (coordinación de pipas y familias); razones documentadas | **Votación A/B/C pendiente.** El indicador no está escrito en una frase. Propuesta: *personas-día sin agua por semana* | Magui |
-| I2 | ≥ 2 datasets del catálogo | 🟡 | #17 municipal obtenido (el catálogo lo pide "por municipio"). #01 usado a fondo | Ver sección 3: el #01 del catálogo puede no ser lo que usamos. #17 a nivel AGEB pendiente de bajar | Magui |
-| I3 | Demostrar cómo se usó cada dataset | 🟡 | `datos/FUENTES.md` documenta procedencia, cobertura y procesamiento | No es la tabla del Anexo B. Falta el uso concreto del #17 y la cita exacta de cada uno | Magui |
+| I1 | Delimitar: zona, por qué, quién usa, indicador | 🟡 | Municipio fijado; usuarios definidos (coordinación de pipas y familias); razones documentadas. Opción B recomendada (colonias dentro del programa, zonas 3 a 6): 462,194 personas (78.6%), de las cuales 368,111 (62.6%) con respaldo de la lista oficial. Jass y Migue votaron B | **Falta el voto de Magui.** El indicador no está escrito en una frase. Propuesta: *personas-día sin agua por semana* (semana del 9 al 15 de noviembre: 210,116 a 490,320 con el calendario vigente) | Magui |
+| I2 | ≥ 2 datasets del catálogo | 🟢 | #17 a dos niveles: municipal (Tlaquepaque "Muy bajo", lugar 2,424 de 2,469) y AGEB (214 AGEB cruzadas con las manzanas por `CVE_AGEB`). #01 usado a fondo. #02 (CNGMD 2023) verificado como respaldo | La sección 3 sigue: preguntar a SOLACYT por el #01. Citar el #02 con un uso concreto en el reporte | Magui |
+| I3 | Demostrar cómo se usó cada dataset | 🟡 | `datos/FUENTES.md` documenta procedencia, cobertura y procesamiento de manzanas, colonias, zonas y calendarios del SIAPA, marginación y cisternas | No es la tabla del Anexo B. Falta la cita exacta de cada uno y la extracción del #02, que todavía no está en el repo | Magui |
 | I4 | Tres áreas de conocimiento | 🔴 | Hay material de las tres (ver abajo) | **No está escrito en ningún lado** | Dani |
-| I5 | Prototipo funcionando; lo simulado, declarado | 🟡 | `app/` compila (8 páginas estáticas) | Datos simulados. Calendario simulado y distinto del oficial. **No hay código en `motor/` ni `optimizador/`** | Migue, Dani, Jass |
+| I5 | Prototipo funcionando; lo simulado, declarado | 🟡 | `app/` compila (8 páginas estáticas). **`motor/` tiene especificación y una implementación de referencia en Python con 34 pruebas.** Los contratos `calendario`, `zonas`, `manzanas`, `estado` y `plan` están actualizados con fixtures. Jass tiene la especificación del priorizador en su rama | La app sigue con datos simulados y calendario simulado, distinto del oficial. Falta adaptar el motor oficial en TypeScript, y **el priorizador no tiene código** | Migue, Dani, Jass |
 | I6 | Fuentes citadas y uso de IA declarado | 🟡 | `decisiones/verificacion-citas.md` verifica tres citas | No hay bibliografía consolidada en APA. No hay declaración de IA | Dani |
 | I7 | Revisar los criterios de éxito | 🟢 | Este documento | Repetirlo el sábado con el reporte ya escrito | Todos |
 
@@ -122,9 +148,9 @@ priorizador de Jass produzca el número que la sostiene.
 
 | # | Criterio | Estado | Evidencia | Falta | Dueño sugerido |
 |---|---|:---:|---|---|---|
-| C1 | Caracterizar el problema con datos específicos de Jalisco | 🟢 | Censo 2020 por manzana; contraste de cisternas (rank mediano 62 contra 125); marginación oficial "Muy bajo" contra 13.8 a 26.5% de viviendas sin almacenamiento; calendario oficial del SIAPA | Pasarlo a 280 palabras de resultados | Magui |
+| C1 | Caracterizar el problema con datos específicos de Jalisco | 🟢 | Censo 2020 por manzana; contraste de cisternas (rank mediano 62 contra 125 sobre todo el municipio; **37 contra 59 restringido al programa**); marginación oficial "Muy bajo" contra 13.8 a 26.5% de viviendas sin almacenamiento; calendario y zonas oficiales del SIAPA (verificados contra su PDF) | Pasarlo a 280 palabras de resultados, con las cuatro advertencias de la sección 0 | Magui |
 | C2 | Solución funcional o prototipada | 🟡 | Igual que I5 | Igual que I5 | Migue |
-| C3 | ≥ 2 datasets oficiales verificables | 🟡 | Igual que I2 | Igual que I2 | Magui |
+| C3 | ≥ 2 datasets oficiales verificables | 🟢 | Igual que I2 | Igual que I2 | Magui |
 | C4 | Tres áreas de conocimiento | 🔴 | Igual que I4 | Igual que I4 | Dani |
 | C5 | **Viabilidad con el contexto institucional y presupuestal de un municipio real** | 🔴 | Solo contexto: 32 pipas, 60 cisternas, 565 viajes en 9 días, 200 L por hogar, TlaqueChat como canal | **Costo por viaje de pipa, presupuesto municipal, costo de operar la herramienta, quién la adopta.** Nada de eso está investigado y no hay propuesta de Jass en el repo | Jass |
 
@@ -157,17 +183,18 @@ y manzana urbana, Censo de Población y Vivienda 2020*. De ahí salen `VPH_TINAC
 | | |
 |---|---|
 | **A favor** | Mismo Censo 2020, mismo nivel (manzana), misma institución, y cubre exactamente "agua, drenaje y electricidad". Un jurado razonable lo aceptaría |
-| **En contra** | Son productos distintos. No pude confirmar si el Inventario trae tinaco y cisterna. Según la búsqueda, el Inventario describe servicios del entorno de la manzana (redes de agua y drenaje, alumbrado, transporte) y se genera a partir del Censo |
+| **En contra** | Son productos distintos. No pude confirmar si el Inventario trae tinaco y cisterna. Su presentación lista vialidad, mobiliario y servicios urbanos, y no nombra tinaco ni cisterna. (Una versión anterior de este documento decía "redes de agua y drenaje": no es lo que dice la presentación) |
 | **Si se interpreta en contra** | Perdemos uno de los dos datasets obligatorios, y el que sostiene todo el proyecto |
 
 ### Qué hacer, de menor a mayor esfuerzo
 
 1. **Preguntar a SOLACYT** (`contacto@solacyt.org` o WhatsApp +52 33 1073 3731, con el número de equipo): *"¿El producto 'Principales resultados por AGEB y manzana urbana, Censo 2020' cuenta como el dataset 01 del catálogo?"* Es un mensaje y puede resolver el tema hoy.
 2. **Citar con precisión.** En el Anexo B poner el nombre exacto del producto, no solo "dataset 01", y explicar la relación con el Inventario.
-3. **Margen de seguridad con un tercer dataset del catálogo** que usemos de verdad. El #02 (agua potable y saneamiento por municipio, CNGMD 2023, INEGI) es el más barato y sirve para el contexto institucional de C5. Así, aunque el #01 se cuestionara, quedarían #17 y #02.
+3. **Margen de seguridad con un tercer dataset del catálogo** que usemos de verdad. El #02 (agua potable y saneamiento por municipio, CNGMD 2023, INEGI) **ya está verificado**: es utilizable (el año del censo es 2023, la información es de 2022) y trae, para Tlaquepaque, que hay dos operadores (la administración municipal fuera de la cabecera, con pipas, y el SIAPA en la cabecera), tomas con y sin medidor, y montos de cobro sin dato. Sirve para el contexto institucional de C5. Así, aunque el #01 se cuestionara, quedarían #17 y #02. **Falta versionar la extracción de Tlaquepaque y citarlo en el Anexo B.**
 
 El #17 no tiene este problema: el catálogo lo describe como "marginación y rezago
-social **por municipio**", y el archivo municipal de CONAPO es exactamente eso.
+social **por municipio**", y el archivo municipal de CONAPO es exactamente eso. Además ya
+se usa a nivel AGEB.
 
 ---
 
@@ -202,7 +229,7 @@ del Hackathon. La carpeta oficial de logos existe y tiene 8 archivos.
 | **RC** Reporte científico | 🔴 | Todo. El material existe, pero está en documentos del equipo y en el repo, no en el formato. Ver secciones 1 y 4 |
 | **INFO** Infografía | 🔴 | Formato libre. Necesita los números finales de resultados |
 | **MU** Manual de usuario | 🔴 | Cómo se usa el software **y sus limitaciones**. Se puede adelantar con la app actual |
-| **ET** Entregable técnico | 🟡 | Hay repo con datos, contratos, scripts y app. Falta README de reproducción y el código del motor y del optimizador |
+| **ET** Entregable técnico | 🟡 | Hay repo con datos, contratos con fixtures, scripts reproducibles (`asigna_zonas`, `recalcular_hallazgos`, `procesa_imu`, `extrae_lista_pdf`), el motor de referencia y las especificaciones. Falta el README de reproducción, el motor oficial en TypeScript y el código del priorizador |
 | **PITCH** 8 diapositivas | 🔴 | Máximo 8. Incluir declaración de IA y lo simulado |
 | **VIDEO** | 🔴 | Demostración del software funcionando, en YouTube. No se puede grabar sin la app con datos reales |
 
@@ -219,7 +246,8 @@ verificó el equipo por su cuenta.
 El kit lo exige textualmente. Hoy es simulado: los hexágonos y las cifras de
 `app/`, las 60 cisternas de la app (las reales están en `datos/`), el calendario de
 noviembre de la app, el aviso por WhatsApp, y el supuesto de que un día de
-racionamiento equivale a cero agua.
+racionamiento equivale a cero agua (`f = 0`, aprobado como cota alta; ver la advertencia 3).
+El baseline del priorizador y el fixture del plan también son estilizados o provisionales.
 
 ---
 
@@ -248,8 +276,8 @@ Una fecha sin confirmar por escrito: el kit dice que la presentación virtual es
 
 | Día | Qué | Responsables |
 |---|---|---|
-| **Mié 11** | Votar la delimitación. Preguntar a SOLACYT por el dataset 01. Magui pasa a `dev`. Juntar credenciales para el Anexo A | Todos |
-| **Jue 12** | Calendario por fecha y zonas reales en el repo. Motor contra datos reales. Abrir las 3 referencias pendientes. Jass investiga costo de pipa y presupuesto municipal | Dani, Jass, Magui |
+| **Mié 11** | Votar la delimitación (✅ Jass y Migue; falta Magui). Preguntar a SOLACYT por el dataset 01. Magui pasa a `dev`. Juntar credenciales para el Anexo A | Todos |
+| **Jue 12** | ✅ *Adelantado el 11:* calendario por fecha y zonas reales en el repo, motor de referencia contra datos reales, marginación por AGEB, contrato `plan`. **Sigue pendiente:** abrir las 3 referencias, Jass investiga costo de pipa y presupuesto municipal, y preguntar al SIAPA por las colonias que su PDF no nombra | Dani, Jass, Magui |
 | **Vie 13** | Priorizador sobre el motor real. App con datos reales. Escribir RC secciones 1 a 3 | Jass, Migue, Dani |
 | **Sáb 14** | RC secciones 4 a 6, infografía, manual, pitch y video. Contar palabras del reporte completo | Todos |
 | **Dom 15** | Repasar las 12 casillas en voz alta. Subir **antes del mediodía** | Todos |
