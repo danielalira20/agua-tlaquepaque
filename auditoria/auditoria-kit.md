@@ -87,7 +87,7 @@ el límite. Estrategia:
 | Anexo A (obligatorio) | Credenciales escolares y de la asesora o asesor |
 | Anexo B | **Tabla de citación de datasets**: nombre, institución, año, cobertura, qué se tomó y para qué |
 | Anexo C | Las tres áreas de conocimiento y qué aportó cada una |
-| Anexo D | Supuestos y análisis de sensibilidad (consumo, tinaco, U, horas de corte) |
+| Anexo D | Supuestos y análisis de sensibilidad (consumo, tinaco, U, horas de corte, fracción `f` que sigue llegando) |
 | Anexo E | Contrastes: cisternas del municipio y marginación oficial |
 | Anexo F | Descripción del prototipo, qué está simulado y qué falta |
 | Anexo G | Declaración de uso de IA |
@@ -122,8 +122,8 @@ que engloba la problemática". Una formulación candidata, para discutir:
 
 > En las colonias de Tlaquepaque dentro del programa de racionamiento, las
 > viviendas sin almacenamiento concentran la exposición a quedarse sin agua, y
-> priorizar el reparto de pipas por viviendas sin respaldo reduce las
-> personas-día sin agua frente a un reparto sin ese criterio, con la misma flota.
+> repartir los mismos viajes de pipa según esa necesidad, en lugar de repartirlos
+> entre las cisternas ya instaladas, atiende a más viviendas sin agua.
 
 Tiene que ser positiva, deseable, factible y viable. Esta lo es, siempre que el
 priorizador de Jass produzca el número que la sostiene.
@@ -152,7 +152,7 @@ priorizador de Jass produzca el número que la sostiene.
 | C2 | Solución funcional o prototipada | 🟡 | Igual que I5 | Igual que I5 | Migue |
 | C3 | ≥ 2 datasets oficiales verificables | 🟢 | Igual que I2 | Igual que I2 | Magui |
 | C4 | Tres áreas de conocimiento | 🔴 | Igual que I4 | Igual que I4 | Dani |
-| C5 | **Viabilidad con el contexto institucional y presupuestal de un municipio real** | 🔴 | Solo contexto: 32 pipas, 60 cisternas, 565 viajes en 9 días, 200 L por hogar, TlaqueChat como canal | **Costo por viaje de pipa, presupuesto municipal, costo de operar la herramienta, quién la adopta.** Nada de eso está investigado y no hay propuesta de Jass en el repo | Jass |
+| C5 | **Viabilidad con el contexto institucional y presupuestal de un municipio real** | 🔴 | Solo contexto: 32 pipas, 60 cisternas según la prensa (el mapa del municipio trae 50 más 10 propuestas), 565 viajes en 9 días, 200 L por hogar, TlaqueChat como canal | **Costo por viaje de pipa, presupuesto municipal, costo de operar la herramienta, quién la adopta.** Nada de eso está investigado y no hay propuesta de Jass en el repo | Jass |
 
 ### Las tres áreas: el material ya existe
 
@@ -244,7 +244,7 @@ verificó el equipo por su cuenta.
 ### Lo simulado hay que decirlo
 
 El kit lo exige textualmente. Hoy es simulado: los hexágonos y las cifras de
-`app/`, las 60 cisternas de la app (las reales están en `datos/`), el calendario de
+`app/`, las 60 cisternas inventadas de la app (las reales, 50 más 10 propuestas, están en `datos/`), el calendario de
 noviembre de la app, el aviso por WhatsApp, y el supuesto de que un día de
 racionamiento equivale a cero agua (`f = 0`, aprobado como cota alta; ver la advertencia 3).
 El baseline del priorizador y el fixture del plan también son estilizados o provisionales.
