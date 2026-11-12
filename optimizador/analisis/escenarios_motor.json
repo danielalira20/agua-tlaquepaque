@@ -1,0 +1,12 @@
+{
+  "_nota": "Escenarios del motor para el comparador (decision 06). Las esquinas son copia de ESQUINAS en scripts/sensibilidad_orden.py (sensibilidad del motor). Se copian porque ese script usa numpy y pandas y este carril solo la biblioteca estandar; optimizador/pruebas/test_comparador.py falla si las dos copias dejan de coincidir. 'procedencia' es la del rango en esa sensibilidad: decision, literatura o sin_fuente.",
+  "escenarios": [
+    {"nombre": "base", "procedencia": "decision", "cambios": {}},
+    {"nombre": "esquina_favorable", "procedencia": "decision",
+     "cambios": {"consumo_l_persona_dia": 50, "tinaco_l": 1100, "fraccion_suministro_en_racionamiento": 0.5, "horas_efectivas_corte": 24}},
+    {"nombre": "esquina_adversa", "procedencia": "decision",
+     "cambios": {"consumo_l_persona_dia": 100, "tinaco_l": 750, "fraccion_suministro_en_racionamiento": 0.0, "horas_efectivas_corte": 48}},
+    {"nombre": "esquina_adversa_extrema", "procedencia": "sin_fuente",
+     "cambios": {"consumo_l_persona_dia": 150, "tinaco_l": 450, "cisterna_l": 2500, "fraccion_suministro_en_racionamiento": 0.0, "horas_efectivas_corte": 48}}
+  ]
+}

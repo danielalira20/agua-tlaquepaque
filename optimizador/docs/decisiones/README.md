@@ -10,6 +10,7 @@ raíz del repo; aquí solo van las internas de este carril.
 | 03 | Radio de cobertura de un punto de entrega | Propuesta |
 | 04 | Horizonte: día por día, racha como desempate | Propuesta |
 | 05 | Algoritmo voraz con comparación contra el máximo | Propuesta |
+| 06 | Rejilla del comparador: qué se corre y qué tablas salen | Propuesta |
 
 ## Formato de cada archivo
 
