@@ -165,7 +165,8 @@ Cada cisterna se ubica con la primera regla que aplique:
    rectángulo de los centroides del municipio, con un margen de 0.02°.
 2. **Por colonia:** si `colonia_capa` no está vacía. La colonia es `geocol` si viene, o la
    única colonia con ese nombre en `manzana_colonia.csv`. El punto es el promedio de los
-   centroides de sus manzanas.
+   centroides de sus manzanas, sumados con `math.fsum` (suma exacta) para que el punto sea
+   el mismo con cualquier versión de Python.
 3. Si ninguna aplica, la cisterna queda fuera.
 
 Con los datos actuales: 35 exactas, 12 por colonia y 3 fuera (CIST014, CIST021 y CIST022),
