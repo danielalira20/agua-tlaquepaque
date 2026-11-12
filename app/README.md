@@ -1,14 +1,29 @@
 # Aguanta · app (carril de Migue)
 
-Next.js estático + MapLibre + deck.gl (hexágonos H3) + Recharts. Un hexágono representa una colonia.
+Next.js estático + MapLibre + deck.gl (hexágonos H3) + Recharts.
 
     npm install
-    npm run datos     # regenera public/datos/*.json (SIMULADOS, con la forma de los contratos)
-    npm run dev       # http://localhost:3000
-    npm run build     # exporta a out/ (listo para Vercel o cualquier hosting estático)
+    npm run dev                          # http://localhost:3000
+    npm run build                        # exporta a out/ (Vercel: Root Directory = app)
+    node scripts/verifica-vectores.ts    # cruce del motor oficial contra el de referencia
 
-Datos reales (manzanas, estado, calendarios, cisternas y plan): `public/datos/real/`, ver su `LEEME.md`. Se regeneran con `python3 scripts/exporta_app.py`; los simulados siguen en `public/datos/` hasta que la app cambie.
+## Datos
 
-Páginas: `/` inicio · `/panal` mapa por fecha · `/mi-casa` calculadora por vivienda · `/pipas` priorizador del día · `/datos` gráficas, método, datasets y supuestos.
+La app lee **solo** `public/datos/real/` (los exporta `python3 scripts/exporta_app.py` desde la raíz; ver su LEEME.md).
+Python exporta los datos; el **motor oficial** (`src/lib/motor.ts`, implementa `motor/ESPECIFICACION.md`) corre en el
+navegador para recalcular lo interactivo: consumo, `f`, horas efectivas y calendario (vigente u original).
 
-Lógica del modelo en `src/lib/modelo.ts`: autonomía por estrato de vivienda (sin almacenamiento / tinaco / cisterna), nunca promediando la colonia; calendario por fecha y zona; priorizador glotón. Cuando lleguen `estado.parquet` y `plan.json` reales, se reemplaza lo que genera `scripts/genera-datos.mjs`.
+Cruce con el motor de Python: los 4 conjuntos de `motor/vectores/vectores.json` (2,128 renglones) y todo `estado.json`
+(34,097 renglones) coinciden exactamente.
+
+## Páginas
+
+- `/panal` — hexágonos H3 (res. 8) que agrupan las manzanas reales. Color: % de viviendas sin agua (cota mínima);
+  altura: personas. Capa de marginación aparte, cisternas, propuestas, supuestos y advertencias.
+- `/mi-casa` — calculadora por vivienda con el calendario vigente.
+- `/pipas` — salida del priorizador (`plan.json`) contra el baseline estilizado, por cota mínima o máxima.
+- `/datos` — vigente vs original, sensibilidad a consumo y `f`, riesgo por zona, tabla de equidad por marginación,
+  colonias de mayor riesgo, método y fuentes.
+
+Reglas que la app respeta: siempre mínimo y máximo; marginación fuera de la severidad; el baseline es estilizado;
+`orden_eleccion` no es una ruta; las 5 advertencias de `meta.json` se muestran en Panal y Datos.

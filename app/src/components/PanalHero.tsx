@@ -35,7 +35,7 @@ export default function PanalHero({ radio = 5, tam = 22 }: { radio?: number; tam
         ))}
       </svg>
       <div className="mx-auto -mt-2 flex w-fit items-center gap-2 whitespace-nowrap rounded-full bg-white/90 px-3 py-1 text-xs shadow backdrop-blur">
-        <span className="h-2 w-2 rounded-full bg-emerald-500" /> Demo con datos simulados <Badge tipo="simulado" />
+        <span className="h-2 w-2 rounded-full bg-emerald-500" /> Datos reales de Tlaquepaque <Badge tipo="real" />
       </div>
     </div>
   );

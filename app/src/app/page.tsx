@@ -9,7 +9,7 @@ export default function Inicio() {
         <div>
           <div className="text-sm font-semibold uppercase tracking-wider text-blue-700">Hackathon Jalisco 2026 · Reto 01 Ciudades</div>
           <h1 className="mt-2 text-4xl font-bold leading-tight">El mismo corte de agua: para una casa es una molestia, para la de enfrente es una emergencia.</h1>
-          <p className="mt-4 text-lg text-slate-600">Cruzamos el Censo (quién tiene tinaco, cisterna o nada) con el calendario de tandeo del SIAPA para decir, colonia por colonia y día por día, <b>cuántas viviendas se quedan sin agua</b> en Tlaquepaque, y a dónde mandar las pipas primero.</p>
+          <p className="mt-4 text-lg text-slate-600">Cruzamos el Censo (quién tiene tinaco, cisterna o nada) con el calendario de tandeo del SIAPA para decir, manzana por manzana y día por día, <b>cuántas viviendas se quedan sin agua</b> en Tlaquepaque, y a dónde mandar las pipas primero.</p>
           <div className="mt-6 flex gap-3">
             <Link href="/panal" className="rounded-full bg-blue-700 px-5 py-2.5 font-medium text-white">Ver el panal</Link>
             <Link href="/mi-casa" className="rounded-full bg-slate-100 px-5 py-2.5 font-medium">¿Cuánto aguanta tu casa?</Link>
@@ -19,9 +19,9 @@ export default function Inicio() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-3">
-        <Tarjeta><div className="text-3xl font-bold">58,938 – 92,069</div><div className="text-sm text-slate-600">personas en manzanas donde más de la mitad de las viviendas no tiene tinaco ni cisterna</div><div className="mt-2"><Badge tipo="real" /> <span className="text-xs text-slate-500">Censo 2020, cota mín–máx</span></div></Tarjeta>
-        <Tarjeta><div className="text-3xl font-bold">111</div><div className="text-sm text-slate-600">colonias de Tlaquepaque en el calendario de tandeo (zonas 3 y 4)</div><div className="mt-2"><Badge tipo="real" /> <span className="text-xs text-slate-500">SIAPA</span></div></Tarjeta>
-        <Tarjeta><div className="text-3xl font-bold">32 pipas · 60 cisternas</div><div className="text-sm text-slate-600">lo que el municipio ya opera, hoy sin una herramienta que priorice por vulnerabilidad</div><div className="mt-2"><Badge tipo="real" /> <span className="text-xs text-slate-500">prensa, oct-2026</span></div></Tarjeta>
+        <Tarjeta><div className="text-3xl font-bold">17,420 – 34,429</div><div className="text-sm text-slate-600">viviendas sin tinaco ni cisterna dentro del programa de racionamiento de Tlaquepaque (zonas 3 a 6)</div><div className="mt-2"><Badge tipo="real" /> <span className="text-xs text-slate-500">Censo 2020 + zonas del SIAPA, cota mín–máx</span></div></Tarjeta>
+        <Tarjeta><div className="text-3xl font-bold">El Sauz</div><div className="text-sm text-slate-600">la colonia de mayor riesgo: 11,889 personas, la gran mayoría de sus viviendas sin dónde guardar agua y ninguna cisterna comunitaria. Zona 6.</div><div className="mt-2"><Badge tipo="real" /></div></Tarjeta>
+        <Tarjeta><div className="text-3xl font-bold">32 pipas · 50 cisternas</div><div className="text-sm text-slate-600">lo que el municipio ya opera, hoy sin una herramienta que priorice dónde se secan las casas</div><div className="mt-2"><Badge tipo="real" /> <span className="text-xs text-slate-500">prensa y mapa municipal, 2026</span></div></Tarjeta>
       </section>
 
       <section className="mt-10 grid gap-4 md:grid-cols-3">
@@ -33,7 +33,7 @@ export default function Inicio() {
       </section>
 
       <section className="mt-10 rounded-2xl border border-dashed border-slate-300 p-5 text-sm text-slate-600">
-        <b>Qué está simulado en este prototipo.</b> Las cifras por colonia, la lista completa de colonias, el calendario de noviembre y la ubicación de las 60 cisternas son datos de ejemplo con la forma exacta de los contratos del repo. Las cifras globales del Censo son reales. Cada número en la app lleva su etiqueta: <Badge tipo="real" /> <Badge tipo="estimado" /> <Badge tipo="simulado" />.
+        <b>Qué hay que saber de estos números.</b> Un día de racionamiento se modela como cero agua: es la cota alta del daño (el SIAPA dice que es baja de presión). El 16 % de la población tiene zona solo por el polígono del portal. El Censo es de 2020 y no dice de cuántos litros son los tinacos. El calendario del SIAPA ya cambió una vez y puede volver a cambiar. Por eso todo número va como rango, y cada uno lleva su etiqueta: <Badge tipo="real" /> <Badge tipo="estimado" /> <Badge tipo="simulado" />.
       </section>
     </main>
   );

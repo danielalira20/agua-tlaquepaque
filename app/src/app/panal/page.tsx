@@ -1,97 +1,140 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
-import { useDatos } from "@/lib/datos";
-import { estadoColonia, resumenDia, SUPUESTOS, fmt, pct, fechaLarga, type Supuestos as TS } from "@/lib/modelo";
-import { Badge, Kpi } from "@/components/ui";
-import { SelectorFecha, Supuestos } from "@/components/Controles";
-import { colorPct } from "@/components/HexMap";
+import { useReal, calcular, rango, fmt, fechaLarga } from "@/lib/real";
+import type { SupuestosMotor } from "@/lib/motor";
+import { Badge } from "@/components/ui";
+import { Advertencias, SelectorFecha, Supuestos } from "@/components/Controles";
+import { COLOR_MARG, colorPct, puntosCisternas } from "@/components/HexMap";
 
 const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loading: () => <div className="grid h-full place-items-center text-slate-400">Cargando mapa…</div> });
 
+const CONF: Record<string, string> = { alta: "alta", media: "media", baja: "baja", conflicto: "fuentes en conflicto", ambiguo: "ambigua", ninguna: "fuera del programa", sin_poligono: "sin polígono", sin_geometria: "sin ubicación" };
+
 export default function Panal() {
-  const datos = useDatos();
-  const [version, setVersion] = useState<"octubre" | "noviembre">("noviembre");
+  const d = useReal();
+  const [version, setVersion] = useState<"vigente" | "original">("vigente");
   const [fecha, setFecha] = useState("2026-11-12");
   const [tresD, setTresD] = useState(true);
+  const [modo, setModo] = useState<"agua" | "marginacion">("agua");
   const [sel, setSel] = useState<string | null>(null);
-  const [s, setS] = useState<TS>(SUPUESTOS);
-  const [verCis, setVerCis] = useState(false);
+  const [s, setS] = useState<SupuestosMotor | null>(null);
+  const [verCis, setVerCis] = useState(true);
+  const [verProp, setVerProp] = useState(false);
 
-  const cal = datos?.calendarios[version];
-  const estados = useMemo(() => (datos && cal ? datos.colonias.map((c) => estadoColonia(c, cal, fecha, s)) : []), [datos, cal, fecha, s]);
-  const r = useMemo(() => resumenDia(estados), [estados]);
-  const e = estados.find((x) => x.colonia.id === sel);
+  const sup = s ?? d?.meta.supuestos ?? null;
+  const cal = d?.calendarios[version];
+  const res = useMemo(() => (d && cal && sup ? calcular(d, cal, fecha, sup) : null), [d, cal, fecha, sup]);
+  const puntos = useMemo(() => (d && verCis ? puntosCisternas(d.cisternas, verProp) : []), [d, verCis, verProp]);
+  if (!d || !cal || !sup || !res) return <div className="p-10 text-slate-500">Cargando datos reales…</div>;
 
-  if (!datos || !cal) return <div className="p-10 text-slate-500">Cargando datos…</div>;
+  const r = res.resumen;
+  const c = res.celdas.find((x) => x.h3 === sel);
+  const dia = cal.dias.find((x) => x.fecha === fecha);
+
+  // detalle de la celda: composición por estrato (cotas) y confianza de la zona
+  const det = c && (() => {
+    let tin = 0, cis = 0, nada_min = 0, nada_max = 0;
+    const conf: Record<string, number> = {};
+    for (const i of c.manzanas) {
+      const m = d.manzanas[i];
+      tin += m.viv_tinaco; cis += m.viv_cisterna; nada_min += m.sin_almacen_min; nada_max += m.sin_almacen_max;
+      conf[m.zona_confianza] = (conf[m.zona_confianza] ?? 0) + m.pob;
+    }
+    return { tin, cis, nada_min, nada_max, conf };
+  })();
 
   return (
     <div className="relative h-[calc(100vh-3.5rem)]">
-      <HexMap estados={estados} cisternas={verCis ? datos.cisternas : []} tresD={tresD} seleccion={sel} onSeleccion={setSel} />
+      <HexMap celdas={res.celdas} puntos={puntos} tresD={tresD} modo={modo} seleccion={sel} onSeleccion={setSel} />
 
-      {/* controles arriba a la izquierda */}
-      <div className="absolute left-4 top-4 flex gap-2">
+      <div className="absolute left-4 top-4 flex flex-wrap gap-2">
         <div className="flex rounded-full bg-white p-1 shadow">
-          {(["octubre", "noviembre"] as const).map((v) => (
-            <button key={v} onClick={() => setVersion(v)} className={`rounded-full px-3 py-1 text-sm font-medium capitalize ${version === v ? "bg-slate-900 text-white" : "text-slate-700"}`}>Calendario {v}</button>
+          {(["vigente", "original"] as const).map((v) => (
+            <button key={v} onClick={() => setVersion(v)} className={`rounded-full px-3 py-1 text-sm font-medium ${version === v ? "bg-slate-900 text-white" : "text-slate-700"}`}>
+              {v === "vigente" ? "Calendario vigente (4-nov)" : "Original (15-oct)"}
+            </button>
+          ))}
+        </div>
+        <div className="flex rounded-full bg-white p-1 shadow">
+          {(["agua", "marginacion"] as const).map((v) => (
+            <button key={v} onClick={() => setModo(v)} className={`rounded-full px-3 py-1 text-sm font-medium ${modo === v ? "bg-blue-700 text-white" : "text-slate-700"}`}>{v === "agua" ? "Sin agua" : "Marginación"}</button>
           ))}
         </div>
         <button onClick={() => setTresD(!tresD)} className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">{tresD ? "Ver 2D" : "Ver 3D"}</button>
-        <button onClick={() => setVerCis(!verCis)} className={`rounded-full px-3 py-1 text-sm font-medium shadow ${verCis ? "bg-orange-500 text-white" : "bg-white"}`}>60 cisternas</button>
+        <button onClick={() => setVerCis(!verCis)} className={`rounded-full px-3 py-1 text-sm font-medium shadow ${verCis ? "bg-orange-500 text-white" : "bg-white"}`}>Cisternas</button>
+        <button onClick={() => setVerProp(!verProp)} className={`rounded-full px-3 py-1 text-sm font-medium shadow ${verProp ? "bg-purple-600 text-white" : "bg-white"}`}>10 propuestas</button>
       </div>
 
-      {/* panel lateral */}
-      <aside className="absolute right-4 top-4 bottom-4 w-[22rem] overflow-y-auto rounded-2xl bg-white/95 p-5 shadow-xl backdrop-blur">
-        <div className="text-xs font-semibold uppercase tracking-wider text-blue-700">Panal · Tlaquepaque</div>
+      <aside className="absolute bottom-4 right-4 top-4 w-[23rem] overflow-y-auto rounded-2xl bg-white/95 p-5 shadow-xl backdrop-blur">
+        <div className="flex items-center justify-between">
+          <div className="text-xs font-semibold uppercase tracking-wider text-blue-700">Panal · Tlaquepaque</div>
+          <Badge tipo="real" />
+        </div>
         <div className="text-lg font-bold capitalize">{fechaLarga(fecha)}</div>
-        <div className="mt-1 text-xs text-slate-500">Zonas sin servicio hoy: {cal.dias.find((d) => d.fecha === fecha)?.zonas_sin_servicio.join(", ") || "ninguna"}</div>
+        <div className="text-xs text-slate-500">Zonas con racionamiento hoy: {dia?.zonas_sin_servicio.join(", ") || "ninguna"}</div>
 
-        {e ? (
+        {c && det ? (
           <div className="mt-4">
             <button onClick={() => setSel(null)} className="text-xs text-blue-700">← Volver al resumen</button>
-            <div className="mt-1 text-xl font-bold">{e.colonia.nombre}</div>
-            <div className="text-sm text-slate-600">Zona {e.colonia.zona} · {e.colonia.manzanas} manzanas · {fmt(e.colonia.pob)} personas</div>
-            <div className="mt-1"><Badge tipo="simulado" /> <span className="text-xs text-slate-500">{e.colonia.simulado}</span></div>
-            <div className="mt-4 text-4xl font-bold tabular-nums" style={{ color: `rgb(${colorPct(e.pct_sin_agua).join(",")})` }}>{pct(e.pct_sin_agua)}</div>
-            <div className="text-sm text-slate-600">de las viviendas sin agua · {fmt(e.personas_sin_agua)} personas</div>
-            <div className="mt-1 text-xs text-slate-500">{e.horas_sin_servicio} h acumuladas sin servicio</div>
-            <div className="mt-4 text-sm font-semibold">Composición de viviendas</div>
-            {e.estratos.map((x) => (
-              <div key={x.nombre} className="mt-2">
-                <div className="flex justify-between text-sm"><span>{x.nombre}</span><span className="tabular-nums">{fmt(x.viviendas)} {x.seca ? "· seca" : x.guardada ? "· agua guardada" : "· con agua"}</span></div>
-                <div className="h-2 rounded bg-slate-100"><div className={`h-2 rounded ${x.seca ? "bg-slate-300" : x.guardada ? "bg-sky-300" : "bg-blue-600"}`} style={{ width: `${(x.viviendas / e.colonia.viviendas) * 100}%` }} /></div>
-                <div className="text-[11px] text-slate-500">{x.autonomia_h === 0 ? "Sin reserva: se queda sin agua en cuanto hay corte" : `Aguanta ${x.autonomia_h.toFixed(0)} h con ${s.consumo} L/persona/día`}</div>
-              </div>
-            ))}
+            <div className="mt-1 text-lg font-bold leading-snug">{c.colonias.slice(0, 4).join(", ")}{c.colonias.length > 4 ? ` y ${c.colonias.length - 4} más` : ""}</div>
+            <div className="text-sm text-slate-600">Zona {c.zonas.join(", ") || "fuera del programa"} · {c.manzanas.length} manzanas · {fmt(c.pob)} personas</div>
+            <div className="mt-3 text-3xl font-bold tabular-nums" style={{ color: `rgb(${colorPct(c.pct_min).join(",")})` }}>{Math.round(c.pct_min * 100)}–{Math.round(c.pct_max * 100)} %</div>
+            <div className="text-sm text-slate-600">de las viviendas sin agua · {rango(c.pers_min, c.pers_max)} personas</div>
+            <div className="mt-4 text-sm font-semibold">Cómo guardan agua sus {fmt(c.viviendas)} viviendas</div>
+            <ul className="mt-1 space-y-1 text-sm">
+              <li className="flex justify-between"><span>Sin tinaco ni cisterna</span><b className="tabular-nums">{rango(det.nada_min, det.nada_max)}</b></li>
+              <li className="flex justify-between"><span>Con tinaco</span><b className="tabular-nums">{fmt(det.tin)}</b></li>
+              <li className="flex justify-between"><span>Con cisterna</span><b className="tabular-nums">{fmt(det.cis)}</b></li>
+            </ul>
+            <p className="mt-1 text-[11px] text-slate-500">El Censo no cruza tinaco con cisterna: por eso las viviendas sin nada van como rango.</p>
+            <div className="mt-3 text-sm font-semibold">Confianza de la zona</div>
+            <ul className="mt-1 text-xs text-slate-600">{Object.entries(det.conf).map(([k, v]) => <li key={k}>{CONF[k] ?? k}: {fmt(v)} personas</li>)}</ul>
+            <div className="mt-2 text-xs text-slate-600">Marginación dominante: <b>{c.marg}</b> <span className="text-slate-400">(capa aparte, no entra en el cálculo)</span></div>
           </div>
         ) : (
           <div className="mt-4 space-y-4">
-            <Kpi valor={pct(r.pct_viv_sin_agua)} etiqueta="de las viviendas sin agua hoy" badge="estimado" />
-            <div className="grid grid-cols-2 gap-3">
-              <Kpi valor={fmt(r.personas_sin_agua)} etiqueta="personas sin agua" badge="estimado" />
-              <Kpi valor={String(r.colonias_afectadas)} etiqueta="colonias afectadas" badge="simulado" />
+            <div>
+              <div className="text-3xl font-bold tabular-nums">{rango(r.sin_min, r.sin_max)}</div>
+              <div className="text-sm text-slate-600">viviendas sin agua hoy (cota mínima – máxima)</div>
             </div>
-            <Kpi valor={fmt(r.viv_agua_guardada)} etiqueta={`viviendas con agua guardada más de ${s.U} h (desinfectar)`} badge="estimado" />
+            <div className="grid grid-cols-2 gap-3">
+              <div><div className="text-xl font-bold tabular-nums">{rango(r.pers_min, r.pers_max)}</div><div className="text-xs text-slate-600">personas sin agua</div></div>
+              <div><div className="text-xl font-bold tabular-nums">{fmt(r.mzas_quiebre)}</div><div className="text-xs text-slate-600">manzanas con 10 % o más de viviendas secas</div></div>
+            </div>
+            <div><div className="text-xl font-bold tabular-nums">{rango(r.guard_min, r.guard_max)}</div><div className="text-xs text-slate-600">viviendas con agua guardada más de {sup.u_horas_agua_guardada} h: desinfectar</div></div>
           </div>
         )}
 
-        <div className="mt-5 border-t pt-4">
-          <SelectorFecha cal={cal} fecha={fecha} onFecha={setFecha} />
-        </div>
+        <div className="mt-5 border-t pt-4"><SelectorFecha cal={cal} fecha={fecha} onFecha={setFecha} /></div>
 
-        <div className="mt-4 border-t pt-4">
-          <div className="text-sm font-semibold">Color: % de viviendas sin agua · altura: personas</div>
-          <div className="mt-1 h-2 rounded" style={{ background: "linear-gradient(90deg, rgb(29,78,216), rgb(226,232,240))" }} />
-          <div className="flex justify-between text-xs text-slate-500"><span>todas con agua</span><span>todas secas</span></div>
+        <div className="mt-4 border-t pt-4 text-sm">
+          {modo === "agua" ? (
+            <>
+              <div className="font-semibold">Color: % de viviendas sin agua (cota mín.) · altura: personas</div>
+              <div className="mt-1 h-2 rounded" style={{ background: "linear-gradient(90deg, rgb(29,78,216), rgb(226,232,240))" }} />
+              <div className="flex justify-between text-xs text-slate-500"><span>todas con agua</span><span>50 % o más secas</span></div>
+              <div className="mt-1 text-xs text-slate-500">Gris muy claro: fuera del programa de racionamiento.</div>
+            </>
+          ) : (
+            <>
+              <div className="font-semibold">Grado de marginación (CONAPO 2020, por AGEB)</div>
+              <div className="mt-1 flex flex-wrap gap-2 text-xs">{Object.entries(COLOR_MARG).map(([k, v]) => <span key={k} className="flex items-center gap-1"><span className="h-3 w-3 rounded-sm" style={{ background: `rgb(${v.join(",")})` }} />{k}</span>)}</div>
+            </>
+          )}
+          <div className="mt-2 flex flex-wrap gap-3 text-xs text-slate-600">
+            <span><span className="text-orange-500">●</span> cisterna</span><span><span className="text-orange-300">●</span> ubicación aproximada</span><span><span className="text-purple-600">●</span> propuesta</span>
+          </div>
         </div>
 
         <details className="mt-4 border-t pt-4">
           <summary className="cursor-pointer text-sm font-semibold">Supuestos (mueven el mapa)</summary>
-          <div className="mt-2"><Supuestos s={s} onChange={setS} /></div>
-          <p className="mt-2 text-[11px] text-slate-500">Con 50 L/persona/día un tinaco de 1,100 L dura más que el ciclo: solo se seca quien no tiene dónde guardar. A 100–150 L también fallan las casas con tinaco.</p>
+          <div className="mt-2"><Supuestos s={sup} onChange={setS} /></div>
+          {s && <button onClick={() => setS(null)} className="mt-2 text-xs text-blue-700">Volver a los supuestos base</button>}
         </details>
 
-        <p className="mt-4 text-[11px] text-slate-400">Cada hexágono representa una colonia (no su forma real). Toca uno para ver su composición y su fuente.</p>
+        <Advertencias lista={d.meta.advertencias} className="mt-4" />
+        <p className="mt-3 text-[11px] text-slate-400">Cada hexágono agrupa las manzanas reales que caen en él (H3, resolución 8). Toca uno para ver sus colonias y su composición.</p>
       </aside>
     </div>
   );

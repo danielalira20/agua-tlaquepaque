@@ -4,31 +4,49 @@ import maplibregl from "maplibre-gl";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { H3HexagonLayer } from "@deck.gl/geo-layers";
 import { ScatterplotLayer } from "@deck.gl/layers";
-import type { Estado, Cisterna } from "@/lib/modelo";
+import type { Celda, Cisterna } from "@/lib/real";
 
 const ESTILO = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
+type RGB = [number, number, number];
 
-/** Azul lleno = con agua; pálido = seco. El panal se vacía conforme avanza el calendario. */
-export function colorPct(p: number): [number, number, number] {
-  const a: [number, number, number] = [29, 78, 216];   // blue-700
-  const b: [number, number, number] = [226, 232, 240]; // slate-200
-  return [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * p)) as [number, number, number];
+/** Azul lleno = con agua; pálido = seco. Se satura en 50 % (umbral de quiebre mayoritario). */
+export const SATURA = 0.5;
+export function colorPct(p: number): RGB {
+  const a: RGB = [29, 78, 216], b: RGB = [226, 232, 240];
+  const t = Math.sqrt(Math.min(1, p / SATURA));
+  return [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * t)) as RGB;
+}
+export const COLOR_MARG: Record<string, RGB> = {
+  "Muy alto": [127, 29, 29], Alto: [220, 38, 38], Medio: [251, 146, 60], Bajo: [254, 215, 170], "Muy bajo": [255, 247, 237], "sin dato": [203, 213, 225],
+};
+const FUERA: RGB = [241, 245, 249];
+
+export type Punto = { id: string; lon: number; lat: number; tipo: "cisterna" | "aproximada" | "propuesta" | "pipa"; texto: string };
+const COLOR_PUNTO: Record<Punto["tipo"], [number, number, number, number]> = {
+  cisterna: [249, 115, 22, 240], aproximada: [253, 186, 116, 220], propuesta: [168, 85, 247, 230], pipa: [15, 23, 42, 230],
+};
+
+export function puntosCisternas(cs: Cisterna[], verPropuestas: boolean): Punto[] {
+  return cs.filter((c) => c.lon != null && c.lat != null && (verPropuestas || c.tipo !== "propuesta_municipio")).map((c) => ({
+    id: c.id, lon: c.lon!, lat: c.lat!,
+    tipo: c.tipo === "propuesta_municipio" ? "propuesta" : c.ubicacion === "centro_de_colonia" ? "aproximada" : "cisterna",
+    texto: c.tipo === "propuesta_municipio" ? `Propuesta del municipio · ${c.colonia}` : `Cisterna${c.ubicacion === "centro_de_colonia" ? " (ubicación aproximada)" : ""} · ${c.colonia}`,
+  }));
 }
 
 type Props = {
-  estados: Estado[]; cisternas?: Cisterna[]; tresD: boolean;
-  seleccion?: string | null; onSeleccion?: (id: string | null) => void;
-  resaltar?: Set<string>;
+  celdas: Celda[]; puntos?: Punto[]; tresD: boolean; modo?: "agua" | "marginacion";
+  seleccion?: string | null; onSeleccion?: (h3: string | null) => void; resaltar?: Set<string>;
 };
 
-export default function HexMap({ estados, cisternas = [], tresD, seleccion, onSeleccion, resaltar }: Props) {
+export default function HexMap({ celdas, puntos = [], tresD, modo = "agua", seleccion, onSeleccion, resaltar }: Props) {
   const div = useRef<HTMLDivElement>(null);
   const mapa = useRef<maplibregl.Map | null>(null);
   const overlay = useRef<MapboxOverlay | null>(null);
 
   useEffect(() => {
     if (!div.current || mapa.current) return;
-    const m = new maplibregl.Map({ container: div.current, style: ESTILO, center: [-103.3, 20.6], zoom: 11.6, pitch: 50, bearing: -15, attributionControl: false });
+    const m = new maplibregl.Map({ container: div.current, style: ESTILO, center: [-103.31, 20.6], zoom: 11.4, pitch: 50, bearing: -15, attributionControl: false });
     m.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
     m.addControl(new maplibregl.AttributionControl({ compact: true }));
     const o = new MapboxOverlay({ interleaved: false, layers: [] });
@@ -41,36 +59,38 @@ export default function HexMap({ estados, cisternas = [], tresD, seleccion, onSe
 
   useEffect(() => {
     if (!overlay.current) return;
-    const maxP = Math.max(1, ...estados.map((e) => e.personas_sin_agua));
+    const maxP = Math.max(1, ...celdas.map((c) => c.pers_max));
     overlay.current.setProps({
       layers: [
-        new H3HexagonLayer<Estado>({
-          id: "colonias", data: estados, pickable: true, extruded: tresD, coverage: 0.9, elevationScale: 1,
-          getHexagon: (e) => e.colonia.h3,
-          getFillColor: (e) => {
-            const c = colorPct(e.pct_sin_agua);
-            const dim = resaltar && !resaltar.has(e.colonia.id);
-            return [...c, dim ? 70 : 230] as [number, number, number, number];
+        new H3HexagonLayer<Celda>({
+          id: "panal", data: celdas, pickable: true, extruded: tresD, coverage: 0.92,
+          getHexagon: (c) => c.h3,
+          getFillColor: (c) => {
+            const col = modo === "marginacion" ? COLOR_MARG[c.marg] ?? COLOR_MARG["sin dato"] : c.en_programa ? colorPct(c.pct_min) : FUERA;
+            return [...col, resaltar && !resaltar.has(c.h3) ? 60 : 235] as [number, number, number, number];
           },
-          getElevation: (e) => 150 + (e.personas_sin_agua / maxP) * 1200,
-          getLineColor: (e) => (e.colonia.id === seleccion ? [15, 23, 42, 255] : [255, 255, 255, 120]),
-          getLineWidth: (e) => (e.colonia.id === seleccion ? 6 : 1), lineWidthUnits: "pixels", stroked: true,
-          onClick: (p) => onSeleccion?.(p.object ? p.object.colonia.id : null),
-          updateTriggers: { getFillColor: [estados, resaltar], getElevation: [estados], getLineColor: [seleccion], getLineWidth: [seleccion] },
-          transitions: { getFillColor: 400, getElevation: 400 },
+          getElevation: (c) => (modo === "agua" ? 40 + (c.pers_min / maxP) * 1400 : 40),
+          getLineColor: (c) => (c.h3 === seleccion ? [15, 23, 42, 255] : [255, 255, 255, 140]),
+          getLineWidth: (c) => (c.h3 === seleccion ? 5 : 1), lineWidthUnits: "pixels", stroked: true,
+          onClick: (p) => onSeleccion?.(p.object ? p.object.h3 : null),
+          updateTriggers: { getFillColor: [celdas, modo, resaltar], getElevation: [celdas, modo], getLineColor: [seleccion], getLineWidth: [seleccion] },
+          transitions: { getFillColor: 350, getElevation: 350 },
         }),
-        new ScatterplotLayer<Cisterna>({
-          id: "cisternas", data: cisternas, getPosition: (c) => [c.lng, c.lat], getRadius: 55, radiusMinPixels: 3,
-          getFillColor: [249, 115, 22, 230], getLineColor: [255, 255, 255], lineWidthMinPixels: 1, stroked: true, pickable: true,
+        new ScatterplotLayer<Punto>({
+          id: "puntos", data: puntos, getPosition: (p) => [p.lon, p.lat], getRadius: 70, radiusMinPixels: 3.5, pickable: true,
+          getFillColor: (p) => COLOR_PUNTO[p.tipo], getLineColor: [255, 255, 255], lineWidthMinPixels: 1, stroked: true,
         }),
       ],
-      getTooltip: ({ object }: { object?: Estado | Cisterna }) => {
+      getTooltip: ({ object }: { object?: Celda | Punto }) => {
         if (!object) return null;
-        if ("colonia" in object) return { text: `${object.colonia.nombre} · zona ${object.colonia.zona}\n${(object.pct_sin_agua * 100).toFixed(0)} % de viviendas sin agua · ${object.personas_sin_agua.toLocaleString("es-MX")} personas` };
-        return { text: "Cisterna comunitaria (ubicación simulada)" };
+        if ("h3" in object) {
+          const col = object.colonias.slice(0, 3).join(", ") + (object.colonias.length > 3 ? ` y ${object.colonias.length - 3} más` : "");
+          return { text: `${col}\nZona ${object.zonas.join(", ") || "fuera del programa"} · ${object.manzanas.length} manzanas\nSin agua: ${Math.round(object.pct_min * 100)}–${Math.round(object.pct_max * 100)} % de viviendas` };
+        }
+        return { text: object.texto };
       },
     });
-  }, [estados, cisternas, tresD, seleccion, onSeleccion, resaltar]);
+  }, [celdas, puntos, tresD, modo, seleccion, onSeleccion, resaltar]);
 
   return <div ref={div} className="h-full w-full" />;
 }
