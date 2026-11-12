@@ -10,6 +10,12 @@ que cubre el calendario de tandeo del SIAPA. Entre 58,938 y 92,069 personas (cot
 el Censo no cruza tinaco con cisterna) viven en manzanas donde más de la mitad de las viviendas no
 tiene tinaco ni cisterna. El censo trae 4,871 manzanas y 588,419 personas.
 
+**Delimitación aprobada (opción B, 12-nov-2026, 4 de 4):** las colonias de Tlaquepaque **dentro del
+programa de racionamiento** del SIAPA (zonas 3 a 6). Son 462,194 personas (78.6%); entre el 63% y el 79% de la
+población según la fuente de zonas, porque la lista oficial y el portal no coinciden del todo (ver
+`datos/zonas_siapa/LEEME.md`). Se reportan resultados por zona y las zonas 3 y 4 quedan como caso de estudio.
+Indicador: **personas-día sin agua por semana**.
+
 **Por qué Tlaquepaque y no El Salto o Tlajomulco.** El calendario oficial de racionamiento
 (siete zonas, versión original del 15-oct-2026 y vigente del 3-nov-2026) solo cubre Guadalajara, Zapopan, Tlaquepaque y Tonalá.
 Sin calendario el modelo no puede anticipar, solo reaccionar, y reaccionar ya es un mapa de

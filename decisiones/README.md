@@ -62,3 +62,32 @@ de prensa leídas completas, y 1 sin verificar: el factor 1.5 de decaimiento del
 
 **Lo único que no se puede hacer** sigue siendo lo que dice la propuesta: quitar la encuesta en silencio
 y aun así escribir "validamos". En el reporte va una línea que diga qué se hizo en su lugar y por qué.
+
+## Resolución de la delimitación (12-nov-2026)
+
+**Aprobada: opción B**, las colonias de Tlaquepaque dentro del programa de racionamiento (zonas 3 a 6).
+Propuesta de Dani; a favor Jass, Migue y Magui (4 de 4). Razones: sigue siendo un solo municipio con calendario
+publicado, incluye a El Sauz y casi todo el riesgo (las zonas 5 y 6 concentran el 72.6%), y el portal ya trae la zona
+de cada colonia.
+
+Cifras con su advertencia: 462,194 personas en el programa (78.6%); 368,111 (62.6%) con respaldo de la lista
+oficial del SIAPA y 94,083 (16.0%) solo por el polígono del portal. Se reporta como rango de 63% a 79%. Detalle en
+`datos/zonas_siapa/LEEME.md` y `datos/HALLAZGOS_zonas.md`.
+
+## Resolución de la decisión abierta 4 del motor: marginación en `severidad` (12-nov-2026)
+
+**Aprobada: opción A.** `severidad` queda **sin peso de marginación**: es exposición pura. La marginación (CONAPO,
+nivel AGEB) va como **capa aparte** en el mapa y en las tablas. Confirmada por Dani; a favor Jass.
+
+Por qué: la mitad del riesgo de almacenamiento (50.2%) está en AGEB de marginación "Muy bajo", así que ponderar por
+marginación movería viajes de ahí a las AGEB "Alto" (17.4% del riesgo) y sacaría a El Sauz del primer lugar. Además
+se perdería el argumento más limpio del priorizador: alcanza el 100% del máximo posible con los mismos viajes.
+Detalle en `datos/HALLAZGOS_marginacion.md`.
+
+**Condición, para que la equidad se vea medida y no supuesta:** el comparador del priorizador (carril de Jass) agrega
+una tabla de viviendas-día atendidas por grado de marginación, priorizado contra baseline, **con las dos cotas**.
+Un cálculo preliminar de Dani con los datos reales de la semana del 9 al 15 de noviembre muestra un costo que hay que
+declarar: con la cota máxima el priorizado atiende 0 de las 2,091 viviendas-día en AGEB "Muy alto" (el baseline
+atiende 661), porque maximizar viviendas atendidas ignora los bolsones pequeños. Con la cota mínima la cobertura de
+"Muy alto" es 26.8%, contra 32.9% del baseline. Queda como sensibilidad opcional un escenario con una reserva mínima de
+viajes para las AGEB Alto y Muy alto.

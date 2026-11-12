@@ -60,13 +60,13 @@ hay sobrerrepresentación.
 Ponderar `severidad` por marginación **bajaría de prioridad a El Sauz**, que es nuestro
 hallazgo número uno, y subiría zonas con poco riesgo de almacenamiento. Opciones:
 
-1. **Sin peso (propuesta actual, recomendada para `severidad`).** `severidad` sigue siendo exposición pura.
+1. **Sin peso (APROBADA el 12-nov-2026).** `severidad` sigue siendo exposición pura.
    La marginación va en el mapa y en la tabla como **capa aparte**, con la lectura de arriba.
 2. **Peso aditivo en el priorizador de Jass**, no en el motor: `personas × horas × (1 + α·vulnerabilidad)`
    con sensibilidad a α. Así el motor queda limpio y el priorizador decide cuánto pesa lo social.
 3. **Peso multiplicativo puro.** No lo recomiendo: borra a El Sauz del primer lugar.
 
-La decisión es de Dani y de Jass.
+**Decisión: opción A**, confirmada por Dani; a favor Jass. Ver `decisiones/README.md`.
 
 ---
 

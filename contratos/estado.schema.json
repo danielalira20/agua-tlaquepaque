@@ -32,7 +32,7 @@
     "viv_agua_guardada_max": "int",
     "requiere_desinfeccion": "bool: viv_agua_guardada_max > 0. Eje independiente del estado",
     "estado": "enum con_agua | quiebre_parcial | quiebre_mayoritario, segun pct_sin_agua_min SIN redondear. Solo para el color del mapa",
-    "severidad": "float 0..1 = pct_sin_agua_min / 100. SIN peso de marginacion todavia (decision abierta 4 de la especificacion)"
+    "severidad": "float 0..1 = pct_sin_agua_min / 100. SIN peso de marginacion, por decision (opcion A, decision 4 de la especificacion): es exposicion pura"
   },
   "umbral_estado": {
     "con_agua": "pct_sin_agua_min < 10",
