@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useReal, calcular, rango, fmt, fechaLarga } from "@/lib/real";
 import type { SupuestosMotor } from "@/lib/motor";
 import { Badge } from "@/components/ui";
-import { Advertencias, SelectorFecha, Supuestos } from "@/components/Controles";
+import { Advertencias, SelectorFecha, Supuestos, diasTinaco } from "@/components/Controles";
 import { COLOR_MARG, colorPct, puntosCisternas } from "@/components/HexMap";
 
 const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loading: () => <div className="grid h-full place-items-center text-slate-400">Cargando mapa…</div> });
@@ -21,10 +21,26 @@ export default function Panal() {
   const [s, setS] = useState<SupuestosMotor | null>(null);
   const [verCis, setVerCis] = useState(true);
   const [verProp, setVerProp] = useState(false);
+  const [verNucleo, setVerNucleo] = useState(false);
 
   const sup = s ?? d?.meta.supuestos ?? null;
   const cal = d?.calendarios[version];
   const res = useMemo(() => (d && cal && sup ? calcular(d, cal, fecha, sup) : null), [d, cal, fecha, sup]);
+  const hayNucleo = !!d?.manzanas.some((m) => m.nucleo_robusto);
+  const nNucleo = useMemo(() => d?.manzanas.filter((m) => m.nucleo_robusto).length ?? 0, [d]);
+  const resaltar = useMemo(() => (verNucleo && res ? new Set(res.celdas.filter((c) => c.nucleo > 0).map((c) => c.h3)) : undefined), [verNucleo, res]);
+  // parte del riesgo de almacenamiento en zonas 5 y 6 (dentro del programa), con las dos cotas
+  const z56 = useMemo(() => {
+    if (!d) return null;
+    let t0 = 0, t1 = 0, a = 0, b = 0;
+    for (const m of d.manzanas) {
+      if (!m.en_programa || !(m.viviendas > 0)) continue;
+      const z = m.zona.split(",").filter(Boolean);
+      t0 += m.sin_almacen_min; t1 += m.sin_almacen_max;
+      if (z.every((x) => x === "5" || x === "6")) { a += m.sin_almacen_min; b += m.sin_almacen_max; }
+    }
+    return { min: (100 * a) / t0, max: (100 * b) / t1 };
+  }, [d]);
   const puntos = useMemo(() => (d && verCis ? puntosCisternas(d.cisternas, verProp) : []), [d, verCis, verProp]);
   if (!d || !cal || !sup || !res) return <div className="p-10 text-slate-500">Cargando datos reales…</div>;
 
@@ -46,7 +62,7 @@ export default function Panal() {
 
   return (
     <div className="relative h-[calc(100vh-3.5rem)]">
-      <HexMap celdas={res.celdas} puntos={puntos} tresD={tresD} modo={modo} seleccion={sel} onSeleccion={setSel} />
+      <HexMap celdas={res.celdas} puntos={puntos} tresD={tresD} modo={modo} seleccion={sel} onSeleccion={setSel} resaltar={resaltar} />
 
       <div className="absolute left-4 top-4 flex flex-wrap gap-2">
         <div className="flex rounded-full bg-white p-1 shadow">
@@ -63,6 +79,8 @@ export default function Panal() {
         </div>
         <button onClick={() => setTresD(!tresD)} className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">{tresD ? "Ver 2D" : "Ver 3D"}</button>
         <button onClick={() => setVerCis(!verCis)} className={`rounded-full px-3 py-1 text-sm font-medium shadow ${verCis ? "bg-orange-500 text-white" : "bg-white"}`}>Cisternas</button>
+        <button disabled={!hayNucleo} onClick={() => setVerNucleo(!verNucleo)} title={hayNucleo ? "Manzanas que quedan entre las 250 más críticas en al menos el 90 % de las simulaciones" : "Pendiente: falta el campo nucleo_robusto en manzanas.json"}
+          className={`rounded-full px-3 py-1 text-sm font-medium shadow disabled:opacity-50 ${verNucleo ? "bg-amber-500 text-white" : "bg-white"}`}>Núcleo robusto{hayNucleo ? ` (${nNucleo})` : ""}</button>
         <button onClick={() => setVerProp(!verProp)} className={`rounded-full px-3 py-1 text-sm font-medium shadow ${verProp ? "bg-purple-600 text-white" : "bg-white"}`}>10 propuestas</button>
       </div>
 
@@ -102,6 +120,7 @@ export default function Panal() {
               <div><div className="text-xl font-bold tabular-nums">{rango(r.pers_min, r.pers_max)}</div><div className="text-xs text-slate-600">personas sin agua</div></div>
               <div><div className="text-xl font-bold tabular-nums">{fmt(r.mzas_quiebre)}</div><div className="text-xs text-slate-600">manzanas con 10 % o más de viviendas secas</div></div>
             </div>
+            {z56 && <div><div className="text-xl font-bold tabular-nums">{z56.max.toFixed(1)} % – {z56.min.toFixed(1)} %</div><div className="text-xs text-slate-600">del riesgo de almacenamiento está en las zonas 5 y 6 ({z56.min.toFixed(1)} % con la cota mín., {z56.max.toFixed(1)} % con la máx.)</div></div>}
             <div><div className="text-xl font-bold tabular-nums">{rango(r.guard_min, r.guard_max)}</div><div className="text-xs text-slate-600">viviendas con agua guardada más de {sup.u_horas_agua_guardada} h: desinfectar</div></div>
           </div>
         )}
@@ -130,6 +149,7 @@ export default function Panal() {
         <details className="mt-4 border-t pt-4">
           <summary className="cursor-pointer text-sm font-semibold">Supuestos (mueven el mapa)</summary>
           <div className="mt-2"><Supuestos s={sup} onChange={setS} /></div>
+          <p className="mt-2 text-xs text-slate-600">Con estos supuestos un tinaco aguanta ~<b>{diasTinaco(sup).toFixed(1)} días</b> (casa de 3.8 personas). Con 6 o más días el orden de las manzanas es casi el del caso base; con menos de 4 cambia bastante. El caso base (50 L, 1,100 L) es el extremo más cómodo.</p>
           {s && <button onClick={() => setS(null)} className="mt-2 text-xs text-blue-700">Volver a los supuestos base</button>}
         </details>
 

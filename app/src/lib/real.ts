@@ -8,7 +8,7 @@ import { evaluarManzana, type Esquema, type SupuestosMotor } from "./motor";
 export type Manzana = {
   cvegeo: string; colonia: string; geocol: string; zona: string; zona_confianza: string; en_programa: boolean;
   lon: number | null; lat: number | null; viviendas: number; pob: number; ocupantes_prom: number;
-  viv_tinaco: number; viv_cisterna: number; sin_almacen_min: number; sin_almacen_max: number; grado_marginacion: string;
+  viv_tinaco: number; viv_cisterna: number; sin_almacen_min: number; sin_almacen_max: number; grado_marginacion: string; nucleo_robusto?: boolean;
 };
 export type DiaCal = { fecha: string; dia: string; zonas_sin_servicio: (string | number)[] };
 export type Calendario = { version: string; vigente_desde: string; vigente_hasta: string | null; consultado: string; esquema: Esquema; dias: DiaCal[]; nota_vigencia?: string };
@@ -40,7 +40,7 @@ export const fechaLarga = (f: string) => new Date(f + "T12:00:00").toLocaleDateS
 export type Celda = {
   h3: string; manzanas: number[]; viviendas: number; pob: number;
   sin_min: number; sin_max: number; pers_min: number; pers_max: number; guard_max: number;
-  pct_min: number; pct_max: number; colonias: string[]; zonas: string[]; marg: string; en_programa: boolean;
+  pct_min: number; pct_max: number; colonias: string[]; zonas: string[]; marg: string; en_programa: boolean; nucleo: number;
 };
 
 export type Resumen = { viv: number; pob: number; sin_min: number; sin_max: number; pers_min: number; pers_max: number; guard_min: number; guard_max: number; mzas_quiebre: number };
@@ -60,7 +60,7 @@ export function calcular(d: Datos, cal: Calendario, fecha: string, s: SupuestosM
     if (m.lat != null && m.lon != null) {
       const h = latLngToCell(m.lat, m.lon, resH3);
       let c = celdas.get(h);
-      if (!c) celdas.set(h, (c = { h3: h, manzanas: [], viviendas: 0, pob: 0, sin_min: 0, sin_max: 0, pers_min: 0, pers_max: 0, guard_max: 0, pct_min: 0, pct_max: 0, colonias: [], zonas: [], marg: "", en_programa: false }));
+      if (!c) celdas.set(h, (c = { h3: h, manzanas: [], viviendas: 0, pob: 0, sin_min: 0, sin_max: 0, pers_min: 0, pers_max: 0, guard_max: 0, pct_min: 0, pct_max: 0, colonias: [], zonas: [], marg: "", en_programa: false, nucleo: 0 }));
       c.manzanas.push(i); c.viviendas += m.viviendas; c.pob += m.pob;
       c.sin_min += o.viv_sin_agua_min; c.sin_max += o.viv_sin_agua_max;
       c.pers_min += o.viv_sin_agua_min * m.ocupantes_prom; c.pers_max += o.viv_sin_agua_max * m.ocupantes_prom;
@@ -68,6 +68,7 @@ export function calcular(d: Datos, cal: Calendario, fecha: string, s: SupuestosM
       if (m.colonia && !c.colonias.includes(m.colonia)) c.colonias.push(m.colonia);
       for (const z of m.zona.split(",").filter(Boolean)) if (!c.zonas.includes(z)) c.zonas.push(z);
       c.en_programa ||= m.en_programa;
+      if (m.nucleo_robusto) c.nucleo++;
     }
     return o;
   });

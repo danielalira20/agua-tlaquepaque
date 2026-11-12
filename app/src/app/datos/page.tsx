@@ -76,7 +76,7 @@ export default function Datos() {
         <Tarjeta><div className="text-2xl font-bold">{fmt(c.personas)}</div><div className="text-sm text-slate-600">personas en Tlaquepaque · {fmt(c.personas_en_programa)} dentro del programa</div><Badge tipo="real" /></Tarjeta>
         <Tarjeta><div className="text-2xl font-bold">{rango(g.tot.min, g.tot.max)}</div><div className="text-sm text-slate-600">viviendas sin tinaco ni cisterna</div><Badge tipo="real" /></Tarjeta>
         <Tarjeta><div className="text-2xl font-bold">{rango(g.sem.vig.min, g.sem.vig.max)}</div><div className="text-sm text-slate-600">personas-día sin agua, semana 9–15 nov (calendario vigente)</div><Badge tipo="estimado" /></Tarjeta>
-        <Tarjeta><div className="text-2xl font-bold">×{(g.sem.vig.min / g.sem.ori.min).toFixed(1)}</div><div className="text-sm text-slate-600">personas-día con el calendario vigente contra el original (cota mínima)</div><Badge tipo="estimado" /></Tarjeta>
+        <Tarjeta><div className="text-2xl font-bold">×{(g.sem.vig.min / g.sem.ori.min).toFixed(1)} – ×{(g.sem.vig.max / g.sem.ori.max).toFixed(1)}</div><div className="text-sm text-slate-600">personas-día con el calendario vigente contra el original (cota mín. – máx.)</div><Badge tipo="estimado" /></Tarjeta>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -105,7 +105,7 @@ export default function Datos() {
       <div className="grid gap-6 md:grid-cols-2">
         <Tarjeta>
           <h2 className="font-semibold">Dónde está el riesgo: viviendas sin almacenamiento por zona</h2>
-          <p className="mb-2 text-xs text-slate-500">Solo manzanas dentro del programa. Barra oscura: cota mínima; clara: hasta la máxima.</p>
+          <p className="mb-2 text-xs text-slate-500">Solo manzanas dentro del programa. Barra oscura: cota mínima; clara: hasta la máxima. Las zonas 5 y 6 concentran entre 63.0 % (cota máx.) y 72.6 % (cota mín.) del riesgo: siempre más de la mitad.</p>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={g.porZona} layout="vertical" margin={{ left: 20 }}><CartesianGrid stroke="#e2e8f0" /><XAxis type="number" fontSize={11} tickFormatter={k} /><YAxis type="category" dataKey="zona" fontSize={11} width={70} /><Tooltip formatter={(v: number) => fmt(v)} />
               <Bar dataKey="minimo" name="cota mínima" stackId="a" fill={AZUL} /><Bar dataKey="rango" name="hasta la máxima" stackId="a" fill={CLARO} />

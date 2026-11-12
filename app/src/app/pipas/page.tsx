@@ -43,7 +43,10 @@ export default function Pipas() {
   ], [d, viajes]);
 
   if (!d || !cal || !res || !dPri) return <div className="p-10 text-slate-500">Cargando…</div>;
-  const rp = dPri.resumen, rb = dBase.resumen, sem = d.plan.comparacion.find((c: any) => c.cota_para_ordenar === cota).semana;
+  const rp = dPri.resumen, rb = dBase.resumen;
+  const semC = (c: string) => d.plan.comparacion.find((x: any) => x.cota_para_ordenar === c).semana;
+  const sMin = semC("min"), sMax = semC("max");
+  const dia = (regla: string, c: string) => d.plan.corridas.find((x: any) => x.regla === regla && x.cota_para_ordenar === c).fechas.find((x: any) => x.fecha === fecha).resumen;
 
   return (
     <div className="grid h-[calc(100vh-3.5rem)] grid-cols-[1fr_27rem]">
@@ -60,11 +63,12 @@ export default function Pipas() {
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-          <div className="rounded-xl bg-blue-50 p-3"><div className="text-xs text-blue-900">Priorizado</div><div className="text-2xl font-bold tabular-nums">{fmt(rp.viviendas_atendidas)}</div><div className="text-xs text-slate-600">viviendas secas atendidas · {rp.cobertura_pct} % de la necesidad</div></div>
-          <div className="rounded-xl bg-slate-50 p-3"><div className="text-xs text-slate-600">Baseline estilizado</div><div className="text-2xl font-bold tabular-nums">{fmt(rb.viviendas_atendidas)}</div><div className="text-xs text-slate-600">con los mismos {rb.viajes_usados} viajes, por turnos entre cisternas</div></div>
+          <div className="rounded-xl bg-blue-50 p-3"><div className="text-xs text-blue-900">Priorizado</div><div className="text-xl font-bold tabular-nums">{rango(dia("priorizado", "min").viviendas_atendidas, dia("priorizado", "max").viviendas_atendidas)}</div><div className="text-xs text-slate-600">viviendas secas atendidas hoy (ordenando por cota mín. – máx.)</div></div>
+          <div className="rounded-xl bg-slate-50 p-3"><div className="text-xs text-slate-600">Baseline estilizado</div><div className="text-xl font-bold tabular-nums">{rango(dia("baseline", "min").viviendas_atendidas, dia("baseline", "max").viviendas_atendidas)}</div><div className="text-xs text-slate-600">con los mismos {rb.viajes_usados} viajes, por turnos entre cisternas</div></div>
         </div>
-        <p className="mt-3 rounded-lg bg-blue-50 p-3 text-xs text-blue-900">En la semana, con los mismos 441 viajes: <b>{fmt(sem.viviendas_atendidas.priorizado)}</b> viviendas atendidas priorizando contra <b>{fmt(sem.viviendas_atendidas.baseline)}</b> en el baseline (+{fmt(sem.personas_atendidas.diferencia)} personas). No pedimos más agua ni más pipas.</p>
-        <p className="mt-2 text-[11px] text-slate-500">Necesidad hoy: {fmt(rp.necesidad_total)} viviendas sin agua en el programa (cota {cota === "min" ? "mínima" : "máxima"}). Hoy en todo el municipio: {rango(res.resumen.sin_min, res.resumen.sin_max)}.</p>
+        <p className="mt-3 rounded-lg bg-blue-50 p-3 text-xs text-blue-900">En la semana, con los mismos 441 viajes: <b>{rango(sMin.viviendas_atendidas.priorizado, sMax.viviendas_atendidas.priorizado)}</b> viviendas atendidas priorizando contra <b>{rango(sMin.viviendas_atendidas.baseline, sMax.viviendas_atendidas.baseline)}</b> en el baseline. En 120 simulaciones con otros supuestos, el priorizador atiende entre <b>2.6 y 4.9 veces</b> lo que el reparto por turnos. No pedimos más agua ni más pipas.</p>
+        <p className="mt-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"><b>Lo que sí y lo que no aguanta.</b> La ventaja del priorizador se sostiene con casi cualquier supuesto; <b>dónde se para cada pipa, no</b>: solo el 37 % de las manzanas atendidas coincide con el caso base. Estos puntos son el plan con los supuestos base; si cambia un supuesto, el plan se recalcula. Los puntos fijos (cisternas permanentes) deben salir del núcleo robusto.</p>
+        <p className="mt-2 text-[11px] text-slate-500">Necesidad hoy: {rango(dia("priorizado", "min").necesidad_total, dia("priorizado", "max").necesidad_total)} viviendas sin agua en el programa. Hoy en todo el municipio: {rango(res.resumen.sin_min, res.resumen.sin_max)}.</p>
 
         <div className="mt-4 text-sm font-semibold">Colonias con pipa hoy ({porColonia.length})</div>
         <ol className="mt-2 space-y-2">
