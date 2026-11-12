@@ -15,6 +15,7 @@ con los recursos reales del municipio, y mide cuánto mejora eso frente al repar
 | Entrada | `datos/cisternas_tlaquepaque.csv` (cisternas del municipio y del SIAPA) | Datos del equipo |
 | Entrada | `supuestos.json` (recursos y parámetros) | Este carril |
 | Salida | `salidas/plan.json` con la forma de `contratos/plan.schema.json` v2: priorizado y baseline, con cota mínima y máxima, y su comparación | Este carril |
+| Salida | `resultados/*.csv` y `resultados/resumen.md`: las tablas del reporte (decisión 06) | Este carril |
 
 `salidas/` no se versiona (está en `.gitignore`). Las tablas finales que cita el reporte
 van en `resultados/`.
@@ -29,7 +30,7 @@ van en `resultados/`.
     supuestos.json       recursos y parámetros compartidos
     docs/decisiones/     una decisión por archivo: contexto, opciones, qué se decidió y por qué
     priorizador/         código: entradas, cobertura, asignación diaria, métricas y salida
-    analisis/            comparación baseline contra priorizado y sensibilidad (pendiente)
+    analisis/            comparador: rejilla, escenarios del motor y equidad por grado (decisión 06)
     pruebas/             pruebas; casos/ tiene manzanas inventadas para los casos a mano
     resultados/          tablas y figuras finales (sí se versionan)
 
@@ -64,8 +65,9 @@ van en `resultados/`.
 | `feat/priorizador-especificacion` | Esqueleto, supuestos, decisiones, `ESPECIFICACION.md` | Hecho |
 | `feat/plan-contrato` | `plan.schema.json` v2 y su fixture | Hecho por Dani, ya en `dev` |
 | `feat/priorizador-referencia` | Cobertura, asignación diaria, métricas y `plan.json`, con pruebas | Hecho |
-| `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | En curso |
-| `feat/priorizador-comparador` | Baseline contra priorizado, sensibilidad | Pendiente |
+| `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | Hecho |
+| `fix/priorizador-centro-fsum` | Centro de colonia con `math.fsum`, igual en cualquier versión de Python | Hecho |
+| `feat/priorizador-comparador` | Rejilla de sensibilidad, escenarios del motor, equidad por grado y tablas en `resultados/` | En curso |
 | `feat/viabilidad-presupuestal` | Costo de un viaje de pipa, con fuente | Pendiente |
 
 ## Cómo correrlo
@@ -94,6 +96,14 @@ Cada corrida incluye el baseline estilizado. Sus variantes:
     python3 -m optimizador.priorizador --estado salidas/referencia.csv --set baseline_cisternas=exactas
 
 `--detalle` imprime cada fecha de cada corrida.
+
+Las tablas del reporte salen de un solo comando, que corre el motor por su cuenta (unos 50 s):
+
+    python3 -m optimizador.analisis
+
+Escribe en `resultados/` la rejilla del priorizador, los escenarios del motor, la equidad por grado de
+marginación, la cobertura diaria y `resumen.md`. Qué se corre y por qué está en
+`docs/decisiones/06-rejilla-comparador.md`. Los archivos no se editan a mano: se vuelven a generar.
 
 Pruebas:
 
