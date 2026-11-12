@@ -1,0 +1,5 @@
+municipio,manzanas,poblacion,cobertura_poblacion_pct,viviendas,sin_almacen_min,sin_almacen_max,pct_sin_almacen_min,pct_sin_almacen_max,pct_con_tinaco,pct_con_cisterna,personas_en_manzanas_con_mayoria_sin_almacen_min,personas_en_manzanas_con_mayoria_sin_almacen_max
+Guadalajara,10784,1286876,92.9,372066,11701,34744,3.1,9.3,89.1,47.9,32169,39599
+San Pedro Tlaquepaque,4871,588419,86.7,158135,21775,41879,13.8,26.5,72.8,39.9,58938,92069
+Tonalá,4457,495775,88.5,129832,11074,26381,8.5,20.3,78.2,44.7,32281,49540
+Zapopan,11711,1329902,91.8,383368,20452,55049,5.3,14.4,82.3,68.4,63836,95700
