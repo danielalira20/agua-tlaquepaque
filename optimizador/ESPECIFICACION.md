@@ -1,6 +1,6 @@
 # Especificación del priorizador de pipas
 
-Versión 0.5, borrador. Es el documento que manda: cualquier implementación (la de
+Versión 0.6, borrador. Es el documento que manda: cualquier implementación (la de
 referencia en Python y, si se acuerda, una en TypeScript dentro de la app) se escribe
 **a partir de esto**, no una de la otra.
 
@@ -59,7 +59,9 @@ Valor derivado:
 hogares_por_viaje = floor(litros_por_viaje / litros_por_hogar)      → 50
 ```
 
-`pipas` (32) se reporta, pero no restringe el cálculo: lo que restringe son los viajes.
+`pipas` (32) se reporta, pero no restringe el cálculo: lo que restringe son los viajes. 32
+es la meta que anunció la alcaldesa el 14 de octubre; en julio eran 24
+(`decisiones/referencias-y-prensa.md`, notas del 21 de julio y del 14 de octubre).
 
 ## 4. Necesidad y peso por manzana y fecha
 
@@ -145,8 +147,9 @@ para k = 1 .. viajes_por_dia:
 
 ## 7. Baseline estilizado
 
-**No es lo que hace el municipio.** Según la prensa, el llenado de cisternas responde a
-reportes ciudadanos, y no hay registro de a dónde fueron las pipas. El baseline es un
+**No es lo que hace el municipio.** Según el director de Agua Potable, las cisternas se
+llenan cuando llega el reporte de los vecinos (La Crónica, 30 de julio; `datos/evidencia.csv`,
+P006), y no hay registro de a dónde fueron las pipas. El baseline es un
 reparto de referencia con las mismas reglas físicas que el priorizado, para medir cuánto
 aporta elegir el destino por necesidad. En el reporte se llama **baseline estilizado**.
 La decisión está en `docs/decisiones/01-baseline-cisternas.md`.
@@ -165,7 +168,8 @@ Cada cisterna se ubica con la primera regla que aplique:
    rectángulo de los centroides del municipio, con un margen de 0.02°.
 2. **Por colonia:** si `colonia_capa` no está vacía. La colonia es `geocol` si viene, o la
    única colonia con ese nombre en `manzana_colonia.csv`. El punto es el promedio de los
-   centroides de sus manzanas.
+   centroides de sus manzanas, sumados con `math.fsum` (suma exacta) para que el punto sea
+   el mismo con cualquier versión de Python.
 3. Si ninguna aplica, la cisterna queda fuera.
 
 Con los datos actuales: 35 exactas, 12 por colonia y 3 fuera (CIST014, CIST021 y CIST022),
@@ -174,9 +178,10 @@ las 35.
 
 ### Turnos
 
-Cada cisterna se identifica con `id@tipo` (`CIST001@municipal`, `CIST001@siapa`), porque
-el archivo repite ids entre el municipio y el SIAPA. Las cisternas se ordenan por esa
-clave. En la fecha con índice `i` (0 para la primera), el
+Cada cisterna se identifica con `id@tipo` (`CIST001@municipal`, `SIAPA001@siapa`). La clave
+se adoptó cuando el archivo repetía ids entre el municipio y el SIAPA; ya son únicos, pero
+se conserva porque no cambia el resultado y `plan.json` la usa. Las cisternas se ordenan por
+esa clave. En la fecha con índice `i` (0 para la primera), el
 viaje `k` va a la cisterna `(i · viajes_por_dia + k − 1) mod N`. Los turnos siguen de un
 día al otro, así que el punto de arranque rota y ninguna cisterna recibe siempre el viaje
 extra.
@@ -325,7 +330,8 @@ entre opciones iguales.
 Hay que declararlo en el reporte:
 
 - Rutas, tráfico, tiempo de traslado y recarga de las pipas: solo cuenta viajes por día.
-- Que cada viaje pueda hacerse con las 32 pipas en un día (se toma el promedio de prensa).
+- Que cada viaje pueda hacerse con las pipas disponibles en un día (se toma el promedio de
+  prensa). 32 pipas es una meta; en julio eran 24.
 - Que la gente sin agua efectivamente llegue al punto. El radio es un supuesto de
   distancia caminable, en línea recta.
 - Que una vivienda guarde agua de la entrega para el día siguiente.
@@ -333,10 +339,11 @@ Hay que declararlo en el reporte:
 - **El reparto real.** El baseline es estilizado: según la prensa, el llenado de
   cisternas responde a reportes ciudadanos, y no hay registro de a dónde fueron los 565
   viajes.
-- **Que las pipas rellenen las cisternas es un supuesto.** La prensa dice que el llenado
-  es con agua de pozos municipales conforme llegan reportes, pero no que los 565 viajes
-  lo incluyan. Cada viaje a una cisterna se trata como un viaje de pipa: 10,000 L, unos 50
-  hogares. Los 28,296 hogares que reporta el municipio coinciden casi con 565 × 50 =
+- **Que cada viaje a una cisterna sea un viaje de pipa completo es un supuesto, con
+  respaldo.** Las cisternas comunitarias son de 10,000 L (La Crónica, 21 de julio; P007) y
+  se llenan con una pipa que se programa cuando llega un reporte (30 de julio; P006). La
+  prensa no dice si los 565 viajes incluyen esos llenados. Cada viaje a una cisterna se
+  trata como un viaje de pipa: 10,000 L, unos 50 hogares. Los 28,296 hogares que reporta el municipio coinciden casi con 565 × 50 =
   28,250: es una cifra derivada de los viajes, no medida.
 - **Una cisterna es un almacén.** En el baseline, un viaje a una cisterna sin viviendas
   sin agua cerca ese día cuenta como perdido, aunque en la realidad el agua quedaría
@@ -345,8 +352,17 @@ Hay que declararlo en el reporte:
   `con_necesidad` es la comparación más conservadora.
 - **La ubicación de 12 cisternas** es el centro de su colonia, no su punto real. La
   sensibilidad con `baseline_cisternas = exactas` usa solo las 35 con coordenada.
-- **La marginación** no entra en la prioridad. El estado del cruce por AGEB está en
-  `datos/HALLAZGOS_marginacion.md`.
+- **La marginación no entra en la prioridad** (opción A de la decisión abierta 4 del motor,
+  `decisiones/README.md`). La equidad se mide aparte: `resultados/equidad_marginacion.csv`
+  compara, por grado de marginación de la AGEB, lo que atiende el priorizado contra el
+  baseline, con las dos cotas. Como maximiza viviendas atendidas, el priorizado puede dejar
+  sin entregas a los grupos pequeños de manzanas de AGEB «Muy alto», sobre todo con la cota
+  máxima: cuánto, en `resultados/resumen.md`, sección 4.
+- **La ventaja depende de los supuestos del motor.** Cuando casi todas las zonas se quedan
+  sin agua (las esquinas adversas de la sensibilidad del motor), cualquier reparto encuentra
+  a quién atender y la ventaja contra el baseline con necesidad se achica: ver
+  `resultados/resumen.md`, sección 3. Toda razón «X veces» dice contra qué baseline, con qué
+  cota y en qué escenario.
 
 ## 12. Decisiones abiertas
 
@@ -372,6 +388,9 @@ La de referencia está en `priorizador/` (Python, solo biblioteca estándar):
 | `plan.py` | Las cuatro corridas: priorizado y baseline, con cota mínima y máxima |
 | `salida.py` | 9: `plan.json` con la forma del contrato v2 y la comparación |
 | `__main__.py` | Corre todo: `python3 -m optimizador.priorizador --estado <csv del motor>` |
+
+El comparador (`analisis/`, decisión 06) usa esta implementación como biblioteca para
+armar las tablas de `resultados/`: no cambia el comando ni la salida.
 
 Las pruebas están en `pruebas/`: los casos A a I en `test_casos.py` y propiedades
 generales con datos al azar en `test_propiedades.py`, y los casos J a M en

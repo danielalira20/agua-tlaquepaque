@@ -103,6 +103,16 @@ class Ubicacion(unittest.TestCase):
         self.assertAlmostEqual(por_id["C03@municipal"].punto[1], (self.ub["a1"][1] + self.ub["a2"][1]) / 2)
         self.assertEqual(por_id["C04@municipal"].punto, por_id["C03@municipal"].punto)
 
+    def test_el_centro_de_colonia_no_depende_de_la_version_de_python(self):
+        # Diez manzanas en el mismo punto: el centro debe ser ese punto, exacto. Con sum(), Python 3.10 y 3.11
+        # dan 0.09999999999999999 y Python 3.12+ da 0.1; math.fsum da 0.1 en todas, y asi plan.json no cambia
+        # segun quien lo genere (scripts/exporta_app.py lo compara byte por byte).
+        ub = {f"g{i}": (0.1, 20.6) for i in range(10)}
+        geo = {c: ("000009", "Gamma") for c in ub}
+        ubicadas, fuera = ubicar_cisternas([fila("C09", capa="Gamma", geocol="9.0")], ub, geo)
+        self.assertEqual(fuera, [])
+        self.assertEqual(ubicadas[0].punto, (0.1, 20.6))
+
     def test_el_mismo_id_en_municipio_y_siapa_son_dos_cisternas(self):
         lat_a, lat_c = str(self.ub["a1"][1]), str(self.ub["c1"][1])
         filas = [

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+import math
 from dataclasses import dataclass
 
 from .asignacion import ResultadoDia, Viaje
@@ -83,9 +84,11 @@ def ubicar_cisternas(
                 motivo = "colonia ambigua" if len(candidatas) > 1 else "colonia no encontrada"
             mzs = manzanas_de.get(geocol)
             if mzs:
+                # math.fsum y no sum(): sum() suma los flotantes distinto desde Python 3.12 y el centro
+                # cambiaba en el ultimo decimal segun la version con que se generara plan.json.
                 punto = (
-                    sum(ubicaciones[m][0] for m in mzs) / len(mzs),
-                    sum(ubicaciones[m][1] for m in mzs) / len(mzs),
+                    math.fsum(ubicaciones[m][0] for m in mzs) / len(mzs),
+                    math.fsum(ubicaciones[m][1] for m in mzs) / len(mzs),
                 )
                 como = "colonia"
             elif geocol:

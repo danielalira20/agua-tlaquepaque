@@ -1,0 +1,13 @@
+cota,grado,necesidad_viv_dia,pct_de_la_necesidad,prio_viv_dia,prio_pct_de_lo_atendido,prio_cobertura_pct,base_turnos_viv_dia,base_turnos_pct_de_lo_atendido,base_turnos_cobertura_pct,base_con_necesidad_viv_dia,base_con_necesidad_pct_de_lo_atendido,base_con_necesidad_cobertura_pct
+min,Muy alto,973,1.65,261,1.18,26.82,320,7.06,32.89,329,4.65,33.81
+min,Alto,10907,18.52,5535,25.10,50.75,1432,31.60,13.13,2048,28.93,18.78
+min,Medio,6224,10.57,1917,8.69,30.80,1450,31.99,23.30,1895,26.77,30.45
+min,Bajo,11066,18.79,4857,22.03,43.89,834,18.40,7.54,1424,20.12,12.87
+min,Muy bajo,29675,50.38,9476,42.98,31.93,496,10.94,1.67,1382,19.53,4.66
+min,sin dato,61,0.10,4,0.02,6.56,0,0.00,0.00,0,0.00,0.00
+max,Muy alto,2091,1.63,0,0.00,0.00,661,6.50,31.61,748,4.70,35.77
+max,Alto,32096,24.99,8728,39.58,27.19,2102,20.65,6.55,3696,23.22,11.52
+max,Medio,35242,27.43,8272,37.51,23.47,5449,53.54,15.46,8164,51.28,23.17
+max,Bajo,20954,16.31,2369,10.74,11.31,1411,13.86,6.73,2188,13.74,10.44
+max,Muy bajo,37989,29.57,2679,12.15,7.05,554,5.44,1.46,1124,7.06,2.96
+max,sin dato,88,0.07,2,0.01,2.27,0,0.00,0.00,0,0.00,0.00

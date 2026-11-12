@@ -34,13 +34,24 @@ de racionamiento**:
 | Bajo | 108,311 | 23.4% | 3,395 | 11.1% | 19.5% | 79% | 52% |
 | **Muy bajo** | 97,772 | 21.2% | **8,743** | **28.7%** | **50.2%** | 62% | 30% |
 
-**La mitad del riesgo está en las AGEB menos marginadas.** La correlación entre el índice y el
-porcentaje de viviendas sin almacenamiento por manzana es +0.10: ligeramente en el sentido
-contrario al que esperábamos. Las colonias con más viviendas sin almacenamiento son casi todas
-de marginación "Muy bajo": Villa Fontana, Parques de Sta. Cruz del Valle, Haciendas del Real, Las
+**El grado menos marginado tiene la mayor parte del riesgo con las dos cotas**: 50.2% con la cota mínima y 32.8% con la máxima. Hay
+que dar las dos, porque el Censo no cruza tinaco con cisterna. Con la cota máxima:
+
+| Grado | Viv. sin almacenamiento | % de las viviendas del grado | % del riesgo |
+|---|---:|---:|---:|
+| Muy alto | 499 | 46.9% | 1.4% |
+| Alto | 7,596 | 33.1% | 22.1% |
+| Medio | 8,967 | 23.5% | 26.0% |
+| Bajo | 6,035 | 19.7% | 17.5% |
+| **Muy bajo** | 11,309 | 37.1% | **32.8%** |
+
+La relación entre el índice y el porcentaje de viviendas sin almacenamiento **no es monótona**: los dos extremos (Muy alto y Muy bajo) tienen los
+porcentajes más altos. La correlación de rangos por manzana es −0.01 con la cota mínima y −0.24 con la máxima (con la máxima, a más marginación,
+algo más de viviendas sin almacenamiento). La correlación de +0.10 que se reportó antes era de Pearson y solo de la cota mínima. Las colonias con
+más viviendas sin almacenamiento son casi todas de marginación "Muy bajo": Villa Fontana, Parques de Sta. Cruz del Valle, Haciendas del Real, Las
 Terrazas, Parques del Bosque, Geo Villas Los Olivos III, y la mayor parte de El Sauz.
 Hipótesis, no verificada: son fraccionamientos de vivienda reciente que se construyeron sin tinaco.
-La marginación "Alto" y "Muy alto" suma 22% de la población del programa y 19% del riesgo, es decir, no
+La marginación "Alto" y "Muy alto" suma 22% de la población del programa y 19% del riesgo con la cota mínima (23.5% con la máxima), es decir, no
 hay sobrerrepresentación.
 
 ### Qué significa y qué no
@@ -48,7 +59,10 @@ hay sobrerrepresentación.
 - **No contradice el hallazgo principal.** El Sauz y las zonas 5 y 6 siguen siendo donde más viviendas
   no tienen cómo aguantar el racionamiento. Lo que cambia es el argumento de equidad.
 - **Sí contradice una frase fácil de escribir:** "el riesgo se concentra en los más pobres". Con
-  este índice no es cierto, y el reporte no debe decirlo.
+  este índice no es cierto, y el reporte no debe decirlo. Tampoco se puede decir que no haya relación: es en forma de U.
+- **Esto es de viviendas sin tinaco ni cisterna, no de viviendas sin agua.** Con consumos altos, las viviendas con un tinaco corto también se
+  quedan sin agua, y esas se concentran en otros grados: la parte del riesgo en Muy bajo del motor baja de 50% a unos 34%
+  (`HALLAZGOS_sensibilidad.md`).
 - **El índice mide privación estructural** (educación, salud, vivienda, internet), **no la capacidad
   de resistir un corte de agua.** Un hogar sin tinaco en un fraccionamiento de marginación "Muy bajo"
   puede comprar pipa o garrafones; uno en una AGEB "Alto" tiene más probabilidad de no poder.

@@ -206,7 +206,9 @@ Hay que declararlo en el reporte (Anexo F):
   sostiene aunque el SIAPA confirme que solo es baja de presión.
 - **El mismo `f` para toda la zona.** El portal dice que el efecto es desigual según
   la altura y la distancia; el motor no lo distingue.
-- La capacidad de tinaco y cisterna: el Censo dice si existen, no de cuántos litros.
+- La capacidad de tinaco y cisterna: el Censo dice si existen, no de cuántos litros. **Es el supuesto que más mueve el
+  resultado**: con 6 días o más de autonomía del tinaco el orden de las manzanas es casi el del caso base, y con menos de 4
+  cambia sustancialmente (`datos/HALLAZGOS_sensibilidad.md`). La autonomía es `tinaco / (ocupantes × consumo × (1 − f))`.
 - Que todas las viviendas de la manzana tienen los mismos ocupantes.
 - Presión, calidad del agua en la llave y cloro. No hay datos públicos.
 - El comportamiento de las familias (compras de garrafón, pipas, vecinos).

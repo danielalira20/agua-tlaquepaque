@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (versión 0.5, borrador). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.6, borrador). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
@@ -15,6 +15,7 @@ con los recursos reales del municipio, y mide cuánto mejora eso frente al repar
 | Entrada | `datos/cisternas_tlaquepaque.csv` (cisternas del municipio y del SIAPA) | Datos del equipo |
 | Entrada | `supuestos.json` (recursos y parámetros) | Este carril |
 | Salida | `salidas/plan.json` con la forma de `contratos/plan.schema.json` v2: priorizado y baseline, con cota mínima y máxima, y su comparación | Este carril |
+| Salida | `resultados/*.csv` y `resultados/resumen.md`: las tablas del reporte (decisión 06) | Este carril |
 
 `salidas/` no se versiona (está en `.gitignore`). Las tablas finales que cita el reporte
 van en `resultados/`.
@@ -29,7 +30,7 @@ van en `resultados/`.
     supuestos.json       recursos y parámetros compartidos
     docs/decisiones/     una decisión por archivo: contexto, opciones, qué se decidió y por qué
     priorizador/         código: entradas, cobertura, asignación diaria, métricas y salida
-    analisis/            comparación baseline contra priorizado y sensibilidad (pendiente)
+    analisis/            comparador: rejilla, escenarios del motor y equidad por grado (decisión 06)
     pruebas/             pruebas; casos/ tiene manzanas inventadas para los casos a mano
     resultados/          tablas y figuras finales (sí se versionan)
 
@@ -37,14 +38,14 @@ van en `resultados/`.
 
 | Parámetro | Valor | Fuente |
 |---|---|---|
-| Pipas | 32 | Prensa, octubre 2026 (ver `decisiones/propuesta-dani.md`, decisión 4) |
-| Litros por viaje | 10,000 | Prensa |
+| Pipas | 32 | Meta anunciada el 14-oct; en julio eran 24. Se reporta, no restringe (`decisiones/referencias-y-prensa.md`) |
+| Litros por viaje | 10,000 | Prensa, 15-oct (P002); 5.6 millones de L en 565 viajes ≈ 9,911 L por viaje |
 | Litros por hogar | 200 | Prensa (~50 hogares por viaje) |
 | Viajes por día | 63 | Prensa: 565 viajes en 9 días (62.8 al día) |
 | Radio de cobertura | 300 m | Supuesto declarado; ver `docs/decisiones/03-radio-cobertura.md` |
 | Cota para ordenar | mínima | Ver `docs/decisiones/02-cota-min-max.md` |
 | Modo de racha | desempate | Ver `docs/decisiones/04-horizonte-dias.md` |
-| Cisterna comunitaria | 1 viaje = 10,000 L | Supuesto; ver `docs/decisiones/01-baseline-cisternas.md` |
+| Cisterna comunitaria | 1 viaje = 10,000 L | Cisternas de 10,000 L (P007) que se llenan con pipa por reporte (P006); ver `docs/decisiones/01-baseline-cisternas.md` |
 | Cisternas del baseline | todas (47) | Sensibilidad con las 35 de coordenada exacta |
 | Turnos del baseline | todas | Sensibilidad con `con_necesidad` |
 
@@ -64,8 +65,9 @@ van en `resultados/`.
 | `feat/priorizador-especificacion` | Esqueleto, supuestos, decisiones, `ESPECIFICACION.md` | Hecho |
 | `feat/plan-contrato` | `plan.schema.json` v2 y su fixture | Hecho por Dani, ya en `dev` |
 | `feat/priorizador-referencia` | Cobertura, asignación diaria, métricas y `plan.json`, con pruebas | Hecho |
-| `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | En curso |
-| `feat/priorizador-comparador` | Baseline contra priorizado, sensibilidad | Pendiente |
+| `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | Hecho |
+| `fix/priorizador-centro-fsum` | Centro de colonia con `math.fsum`, igual en cualquier versión de Python | Hecho |
+| `feat/priorizador-comparador` | Rejilla de sensibilidad, escenarios del motor, equidad por grado y tablas en `resultados/` | En curso |
 | `feat/viabilidad-presupuestal` | Costo de un viaje de pipa, con fuente | Pendiente |
 
 ## Cómo correrlo
@@ -94,6 +96,14 @@ Cada corrida incluye el baseline estilizado. Sus variantes:
     python3 -m optimizador.priorizador --estado salidas/referencia.csv --set baseline_cisternas=exactas
 
 `--detalle` imprime cada fecha de cada corrida.
+
+Las tablas del reporte salen de un solo comando, que corre el motor por su cuenta (unos 50 s):
+
+    python3 -m optimizador.analisis
+
+Escribe en `resultados/` la rejilla del priorizador, los escenarios del motor, la equidad por grado de
+marginación, la cobertura diaria y `resumen.md`. Qué se corre y por qué está en
+`docs/decisiones/06-rejilla-comparador.md`. Los archivos no se editan a mano: se vuelven a generar.
 
 Pruebas:
 
