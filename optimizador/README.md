@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (versión 0.5, borrador). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.6, borrador). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
@@ -38,14 +38,14 @@ van en `resultados/`.
 
 | Parámetro | Valor | Fuente |
 |---|---|---|
-| Pipas | 32 | Prensa, octubre 2026 (ver `decisiones/propuesta-dani.md`, decisión 4) |
-| Litros por viaje | 10,000 | Prensa |
+| Pipas | 32 | Meta anunciada el 14-oct; en julio eran 24. Se reporta, no restringe (`decisiones/referencias-y-prensa.md`) |
+| Litros por viaje | 10,000 | Prensa, 15-oct (P002); 5.6 millones de L en 565 viajes ≈ 9,911 L por viaje |
 | Litros por hogar | 200 | Prensa (~50 hogares por viaje) |
 | Viajes por día | 63 | Prensa: 565 viajes en 9 días (62.8 al día) |
 | Radio de cobertura | 300 m | Supuesto declarado; ver `docs/decisiones/03-radio-cobertura.md` |
 | Cota para ordenar | mínima | Ver `docs/decisiones/02-cota-min-max.md` |
 | Modo de racha | desempate | Ver `docs/decisiones/04-horizonte-dias.md` |
-| Cisterna comunitaria | 1 viaje = 10,000 L | Supuesto; ver `docs/decisiones/01-baseline-cisternas.md` |
+| Cisterna comunitaria | 1 viaje = 10,000 L | Cisternas de 10,000 L (P007) que se llenan con pipa por reporte (P006); ver `docs/decisiones/01-baseline-cisternas.md` |
 | Cisternas del baseline | todas (47) | Sensibilidad con las 35 de coordenada exacta |
 | Turnos del baseline | todas | Sensibilidad con `con_necesidad` |
 
