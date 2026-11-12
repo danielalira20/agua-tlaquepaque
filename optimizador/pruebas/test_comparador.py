@@ -20,6 +20,7 @@ SENS = {
     "baseline_turnos": ["todas", "con_necesidad"],
     "baseline_cisternas": ["todas", "exactas"],
 }
+COSTOS = {"referencia": 1200, "valores": [700, 1200]}
 
 
 def mundo_chico() -> C.Mundo:
@@ -96,6 +97,53 @@ class Equidad(unittest.TestCase):
                 C.leer_grados(str(ruta))
 
 
+class Costo(unittest.TestCase):
+    def setUp(self):
+        self.p = parametros(viajes_por_dia=2)
+        self.filas_rejilla = C.rejilla(estados_chicos(), mundo_chico(), self.p, SENS)
+        self.filas = C.costo_por_vivienda(self.filas_rejilla, self.p, COSTOS)
+
+    def test_costo_por_vivienda_dia_es_costo_de_los_viajes_entre_lo_atendido(self):
+        base = [f for f in self.filas_rejilla if f["modo_racha"] == self.p.modo_racha and f["radio_m"] == self.p.radio_cobertura_m]
+        # por cada costo y cota: el priorizado y los 4 baselines del caso base
+        self.assertEqual(len(self.filas), len(COSTOS["valores"]) * 2 * (1 + 4))
+        for f in self.filas:
+            self.assertEqual(f["costo_viajes_mxn"], f["costo_viaje_mxn"] * f["viajes"])
+            if f["viv_dia"]:
+                self.assertAlmostEqual(f["costo_por_viv_dia_mxn"], f["costo_viajes_mxn"] / f["viv_dia"])
+            if f["regla"] == "priorizado":
+                fila = next(b for b in base if b["cota"] == f["cota"])
+                self.assertEqual((f["viajes"], f["viv_dia"]), (fila["prio_viajes"], fila["prio_viv_dia"]))
+            else:
+                fila = next(b for b in base if (b["cota"], b["baseline_turnos"], b["baseline_cisternas"])
+                            == (f["cota"], f["baseline_turnos"], f["baseline_cisternas"]))
+                self.assertEqual((f["viajes"], f["viv_dia"]), (fila["base_viajes"], fila["base_viv_dia"]))
+
+    def test_la_razon_contra_el_baseline_no_depende_del_precio(self):
+        def razon(costo, cota):
+            de = [f for f in self.filas if f["costo_viaje_mxn"] == costo and f["cota"] == cota]
+            prio = next(f for f in de if f["regla"] == "priorizado")
+            return [f["costo_por_viv_dia_mxn"] / prio["costo_por_viv_dia_mxn"] for f in de
+                    if f["regla"] == "baseline" and f["costo_por_viv_dia_mxn"]]
+        for cota in ("min", "max"):
+            for a, b in zip(razon(700, cota), razon(1200, cota)):
+                self.assertAlmostEqual(a, b)
+
+    def test_sin_viviendas_atendidas_no_hay_costo_por_vivienda(self):
+        sin_atender = [dict(f, base_viv_dia=0) for f in self.filas_rejilla]
+        filas = C.costo_por_vivienda(sin_atender, self.p, COSTOS)
+        self.assertTrue(all(f["costo_por_viv_dia_mxn"] is None for f in filas if f["regla"] == "baseline"))
+
+    def test_el_costo_de_supuestos_esta_en_su_sensibilidad(self):
+        costos = C.leer_costos(str(RAIZ / "optimizador" / "supuestos.json"))
+        self.assertIn(costos["referencia"], costos["valores"])
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = Path(tmp) / "supuestos.json"
+            ruta.write_text('{"costo_viaje_mxn": 999, "sensibilidad": {"costo_viaje_mxn": [700, 1200]}}', encoding="utf-8")
+            with self.assertRaises(ValueError):
+                C.leer_costos(str(ruta))
+
+
 class Escenarios(unittest.TestCase):
     def test_las_esquinas_son_las_de_la_sensibilidad_del_motor(self):
         fuente = (RAIZ / "scripts" / "sensibilidad_orden.py").read_text(encoding="utf-8")
@@ -114,15 +162,15 @@ class Salida(unittest.TestCase):
         estados_de = {"base": estados, "esquina_x": estados}
         ctx = {"desde": "d1", "hasta": "d2", "calendario": "prueba", "viajes_por_dia": p.viajes_por_dia,
                "hogares_por_viaje": p.hogares_por_viaje, "modo_racha": p.modo_racha, "radio": p.radio_cobertura_m,
-               "sens": SENS, "escenarios": escenarios, "n_cisternas": {"todas": 2, "exactas": 1}}
+               "sens": SENS, "costos": COSTOS, "escenarios": escenarios, "n_cisternas": {"todas": 2, "exactas": 1}}
         contenidos = []
         for _ in range(2):
             with tempfile.TemporaryDirectory() as tmp:
-                rutas = C.escribir_resultados(Path(tmp), C.calcular(estados_de, escenarios, mundo, p, SENS), ctx)
+                rutas = C.escribir_resultados(Path(tmp), C.calcular(estados_de, escenarios, mundo, p, SENS, COSTOS), ctx)
                 contenidos.append({r.name: r.read_bytes() for r in rutas})
         self.assertEqual(contenidos[0], contenidos[1])
-        self.assertEqual(sorted(contenidos[0]), ["cobertura_diaria.csv", "equidad_marginacion.csv", "escenarios_motor.csv",
-                                                 "rejilla_priorizador.csv", "resumen.md"])
+        self.assertEqual(sorted(contenidos[0]), ["cobertura_diaria.csv", "costo_por_vivienda.csv", "equidad_marginacion.csv",
+                                                 "escenarios_motor.csv", "rejilla_priorizador.csv", "resumen.md"])
         self.assertIn("comparación más conservadora", contenidos[0]["resumen.md"].decode("utf-8"))
 
 

@@ -79,6 +79,17 @@ def leer_sensibilidad(ruta_supuestos: str) -> dict[str, list]:
     return {k: list(sens[k]) for k in CLAVES_SENSIBILIDAD}
 
 
+def leer_costos(ruta_supuestos: str) -> dict:
+    """Costo de un viaje de pipa (decision 07): el valor de referencia y los de la sensibilidad."""
+    with open(ruta_supuestos, encoding="utf-8") as f:
+        datos = json.load(f)
+    referencia = datos["costo_viaje_mxn"]
+    valores = list(datos["sensibilidad"]["costo_viaje_mxn"])
+    if referencia not in valores or any(v <= 0 for v in valores):
+        raise ValueError(f"{ruta_supuestos}: costo_viaje_mxn debe ser positivo y estar en su sensibilidad")
+    return {"referencia": referencia, "valores": valores}
+
+
 def leer_escenarios(ruta: str) -> list[Escenario]:
     with open(ruta, encoding="utf-8") as f:
         datos = json.load(f)
@@ -118,9 +129,11 @@ def comparar(prio: Corrida, base: Corrida) -> dict:
         "prio_personas_dia": sp["personas_atendidas"],
         "prio_eficiencia_pct": sp["eficiencia_viviendas_pct"],
         "prio_mzas_sin_entrega": sp["manzanas_sin_entrega"],
+        "prio_viajes": sp["viajes_usados"],
         "base_viv_dia": sb["viviendas_atendidas"],
         "base_personas_dia": sb["personas_atendidas"],
         "base_viajes_vacios": sb["viajes_vacios"],
+        "base_viajes": sb["viajes_usados"],
         "veces": veces(sp["viviendas_atendidas"], sb["viviendas_atendidas"]),
     }
 
@@ -220,16 +233,36 @@ def cobertura_diaria(corridas: dict[str, dict[str, Corrida]]) -> list[dict]:
     return filas
 
 
+def costo_por_vivienda(filas_rejilla: list[dict], p: Parametros, costos: dict) -> list[dict]:
+    """Decision 07. Caso base: costo de los viajes usados y costo por vivienda-dia atendida, para el priorizado y
+    cada baseline, con cada costo de la sensibilidad. Un viaje vacio cuenta como usado: la pipa sale igual."""
+    base = [f for f in filas_rejilla if f["modo_racha"] == p.modo_racha and f["radio_m"] == p.radio_cobertura_m]
+    filas = []
+    for costo in costos["valores"]:
+        for cota in COTAS_ORDEN:
+            de_cota = [f for f in base if f["cota"] == cota]
+            reglas = [("priorizado", "", "", de_cota[0]["prio_viajes"], de_cota[0]["prio_viv_dia"])]
+            reglas += [("baseline", f["baseline_turnos"], f["baseline_cisternas"], f["base_viajes"], f["base_viv_dia"])
+                       for f in de_cota]
+            for regla, turnos, cist, viajes, viv in reglas:
+                filas.append({"costo_viaje_mxn": costo, "cota": cota, "regla": regla, "baseline_turnos": turnos,
+                              "baseline_cisternas": cist, "viajes": viajes, "costo_viajes_mxn": costo * viajes,
+                              "viv_dia": viv, "costo_por_viv_dia_mxn": None if viv == 0 else costo * viajes / viv})
+    return filas
+
+
 def calcular(estados_de: dict[str, Estados], escenarios: list[Escenario], mundo: Mundo, p: Parametros,
-             sens: dict[str, list]) -> dict[str, list[dict]]:
+             sens: dict[str, list], costos: dict) -> dict[str, list[dict]]:
     """Todas las tablas. `estados_de` va del nombre del escenario a su estado; el de 'base' es el del reporte."""
     base = estados_de["base"]
     corridas = corridas_base(base, mundo, p)
+    filas_rejilla = rejilla(base, mundo, p, sens)
     return {
-        "rejilla_priorizador": rejilla(base, mundo, p, sens),
+        "rejilla_priorizador": filas_rejilla,
         "escenarios_motor": escenarios_motor(escenarios, estados_de, mundo, p, sens),
         "equidad_marginacion": equidad(base, corridas, mundo),
         "cobertura_diaria": cobertura_diaria(corridas),
+        "costo_por_vivienda": costo_por_vivienda(filas_rejilla, p, costos),
     }
 
 

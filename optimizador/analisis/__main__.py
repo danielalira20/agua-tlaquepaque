@@ -20,7 +20,15 @@ from pathlib import Path
 from optimizador.priorizador.baseline import seleccionar
 from optimizador.priorizador.entradas import leer_supuestos
 
-from .comparador import calcular, cargar_mundo, escribir_resultados, leer_escenarios, leer_estados, leer_sensibilidad
+from .comparador import (
+    calcular,
+    cargar_mundo,
+    escribir_resultados,
+    leer_costos,
+    leer_escenarios,
+    leer_estados,
+    leer_sensibilidad,
+)
 
 
 def _argumentos(argv) -> argparse.Namespace:
@@ -56,6 +64,7 @@ def main(argv=None) -> None:
     inicio = time.perf_counter()
     p = leer_supuestos(args.supuestos)
     sens = leer_sensibilidad(args.supuestos)
+    costos = leer_costos(args.supuestos)
     escenarios = leer_escenarios(args.escenarios)
     mundo = cargar_mundo(args.ubicaciones, args.manzanas, args.colonias, args.cisternas, args.marginacion)
 
@@ -67,7 +76,7 @@ def main(argv=None) -> None:
             estados_de[e.nombre] = leer_estados(str(ruta))
             print(f"motor: {e.nombre} ({time.perf_counter() - inicio:.0f} s)")
 
-    tablas = calcular(estados_de, escenarios, mundo, p, sens)
+    tablas = calcular(estados_de, escenarios, mundo, p, sens, costos)
     contexto = {
         "desde": args.desde,
         "hasta": args.hasta,
@@ -77,6 +86,7 @@ def main(argv=None) -> None:
         "modo_racha": p.modo_racha,
         "radio": p.radio_cobertura_m,
         "sens": sens,
+        "costos": costos,
         "escenarios": escenarios,
         "n_cisternas": {c: len(seleccionar(mundo.cisternas, mundo.fuera, replace(p, baseline_cisternas=c))[0])
                         for c in sens["baseline_cisternas"]},
