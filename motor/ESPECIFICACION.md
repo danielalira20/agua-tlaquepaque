@@ -1,6 +1,6 @@
 # Especificación del motor de autonomía
 
-Versión 0.2. Decisión 6 aprobada; el resto sigue como borrador. Es el único documento que mandan: la
+Versión 0.3. Decisiones 4 y 6 aprobadas; el resto sigue como borrador. Es el único documento que mandan: la
 implementación oficial (TypeScript, en la app) y la de referencia (Python,
 `motor/referencia.py`) se escriben **a partir de esto**, no una de la otra.
 
@@ -163,7 +163,7 @@ Un renglón por manzana y por fecha:
 | `viv_agua_guardada_min`, `_max` | Sección 6 |
 | `requiere_desinfeccion` | Sección 6 |
 | `estado` | Según `pct_sin_agua_min` **sin redondear**: menor que 10 → `con_agua`; de 10 a 50 → `quiebre_parcial`; mayor que 50 → `quiebre_mayoritario` |
-| `severidad` | `pct_sin_agua_min / 100`. **Sin peso de marginación todavía** (decisión abierta, ver sección 10) |
+| `severidad` | `pct_sin_agua_min / 100`. **Sin peso de marginación**, por decisión (opción A, ver sección 10) |
 
 ## 8. Casos resueltos a mano
 
@@ -219,7 +219,7 @@ Hay que declararlo en el reporte (Anexo F):
 | 1 | Salida por **fecha** o por `dia_ciclo` | Por fecha, con `dia` como columna adicional | El grupo (cambia el contrato `estado`) |
 | 2 | Valor de `horas_efectivas_corte` | 24 por defecto, con sensibilidad a 24, 36 y 48 | Tú y Jass |
 | 3 | Manzanas con varias zonas | Ensanchar el intervalo (sección 4) | Tú |
-| 4 | Peso de marginación en `severidad` | Cuando llegue el archivo de AGEB. Hoy sin peso | Tú y Jass |
+| 4 | Peso de marginación en `severidad` | **Aprobada: sin peso (opción A).** La marginación va como capa aparte; el comparador del priorizador mide la equidad con una tabla por grado | Dani (confirmó el 12-nov) y Jass |
 | 5 | Desigualdad estricta en `aut < H` | Estricta | Tú |
 | 6 | Parámetro `f` (fracción del suministro que llega en racionamiento) | Valor por defecto 0, con sensibilidad a 0, 0.25 y 0.5. Los estratos sin almacenamiento cuentan sin agua mientras f < 1 | **Aprobada** (Dani, 11-nov-2026). Propuesta de Migue y de Jass. `f = 0` es el escenario de corte total y la cota alta del daño, no una medición: no hay dato público de cuánta agua llega en un día de baja presión |
 

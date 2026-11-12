@@ -25,8 +25,8 @@ siguen siendo **seis problemas distintos**:
 | 2 | Falta la viabilidad institucional y presupuestal | C5 | 🔴 sin dueño ni datos |
 | 3 | Las tres áreas de conocimiento no están escritas | I4, C4 | 🔴 |
 | 4 | El dataset 01 del catálogo puede no ser el que usamos | I3 | 🟡 mitigado: quedan #17 y #02. Falta preguntar a SOLACYT |
-| 5 | El prototipo usa datos simulados y el priorizador no tiene código | I5, C2 | 🟡 hay motor, contratos y especificación |
-| 6 | La delimitación espera el voto de Magui y tiene cifras con rango | I1 | 🟡 |
+| 5 | La app usa datos simulados y no hay motor oficial en TypeScript | I5, C2 | 🟡 hay motor y priorizador de referencia, contratos y especificaciones |
+| 6 | La delimitación está aprobada (B, 4 de 4) pero tiene cifras con rango | I1 | 🟡 |
 
 La caracterización del problema con datos de Jalisco (C1) es nuestro punto fuerte.
 
@@ -35,8 +35,8 @@ La caracterización del problema con datos de Jalisco (C1) es nuestro punto fuer
 | Casilla | Antes | Ahora | Por qué |
 |---|:---:|:---:|---|
 | I2, C3 (≥ 2 datasets) | 🟡 | 🟢 | El #17 ya se usa a dos niveles (municipal y AGEB). El #02 está verificado como respaldo, así que aunque el #01 se cuestionara quedan dos. Condición: citar el #02 con un uso concreto |
-| I5, C2 (prototipo) | 🟡 | 🟡 | Ya hay motor de referencia con 34 pruebas, contratos con fixtures y la especificación del priorizador. La app sigue simulada y falta el código del priorizador |
-| I1 (delimitación) | 🟡 | 🟡 | Jass y Migue votaron B. Falta Magui. Las cifras se corrigieron (ver la advertencia 1) |
+| I5, C2 (prototipo) | 🟡 | 🟡 | Ya hay motor de referencia (39 pruebas), priorizador de referencia de Jass (37 pruebas, corre con datos reales) y contratos con fixtures. La app sigue simulada y falta el motor oficial en TypeScript |
+| I1 (delimitación) | 🟡 | 🟡 | **Aprobada B, 4 de 4** (Magui votó el 12-nov). Las cifras se corrigieron (ver la advertencia 1). Falta escribir el indicador en una frase en el reporte |
 
 ### Cuatro advertencias nuevas para el reporte
 
@@ -136,11 +136,11 @@ priorizador de Jass produzca el número que la sostiene.
 
 | # | Indicación | Estado | Evidencia en el repo | Falta | Dueño sugerido |
 |---|---|:---:|---|---|---|
-| I1 | Delimitar: zona, por qué, quién usa, indicador | 🟡 | Municipio fijado; usuarios definidos (coordinación de pipas y familias); razones documentadas. Opción B recomendada (colonias dentro del programa, zonas 3 a 6): 462,194 personas (78.6%), de las cuales 368,111 (62.6%) con respaldo de la lista oficial. Jass y Migue votaron B | **Falta el voto de Magui.** El indicador no está escrito en una frase. Propuesta: *personas-día sin agua por semana* (semana del 9 al 15 de noviembre: 210,116 a 490,320 con el calendario vigente) | Magui |
+| I1 | Delimitar: zona, por qué, quién usa, indicador | 🟡 | Municipio fijado; usuarios definidos (coordinación de pipas y familias); razones documentadas. **Opción B aprobada, 4 de 4** (colonias dentro del programa, zonas 3 a 6): 462,194 personas (78.6%), de las cuales 368,111 (62.6%) con respaldo de la lista oficial | El indicador no está escrito en una frase en el reporte. Propuesta: *personas-día sin agua por semana* (semana del 9 al 15 de noviembre: 210,116 a 490,320 con el calendario vigente) | Magui |
 | I2 | ≥ 2 datasets del catálogo | 🟢 | #17 a dos niveles: municipal (Tlaquepaque "Muy bajo", lugar 2,424 de 2,469) y AGEB (214 AGEB cruzadas con las manzanas por `CVE_AGEB`). #01 usado a fondo. #02 (CNGMD 2023) verificado como respaldo | La sección 3 sigue: preguntar a SOLACYT por el #01. Citar el #02 con un uso concreto en el reporte | Magui |
 | I3 | Demostrar cómo se usó cada dataset | 🟡 | `datos/FUENTES.md` documenta procedencia, cobertura y procesamiento de manzanas, colonias, zonas y calendarios del SIAPA, marginación y cisternas | No es la tabla del Anexo B. Falta la cita exacta de cada uno y la extracción del #02, que todavía no está en el repo | Magui |
 | I4 | Tres áreas de conocimiento | 🔴 | Hay material de las tres (ver abajo) | **No está escrito en ningún lado** | Dani |
-| I5 | Prototipo funcionando; lo simulado, declarado | 🟡 | `app/` compila (8 páginas estáticas). **`motor/` tiene especificación y una implementación de referencia en Python con 34 pruebas.** Los contratos `calendario`, `zonas`, `manzanas`, `estado` y `plan` están actualizados con fixtures. Jass tiene la especificación del priorizador en su rama | La app sigue con datos simulados y calendario simulado, distinto del oficial. Falta adaptar el motor oficial en TypeScript, y **el priorizador no tiene código** | Migue, Dani, Jass |
+| I5 | Prototipo funcionando; lo simulado, declarado | 🟡 | `app/` compila (8 páginas estáticas). **`motor/` tiene especificación y una implementación de referencia en Python con 39 pruebas, y `optimizador/` un priorizador de referencia con 37.** Los contratos `calendario`, `zonas`, `manzanas`, `estado`, `plan` y `evidencia` están actualizados con fixtures. Con datos reales de la semana del 9 al 15 de noviembre, el priorizado atiende 22,050 viviendas-día contra 4,532 del baseline estilizado | La app sigue con datos simulados y calendario simulado, distinto del oficial. **Falta el motor oficial en TypeScript** y que la app lea datos reales (ver `app/public/datos/real/LEEME.md` cuando exista la exportación) | Migue, Dani |
 | I6 | Fuentes citadas y uso de IA declarado | 🟡 | `decisiones/verificacion-citas.md` verifica tres citas; `datos/evidencia.csv` registra cada fuente con su nivel de verificación | La bibliografía en APA ya está consolidada (`decisiones/referencias-y-prensa.md`). Falta la declaración de IA | Dani |
 | I7 | Revisar los criterios de éxito | 🟢 | Este documento | Repetirlo el sábado con el reporte ya escrito | Todos |
 
