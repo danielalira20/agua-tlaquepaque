@@ -1,0 +1,438 @@
+cvegeo,colonia,zona,grado_marginacion,viviendas,viv_dia_min_base,rango_base,en_top250_base,frec_top250_A,frec_top250_B,nucleo_robusto
+1409800010262003,San Martin de Las Flores de Abajo,4,Alto,57,76.0,185,True,1.0,1.0,True
+1409800010262016,San Martin de Las Flores de Arriba,4,Alto,48,64.0,226,True,1.0,1.0,True
+1409800010262018,San Martin de Las Flores de Arriba,4,Alto,95,172.0,64,True,1.0,1.0,True
+1409800010262019,San Martin de Las Flores de Abajo,4,Alto,45,128.0,90,True,1.0,1.0,True
+1409800010262030,San Martin de Las Flores de Arriba,4,Alto,66,80.0,174,True,1.0,1.0,True
+1409800010262034,El Mirador,4,Alto,113,172.0,65,True,1.0,1.0,True
+1409800010262039,El Mirador,4,Alto,70,156.0,72,True,1.0,1.0,True
+1409800010296013,San Martin de Las Flores de Arriba,4,Alto,52,112.0,108,True,1.0,1.0,True
+1409800010296024,San Martin de Las Flores de Abajo,4,Alto,79,168.0,70,True,1.0,1.0,True
+1409800010296025,San Martin de Las Flores de Abajo,4,Alto,84,140.0,80,True,1.0,1.0,True
+1409800010296030,San Martin de Las Flores de Abajo,4,Alto,107,104.0,123,True,1.0,1.0,True
+1409800010296032,San Martin de Las Flores de Abajo,4,Alto,58,104.0,120,True,1.0,1.0,True
+1409800010370009,La Loma,6,Medio,332,96.0,138,True,1.0,1.0,True
+1409800010597035,San Pedrito,4,Alto,60,112.0,109,True,1.0,1.0,True
+1409800010597039,El Mirador,4,Alto,71,64.0,229,True,1.0,1.0,True
+1409800010671018,Las Juntas,3,Bajo,105,177.0,62,True,1.0,1.0,True
+1409800010671084,Las Juntas,3,Bajo,216,369.0,14,True,1.0,1.0,True
+1409800010690038,El Vergel,3,Medio,69,207.0,42,True,1.0,1.0,True
+1409800010690044,Cerro del Cuatro,5,Medio,51,64.0,227,True,1.0,1.0,True
+1409800010968035,Emiliano Zapata,4,Alto,48,84.0,161,True,1.0,1.0,True
+1409800011222009,El Vergel,3,Medio,105,84.0,164,True,1.0,1.0,True
+1409800011379015,Lomas del Tapatío,4,Bajo,61,72.0,200,True,1.0,1.0,True
+1409800011538029,Lomas de Tlaquepaque,3,Medio,166,204.0,46,True,1.0,1.0,True
+1409800011665001,Prado de La Luna,5,Muy bajo,153,96.0,137,True,1.0,1.0,True
+1409800011716004,La Llave,5,Muy bajo,91,132.0,88,True,1.0,1.0,True
+1409800011735021,Alfredo Barba,4,Alto,75,72.0,202,True,1.0,1.0,True
+1409800011735068,Alfredo Barba,4,Alto,96,116.0,106,True,1.0,1.0,True
+1409800011773006,San Martin de Las Flores de Arriba,4,Medio,63,100.0,131,True,1.0,1.0,True
+1409800011966026,Lomas de Santa María,5,Alto,72,128.0,93,True,1.0,1.0,True
+1409800011966036,Lomas de Santa María,5,Alto,48,68.0,208,True,1.0,1.0,True
+1409800011970031,Guayabitos,5,Alto,62,104.0,121,True,1.0,1.0,True
+1409800012004001,Los Santibáñez,4,Muy alto,67,76.0,186,True,1.0,1.0,True
+1409800012131003,Geo Villas Los Olivos III,6,Muy bajo,302,477.0,6,True,1.0,1.0,True
+1409800012131004,Haciendas del Real,6,Muy bajo,132,294.0,26,True,1.0,1.0,True
+1409800012131005,Haciendas del Real,6,Muy bajo,61,141.0,78,True,1.0,1.0,True
+1409800012131007,Haciendas del Real,6,Muy bajo,93,216.0,41,True,1.0,1.0,True
+1409800012131009,Haciendas del Real,6,Muy bajo,84,192.0,51,True,1.0,1.0,True
+1409800012131010,Haciendas del Real,6,Muy bajo,86,204.0,44,True,1.0,1.0,True
+1409800012131011,Haciendas del Real,6,Muy bajo,90,225.0,38,True,1.0,1.0,True
+1409800012131012,Haciendas del Real,6,Muy bajo,55,117.0,100,True,1.0,1.0,True
+1409800012131015,Haciendas del Real,6,Muy bajo,58,135.0,83,True,1.0,1.0,True
+1409800012131063,Haciendas del Real,6,Muy bajo,151,282.0,29,True,1.0,1.0,True
+1409800012150013,San Sebastianito,6,Bajo,244,123.0,98,True,1.0,1.0,True
+1409800012150045,Miraflores,6,Bajo,125,186.0,57,True,1.0,1.0,True
+1409800012201001,San Martin de Las Flores de Abajo,4,Alto,57,128.0,92,True,1.0,1.0,True
+1409800012201004,San Martin de Las Flores de Abajo,4,Alto,61,84.0,162,True,1.0,1.0,True
+1409800012201006,San Martin de Las Flores de Abajo,4,Alto,130,96.0,136,True,1.0,1.0,True
+1409800012201008,San Martin de Las Flores de Abajo,4,Alto,49,88.0,151,True,1.0,1.0,True
+1409800012201010,San Martin de Las Flores de Abajo,4,Alto,86,112.0,110,True,1.0,1.0,True
+1409800012201015,San Martin de Las Flores de Abajo,4,Alto,69,117.0,102,True,1.0,1.0,True
+1409800012216004,San Martin de Las Flores de Abajo,4,Alto,54,140.0,79,True,1.0,1.0,True
+1409800012216009,San Martin de Las Flores de Abajo,4,Alto,76,104.0,122,True,1.0,1.0,True
+1409800012273003,Los Santibáñez,4,Alto,46,116.0,104,True,1.0,1.0,True
+1409800012273044,Francisco Silva Romero,4,Alto,62,116.0,105,True,1.0,1.0,True
+1409800012292017,Balcones de Santa María,6,Muy bajo,60,135.0,84,True,1.0,1.0,True
+1409800012292034,Balcones de Santa María,6,Muy bajo,54,135.0,82,True,1.0,1.0,True
+1409800012292037,Balcones de Santa María,6,Muy bajo,57,129.0,89,True,1.0,1.0,True
+1409800012358007,El Sauz,6,Bajo,119,279.0,31,True,1.0,1.0,True
+1409800012358008,El Sauz,6,Bajo,119,300.0,24,True,1.0,1.0,True
+1409800012358009,El Sauz,6,Bajo,83,219.0,39,True,1.0,1.0,True
+1409800012358013,El Sauz,6,Bajo,139,387.0,9,True,1.0,1.0,True
+1409800012358018,El Sauz,6,Bajo,154,426.0,7,True,1.0,1.0,True
+1409800012362002,El Sauz,6,Muy bajo,139,375.0,12,True,1.0,1.0,True
+1409800012362003,El Sauz,6,Muy bajo,124,336.0,20,True,1.0,1.0,True
+1409800012362006,El Sauz,6,Muy bajo,73,180.0,60,True,1.0,1.0,True
+1409800012362008,El Sauz,6,Muy bajo,109,297.0,25,True,1.0,1.0,True
+1409800012362010,El Sauz,6,Muy bajo,156,420.0,8,True,1.0,1.0,True
+1409800012362011,Lomas del Tesoro,6,Muy bajo,128,282.0,28,True,1.0,1.0,True
+1409800012362013,El Sauz,6,Muy bajo,137,384.0,10,True,1.0,1.0,True
+1409800012362014,El Sauz,6,Muy bajo,127,342.0,17,True,1.0,1.0,True
+1409800012362015,Lomas del Tesoro,6,Muy bajo,110,270.0,32,True,1.0,1.0,True
+1409800012362021,El Sauz,6,Muy bajo,104,267.0,33,True,1.0,1.0,True
+1409800012362023,El Sauz,6,Muy bajo,106,288.0,27,True,1.0,1.0,True
+1409800012362024,El Sauz,6,Muy bajo,109,306.0,22,True,1.0,1.0,True
+1409800012362028,El Sauz,6,Muy bajo,436,762.0,2,True,1.0,1.0,True
+1409800012362029,El Sauz,6,Muy bajo,171,342.0,18,True,1.0,1.0,True
+1409800012377002,El Sauz,6,Muy bajo,70,189.0,52,True,1.0,1.0,True
+1409800012377003,El Sauz,6,Muy bajo,131,363.0,16,True,1.0,1.0,True
+1409800012377004,El Sauz,6,Muy bajo,144,366.0,15,True,1.0,1.0,True
+1409800012377006,El Sauz,6,Muy bajo,142,372.0,13,True,1.0,1.0,True
+1409800012377007,El Sauz,6,Muy bajo,79,204.0,43,True,1.0,1.0,True
+1409800012377008,El Sauz,6,Muy bajo,104,249.0,35,True,1.0,1.0,True
+1409800012377009,El Sauz,6,Muy bajo,77,183.0,59,True,1.0,1.0,True
+1409800012377010,El Sauz,6,Muy bajo,111,306.0,23,True,1.0,1.0,True
+1409800012377011,El Sauz,6,Muy bajo,75,225.0,37,True,1.0,1.0,True
+1409800012377049,El Sauz,6,Muy bajo,95,204.0,45,True,1.0,1.0,True
+1409800012377050,El Sauz,6,Muy bajo,113,279.0,30,True,1.0,1.0,True
+1409800012447001,Fovissste Miravalle,5,Bajo,62,84.0,163,True,1.0,1.0,True
+1409800012447002,Fovissste Miravalle,5,Bajo,61,88.0,153,True,1.0,1.0,True
+1409800012447007,Fovissste Miravalle,5,Bajo,57,88.0,152,True,1.0,1.0,True
+1409800012447013,Fovissste Miravalle,5,Bajo,55,80.0,173,True,1.0,1.0,True
+1409800012451002,Fovissste Miravalle,5,Bajo,54,92.0,145,True,1.0,1.0,True
+1409800012451007,Fovissste Miravalle,5,Bajo,48,108.0,113,True,1.0,1.0,True
+1409800012451020,Fovissste Miravalle,5,Bajo,42,92.0,144,True,1.0,1.0,True
+1409800012466001,Toluquilla,6,Muy bajo,128,123.0,97,True,1.0,1.0,True
+1409800012466008,Fovissste Miravalle,5,Muy bajo,45,168.0,66,True,1.0,1.0,True
+1409800012466020,Fovissste Miravalle,5,Muy bajo,36,144.0,76,True,1.0,1.0,True
+1409800012466031,Fovissste Miravalle,5,Muy bajo,42,148.0,75,True,1.0,1.0,True
+1409800012466051,Terralta,5,Muy bajo,44,120.0,99,True,1.0,1.0,True
+1409800012466055,Terralta,5,Muy bajo,73,176.0,63,True,1.0,1.0,True
+1409800012466060,Terralta,5,Muy bajo,100,140.0,81,True,1.0,1.0,True
+1409800012470009,Fovissste Miravalle,5,Bajo,42,132.0,87,True,1.0,1.0,True
+1409800012470010,Fovissste Miravalle,5,Bajo,47,168.0,67,True,1.0,1.0,True
+140980001249A017,Fovissste Miravalle,5,Bajo,54,216.0,40,True,1.0,1.0,True
+140980001249A020,Fovissste Miravalle,5,Bajo,47,188.0,54,True,1.0,1.0,True
+140980001249A026,Fovissste Miravalle,5,Bajo,49,196.0,50,True,1.0,1.0,True
+1409800012574023,Parques del Bosque,6,Muy bajo,104,168.0,69,True,1.0,1.0,True
+1409800012697002,Parques de Sta. Cruz del Valle,5,Muy bajo,143,340.0,19,True,1.0,1.0,True
+1409800012697006,Parques de Sta. Cruz del Valle,5,Muy bajo,56,108.0,114,True,1.0,1.0,True
+1409800012697012,Parques de Sta. Cruz del Valle,5,Muy bajo,62,124.0,94,True,1.0,1.0,True
+1409800012697019,La Llave,5,Muy bajo,123,200.0,48,True,1.0,1.0,True
+1409800012697020,Paseo de Los Parques,5,Muy bajo,117,184.0,58,True,1.0,1.0,True
+140980001270A001,Parques de Sta. Cruz del Valle,5,Muy bajo,261,200.0,49,True,1.0,1.0,True
+140980001270A008,Parques de Sta. Cruz del Valle,5,Muy bajo,40,104.0,118,True,1.0,1.0,True
+1409800012714016,Villa Fontana,5,Muy bajo,63,96.0,135,True,1.0,1.0,True
+1409800012714021,Villa Fontana,5,Muy bajo,75,188.0,55,True,1.0,1.0,True
+1409800012714022,Villa Fontana,5,Muy bajo,621,1464.0,1,True,1.0,1.0,True
+1409800012714023,Villa Fontana,5,Muy bajo,192,484.0,5,True,1.0,1.0,True
+1409800012714080,Villa Fontana,5,Muy bajo,202,376.0,11,True,1.0,1.0,True
+1409800012714081,Villa Fontana,5,Muy bajo,88,200.0,47,True,1.0,1.0,True
+1409800012729016,Villa Fontana,5,Muy bajo,64,164.0,71,True,1.0,1.0,True
+1409800012729019,Villa Fontana,5,Muy bajo,100,264.0,34,True,1.0,1.0,True
+1409800012729021,Villa Fontana,5,Muy bajo,47,128.0,91,True,1.0,1.0,True
+1409800012733001,Parques de Sta. Cruz del Valle,5,Muy bajo,195,488.0,4,True,1.0,1.0,True
+1409800012733005,Parques de Sta. Cruz del Valle,5,Muy bajo,296,756.0,3,True,1.0,1.0,True
+1409800012733016,Valle de La Misericordia,5,Muy bajo,93,232.0,36,True,1.0,1.0,True
+1409800012733017,Parques de Sta. Cruz del Valle,5,Muy bajo,85,152.0,73,True,1.0,1.0,True
+1409800012733039,Parques de Sta. Cruz del Valle,5,Muy bajo,46,104.0,119,True,1.0,1.0,True
+1409800012841001,Miraflores,6,Bajo,50,141.0,77,True,1.0,1.0,True
+1409800012841008,Miraflores,6,Bajo,53,150.0,74,True,1.0,1.0,True
+1409800012841010,Miraflores,6,Bajo,78,123.0,96,True,1.0,1.0,True
+1409800012856030,Balcones de Santa María,6,Bajo,72,168.0,68,True,1.0,1.0,True
+1409800012856031,Balcones de Santa María,6,Bajo,77,177.0,61,True,1.0,1.0,True
+1409800012856035,Balcones de Santa María,6,Bajo,79,189.0,53,True,1.0,1.0,True
+1409800012860017,Balcones de Santa María,6,Muy bajo,103,186.0,56,True,1.0,1.0,True
+1409800013182014,La Cofradía,4,Bajo,95,312.0,21,True,1.0,1.0,True
+1409800012574033,Parques del Bosque,6,Muy bajo,78,102.0,125,True,1.0,0.9967,True
+1409800010262006,El Mirador,4,Alto,43,72.0,196,True,1.0,0.9933,True
+1409800012131020,Geo Villas Los Olivos III,6,Muy bajo,54,123.0,95,True,1.0,0.9933,True
+140980001249A019,Fovissste Miravalle,5,Bajo,33,132.0,86,True,1.0,0.9933,True
+140980001249A063,Fovissste Miravalle,5,Bajo,33,132.0,85,True,1.0,0.9933,True
+1409800012841015,Miraflores,6,Bajo,57,117.0,101,True,1.0,0.9933,True
+1409800013040005,San Juan,4,Muy alto,41,88.0,150,True,1.0,0.9933,True
+1409800011082010,El Cerrito,4,Medio,58,64.0,228,True,1.0,0.9867,True
+1409800012729003,Villa Fontana,5,Muy bajo,36,100.0,129,True,1.0,0.98,True
+1409800012432005,Fovissste Miravalle,5,Bajo,37,108.0,112,True,1.0,0.9733,True
+140980001270A010,Parques de Sta. Cruz del Valle,5,Muy bajo,38,100.0,130,True,0.9933,0.9767,True
+1409800012216014,Plan de Oriente,4,Alto,36,80.0,169,True,0.9933,0.9733,True
+1409800012216026,San Martin de Las Flores de Abajo,4,Alto,56,36.0,459,False,0.9933,0.8233,True
+1409800011082034,El Morito,4,Medio,146,68.0,210,True,0.9867,0.9833,True
+1409800012574066,Parques del Bosque,6,Muy bajo,97,114.0,107,True,0.9833,0.9733,True
+140980001249A027,Fovissste Miravalle,5,Bajo,29,116.0,103,True,0.9833,0.9667,True
+1409800011966018,Guayabitos,5,Alto,48,52.0,297,False,0.9833,0.79,True
+1409800012201002,San Martin de Las Flores de Abajo,4,Alto,50,52.0,299,False,0.9833,0.79,True
+1409800010046030,Revolución,3,Medio,53,105.0,116,True,0.98,0.9633,True
+1409800010262002,San Martin de Las Flores de Abajo,4,Alto,63,72.0,201,True,0.9733,0.9533,True
+1409800011966013,Guayabitos,5,Alto,90,24.0,676,False,0.9733,0.7433,True
+1409800012108011,Alborada,5,Alto,59,56.0,272,False,0.9733,0.7433,True
+1409800010968022,Ladrillera,4,Alto,58,40.0,404,False,0.9733,0.7367,True
+1409800011966011,Guayabitos,5,Alto,95,36.0,463,False,0.9733,0.7233,True
+1409800012201009,San Martin de Las Flores de Abajo,4,Alto,55,52.0,301,False,0.9733,0.7233,True
+1409800010597003,San Pedrito,4,Alto,117,32.0,522,False,0.97,0.7167,True
+1409800012470035,Fovissste Miravalle,5,Bajo,30,104.0,117,True,0.9667,0.9567,True
+1409800012216023,San Martin de Las Flores de Abajo,4,Alto,38,64.0,224,True,0.96,0.9667,True
+1409800010262017,San Martin de Las Flores de Arriba,4,Alto,58,40.0,405,False,0.96,0.7033,True
+1409800012131014,Haciendas del Real,6,Muy bajo,44,105.0,115,True,0.9567,0.96,True
+1409800012574003,Parques del Bosque,6,Muy bajo,343,102.0,126,True,0.9567,0.9567,True
+1409800012292033,Balcones de Santa María,6,Muy bajo,46,102.0,124,True,0.9567,0.9433,True
+140980001110A023,Las Huertas,4,Medio,57,44.0,361,False,0.9533,0.6967,True
+1409800012432006,Fovissste Miravalle,5,Bajo,38,88.0,149,True,0.95,0.9533,True
+1409800012216021,San Martin de Las Flores de Abajo,4,Alto,53,40.0,400,False,0.95,0.74,True
+1409800010671071,Las Juntas,3,Bajo,58,72.0,197,True,0.9467,0.9667,True
+1409800010597063,Alfareros,4,Alto,61,48.0,333,False,0.9467,0.6667,True
+1409800011203023,El Campesino,3,Alto,45,72.0,190,True,0.9433,0.9667,True
+1409800012697017,Parques de Sta. Cruz del Valle,5,Muy bajo,36,88.0,148,True,0.9433,0.9467,True
+1409800013214024,Verde Valle,5,Bajo,27,108.0,111,True,0.9433,0.9467,True
+1409800012748001,Valle de La Misericordia,5,Bajo,39,80.0,170,True,0.9433,0.9433,True
+1409800012466035,Fovissste Miravalle,5,Muy bajo,29,100.0,128,True,0.9433,0.9367,True
+1409800011097036,Las Huertas,4,Bajo,70,12.0,979,False,0.94,0.7133,True
+1409800011082008,El Cerrito,4,Medio,87,20.0,759,False,0.94,0.6667,True
+1409800012201005,San Martin de Las Flores de Abajo,4,Alto,161,84.0,165,True,0.93,0.93,True
+1409800012470032,Fovissste Miravalle,5,Bajo,29,92.0,143,True,0.93,0.9233,True
+1409800011966015,Guayabitos,5,Alto,56,40.0,403,False,0.9233,0.6967,True
+1409800010690058,Guadalupe Ejidal,5,Medio,28,100.0,127,True,0.9167,0.9333,True
+1409800012466030,Fovissste Miravalle,5,Muy bajo,28,92.0,142,True,0.9167,0.93,True
+1409800010597025,San Pedrito,4,Alto,63,48.0,334,False,0.9,0.6367,True
+1409800012292022,Balcones de Santa María,6,Muy bajo,57,96.0,134,True,0.8867,0.8867,False
+1409800012292019,Balcones de Santa María,6,Muy bajo,60,93.0,141,True,0.87,0.8767,False
+1409800012697015,Parques de Sta. Cruz del Valle,5,Muy bajo,39,80.0,171,True,0.86,0.82,False
+1409800012292032,Balcones de Santa María,6,Muy bajo,49,96.0,133,True,0.8567,0.89,False
+1409800012292026,Balcones de Santa María,6,Muy bajo,45,96.0,132,True,0.8433,0.89,False
+1409800012714079,Villa Fontana,5,Muy bajo,47,76.0,184,True,0.8433,0.8433,False
+1409800012466049,Terralta,5,Muy bajo,42,72.0,195,True,0.8433,0.8367,False
+1409800012451010,Fovissste Miravalle,5,Bajo,46,64.0,225,True,0.8433,0.8333,False
+1409800012856011,Balcones de Santa María,6,Bajo,56,93.0,140,True,0.84,0.87,False
+1409800012131013,Haciendas del Real,6,Muy bajo,45,93.0,139,True,0.8133,0.8433,False
+1409800010262032,San Martin de Las Flores de Arriba,4,Alto,74,56.0,273,False,0.8133,0.52,False
+1409800011044006,López Mateos,4,Medio,75,44.0,364,False,0.81,0.5167,False
+1409800012273027,Francisco Silva Romero,4,Alto,35,72.0,191,True,0.8067,0.8767,False
+1409800011862004,Francisco I Madero,5,Alto,44,60.0,249,True,0.8067,0.7967,False
+1409800010525012,Las Juntas,3,Medio,70,90.0,147,True,0.7933,0.8767,False
+1409800012254001,El Órgano,4,Medio,50,48.0,332,False,0.7933,0.5833,False
+1409800010968013,Emiliano Zapata,4,Alto,130,12.0,980,False,0.7867,0.4933,False
+1409800010597036,El Mirador,4,Alto,55,40.0,401,False,0.77,0.59,False
+1409800011218032,El Vergel,3,Medio,143,78.0,179,True,0.7667,0.8333,False
+140980001249A028,Miravalle,5,Bajo,43,56.0,269,False,0.7667,0.51,False
+1409800012729010,Villa Fontana,5,Muy bajo,45,80.0,172,True,0.74,0.76,False
+1409800012004003,Los Santibáñez,4,Muy alto,40,52.0,293,False,0.7367,0.56,False
+1409800011379014,Lomas del Tapatío,4,Bajo,35,52.0,292,False,0.73,0.65,False
+1409800010671110,Las Juntas,3,Bajo,43,90.0,146,True,0.71,0.81,False
+1409800011970030,Guayabitos,5,Alto,57,36.0,460,False,0.6967,0.5133,False
+1409800012729013,Villa Fontana,5,Muy bajo,31,80.0,168,True,0.6833,0.79,False
+1409800011966028,Guayabitos,5,Alto,67,24.0,675,False,0.68,0.4867,False
+1409800012856023,Balcones de Santa María,6,Bajo,60,81.0,166,True,0.6567,0.7533,False
+1409800011203021,El Campesino,3,Alto,56,57.0,256,False,0.6567,0.5467,False
+140980001270A029,La Llave,5,Muy bajo,226,0.0,,False,0.6533,0.3767,False
+1409800010046043,Revolución,3,Medio,46,84.0,158,True,0.6467,0.7533,False
+1409800010794002,Francisco I Madero,5,Alto,58,44.0,362,False,0.6433,0.4067,False
+1409800012466004,Fovissste Miravalle,5,Muy bajo,25,84.0,157,True,0.6367,0.7633,False
+1409800013125001,Buenos Aires Segunda Sección,5,Muy alto,30,72.0,188,True,0.6333,0.78,False
+1409800011063022,San Pedrito,4,Alto,95,0.0,,False,0.6333,0.3933,False
+1409800010296029,San Martin de Las Flores de Abajo,4,Alto,39,56.0,268,False,0.6267,0.5233,False
+1409800011171006,Francisco I Madero,5,Alto,73,8.0,1090,False,0.6,0.4967,False
+1409800011631016,Lomas del Cuatro,5,Medio,72,36.0,461,False,0.6,0.3567,False
+1409800012625005,Alfredo Barba,4,Medio,123,0.0,,False,0.59,0.3833,False
+1409800012841019,Miraflores,6,Bajo,56,84.0,160,True,0.5833,0.6967,False
+140980001110A024,Las Huertas,4,Medio,109,0.0,,False,0.5733,0.3667,False
+1409800010671023,Las Juntas,3,Bajo,29,87.0,154,True,0.57,0.7433,False
+1409800012292001,Balcones de Santa María,6,Muy bajo,59,87.0,155,True,0.57,0.7433,False
+1409800012201017,San Martin de Las Flores de Abajo,4,Alto,50,20.0,754,False,0.5667,0.37,False
+1409800010370049,Santa María Tequepexpan,5,Medio,41,52.0,294,False,0.56,0.4667,False
+1409800010953011,Tateposco (San José de Tateposco),4,Medio,70,0.0,,False,0.55,0.4567,False
+1409800013214025,Verde Valle,5,Bajo,21,84.0,156,True,0.5233,0.6933,False
+1409800011078003,El Cerrito,4,Alto,90,0.0,,False,0.5233,0.3467,False
+1409800012108003,Alborada,5,Alto,56,32.0,521,False,0.5167,0.3567,False
+1409800012841011,Miraflores,6,Bajo,56,84.0,159,True,0.5133,0.69,False
+1409800010597041,El Mirador,4,Alto,34,52.0,290,False,0.5033,0.4433,False
+1409800010690047,Guadalupe Ejidal,5,Medio,87,44.0,365,False,0.4933,0.2733,False
+1409800010385026,Cerro del Cuatro,5,Medio,49,40.0,399,False,0.48,0.3333,False
+1409800011059019,San Pedrito,4,Medio,68,0.0,,False,0.4767,0.3233,False
+1409800012470028,Fovissste Miravalle,5,Bajo,26,80.0,167,True,0.4633,0.66,False
+1409800012216024,San Martin de Las Flores de Abajo,4,Alto,33,56.0,266,False,0.4633,0.5033,False
+1409800011059022,San Pedrito,4,Medio,70,0.0,,False,0.4567,0.3067,False
+1409800012216030,San Martin de Las Flores de Abajo,4,Alto,56,24.0,673,False,0.4467,0.29,False
+1409800011044037,Las Huertas,4,Medio,79,0.0,,False,0.4433,0.2833,False
+1409800013163006,Arboledas de San Martin,4,Medio,49,0.0,,False,0.4333,0.3,False
+1409800011769034,Francisco Silva Romero,4,Alto,68,8.0,1089,False,0.43,0.29,False
+1409800010968021,Pblo. San Martin de Las Flores de Abajo,4,Alto,87,0.0,,False,0.43,0.2867,False
+1409800012733040,Parques de Sta. Cruz del Valle,5,Muy bajo,44,56.0,270,False,0.43,0.2267,False
+1409800012714042,Villa Fontana,5,Muy bajo,27,76.0,183,True,0.4267,0.6167,False
+1409800011769021,Los Puestos,4,Alto,88,0.0,,False,0.4267,0.26,False
+1409800012292003,Balcones de Santa María,6,Muy bajo,35,78.0,175,True,0.42,0.6333,False
+1409800012860024,Balcones de Santa María,6,Muy bajo,40,78.0,176,True,0.42,0.63,False
+1409800012131001,Haciendas del Real,6,Muy bajo,40,78.0,177,True,0.4167,0.6267,False
+1409800011966017,Guayabitos,5,Alto,45,36.0,457,False,0.4167,0.3767,False
+1409800012432010,Cerro del Cuatro,5,Bajo,73,0.0,,False,0.4133,0.3167,False
+1409800012574102,Parques del Bosque,6,Muy bajo,45,78.0,178,True,0.41,0.6267,False
+1409800013163018,Arboledas de San Martin,4,Medio,62,4.0,1236,False,0.3967,0.2467,False
+1409800011082003,San Pedrito,4,Medio,66,24.0,674,False,0.3867,0.23,False
+1409800012216048,Plan del Rio,4,Alto,54,4.0,1234,False,0.3767,0.2367,False
+1409800012432019,Fovissste Miravalle,5,Bajo,19,76.0,180,True,0.37,0.6167,False
+1409800011839028,Francisco I Madero,5,Medio,54,16.0,849,False,0.37,0.31,False
+1409800013267018,Las Terrazas,5,Muy bajo,19,76.0,181,True,0.3667,0.6167,False
+1409800012466039,Fovissste Miravalle,5,Muy bajo,19,76.0,182,True,0.3667,0.6133,False
+1409800013286004,Pedregal del Bosque,5,Muy bajo,70,44.0,363,False,0.3633,0.18,False
+1409800011364023,Las Huertas,4,Medio,41,24.0,666,False,0.35,0.2067,False
+1409800012216039,Plan de Oriente,4,Alto,35,64.0,221,True,0.3367,0.5533,False
+1409800010296010,San Martin de Las Flores de Abajo,4,Alto,47,28.0,579,False,0.33,0.2267,False
+1409800010296028,San Martin de Las Flores de Abajo,4,Alto,54,28.0,585,False,0.33,0.2233,False
+1409800012860014,Balcones de Santa María,6,Muy bajo,36,75.0,187,True,0.3267,0.5867,False
+1409800011222046,El Vergel,3,Medio,71,54.0,274,False,0.3267,0.2133,False
+1409800010968009,Emiliano Zapata,4,Alto,33,48.0,328,False,0.32,0.28,False
+1409800011078040,El Cerrito,4,Alto,26,68.0,205,True,0.3133,0.5933,False
+1409800012199012,Tepeyac,5,Medio,54,36.0,458,False,0.3133,0.21,False
+1409800011059026,San Pedrito,4,Medio,53,28.0,584,False,0.3067,0.2033,False
+1409800011167029,Las Juntas,3,Bajo,155,0.0,,False,0.3,0.2,False
+1409800011082007,El Morito,4,Medio,55,40.0,402,False,0.3,0.1533,False
+1409800012292005,Balcones de Santa María,6,Muy bajo,41,72.0,189,True,0.29,0.5633,False
+1409800012714101,Villa Fontana,5,Muy bajo,30,64.0,219,True,0.29,0.4467,False
+1409800011862005,Francisco I Madero,5,Alto,42,52.0,295,False,0.29,0.2633,False
+1409800012536003,Coto del Carmen,5,Muy bajo,55,56.0,271,False,0.29,0.1333,False
+1409800010262008,San Martin de Las Flores de Abajo,4,Alto,37,72.0,192,True,0.2867,0.56,False
+1409800013286003,Pedregal del Bosque,5,Muy bajo,82,36.0,462,False,0.2867,0.1267,False
+1409800012841024,Miraflores,6,Bajo,52,72.0,193,True,0.2833,0.56,False
+1409800012574027,Parques del Bosque,6,Muy bajo,56,72.0,194,True,0.28,0.56,False
+1409800012663013,Geo Villas Los Olivos II,6,Muy bajo,62,72.0,198,True,0.2767,0.5567,False
+1409800010968042,De San Martin,4,Alto,48,4.0,1233,False,0.2767,0.2367,False
+1409800011631004,Lomas del Cuatro,5,Medio,51,52.0,300,False,0.2767,0.1467,False
+1409800011970002,Guayabitos,5,Alto,49,20.0,753,False,0.2733,0.1867,False
+1409800012574101,Parques del Bosque,6,Muy bajo,69,72.0,199,True,0.27,0.54,False
+1409800012201007,San Martin de Las Flores de Abajo,4,Alto,37,40.0,397,False,0.27,0.2067,False
+1409800012466053,Terralta,5,Muy bajo,28,68.0,206,True,0.2667,0.46,False
+1409800012466046,Terralta,5,Muy bajo,72,0.0,,False,0.2667,0.1467,False
+1409800012714096,Villa Fontana,5,Muy bajo,36,64.0,222,True,0.2567,0.3867,False
+1409800010794020,Francisco I Madero 2a Sección,5,Alto,59,0.0,,False,0.2567,0.16,False
+1409800012432017,Cerro del Cuatro,5,Bajo,64,48.0,335,False,0.25,0.0967,False
+1409800012216033,San Martin de Las Flores de Abajo,4,Alto,30,56.0,265,False,0.2433,0.3333,False
+1409800012432016,Cerro del Cuatro,5,Bajo,76,0.0,,False,0.23,0.1167,False
+1409800012216020,San Martin de Las Flores de Abajo,4,Alto,33,60.0,245,True,0.2267,0.2667,False
+1409800011773007,San Martin de Las Flores de Arriba,4,Medio,49,28.0,580,False,0.2267,0.16,False
+1409800010084011,Centro,3,Medio,149,0.0,,False,0.2267,0.1333,False
+1409800011966005,Guayabitos,5,Alto,59,0.0,,False,0.22,0.1833,False
+1409800012555021,Parques de Santa María,6,Muy bajo,156,0.0,,False,0.2167,0.11,False
+1409800012447009,Fovissste Miravalle,5,Bajo,36,56.0,267,False,0.2133,0.0933,False
+140980001249A011,Fovissste Miravalle,5,Bajo,17,68.0,203,True,0.2067,0.4767,False
+1409800010046014,San Francisco,3,Medio,99,30.0,539,False,0.2067,0.1267,False
+1409800012555015,Parques de Santa María,6,Muy bajo,133,0.0,,False,0.2067,0.12,False
+1409800011044020,Las Huertas,4,Medio,54,0.0,,False,0.1967,0.13,False
+1409800013375021,Las Terrazas,5,Muy bajo,20,68.0,204,True,0.1933,0.4667,False
+1409800010262020,San Martin de Las Flores de Abajo,4,Alto,31,68.0,207,True,0.1867,0.4433,False
+1409800011078051,Álvaro Obregón,4,Alto,47,24.0,670,False,0.1833,0.13,False
+1409800012381009,Paisajes del Tesoro,5,Bajo,49,68.0,209,True,0.1733,0.4433,False
+1409800010794008,Francisco I Madero 2a Sección,5,Alto,56,4.0,1235,False,0.1733,0.1,False
+1409800012911007,Haciendas del Real,6,Muy bajo,346,0.0,,False,0.17,0.0867,False
+1409800010120008,La Capacha,3,Bajo,63,24.0,671,False,0.1633,0.14,False
+1409800012555006,Parques de Santa María,6,Muy bajo,166,0.0,,False,0.16,0.0833,False
+1409800012625039,Lomas del Tapatío,4,Medio,74,0.0,,False,0.1533,0.1367,False
+1409800011063021,San Pedrito,4,Alto,70,0.0,,False,0.1533,0.1133,False
+1409800012432009,Fovissste Miravalle,5,Bajo,58,0.0,,False,0.1533,0.0967,False
+1409800011059025,San Pedrito,4,Medio,54,0.0,,False,0.15,0.08,False
+1409800010385020,Cerro del Cuatro,5,Medio,87,4.0,1237,False,0.1467,0.06,False
+1409800011190047,El Campesino,3,Alto,66,33.0,480,False,0.14,0.1,False
+1409800011222012,El Vergel,3,Medio,69,39.0,417,False,0.1333,0.12,False
+1409800012555032,Parques de Santa María,6,Muy bajo,112,0.0,,False,0.1333,0.0567,False
+1409800012451008,Fovissste Miravalle,5,Bajo,49,52.0,298,False,0.13,0.0367,False
+1409800010968008,Emiliano Zapata,4,Alto,27,36.0,447,False,0.1267,0.1767,False
+1409800010597010,San Pedrito,4,Alto,55,0.0,,False,0.1267,0.12,False
+1409800012697010,Parques de Sta. Cruz del Valle,5,Muy bajo,36,64.0,223,True,0.12,0.3433,False
+1409800011059016,San Pedrito,4,Medio,53,20.0,757,False,0.12,0.06,False
+1409800010046042,Revolución,3,Medio,34,66.0,211,True,0.1133,0.3933,False
+1409800012663003,Geo Villas Los Olivos II,6,Muy bajo,39,66.0,212,True,0.11,0.39,False
+1409800011379021,Lomas del Tapatío,4,Bajo,71,0.0,,False,0.11,0.11,False
+1409800011843028,Buenos Aires,5,Medio,62,0.0,,False,0.1067,0.1433,False
+1409800012663011,Geo Villas Los Olivos II,6,Muy bajo,49,66.0,213,True,0.1,0.36,False
+1409800011862006,Francisco I Madero,5,Alto,50,20.0,756,False,0.1,0.0933,False
+1409800011082019,El Mirador,4,Medio,52,28.0,583,False,0.1,0.0567,False
+1409800012466045,Terralta,5,Muy bajo,43,52.0,296,False,0.0967,0.0367,False
+1409800011059027,San Pedrito,4,Medio,57,0.0,,False,0.0933,0.0767,False
+1409800010671051,Las Juntas,3,Bajo,62,39.0,416,False,0.09,0.0967,False
+1409800012470036,Fovissste Miravalle,5,Bajo,16,64.0,214,True,0.0867,0.3467,False
+1409800010794031,Francisco I Madero,5,Alto,32,52.0,288,False,0.0867,0.1067,False
+1409800010597047,El Mirador,4,Alto,32,45.0,339,False,0.0833,0.2233,False
+1409800011222050,El Vergel,3,Medio,69,33.0,481,False,0.08,0.07,False
+1409800012273099,Los Puestos,4,Alto,62,0.0,,False,0.08,0.0467,False
+1409800012714056,Villa Fontana,5,Muy bajo,20,64.0,215,True,0.0733,0.3433,False
+1409800013375020,Las Terrazas,5,Muy bajo,21,64.0,216,True,0.0733,0.34,False
+1409800013055027,El Sauz,"4,6",Muy alto,48,64.0,217,True,0.0733,0.3367,False
+1409800011044008,López Mateos,4,Medio,55,12.0,978,False,0.0733,0.0433,False
+1409800011078019,El Cerrito,4,Alto,31,44.0,354,False,0.07,0.1,False
+1409800010262037,San Martin de Las Flores de Arriba,4,Alto,30,44.0,353,False,0.07,0.0633,False
+140980001256A025,Agua Blanca Industrial,6,Muy bajo,150,0.0,,False,0.07,0.0167,False
+1409800012517003,Las Terrazas,5,Muy bajo,24,64.0,218,True,0.0633,0.3367,False
+140980001249A029,Miravalle,5,Bajo,23,60.0,241,True,0.0633,0.26,False
+1409800012714099,Villa Fontana,5,Muy bajo,33,64.0,220,True,0.06,0.3333,False
+1409800010597062,San Pedrito,4,Alto,34,52.0,291,False,0.0567,0.0833,False
+1409800011152032,Las Juntas,3,Medio,66,0.0,,False,0.0567,0.0633,False
+1409800011152013,Las Juntas,3,Medio,65,15.0,874,False,0.0567,0.0333,False
+1409800012377045,Mirador del Tesoro,6,Muy bajo,194,0.0,,False,0.0567,0.0233,False
+1409800012856006,Jardines de Santa María,6,Bajo,198,0.0,,False,0.0567,0.02,False
+1409800011631028,Lomas del Cuatro,5,Medio,43,36.0,456,False,0.0533,0.0467,False
+1409800012574002,San Arturo,6,Muy bajo,307,0.0,,False,0.0533,0.03,False
+1409800012663016,Geo Villas Los Olivos II,6,Muy bajo,36,63.0,231,True,0.0467,0.3033,False
+1409800012841007,Miraflores,6,Bajo,26,63.0,230,True,0.0467,0.3033,False
+1409800011097034,Las Huertas,4,Bajo,44,0.0,,False,0.0467,0.04,False
+1409800012574088,Parques del Bosque,6,Muy bajo,183,39.0,419,False,0.0433,0.03,False
+1409800011190049,El Campesino,3,Alto,44,63.0,233,True,0.04,0.2967,False
+1409800012663017,Geo Villas Los Olivos II,6,Muy bajo,41,63.0,232,True,0.04,0.2967,False
+140980001103A030,Las Huertas,4,Medio,33,32.0,513,False,0.04,0.0333,False
+1409800011769002,Francisco Silva Romero,4,Alto,51,0.0,,False,0.0333,0.0267,False
+1409800010775008,Buenos Aires,5,Medio,44,8.0,1087,False,0.0333,0.0233,False
+1409800012470007,Fovissste Miravalle,5,Bajo,15,60.0,234,True,0.0267,0.2767,False
+1409800012517016,Las Terrazas,5,Muy bajo,22,60.0,236,True,0.0267,0.27,False
+1409800012517023,Las Terrazas,5,Muy bajo,20,60.0,235,True,0.0267,0.27,False
+1409800012860001,Balcones de Santa María,6,Muy bajo,30,60.0,237,True,0.0267,0.2667,False
+1409800012733029,Parques de Sta. Cruz del Valle,5,Muy bajo,23,60.0,238,True,0.0267,0.2633,False
+1409800012517024,Las Terrazas,5,Muy bajo,23,60.0,239,True,0.0267,0.2567,False
+1409800012517025,Las Terrazas,5,Muy bajo,23,60.0,240,True,0.0267,0.2567,False
+1409800013163012,Arboledas de San Martin,4,Medio,41,0.0,,False,0.0267,0.02,False
+1409800011044003,López Mateos,4,Medio,59,0.0,,False,0.0267,0.0133,False
+1409800010262007,San Martin de Las Flores de Abajo,4,Alto,56,0.0,,False,0.0233,0.02,False
+1409800010597021,San Pedrito,4,Alto,51,0.0,,False,0.0233,0.0167,False
+1409800010385013,Cerro del Cuatro,5,Medio,61,20.0,758,False,0.0233,0.0067,False
+1409800012292008,Balcones de Santa María,6,Muy bajo,38,60.0,242,True,0.02,0.24,False
+1409800011222055,El Vergel,3,Medio,62,39.0,415,False,0.02,0.01,False
+1409800012377090,Mirador del Tesoro,6,Muy bajo,41,60.0,243,True,0.0167,0.22,False
+1409800012729017,Villa Fontana,5,Muy bajo,31,60.0,244,True,0.0167,0.2167,False
+1409800010046041,Revolución,3,Medio,47,60.0,246,True,0.0167,0.21,False
+1409800012860026,Balcones de Santa María,6,Muy bajo,53,60.0,247,True,0.0167,0.21,False
+1409800012729023,Villa Fontana,5,Muy bajo,48,12.0,977,False,0.0167,0.0133,False
+1409800012292011,Balcones de Santa María,6,Muy bajo,55,60.0,248,True,0.0133,0.1867,False
+1409800011966032,Guayabitos,5,Alto,31,32.0,511,False,0.0133,0.05,False
+1409800010597017,San Pedrito,4,Alto,42,28.0,577,False,0.0133,0.0267,False
+1409800010597016,San Pedrito,4,Alto,66,0.0,,False,0.0133,0.0067,False
+1409800012733036,Parques de Sta. Cruz del Valle,5,Muy bajo,51,28.0,582,False,0.0133,0.0,False
+1409800011078016,El Cerrito,4,Alto,36,32.0,514,False,0.01,0.02,False
+1409800010597011,San Pedrito,4,Alto,56,0.0,,False,0.01,0.01,False
+1409800011063008,San Pedrito,4,Alto,66,0.0,,False,0.01,0.01,False
+1409800012292015,Balcones de Santa María,6,Muy bajo,63,60.0,250,True,0.0067,0.15,False
+1409800010506031,Lomas de Tlaquepaque,3,Bajo,195,0.0,,False,0.0067,0.0333,False
+1409800012216017,Plan del Rio,4,Alto,43,0.0,,False,0.0067,0.0233,False
+1409800011059020,San Pedrito,4,Medio,52,0.0,,False,0.0067,0.0167,False
+1409800010968066,Hacienda de San Martin,4,Alto,42,0.0,,False,0.0067,0.0133,False
+1409800011190043,El Campesino,3,Alto,74,0.0,,False,0.0067,0.0067,False
+1409800011453011,Lomas del Cuatro,5,Medio,54,24.0,672,False,0.0067,0.0033,False
+1409800011538017,Centro,3,Medio,78,30.0,538,False,0.0067,0.0,False
+1409800010968069,Hacienda de San Martin,4,Alto,43,0.0,,False,0.0033,0.02,False
+1409800011970011,Guayabitos,5,Alto,58,0.0,,False,0.0033,0.0067,False
+1409800011222005,El Vergel,3,Medio,58,30.0,537,False,0.0033,0.0033,False
+1409800011364024,Las Huertas,4,Medio,54,0.0,,False,0.0,0.03,False
+140980001007A016,Santa María,3,Bajo,122,0.0,,False,0.0,0.0267,False
+1409800010597030,San Pedrito,4,Alto,64,0.0,,False,0.0,0.0267,False
+1409800011222014,El Vergel,3,Medio,53,15.0,872,False,0.0,0.0267,False
+1409800010972012,Francisco I Madero 2a Sección,5,Alto,48,0.0,,False,0.0,0.0167,False
+1409800011063018,San Pedrito,4,Alto,71,0.0,,False,0.0,0.0167,False
+1409800011769011,Francisco Silva Romero,4,Alto,49,0.0,,False,0.0,0.0167,False
+1409800012555048,Parques de Santa María,6,Muy bajo,84,0.0,,False,0.0,0.0167,False
+1409800011379001,Las Huertas,4,Bajo,37,36.0,454,False,0.0,0.0133,False
+1409800011453009,Lomas del Cuatro,5,Medio,71,0.0,,False,0.0,0.0133,False
+1409800012555039,Parques de Santa María,6,Muy bajo,82,0.0,,False,0.0,0.0133,False
+1409800011082015,El Morito,4,Medio,55,8.0,1088,False,0.0,0.01,False
+1409800010120007,La Capacha,3,Bajo,129,0.0,,False,0.0,0.0067,False
+1409800011044019,Las Huertas,4,Medio,47,0.0,,False,0.0,0.0067,False
+1409800011097011,Lomas de San Miguel,4,Bajo,97,0.0,,False,0.0,0.0067,False
+1409800011538007,Centro,3,Medio,127,0.0,,False,0.0,0.0067,False
+1409800011966019,Guayabitos,5,Alto,44,16.0,846,False,0.0,0.0067,False
+1409800012466057,Terralta,5,Muy bajo,52,0.0,,False,0.0,0.0067,False
+1409800012555010,Parques de Santa María,6,Muy bajo,98,0.0,,False,0.0,0.0067,False
+1409800012555017,Parques de Santa María,6,Muy bajo,85,0.0,,False,0.0,0.0067,False
+1409800012555030,Parques de Santa María,6,Muy bajo,98,0.0,,False,0.0,0.0067,False
+140980001256A002,Parques de Santa María,6,Muy bajo,107,0.0,,False,0.0,0.0067,False
+1409800010296023,San Martin de Las Flores de Abajo,4,Alto,39,28.0,575,False,0.0,0.0033,False
+1409800010794038,Francisco I Madero 2a Sección,5,Alto,42,12.0,974,False,0.0,0.0033,False
+1409800011218043,El Vergel,3,Medio,62,27.0,604,False,0.0,0.0033,False
+1409800011769020,Los Puestos,4,Alto,53,0.0,,False,0.0,0.0033,False
+1409800012269017,Los Puestos,4,Alto,41,16.0,845,False,0.0,0.0033,False
+1409800012466073,Toluquilla,6,Muy bajo,64,33.0,479,False,0.0,0.0033,False
+1409800012555013,Parques de Santa María,6,Muy bajo,119,0.0,,False,0.0,0.0033,False
