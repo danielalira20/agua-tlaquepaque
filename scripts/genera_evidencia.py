@@ -160,11 +160,12 @@ def literatura_y_prensa():
         fila(id="E010", fuente="literatura", tipo="valor",
              descripcion="Tasa de decaimiento del cloro en redes intermitentes (hierro dúctil y fundido) frente a continuas",
              valor="1.5", unidad="veces mayor", cita=VAIDYA, url_o_doi="https://doi.org/10.1080/1573062X.2022.2139275",
-             arbitrada="nd", verificacion=nov, uso="NO USAR hasta abrir el artículo",
+             arbitrada="nd", verificacion=nov,
+             uso="NO USAR. DESCARTADA el 12-nov: de pago, sin material suplementario, y nada del reporte depende de ella",
              nota="Autores y datos de la revista confirmados en Crossref (en línea nov-2022; volumen 20(1), enero 2023). El "
                   "texto y el resumen no se pudieron abrir (Taylor & Francis bloquea la descarga automática): el factor 1.5 y la "
-                  "frase 'se sabe muy poco' siguen sin confirmar. Dani confirmó el 12-nov que solo está disponible de pago. "
-                  "Propuesta: descartarlo; ninguna afirmación del reporte depende de él."),
+                  "frase 'se sabe muy poco' no se confirmaron. Dani confirmó el 12-nov que solo está disponible de pago y que no "
+                  "tiene suplementario, y decidió descartarla. El decaimiento del cloro no se modela; el contexto lo cubren Rubino y la OMS."),
         # --- Intermitencia: arbitrados ---
         fila(id="E011", fuente="literatura", tipo="valor",
              descripcion="A presiones menores de 10 psi se detectaron con frecuencia bacterias indicadoras aun con cloro residual "

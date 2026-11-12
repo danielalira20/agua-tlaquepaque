@@ -215,7 +215,7 @@ fechas de recepción y aceptación de cada artículo, las afirmaciones que sosti
 | Kumpel y Nelson (2014). *Environ. Sci. Technol., 48*(5), 2766–2775 | 🟡 Arbitrada (MEDLINE). **Solo resumen oficial** (confirma los umbrales de 10 y 17 psi) y material suplementario. El artículo es de pago |
 | Kumpel y Nelson (2016). *Environ. Sci. Technol., 50*(2), 542–553 | 🟡 Igual: resumen oficial y suplemento. De pago |
 | Matsinhe et al. (2014). *VATTEN, 70*, 51–60 | ⚠️ **No es arbitrada** (la revista dice que no aplica un sistema de arbitraje formal). Citable como fuente científica, no cuenta entre las 5 |
-| Vaidya et al. (2023). *Urban Water Journal, 20*(1), 60–73 | ⚠️ Autores confirmados. **Sin abrir y de pago**: el factor 1.5 no puede usarse. Se propone descartarlo |
+| Vaidya et al. (2023). *Urban Water Journal, 20*(1), 60–73 | ⚠️ Autores confirmados. **Descartada** (de pago, sin suplementario; decisión de Dani, 12-nov). El factor 1.5 no se usa |
 | Abernethy et al. (Flint). arXiv:1707.01591 | ⚠️ Preprint. No se usó |
 | OMS, *Guidelines for Drinking-water Quality*, 4.ª ed., cap. 4 | Leída. **Autoridad, no arbitrada.** Complemento |
 | NOM-127-SSA1-2021 | Norma. Complemento |

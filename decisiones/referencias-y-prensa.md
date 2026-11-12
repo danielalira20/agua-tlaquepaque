@@ -14,7 +14,7 @@ El registro completo, renglón por renglón, está en `datos/evidencia.csv` (con
 | Referencias arbitradas **leídas completas** | 1 (Rubino) y una dudosa (Matsinhe) | **6**: Rubino, Ercumen, Taylor, Sosa-Moreno, Wu y Leifels |
 | Arbitradas con resumen oficial | 0 | 2: Kumpel y Nelson 2014 y 2016. Además se leyó el **material suplementario** de ambas (no son los artículos) |
 | Matsinhe 2014 (Maputo) | "confirmar que sea arbitrada" | **No es arbitrada.** La revista lo dice de sí misma. Sigue siendo citable, pero no cuenta entre las 5 |
-| Chlorine degradation (*Urban Water Journal*) | Sin autores, "viene de un resumen" | Autores y datos confirmados. El texto y el resumen siguen sin abrirse y el artículo es **solo de pago**: sigue sin poder usarse y se propone descartarlo |
+| Chlorine degradation (*Urban Water Journal*) | Sin autores, "viene de un resumen" | Autores y datos confirmados. El texto y el resumen siguen sin abrirse y el artículo es **solo de pago**: **descartada** (decisión de Dani, 12-nov) |
 | Notas de prensa leídas completas | 0 (solo resúmenes de búsqueda) | 6 de La Crónica de Hoy (21-jul, 30-jul, 30-ago, 14-oct, 15-oct y 22-oct). La de Milenio no se pudo abrir |
 | ¿Las pipas rellenan las cisternas? | Sin fuente | **Sí, con cita textual de un funcionario** (sección 3) |
 
@@ -67,7 +67,7 @@ pero no reemplaza al texto principal.
 | Referencia | Estado |
 |---|---|
 | Matsinhe, N. P., Juízo, D. L., & Persson, K. M. (2014). VATTEN, *70*, 51–60 | **No arbitrada.** La página de VATTEN dice: *"A referee system is not applied in the formal meaning. All manuscripts are evaluated by the editor and sometimes also by colleagues."* Se leyó completa y sus datos son buenos (caída de 60% del cloro, retención de 0.4 a 6.3 días, consumo de 120 L), pero se cita como fuente científica, no como arbitrada |
-| Vaidya, R., Kumar, K. R. S., Mohan Kumar, M. S., & Rao, L. (2023). Chlorine degradation in continuous and intermittent drinking water supply networks. *Urban Water Journal, 20*(1), 60–73 | Datos confirmados en Crossref (en línea nov-2022; número de enero 2023). **No se pudo abrir ni el resumen** (Taylor & Francis bloquea) y el artículo es **solo de pago** (confirmado por Dani el 12-nov). El factor 1.5 y la frase "se sabe muy poco" **siguen sin confirmar y no deben usarse**. **Propuesta: descartarlo.** Ninguna afirmación del reporte depende de él: el decaimiento del cloro en Tlaquepaque no se modela, y el contexto lo cubren Rubino (medición local) y la OMS |
+| Vaidya, R., Kumar, K. R. S., Mohan Kumar, M. S., & Rao, L. (2023). Chlorine degradation in continuous and intermittent drinking water supply networks. *Urban Water Journal, 20*(1), 60–73 | Datos confirmados en Crossref (en línea nov-2022; número de enero 2023). **No se pudo abrir ni el resumen** (Taylor & Francis bloquea) y el artículo es **solo de pago** (confirmado por Dani el 12-nov). El factor 1.5 y la frase "se sabe muy poco" **siguen sin confirmar y no deben usarse**. **Descartada por decisión de Dani el 12-nov** (tampoco tiene material suplementario). Ninguna afirmación del reporte depende de ella: el decaimiento del cloro en Tlaquepaque no se modela, y el contexto lo cubren Rubino (medición local) y la OMS |
 | OMS (2017), *Guidelines for drinking-water quality*, 4.ª ed. con primer apéndice | Autoridad, no artículo arbitrado. Se leyeron los capítulos 4 y 7 |
 | NOM-127-SSA1-2021 | Norma |
 | Abernethy et al. (Flint) | Preprint, no se usó |
@@ -117,7 +117,7 @@ prefiere que las cinco sean de texto completo, se cambia por Wu 2023 (170 palabr
 | escholarship.org | Respondió 202 sin contenido; no se insistió |
 
 **Los tres artículos pendientes (Kumpel y Nelson 2014 y 2016, y *Urban Water Journal*) son de pago y no vale la
-pena comprarlos**: el reporte se sostiene sin ellos. Si alguien del equipo tiene acceso por su escuela o universidad,
+pena comprarlos**: el reporte se sostiene sin ellos. *Urban Water Journal* queda descartada. Si alguien del equipo tiene acceso por su escuela o universidad,
 sirve para subir a Kumpel 2014 a "leído completo"; si no, se cita por lo que dice su resumen oficial y su
 suplemento, que es lo que ya está verificado. La alternativa de costo cero para el cuerpo del reporte es cambiar
 Kumpel 2014 por Wu 2023, que sí está leído completo (170 palabras en total).
