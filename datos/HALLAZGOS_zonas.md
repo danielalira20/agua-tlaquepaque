@@ -45,11 +45,13 @@ Por zona y por respaldo de la fuente (cota mínima):
 | 4,6 | 93 | 0 |
 | 3,4 | 9 | 0 |
 
-**La conclusión se sostiene:** casi tres cuartas partes del riesgo están en las zonas 5 y 6
-con cualquiera de las dos fuentes. Con solo la lista oficial, las zonas 5 y 6 tienen
+**La conclusión se sostiene:** casi tres cuartas partes del riesgo (con la cota mínima; **63.0% con la máxima**,
+21,699 de 34,429) están en las zonas 5 y 6 con cualquiera de las dos fuentes. Con solo la lista oficial, las zonas 5 y 6 tienen
 10,599 de las 14,478 viviendas respaldadas (73.2%); el portal suma 2,942 viviendas más
 (2,043 de ellas en zonas 5 y 6), para un total de 17,420 y 72.6%.
-`riesgo_por_zona.csv` trae el detalle completo.
+`riesgo_por_zona.csv` trae el detalle completo. Ojo: es el riesgo de **almacenamiento** (Censo), que no depende de
+ningún supuesto. Las viviendas **sin agua del motor** sí dependen del consumo y del tinaco: con los supuestos de la
+decisión 1 las zonas 5 y 6 tienen en promedio 59.8% (nunca menos de 52.6% en esos sorteos). Ver `HALLAZGOS_sensibilidad.md`.
 
 ## 3. Contraste con las cisternas del municipio, restringido al programa
 
