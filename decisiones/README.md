@@ -60,6 +60,13 @@ Ese campo es lo que impide citar algo que no se leyó. Tras la revisión del 11-
 `referencias-y-prensa.md`) hay 6 referencias arbitradas leídas completas, 2 con resumen oficial, las notas
 de prensa leídas completas, y 1 sin verificar: el factor 1.5 de decaimiento del cloro, marcado NO USAR.
 
+**Resultado del análisis de sensibilidad (12-nov-2026)**, que es lo que sustituye a la encuesta (`datos/HALLAZGOS_sensibilidad.md`):
+la hipótesis de la propuesta, que el orden de las manzanas casi no cambia entre los extremos, **no se sostiene** para el orden
+individual de cada manzana (rho de Spearman mediano 0.65 con los rangos de la decisión). Sí se sostienen conclusiones más
+específicas: un núcleo de 186 manzanas que queda entre las 250 más críticas en el 90% de las simulaciones, El Sauz como
+primera colonia en todas, y una ventaja del priorizador de al menos 2.6 veces el baseline. Lo que decide todo es cuántos días
+aguanta un tinaco, y eso el Censo no lo dice.
+
 **Lo único que no se puede hacer** sigue siendo lo que dice la propuesta: quitar la encuesta en silencio
 y aun así escribir "validamos". En el reporte va una línea que diga qué se hizo en su lugar y por qué.
 
@@ -67,7 +74,7 @@ y aun así escribir "validamos". En el reporte va una línea que diga qué se hi
 
 **Aprobada: opción B**, las colonias de Tlaquepaque dentro del programa de racionamiento (zonas 3 a 6).
 Propuesta de Dani; a favor Jass, Migue y Magui (4 de 4). Razones: sigue siendo un solo municipio con calendario
-publicado, incluye a El Sauz y casi todo el riesgo (las zonas 5 y 6 concentran el 72.6%), y el portal ya trae la zona
+publicado, incluye a El Sauz y casi todo el riesgo (las zonas 5 y 6 concentran el 72.6% con la cota mínima y el 63.0% con la máxima), y el portal ya trae la zona
 de cada colonia.
 
 Cifras con su advertencia: 462,194 personas en el programa (78.6%); 368,111 (62.6%) con respaldo de la lista
@@ -79,8 +86,9 @@ oficial del SIAPA y 94,083 (16.0%) solo por el polígono del portal. Se reporta 
 **Aprobada: opción A.** `severidad` queda **sin peso de marginación**: es exposición pura. La marginación (CONAPO,
 nivel AGEB) va como **capa aparte** en el mapa y en las tablas. Confirmada por Dani; a favor Jass.
 
-Por qué: la mitad del riesgo de almacenamiento (50.2%) está en AGEB de marginación "Muy bajo", así que ponderar por
-marginación movería viajes de ahí a las AGEB "Alto" (17.4% del riesgo) y sacaría a El Sauz del primer lugar. Además
+Por qué: el grado "Muy bajo" concentra la mayor parte del riesgo de almacenamiento (50.2% con la cota mínima, 32.8% con la
+máxima), así que ponderar por marginación movería viajes de ahí a las AGEB "Alto" (17.4% con la cota mínima, 22.1% con la
+máxima) y sacaría a El Sauz del primer lugar. Además
 se perdería el argumento más limpio del priorizador: alcanza el 100% del máximo posible con los mismos viajes.
 Detalle en `datos/HALLAZGOS_marginacion.md`.
 

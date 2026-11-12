@@ -57,6 +57,9 @@ Mientras tanto, los tres trabajan contra `fixtures/` y nadie espera a nadie.
 7. La zona de cada manzana sale de dos fuentes que no siempre coinciden. La cobertura del
    programa se reporta como rango (63% a 79% de la población), con nivel de confianza por
    manzana. Ver `datos/zonas_siapa/LEEME.md`.
+8. El orden exacto de las manzanas depende de cuántos días aguanta un tinaco (consumo y tamaño): rho de Spearman mediano
+   de 0.65 con los rangos de la decisión 1. El reporte presenta un **núcleo robusto de 186 manzanas**, no un ranking. Ver
+   `datos/HALLAZGOS_sensibilidad.md`.
 
 ## Umbral oficial
 

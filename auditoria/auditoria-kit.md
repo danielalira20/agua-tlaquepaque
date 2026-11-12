@@ -38,7 +38,7 @@ La caracterización del problema con datos de Jalisco (C1) es nuestro punto fuer
 | I5, C2 (prototipo) | 🟡 | 🟡 | Ya hay motor de referencia (39 pruebas), priorizador de referencia de Jass (37 pruebas, corre con datos reales) y contratos con fixtures. La app sigue simulada y falta el motor oficial en TypeScript |
 | I1 (delimitación) | 🟡 | 🟡 | **Aprobada B, 4 de 4** (Magui votó el 12-nov). Las cifras se corrigieron (ver la advertencia 1). Falta escribir el indicador en una frase en el reporte |
 
-### Cuatro advertencias nuevas para el reporte
+### Cinco advertencias nuevas para el reporte
 
 Salieron de los datos de hoy y cambian lo que se puede afirmar:
 
@@ -46,14 +46,18 @@ Salieron de los datos de hoy y cambian lo que se puede afirmar:
    tiene respaldo de la lista oficial del SIAPA y el 16% restante sale solo de los polígonos del
    portal. El PDF oficial no nombra esas colonias (`datos/zonas_siapa/LEEME.md`).
 2. **No se puede decir que "el riesgo se concentra en los más pobres".** Dentro del programa, el 50%
-   de las viviendas sin tinaco ni cisterna está en AGEB de marginación "Muy bajo"
-   (`datos/HALLAZGOS_marginacion.md`). Sí se puede decir que el índice oficial mide el tubo y no el
+   de las viviendas sin tinaco ni cisterna con la cota mínima (33% con la máxima, y aun así el grado con más) está en AGEB de
+   marginación "Muy bajo" (`datos/HALLAZGOS_marginacion.md`). Sí se puede decir que el índice oficial mide el tubo y no el
    almacenamiento. Hay que presentar exposición y vulnerabilidad social como dos dimensiones.
 3. **"Sin agua" va con el supuesto de corte total.** El portal del SIAPA dice que el racionamiento es
    baja de presión. El valor por defecto `f = 0` es la cota alta, no una medición, y a 50 L/persona/día
    casi no cambia el resultado, pero a 100 L lo multiplica por 2.2 (`motor/ESPECIFICACION.md`, sección 9).
 4. **El baseline del priorizador es estilizado**: los mismos viajes repartidos por turnos entre las
    cisternas instaladas, no el reparto real del municipio, del que no hay registro.
+5. **El orden exacto de las manzanas depende de los supuestos** (cuántos días aguanta un tinaco): rho mediano 0.65 con
+   los rangos de la decisión 1. Lo que aguanta es un **núcleo de 186 manzanas**, El Sauz como primera colonia y una ventaja
+   del priorizador de al menos 2.6 veces el baseline. Y las zonas 5 y 6 son la mayoría del riesgo (siempre más del 50%), no
+   "tres cuartas partes" salvo en el caso base (`datos/HALLAZGOS_sensibilidad.md`).
 
 ---
 
@@ -87,7 +91,7 @@ el límite. Estrategia:
 | Anexo A (obligatorio) | Credenciales escolares y de la asesora o asesor |
 | Anexo B | **Tabla de citación de datasets**: nombre, institución, año, cobertura, qué se tomó y para qué |
 | Anexo C | Las tres áreas de conocimiento y qué aportó cada una |
-| Anexo D | Supuestos y análisis de sensibilidad (consumo, tinaco, U, horas de corte, fracción `f` que sigue llegando) |
+| Anexo D | Supuestos y análisis de sensibilidad (consumo, tinaco, U, horas de corte, fracción `f` que sigue llegando). **Ya hecho**: `datos/HALLAZGOS_sensibilidad.md`, con redacción propuesta |
 | Anexo E | Contrastes: cisternas del municipio y marginación oficial |
 | Anexo F | Descripción del prototipo, qué está simulado y qué falta |
 | Anexo G | Declaración de uso de IA |
