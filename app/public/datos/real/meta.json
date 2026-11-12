@@ -1,0 +1,43 @@
+{
+  "formato": 1,
+  "simulado": false,
+  "ventana": {
+    "desde": "2026-11-09",
+    "hasta": "2026-11-15",
+    "fechas": 7
+  },
+  "calendario_usado": "vigente",
+  "supuestos": {
+    "_nota": "Parametros compartidos por la implementacion oficial (TypeScript) y la de referencia (Python). Si cambia un valor aqui, cambia en las dos.",
+    "consumo_l_persona_dia": 50,
+    "tinaco_l": 1100,
+    "cisterna_l": 5000,
+    "horas_efectivas_corte": 24,
+    "fraccion_suministro_en_racionamiento": 0.0,
+    "u_horas_agua_guardada": 48,
+    "umbral_estado_parcial_pct": 10,
+    "umbral_estado_mayoritario_pct": 50
+  },
+  "conteos": {
+    "manzanas": 4871,
+    "manzanas_en_programa": 3761,
+    "personas": 588419,
+    "personas_en_programa": 462194,
+    "personas_en_programa_con_respaldo_de_la_lista": 368111,
+    "cisternas": 50,
+    "propuestas": 10
+  },
+  "fuentes": [
+    "INEGI, Censo 2020 (manzana)",
+    "SIAPA, portal de rotacion y lista oficial de colonias (11-nov-2026)",
+    "CONAPO, indice de marginacion urbana por AGEB 2020",
+    "Gobierno de San Pedro Tlaquepaque, mapa de cisternas (2026)"
+  ],
+  "advertencias": [
+    "Un dia de racionamiento se modela como cero agua (f = 0): es la cota alta del dano, no una medicion.",
+    "Las zonas salen de dos fuentes que no siempre coinciden; el 16% de la poblacion tiene zona solo por el poligono del portal.",
+    "Censo 2020; el Censo no dice la capacidad de tinacos ni cisternas.",
+    "El calendario del SIAPA puede volver a cambiar.",
+    "El baseline del priorizador es estilizado: no es el reparto real del municipio."
+  ]
+}

@@ -37,6 +37,13 @@ Sensibilidad, sin tocar el archivo de supuestos:
 
     ... --set consumo_l_persona_dia=100 --set horas_efectivas_corte=36
 
+## Vectores para el motor oficial en TypeScript
+
+`motor/vectores/vectores.json` (lo genera `scripts/exporta_app.py`) trae entradas, supuestos y la salida esperada del motor de
+referencia para cuatro conjuntos de supuestos, incluidas manzanas con varias zonas y fuera del programa. El motor de la app debe
+reproducirlos: conteos de viviendas y horas, exactos. Los datos reales para la app están en
+`app/public/datos/real/` (ver su `LEEME.md`).
+
 ## Qué falta
 
 - La zona de cada manzana ya es real: `datos/zonas_siapa/manzana_zona.csv`. Los fixtures

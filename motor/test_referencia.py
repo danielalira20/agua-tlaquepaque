@@ -408,5 +408,56 @@ class TestContratos(unittest.TestCase):
         self.assertTrue(e010["uso"].startswith("NO USAR"))
 
 
+    def test_exportacion_para_la_app(self):
+        import subprocess
+        d = self.RAIZ / "app" / "public" / "datos" / "real"
+        archivos = [d / n for n in ("meta.json", "manzanas.json", "estado.json", "calendarios.json", "cisternas.json", "plan.json", "LEEME.md")]
+        archivos.append(self.RAIZ / "motor" / "vectores" / "vectores.json")
+        antes = [a.read_text(encoding="utf-8") for a in archivos]
+        subprocess.run([sys.executable, "-I", str(self.RAIZ / "scripts" / "exporta_app.py")], check=True, capture_output=True)
+        self.assertEqual([a.read_text(encoding="utf-8") for a in archivos], antes, "la exportacion no es determinista")
+        man = self._json(d / "manzanas.json")
+        est = self._json(d / "estado.json")
+        meta = self._json(d / "meta.json")
+        self.assertEqual(len(man), 4871)
+        self.assertEqual(len({m["cvegeo"] for m in man}), 4871)
+        self.assertTrue(all(len(m["cvegeo"]) == 16 for m in man))
+        self.assertFalse(meta["simulado"])
+        self.assertEqual(meta["conteos"]["personas_en_programa"], 462194)
+        for f in est["fechas"]:
+            for k, v in f.items():
+                if isinstance(v, list):
+                    self.assertEqual(len(v), len(man), k)
+        self.assertEqual(sum(sum(f["viv_sin_agua_min"]) for f in est["fechas"]), 58906)
+        self.assertEqual(sum(sum(f["viv_sin_agua_max"]) for f in est["fechas"]), 128460)
+        cis = self._json(d / "cisternas.json")
+        self.assertEqual(len(cis), 60)
+        self.assertEqual(len({c["id"] for c in cis}), 60)
+        reales = [c for c in cis if not c["id"].startswith("PROP")]
+        self.assertEqual(sorted(c["ubicacion"] for c in reales).count("coordenada_exacta"), 35)
+        self.assertEqual(sorted(c["ubicacion"] for c in reales).count("centro_de_colonia"), 12)
+        self.assertEqual(sum(c["cuenta_como_cobertura"] for c in cis), 47)
+        plan = self._json(d / "plan.json")
+        self.assertEqual(plan["comparacion"][0]["semana"]["viviendas_atendidas"]["priorizado"], 22050)
+        # los archivos simulados de la app no se tocan
+        self.assertIn("SIMULADO", self._json(self.RAIZ / "app" / "public" / "datos" / "colonias.json")["nota"])
+
+    def test_vectores_del_motor_coinciden_con_la_referencia(self):
+        vec = self._json(self.RAIZ / "motor" / "vectores" / "vectores.json")
+        self.assertGreaterEqual(vec["casos"]["con_varias_zonas"], 5)
+        self.assertGreaterEqual(vec["casos"]["fuera_del_programa"], 5)
+        self.assertEqual(set(vec["conjuntos"]), {"base", "consumo_100", "consumo_100_f_050", "horas_36_u_72"})
+        esquema = R.leer_json(AQUI / "calendarios" / "vigente-2026-11-03.json")["esquema"]
+        fechas = [dt.date.fromisoformat(f) for f in vec["fechas"]]
+        filas = [{k: e[k] for k in ("cvegeo", "viviendas", "viv_tinaco", "viv_cisterna", "ocupantes_prom")} for e in vec["entradas"]]
+        zonas = {e["cvegeo"]: e["zona"] for e in vec["entradas"]}
+        for nombre, c in vec["conjuntos"].items():
+            nuevo = [{k: r[k] for k in c["salida"][0]} for r in R.procesar(filas, zonas, esquema, fechas, c["supuestos"])]
+            self.assertEqual(nuevo, c["salida"], nombre)
+        # y los conjuntos si cambian el resultado: no son copias del base
+        totales = {n: sum(r["viv_sin_agua_min"] for r in c["salida"]) for n, c in vec["conjuntos"].items()}
+        self.assertGreater(totales["consumo_100"], totales["base"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)
