@@ -459,5 +459,23 @@ class TestContratos(unittest.TestCase):
         self.assertGreater(totales["consumo_100"], totales["base"])
 
 
+    def test_comparacion_de_municipios_coincide_con_el_proyecto(self):
+        filas = {f["municipio"]: f for f in self._csv(self.RAIZ / "datos" / "comparacion_municipios.csv")}
+        self.assertEqual(set(filas), {"Guadalajara", "San Pedro Tlaquepaque", "Tonalá", "Zapopan"})
+        manz = self._csv(self.RAIZ / "datos" / "manzanas_tlaquepaque.csv")
+        t = filas["San Pedro Tlaquepaque"]
+        self.assertEqual(int(t["manzanas"]), len(manz))
+        self.assertEqual(int(t["poblacion"]), sum(int(float(m["pob"])) for m in manz))
+        self.assertEqual(int(t["viviendas"]), sum(int(float(m["viviendas"])) for m in manz))
+        self.assertEqual(int(t["sin_almacen_min"]), sum(int(float(m["sin_almacen_min"])) for m in manz))
+        self.assertEqual(int(t["sin_almacen_max"]), sum(int(float(m["sin_almacen_max"])) for m in manz))
+        # la afirmacion del README: mayor PROPORCION de viviendas sin almacenamiento, con las dos cotas
+        otros = [f for n, f in filas.items() if n != "San Pedro Tlaquepaque"]
+        self.assertTrue(all(float(t["pct_sin_almacen_min"]) > float(o["pct_sin_almacen_min"]) for o in otros))
+        self.assertTrue(all(float(t["pct_sin_almacen_max"]) > float(o["pct_sin_almacen_max"]) for o in otros))
+        # pero no la mayor cantidad: Zapopan tiene mas con la cota maxima (el README no debe decir lo contrario)
+        self.assertGreater(int(filas["Zapopan"]["sin_almacen_max"]), int(t["sin_almacen_max"]))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

@@ -95,6 +95,15 @@ acota el trabajo, no lo sustituye.
 > sirviendo para nombrar y reportar, pero la zona de cada manzana sale de
 > `zonas_siapa/` (siguiente sección), que no depende de esta capa de colonias del IIEG.
 
+## `comparacion_municipios.csv`
+
+| Campo | Valor |
+|---|---|
+| **Fuente** | INEGI, Censo 2020, *Principales resultados por AGEB y manzana urbana*, Jalisco (el mismo producto que `manzanas_tlaquepaque.csv`) |
+| **Cobertura** | Los 4 municipios del calendario del SIAPA: Guadalajara, San Pedro Tlaquepaque, Tonalá y Zapopan |
+| **Procesamiento** | `scripts/compara_municipios.py`: cotas mínima y máxima por manzana, igual que el resto del proyecto |
+| **Para qué** | Verificar que Tlaquepaque es el municipio con mayor proporción de viviendas sin almacenamiento. Ver `comparacion_municipios.md`, con sus matices |
+
 ## `zonas_siapa/` y `../motor/calendarios/`
 
 | Campo | Valor |

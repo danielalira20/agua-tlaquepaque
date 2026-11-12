@@ -5,8 +5,9 @@ de salud. Modelamos la cadena red → tinaco → llave para decir en qué manzan
 del calendario, el agua deja de ser segura, y repartimos las pipas por riesgo sanitario con la
 misma agua.
 
-**Delimitación.** San Pedro Tlaquepaque, el municipio con menos almacenamiento de los cuatro
-que cubre el calendario de tandeo del SIAPA. Entre 58,938 y 92,069 personas (cota mínima y máxima:
+**Delimitación.** San Pedro Tlaquepaque, el municipio con **mayor proporción de viviendas sin almacenamiento** de los cuatro
+que cubre el calendario de tandeo del SIAPA (13.8% a 26.5% de sus viviendas urbanas, contra 3.1% a 9.3% en Guadalajara, 5.3% a 14.4% en
+Zapopan y 8.5% a 20.3% en Tonalá; es la proporción, no la cantidad: ver `datos/comparacion_municipios.md`). Entre 58,938 y 92,069 personas (cota mínima y máxima:
 el Censo no cruza tinaco con cisterna) viven en manzanas donde más de la mitad de las viviendas no
 tiene tinaco ni cisterna. El censo trae 4,871 manzanas y 588,419 personas.
 
