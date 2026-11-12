@@ -16,8 +16,8 @@ procedencia y su nivel de verificación:
 Dos columnas distintas, que no hay que confundir:
   - `arbitrada`: si el artículo pasó revisión por pares (si | no | vacío si no es un artículo)
   - `verificacion`: cuánto se leyó. fuente_primaria (texto completo o archivo original) ·
-    resumen_oficial (solo el resumen de PubMed o del editor) · solo_resumen (resumen de búsqueda) ·
-    norma · no_verificada
+    resumen_oficial (solo el resumen de PubMed o del editor) · suplemento (solo el material suplementario,
+    no el artículo) · solo_resumen (resumen de búsqueda) · norma · no_verificada
 Las referencias que cuentan para las 5 del formato del reporte son arbitrada = si y
 verificacion = fuente_primaria.
 """
@@ -105,7 +105,7 @@ def cisternas():
 
 
 def literatura_y_prensa():
-    fp, ro, norma, nov = "fuente_primaria", "resumen_oficial", "norma", "no_verificada"
+    fp, ro, sup, norma, nov = "fuente_primaria", "resumen_oficial", "suplemento", "norma", "no_verificada"
     return [
         # --- Estudio de Guadalajara (Rubino 2019): arbitrado, leido completo ---
         fila(id="E001", fuente="estudio_rubino", tipo="valor",
@@ -160,10 +160,12 @@ def literatura_y_prensa():
         fila(id="E010", fuente="literatura", tipo="valor",
              descripcion="Tasa de decaimiento del cloro en redes intermitentes (hierro dúctil y fundido) frente a continuas",
              valor="1.5", unidad="veces mayor", cita=VAIDYA, url_o_doi="https://doi.org/10.1080/1573062X.2022.2139275",
-             arbitrada="nd", verificacion=nov, uso="NO USAR hasta abrir el artículo",
+             arbitrada="nd", verificacion=nov,
+             uso="NO USAR. DESCARTADA el 12-nov: de pago, sin material suplementario, y nada del reporte depende de ella",
              nota="Autores y datos de la revista confirmados en Crossref (en línea nov-2022; volumen 20(1), enero 2023). El "
                   "texto y el resumen no se pudieron abrir (Taylor & Francis bloquea la descarga automática): el factor 1.5 y la "
-                  "frase 'se sabe muy poco' siguen sin confirmar. Si no se confirman, se quitan."),
+                  "frase 'se sabe muy poco' no se confirmaron. Dani confirmó el 12-nov que solo está disponible de pago y que no "
+                  "tiene suplementario, y decidió descartarla. El decaimiento del cloro no se modela; el contexto lo cubren Rubino y la OMS."),
         # --- Intermitencia: arbitrados ---
         fila(id="E011", fuente="literatura", tipo="valor",
              descripcion="A presiones menores de 10 psi se detectaron con frecuencia bacterias indicadoras aun con cloro residual "
@@ -172,13 +174,16 @@ def literatura_y_prensa():
              valor="10 / 17", unidad="psi", cita=KUMPEL14, url_o_doi="https://doi.org/10.1021/es405054u", arbitrada="si",
              verificacion=ro, uso="Respaldo de por qué la baja presión del racionamiento es un riesgo, no solo una molestia",
              nota="Solo se leyó el resumen oficial (PubMed 24459990, 'Indexed for MEDLINE'); el texto completo está en ACS, "
-                  "que bloquea la descarga automática. Estudio en Hubli-Dharwad, India, 11 sitios: los umbrales son de esa red."),
+                  "que bloquea la descarga automática. Estudio en Hubli-Dharwad, India, 11 sitios: los umbrales son de esa red. "
+                  "El material suplementario (leído el 12-nov, ver E021 y E022) trae las gráficas de turbidez agrupadas con las mismas "
+                  "categorías de presión (menos de 10, 10 a 17 y más de 17 psi), pero no reemplaza al texto principal."),
         fila(id="E012", fuente="literatura", tipo="valor",
              descripcion="El suministro intermitente atiende al menos esta cantidad de personas en el mundo", valor="300 millones",
              unidad="personas", cita=KUMPEL16, url_o_doi="https://doi.org/10.1021/acs.est.5b03973", arbitrada="si",
              verificacion=ro, uso="Contexto: la intermitencia no es un caso aislado",
              nota="Resumen oficial (PubMed 26670120, 'Indexed for MEDLINE'). Revisión. Taylor et al. (2018) dan cerca de mil "
-                  "millones de personas con redes no siempre presurizadas: son definiciones distintas, no se contradicen."),
+                  "millones de personas con redes no siempre presurizadas: son definiciones distintas, no se contradicen. Según su "
+                  "material suplementario (E023), la cifra sale de una base voluntaria que excluye a muchas empresas: es una cota inferior."),
         fila(id="E013", fuente="literatura", tipo="valor",
              descripcion="Agua almacenada que no cumplía las guías, con suministro continuo frente a intermitente: la calidad "
                          "empeoró en el almacenamiento en ambos grupos",
@@ -234,6 +239,33 @@ def literatura_y_prensa():
              verificacion=fp, uso="Apoyo del mecanismo, no de magnitudes",
              nota="Experimento a escala piloto (tubería de PVC de 90 m con monocloramina, 3 corridas de 30 días), no estudio de "
                   "campo. " + ARB_FECHAS.format("recibido 2025-02-10, aceptado 2025-05-21") + ABIERTA),
+        # --- Material suplementario de Kumpel y Nelson (leido completo el 12-nov; NO es el articulo) ---
+        fila(id="E021", fuente="literatura", tipo="valor",
+             descripcion="Encuesta de hogares en Hubli-Dharwad (n = 1,951): con tinaco de azotea; con llaves dentro de tanques que se "
+                         "sumergieron el último mes; con llaves a nivel del suelo o por debajo; y, de estos últimos, los que reportaron "
+                         "que la calle se inundó por encima de su llave en el último mes",
+             valor="35 / 8 / 17 / 62", unidad="% de hogares", cita=KUMPEL14, url_o_doi="https://doi.org/10.1021/es405054u",
+             arbitrada="si", verificacion=sup,
+             uso="Ejemplo de que un tinaco o una cisterna pueden ser un punto de contaminación cruzada si la llave se sumerge",
+             nota="Material suplementario (S2), no el artículo. Datos de India: el Censo no registra la posición de las llaves, "
+                  "así que no se puede estimar nada igual para Tlaquepaque."),
+        fila(id="E022", fuente="literatura", tipo="valor",
+             descripcion="La conductividad al restablecer el servicio fue significativamente mayor en 15 de 23 ciclos de suministro "
+                         "(diferencia media de 121 µS/cm), lo que sugiere intrusión de agua subterránea; en las llaves de consumidores "
+                         "se registró presión menor de 0 psi justo después de cortar el suministro",
+             valor="15 de 23", unidad="ciclos de suministro", cita=KUMPEL14, url_o_doi="https://doi.org/10.1021/es405054u",
+             arbitrada="si", verificacion=sup, uso="Respaldo del mecanismo de intrusión cuando la red se despresuriza",
+             nota="Material suplementario (S2), no el artículo. Es una red de India con suministro muy corto; en Tlaquepaque el "
+                  "SIAPA habla de baja presión, no de corte total."),
+        fila(id="E023", fuente="literatura", tipo="valor",
+             descripcion="Una empresa se clasificó como de suministro intermitente si su continuidad promedio reportada era de menos "
+                         "de 24 horas al día. Los datos de la base IBNET los envían las empresas de forma voluntaria y excluyen a muchas",
+             valor="<24", unidad="horas de servicio al día (promedio)", cita=KUMPEL16,
+             url_o_doi="https://doi.org/10.1021/acs.est.5b03973", arbitrada="si", verificacion=sup,
+             uso="Declarar que los 300 millones de E012 son una cota inferior, y que la definición es por horas al día",
+             nota="Material suplementario, no el artículo. El calendario del SIAPA se expresa en días por semana con baja presión, "
+                  "no en horas al día: no es la misma definición, así que no se debe decir que Tlaquepaque 'es un sistema intermitente' "
+                  "con esta referencia."),
         # --- Prensa: notas completas leidas el 11-nov ---
         fila(id="P001", fuente="prensa", tipo="contexto", descripcion="Pipas del municipio",
              valor="32", unidad="pipas", cita=CR_O15, url_o_doi=U_O15, verificacion=fp,

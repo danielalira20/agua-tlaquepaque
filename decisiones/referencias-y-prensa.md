@@ -12,9 +12,9 @@ El registro completo, renglón por renglón, está en `datos/evidencia.csv` (con
 | | Antes | Ahora |
 |---|---|---|
 | Referencias arbitradas **leídas completas** | 1 (Rubino) y una dudosa (Matsinhe) | **6**: Rubino, Ercumen, Taylor, Sosa-Moreno, Wu y Leifels |
-| Arbitradas con resumen oficial | 0 | 2: Kumpel y Nelson 2014 y 2016 |
+| Arbitradas con resumen oficial | 0 | 2: Kumpel y Nelson 2014 y 2016. Además se leyó el **material suplementario** de ambas (no son los artículos) |
 | Matsinhe 2014 (Maputo) | "confirmar que sea arbitrada" | **No es arbitrada.** La revista lo dice de sí misma. Sigue siendo citable, pero no cuenta entre las 5 |
-| Chlorine degradation (*Urban Water Journal*) | Sin autores, "viene de un resumen" | Autores y datos confirmados. El texto y el resumen siguen sin abrirse: **sigue sin poder usarse** |
+| Chlorine degradation (*Urban Water Journal*) | Sin autores, "viene de un resumen" | Autores y datos confirmados. El texto y el resumen siguen sin abrirse y el artículo es **solo de pago**: **descartada** (decisión de Dani, 12-nov) |
 | Notas de prensa leídas completas | 0 (solo resúmenes de búsqueda) | 6 de La Crónica de Hoy (21-jul, 30-jul, 30-ago, 14-oct, 15-oct y 22-oct). La de Milenio no se pudo abrir |
 | ¿Las pipas rellenan las cisternas? | Sin fuente | **Sí, con cita textual de un funcionario** (sección 3) |
 
@@ -47,15 +47,27 @@ El registro completo, renglón por renglón, está en `datos/evidencia.csv` (con
 | Kumpel, E., & Nelson, K. L. (2014). Mechanisms affecting water quality in an intermittent piped water supply. *Environmental Science & Technology, 48*(5), 2766–2775. https://doi.org/10.1021/es405054u | Con menos de 10 psi se detectaron bacterias indicadoras con frecuencia **aun con cloro residual**; entre 10 y 17 psi, contaminación periódica; con más de 17 psi y cloro, pocos coliformes totales y ningún *E. coli* | Solo por lo que el resumen dice. Los umbrales son de una red en Hubli-Dharwad, India. Es lo que respalda que la baja presión del racionamiento sea un riesgo |
 | Kumpel, E., & Nelson, K. L. (2016). Intermittent water supply: Prevalence, practice, and microbial water quality. *Environmental Science & Technology, 50*(2), 542–553. https://doi.org/10.1021/acs.est.5b03973 | El suministro intermitente atiende "al menos 300 millones de personas" | Contexto. Taylor y colaboradores dan cerca de mil millones con una definición más amplia: no se contradicen |
 
-Los dos están indexados en MEDLINE. Para subirlos a "leídos completos" hay que bajar el PDF desde un
-navegador (ACS bloquea la descarga automática).
+Los dos están indexados en MEDLINE. **Los artículos son de pago y no se pudieron conseguir.** Lo que sí se
+leyó completo el 12-nov es su **material suplementario** (*Supporting Information*), que no es el artículo y por eso
+no sube su nivel a "leído completo" (en el registro, verificación `suplemento`). Aporta tres datos citables, siempre
+indicando que vienen del suplemento:
+
+| Dato | Registro | Límite |
+|---|---|---|
+| Kumpel 2014: de 1,951 hogares encuestados en Hubli-Dharwad, 35% tenía tinaco de azotea; 8% tenía llaves dentro de tanques sumergidos el último mes; 17% tenía llaves a nivel del suelo o por debajo, y 62% de ellos reportó que la calle se inundó por encima de su llave | E021 | India. El Censo no registra la posición de las llaves |
+| Kumpel 2014: la conductividad al restablecer el servicio fue mayor en 15 de 23 ciclos (121 µS/cm de diferencia media), lo que sugiere intrusión de agua subterránea; presión menor de 0 psi en las llaves justo después de cortar el suministro | E022 | Red de India con suministro muy corto; en Tlaquepaque el SIAPA habla de baja presión, no de corte total |
+| Kumpel 2016: una empresa es "intermitente" si su continuidad promedio es menor de **24 horas al día**; la base IBNET es voluntaria y excluye a muchas empresas, así que los 300 millones son una **cota inferior** | E023 | La definición es por horas al día; el calendario del SIAPA es por días a la semana. No decir que Tlaquepaque "es un sistema intermitente" con esta referencia |
+
+Una advertencia de lectura: los 300 millones y los umbrales de 10 y 17 psi siguen respaldados solo por el
+resumen oficial. El suplemento de 2014 trae las gráficas de turbidez agrupadas con esas mismas categorías de presión,
+pero no reemplaza al texto principal.
 
 ### Las que NO cuentan, y por qué
 
 | Referencia | Estado |
 |---|---|
 | Matsinhe, N. P., Juízo, D. L., & Persson, K. M. (2014). VATTEN, *70*, 51–60 | **No arbitrada.** La página de VATTEN dice: *"A referee system is not applied in the formal meaning. All manuscripts are evaluated by the editor and sometimes also by colleagues."* Se leyó completa y sus datos son buenos (caída de 60% del cloro, retención de 0.4 a 6.3 días, consumo de 120 L), pero se cita como fuente científica, no como arbitrada |
-| Vaidya, R., Kumar, K. R. S., Mohan Kumar, M. S., & Rao, L. (2023). Chlorine degradation in continuous and intermittent drinking water supply networks. *Urban Water Journal, 20*(1), 60–73 | Datos confirmados en Crossref (en línea nov-2022; número de enero 2023). **No se pudo abrir ni el resumen** (Taylor & Francis bloquea). El factor 1.5 y la frase "se sabe muy poco" **siguen sin confirmar y no deben usarse** |
+| Vaidya, R., Kumar, K. R. S., Mohan Kumar, M. S., & Rao, L. (2023). Chlorine degradation in continuous and intermittent drinking water supply networks. *Urban Water Journal, 20*(1), 60–73 | Datos confirmados en Crossref (en línea nov-2022; número de enero 2023). **No se pudo abrir ni el resumen** (Taylor & Francis bloquea) y el artículo es **solo de pago** (confirmado por Dani el 12-nov). El factor 1.5 y la frase "se sabe muy poco" **siguen sin confirmar y no deben usarse**. **Descartada por decisión de Dani el 12-nov** (tampoco tiene material suplementario). Ninguna afirmación del reporte depende de ella: el decaimiento del cloro en Tlaquepaque no se modela, y el contexto lo cubren Rubino (medición local) y la OMS |
 | OMS (2017), *Guidelines for drinking-water quality*, 4.ª ed. con primer apéndice | Autoridad, no artículo arbitrado. Se leyeron los capítulos 4 y 7 |
 | NOM-127-SSA1-2021 | Norma |
 | Abernethy et al. (Flint) | Preprint, no se usó |
@@ -104,8 +116,11 @@ prefiere que las cinco sean de texto completo, se cambia por Wu 2023 (170 palabr
 | ACS (Kumpel y Nelson), Taylor & Francis (*Urban Water Journal*), MDPI, Milenio | **Bloquean la descarga automática (403). No se esquivó** |
 | escholarship.org | Respondió 202 sin contenido; no se insistió |
 
-Para abrir los pendientes hay que bajarlos desde un navegador. Lo único que se espera: el PDF de
-Kumpel y Nelson 2014 y 2016, y el artículo de *Urban Water Journal*.
+**Los tres artículos pendientes (Kumpel y Nelson 2014 y 2016, y *Urban Water Journal*) son de pago y no vale la
+pena comprarlos**: el reporte se sostiene sin ellos. *Urban Water Journal* queda descartada. Si alguien del equipo tiene acceso por su escuela o universidad,
+sirve para subir a Kumpel 2014 a "leído completo"; si no, se cita por lo que dice su resumen oficial y su
+suplemento, que es lo que ya está verificado. La alternativa de costo cero para el cuerpo del reporte es cambiar
+Kumpel 2014 por Wu 2023, que sí está leído completo (170 palabras en total).
 
 ## 3. Las notas de prensa
 

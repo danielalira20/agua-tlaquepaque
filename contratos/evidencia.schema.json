@@ -19,7 +19,7 @@
     "cita": "string en formato APA",
     "url_o_doi": "string",
     "arbitrada": "si | no | nd (no determinada) | vacio si el renglon no es un articulo. Si el articulo paso revision por pares. Es DISTINTO de verificacion: una cosa es la revista y otra cuanto se leyo",
-    "verificacion": "fuente_primaria | resumen_oficial | solo_resumen | norma | no_verificada (ver 'verificacion' abajo)",
+    "verificacion": "fuente_primaria | resumen_oficial | suplemento | solo_resumen | norma | no_verificada (ver 'verificacion' abajo)",
     "uso": "string: para que se usa en el proyecto, o NO USAR",
     "fecha_consulta": "YYYY-MM-DD",
     "nota": "string: limitaciones o tensiones que hay que declarar"
@@ -27,12 +27,13 @@
   "verificacion": {
     "fuente_primaria": "se leyo el dato en la fuente original: el archivo del municipio, el texto completo del articulo o de la nota de prensa",
     "resumen_oficial": "solo se leyo el resumen oficial (PubMed o el editor). Se puede citar lo que el resumen dice literalmente, y nada mas",
+    "suplemento": "solo se leyo el material suplementario del articulo (Supporting Information), no el articulo. Se puede citar lo que el suplemento dice, indicando que es suplemento, y NO cuenta como texto completo",
     "solo_resumen": "solo se vio un fragmento de busqueda. Hay que abrir la fuente antes de citarlo",
     "norma": "es una norma o reglamento",
     "no_verificada": "viene de una fuente secundaria o sin identificar. No se debe citar tal cual"
   },
   "reglas": [
-    "No se cita en el reporte nada con verificacion distinta de fuente_primaria, resumen_oficial (solo lo que el resumen dice) o norma.",
+    "No se cita en el reporte nada con verificacion distinta de fuente_primaria, resumen_oficial o suplemento (solo lo que ese resumen o suplemento dice) ni de norma.",
     "Un renglon con uso que empieza por NO USAR no entra a ningun calculo ni al reporte.",
     "Las 10 propuestas del municipio (PROP###) no cuentan como cobertura ni entran al baseline.",
     "La ubicacion_calidad de las cisternas coincide con el baseline del plan: 35 coordenada_exacta, 12 centro_de_colonia, 3 sin_ubicar.",
@@ -43,6 +44,7 @@
     "Matsinhe 2014 (VATTEN) NO es arbitrada: la revista dice 'A referee system is not applied in the formal meaning'. Es una fuente cientifica citable, pero no cuenta entre las 5.",
     "La OMS y las normas son autoridad, no articulos arbitrados.",
     "Mapa de cisternas del municipio: https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U. El Ayuntamiento lo publico en su informe del 22-oct (renglon P009).",
-    "Las notas de prensa se leyeron completas en La Crónica de Hoy. La de Milenio sobre las 55 cisternas no se pudo abrir (el sitio bloquea la descarga automatica) y no se cita."
+    "Las notas de prensa se leyeron completas en La Crónica de Hoy. La de Milenio sobre las 55 cisternas no se pudo abrir (el sitio bloquea la descarga automatica) y no se cita.",
+    "Kumpel y Nelson 2014 y 2016: se leyo el material suplementario (renglones E021 a E023) pero no los articulos, asi que siguen sin contar como leidos completos. Vaidya et al. 2023 (Urban Water Journal) esta DESCARTADA (decision de Dani, 12-nov): solo de pago, sin suplementario, y nada del reporte depende de ella."
   ]
 }
