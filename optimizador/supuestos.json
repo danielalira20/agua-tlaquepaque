@@ -9,6 +9,7 @@
   "modo_racha": "desempate",
   "baseline_cisternas": "todas",
   "baseline_turnos": "todas",
+  "costo_viaje_mxn": 1200,
   "sensibilidad": {
     "radio_cobertura_m": [
       200,
@@ -31,6 +32,11 @@
     "baseline_turnos": [
       "todas",
       "con_necesidad"
+    ],
+    "costo_viaje_mxn": [
+      700,
+      1200,
+      2000
     ]
   }
 }

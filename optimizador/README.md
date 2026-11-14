@@ -29,6 +29,7 @@ van en `resultados/`.
     ESPECIFICACION.md    reglas del priorizador y casos resueltos a mano
     supuestos.json       recursos y parámetros compartidos
     docs/decisiones/     una decisión por archivo: contexto, opciones, qué se decidió y por qué
+    docs/viabilidad-presupuestal.md   texto base del criterio 5 (viabilidad) para el reporte
     priorizador/         código: entradas, cobertura, asignación diaria, métricas y salida
     analisis/            comparador: rejilla, escenarios del motor y equidad por grado (decisión 06)
     pruebas/             pruebas; casos/ tiene manzanas inventadas para los casos a mano
@@ -48,6 +49,7 @@ van en `resultados/`.
 | Cisterna comunitaria | 1 viaje = 10,000 L | Cisternas de 10,000 L (P007) que se llenan con pipa por reporte (P006); ver `docs/decisiones/01-baseline-cisternas.md` |
 | Cisternas del baseline | todas (47) | Sensibilidad con las 35 de coordenada exacta |
 | Turnos del baseline | todas | Sensibilidad con `con_necesidad` |
+| Costo de un viaje | 1,200 pesos (sensibilidad 700 y 2,000) | Precio de una pipa particular en Tlaquepaque (P012); ver `docs/decisiones/07-costo-de-un-viaje.md`. Solo lo usa el comparador |
 
 200 L por hogar equivale a un día de consumo: 3.7 personas × 50 L ≈ 185 L.
 
@@ -67,8 +69,8 @@ van en `resultados/`.
 | `feat/priorizador-referencia` | Cobertura, asignación diaria, métricas y `plan.json`, con pruebas | Hecho |
 | `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | Hecho |
 | `fix/priorizador-centro-fsum` | Centro de colonia con `math.fsum`, igual en cualquier versión de Python | Hecho |
-| `feat/priorizador-comparador` | Rejilla de sensibilidad, escenarios del motor, equidad por grado y tablas en `resultados/` | En curso |
-| `feat/viabilidad-presupuestal` | Costo de un viaje de pipa, con fuente | Pendiente |
+| `feat/priorizador-comparador` | Rejilla de sensibilidad, escenarios del motor, equidad por grado y tablas en `resultados/` | Hecho |
+| `feat/viabilidad-presupuestal` | Costo de un viaje (decisión 07), costo por vivienda-día en el comparador y `docs/viabilidad-presupuestal.md` | En curso |
 
 ## Cómo correrlo
 

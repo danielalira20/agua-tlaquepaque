@@ -86,10 +86,25 @@ Estado y parámetros base. Grado de marginación de la AGEB de cada manzana (CON
 
 Cada día, el priorizado cubre entre 34.2% y 40.5% con la cota mínima, y entre 16.1% y 18.3% con la cota máxima, de las viviendas sin agua. Los viajes no alcanzan para todas: por eso importa a dónde van. Detalle por fecha en `cobertura_diaria.csv`.
 
+## 6. Costo por vivienda-día atendida
+
+Decisión 07. Con el viaje de pipa a 1,200 pesos (precio de una pipa particular de 10,000 L en Tlaquepaque), los 441 viajes de la semana del priorizado cuestan 529,200 pesos. El costo por vivienda-día es el costo de los viajes usados entre las viviendas-día atendidas; un viaje vacío del baseline cuenta, porque la pipa sale igual.
+
+|  | Cota mínima | Cota máxima | Viajes usados (mín. / máx.) |
+|---|---:|---:|---:|
+| **Priorizado** | **24.0 pesos** | **24.0 pesos** | 441 |
+| Baseline por turnos, 47 cisternas | 116.8 pesos | 52.0 pesos | 441 / 441 |
+| Baseline por turnos, 35 exactas | 133.9 pesos | 55.9 pesos | 441 / 441 |
+| Baseline con necesidad, 47 cisternas | 74.8 pesos | 33.2 pesos | 441 / 441 |
+| Baseline con necesidad, 35 exactas | 97.0 pesos | 37.3 pesos | 441 / 441 |
+
+Con otros precios: con 700 pesos por viaje, el priorizado sale en 14.0 pesos con las dos cotas; con 2,000 pesos por viaje, el priorizado sale en 40.0 pesos con las dos cotas. La razón entre el priorizado y cada baseline no cambia con el precio, porque los viajes son los mismos.
+
 ## Lo que se declara
 
 - Toda razón «X veces el baseline» dice contra qué baseline y con qué cota. La más conservadora es la del baseline con necesidad con la cota máxima.
 - El baseline es estilizado: los mismos viajes repartidos por turnos entre las cisternas instaladas. No es lo que hace hoy el municipio, que llena las cisternas cuando los vecinos lo reportan (`decisiones/referencias-y-prensa.md`), y de ese reparto no hay registro.
 - La marginación no pesa en la prioridad (opción A de la decisión abierta 4 del motor). Con la cota máxima, el priorizado puede dejar sin entregas a los grupos pequeños de manzanas de AGEB «Muy alto»: la sección 4 dice cuánto.
 - El plan de cada día se recalcula cuando cambia un supuesto: el resultado agregado es robusto, los puntos de entrega no (`datos/HALLAZGOS_sensibilidad.md`).
+- El costo de un viaje es el precio de una pipa particular de 10,000 L en Tlaquepaque (Milenio, 16 de mayo de 2025), no el costo del municipio, que no lo publica; no se ajustó por inflación (decisión 07). El costo por vivienda-día es otra forma de leer la ventaja del priorizado: no es un ahorro de presupuesto, porque los viajes son los mismos.
 - Las cifras usan el estado del motor de referencia; se recalculan con el de la implementación oficial.

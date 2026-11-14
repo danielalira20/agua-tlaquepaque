@@ -68,6 +68,17 @@ CR_O15 = "Gómez, R. (2026, 15 de octubre). Despliega Tlaquepaque 32 pipas; colo
 U_O15 = "https://www.cronica.com.mx/jalisco/guadalajara/2026/10/15/despliega-tlaquepaque-32-pipas-coloca-60-cisternas-ante-tandeos-del-siapa/"
 CR_O22 = "Gómez, R. (2026, 22 de octubre). Distribuye Tlaquepaque 5.6 millones de litros de agua ante desabasto por tandeos. La Crónica de Hoy."
 U_O22 = "https://www.cronica.com.mx/jalisco/guadalajara/2026/10/22/distribuye-tlaquepaque-56-millones-de-litros-de-agua-ante-desabasto-por-tandeos"
+MI_M16 = "Milenio Estados (2025, 16 de mayo). Gobierno de Tlaquepaque llevará agua a colonias afectadas por falla en el SIAPA. Milenio."
+U_M16 = "https://amp.milenio.com/politica/comunidad/tlaquepaque-guardia-nacional-defensa-surtiran-agua-colonias"
+TD_M20 = "Telediario Guadalajara (2025, 20 de mayo). ¿Cuánto cuesta una pipa de agua en Guadalajara? Telediario."
+U_M20 = "https://www.telediario.mx/comunidad/pipa-de-agua-en-guadalajara-cuanto-cuesta"
+CR_D08 = "Gómez, R. (2025, 8 de diciembre). Aprueban en Tlaquepaque presupuesto 2026; entregan el Premio Municipal a la Juventud. La Crónica de Hoy."
+U_D08 = "https://www.cronica.com.mx/jalisco/guadalajara/2025/12/08/aprueban-en-tlaquepaque-presupuesto-2026-entregan-el-premio-municipal-a-la-juventud/"
+CR_J15 = "Gómez, R. (2026, 15 de julio). Rechaza Tlaquepaque cualquier intento de privatizar el agua. La Crónica de Hoy."
+U_J15 = "https://www.cronica.com.mx/jalisco/guadalajara/2026/07/15/rechaza-tlaquepaque-cualquier-intento-de-privatizar-el-agua/"
+CR_A30 = "Gómez, R. (2026, 30 de agosto). Tlaquepaque invierte 23.5 millones de pesos en rehabilitación de pozos de agua. La Crónica de Hoy."
+U_A30 = "https://www.cronica.com.mx/jalisco/guadalajara/2026/08/30/tlaquepaque-invierte-235-millones-de-pesos-en-rehabilitacion-de-pozos-de-agua/"
+CONSULTA_VIABILIDAD = "2026-11-12"
 ABIERTA = "Texto completo leído el 11-nov en PMC (acceso abierto)."
 ARB_FECHAS = "Revisión por pares: el registro de PMC trae fechas de recepción y aceptación ({}). "
 
@@ -329,8 +340,43 @@ def literatura_y_prensa():
         fila(id="P011", fuente="prensa", tipo="contexto",
              descripcion="Una vecina de Alfredo Barba dice que algunos proveedores particulares de pipa cobran hasta dos mil pesos",
              valor="2000", unidad="MXN (testimonio)", cita=CR_O15, url_o_doi=U_O15, verificacion=fp,
-             uso="Solo como orden de magnitud para el costo privado de una pipa (criterio 5)",
-             nota="Es el testimonio de una persona citada por la nota, no un dato oficial ni un precio por viaje: Jass debe buscar un costo con fuente."),
+             uso="Cota alta de la sensibilidad del costo de un viaje de pipa (decisión 07 del priorizador, criterio 5)",
+             nota="Es el testimonio de una persona citada por la nota, no un dato oficial ni un precio por viaje. La referencia "
+                  "del costo de un viaje es P012."),
+        # --- Viabilidad presupuestal (criterio 5, carril de Jass): notas leídas completas el 12-nov ---
+        fila(id="P012", fuente="prensa", tipo="valor",
+             descripcion="Costo de una pipa privada de 10 mil litros por municipio: Tonalá 700 pesos, Guadalajara 1,400, "
+                         "Zapopan 1,400 y Tlaquepaque 1,200; los precios aumentan con la distancia al punto de entrega",
+             valor="1200", unidad="MXN por pipa de 10,000 L (Tlaquepaque, empresas privadas)", cita=MI_M16, url_o_doi=U_M16,
+             verificacion=fp, fecha_consulta=CONSULTA_VIABILIDAD,
+             uso="Costo de referencia de un viaje de pipa (decisión 07 del priorizador); Tonalá (700) es la cota baja de la sensibilidad",
+             nota="Nota completa leída. No dice cómo obtuvo los promedios ni cuántas empresas consultó. Es de mayo de 2025 y no se "
+                  "ajustó por inflación. Es el precio de una pipa particular, no el costo del municipio, que no lo publica."),
+        fila(id="P013", fuente="prensa", tipo="contexto",
+             descripcion="Repite los precios de P012 por pipa de 10 mil litros y agrega que las pipas de 20 mil litros cuestan "
+                         "entre 1,900 y 3,000 pesos", cita=TD_M20, url_o_doi=U_M20, verificacion=fp,
+             fecha_consulta=CONSULTA_VIABILIDAD,
+             uso="Solo como constancia: es la misma fuente que P012, no una segunda",
+             nota="Nota completa leída. Mismo grupo editorial que Milenio, cuatro días después y con las mismas cifras."),
+        fila(id="P014", fuente="prensa", tipo="valor",
+             descripcion="El Ayuntamiento aprobó el presupuesto de egresos para el ejercicio fiscal 2026 por 3 mil 174 millones de pesos",
+             valor="3174", unidad="millones de MXN", cita=CR_D08, url_o_doi=U_D08, verificacion=fp,
+             fecha_consulta=CONSULTA_VIABILIDAD, uso="Recursos del municipio (viabilidad, criterio 5)",
+             nota="Nota completa leída. Es el presupuesto aprobado, no el ejercido."),
+        fila(id="P015", fuente="prensa", tipo="valor",
+             descripcion="La alcaldesa señaló que el Ayuntamiento ha destinado más de 400 millones de pesos a obras y acciones de "
+                         "infraestructura hidráulica, entre ellas el abastecimiento de agua mediante pipas y cisternas",
+             valor="400", unidad="millones de MXN (más de)", cita=CR_J15, url_o_doi=U_J15, verificacion=fp,
+             fecha_consulta=CONSULTA_VIABILIDAD, uso="Recursos del municipio (viabilidad, criterio 5)",
+             nota="Nota completa leída. Cifra declarada por la alcaldesa, acumulada en la administración; no dice cuánto fue a "
+                  "pipas. La nota del 21 de julio (P007) habla de más de 320 millones."),
+        fila(id="P016", fuente="prensa", tipo="valor",
+             descripcion="Más de 23.5 millones de pesos en rehabilitación, adecuación y equipamiento de los pozos que abastecen las "
+                         "zonas donde el municipio administra directamente el servicio (21 pozos)",
+             valor="23.5", unidad="millones de MXN (más de)", cita=CR_A30, url_o_doi=U_A30, verificacion=fp,
+             fecha_consulta=CONSULTA_VIABILIDAD, uso="Recursos del municipio (viabilidad, criterio 5)",
+             nota="Nota completa leída. Son los pozos de las zonas que abastece el municipio, no las del SIAPA. La nota del 30 de "
+                  "julio (P006) da 11.7 millones en 22 pozos: son cortes distintos."),
     ]
 
 

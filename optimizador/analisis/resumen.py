@@ -21,6 +21,10 @@ def _pct(v) -> str:
     return "—" if v is None else f"{v:.1f}%"
 
 
+def _pesos(v, decimales: int = 0) -> str:
+    return "—" if v is None else f"{v:,.{decimales}f} pesos"
+
+
 def _baseline(turnos: str, cist: str, n: dict[str, int]) -> str:
     regla = "por turnos" if turnos == "todas" else "con necesidad"
     cuales = f"{n[cist]} cisternas" if cist == "todas" else f"{n[cist]} exactas"
@@ -152,6 +156,39 @@ def _cobertura(tablas: dict) -> list[str]:
             "Los viajes no alcanzan para todas: por eso importa a dónde van. Detalle por fecha en `cobertura_diaria.csv`.", ""]
 
 
+def _costo(tablas: dict, ctx: dict, combos: list[tuple[str, str]]) -> list[str]:
+    filas_c = tablas["costo_por_vivienda"]
+    ref = ctx["costos"]["referencia"]
+
+    def una(costo, cota, turnos="", cist=""):
+        regla = "priorizado" if not turnos else "baseline"
+        return _una(filas_c, costo_viaje_mxn=costo, cota=cota, regla=regla, baseline_turnos=turnos, baseline_cisternas=cist)
+
+    filas = [["**Priorizado**", *[f"**{_pesos(una(ref, c)['costo_por_viv_dia_mxn'], 1)}**" for c in COTAS_ORDEN],
+              _miles(una(ref, "min")["viajes"])]]
+    for t, c in combos:
+        filas.append([f"Baseline {_baseline(t, c, ctx['n_cisternas'])}",
+                      *[_pesos(una(ref, cota, t, c)["costo_por_viv_dia_mxn"], 1) for cota in COTAS_ORDEN],
+                      " / ".join(_miles(una(ref, cota, t, c)["viajes"]) for cota in COTAS_ORDEN)])
+    prio = una(ref, "min")
+    lineas = ["## 6. Costo por vivienda-día atendida", "",
+              f"Decisión 07. Con el viaje de pipa a {_pesos(ref)} (precio de una pipa particular de 10,000 L en Tlaquepaque), "
+              f"los {_miles(prio['viajes'])} viajes de la semana del priorizado cuestan {_pesos(prio['costo_viajes_mxn'])}. "
+              "El costo por vivienda-día es el costo de los viajes usados entre las viviendas-día atendidas; un viaje vacío "
+              "del baseline cuenta, porque la pipa sale igual.", ""]
+    lineas += _tabla(["", "Cota mínima", "Cota máxima", "Viajes usados (mín. / máx.)"], filas)
+    otros = [v for v in ctx["costos"]["valores"] if v != ref]
+    if otros:
+        partes = []
+        for v in otros:
+            vmin, vmax = (_pesos(una(v, c)["costo_por_viv_dia_mxn"], 1) for c in COTAS_ORDEN)
+            cuanto = f"{vmin} con las dos cotas" if vmin == vmax else f"{vmin} con la cota mínima y {vmax} con la máxima"
+            partes.append(f"con {_pesos(v)} por viaje, el priorizado sale en {cuanto}")
+        lineas += ["Con otros precios: " + "; ".join(partes) + ". La razón entre el priorizado y cada baseline "
+                   "no cambia con el precio, porque los viajes son los mismos.", ""]
+    return lineas
+
+
 DECLARAR = [
     "Toda razón «X veces el baseline» dice contra qué baseline y con qué cota. La más conservadora es la del baseline "
     "con necesidad con la cota máxima.",
@@ -162,6 +199,9 @@ DECLARAR = [
     "puede dejar sin entregas a los grupos pequeños de manzanas de AGEB «Muy alto»: la sección 4 dice cuánto.",
     "El plan de cada día se recalcula cuando cambia un supuesto: el resultado agregado es robusto, los puntos de entrega no "
     "(`datos/HALLAZGOS_sensibilidad.md`).",
+    "El costo de un viaje es el precio de una pipa particular de 10,000 L en Tlaquepaque (Milenio, 16 de mayo de 2025), "
+    "no el costo del municipio, que no lo publica; no se ajustó por inflación (decisión 07). El costo por vivienda-día es "
+    "otra forma de leer la ventaja del priorizado: no es un ahorro de presupuesto, porque los viajes son los mismos.",
     "Las cifras usan el estado del motor de referencia; se recalculan con el de la implementación oficial.",
 ]
 
@@ -182,5 +222,6 @@ def resumen(tablas: dict, ctx: dict) -> str:
     lineas += _escenarios(tablas, ctx, combos)
     lineas += _equidad(tablas)
     lineas += _cobertura(tablas)
+    lineas += _costo(tablas, ctx, combos)
     lineas += ["## Lo que se declara", ""] + [f"- {d}" for d in DECLARAR] + [""]
     return "\n".join(lineas)

@@ -11,6 +11,7 @@ raíz del repo; aquí solo van las internas de este carril.
 | 04 | Horizonte: día por día, racha como desempate | Propuesta |
 | 05 | Algoritmo voraz con comparación contra el máximo | Propuesta |
 | 06 | Rejilla del comparador: qué se corre y qué tablas salen | Propuesta |
+| 07 | Costo de un viaje de pipa | Propuesta |
 
 ## Formato de cada archivo
 
