@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (versión 0.6, borrador). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.7). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
