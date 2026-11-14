@@ -1,0 +1,61 @@
+id,tipo,nombre,direccion,cp,colonia_texto,lon,lat,fuente_ubicacion,colonia_capa,geocol,score_colonia,revisar
+CIST001,cisterna_municipal,,CALLE SANTA CECILIA #660,,,-103.329417,20.598722,coordenada_exacta,Felipe Ángeles,98160.0,0.0,False
+CIST003,cisterna_municipal,,RIO TEPALCATEPEC #1345-1337,45595.0,El Vergel,,,sin_coordenada,El Vergel,98164.0,1.0,False
+CIST004,cisterna_municipal,,CALLE SALVADOR CORONA  # 490,45597.0,El Campesino,,,sin_coordenada,El Campesino,98171.0,1.0,False
+CIST005,cisterna_municipal,,ANDRES MAZARIEGO #613-657,45594.0,Fovisste Miravalle,,,sin_coordenada,Fovissste Miravalle,98156.0,0.97,False
+CIST006,cisterna_municipal,,RITA PEREZ DE MORENO #12,,,-103.322806,20.605917,coordenada_exacta,El Tapatío,98218.0,0.0,False
+CIST007,cisterna_municipal,,"GABRIEL #1, ESQUINA ZAZRAGOZA",,,-103.324306,20.607583,coordenada_exacta,El Tapatío,98218.0,0.0,False
+CIST008,cisterna_municipal,,CALLE JOEL & CALLE DANIEL,,,-103.327028,20.605083,coordenada_exacta,El Tapatío,98218.0,0.0,False
+CIST009,cisterna_municipal,,CALLE BUGAMBILIAS & CALLE EZEQUIEL BARBA,,,-103.317694,20.608194,coordenada_exacta,El Tapatío,98218.0,0.0,False
+CIST010,cisterna_municipal,,MIROSLAVA #3,45588.0,Jardines del Tapatío,,,sin_coordenada,Jardines del Tapatío,98118.0,1.0,False
+CIST011,cisterna_municipal,,CALLE PALMAS #87 A CRUCE ALFREDO BARBA,,,-103.308083,20.609444,coordenada_exacta,Lomas del Tapatío,98182.0,0.0,False
+CIST012,cisterna_municipal,,HERRERA I CAIRO # 432,45560.0,Hacienda de Tlaquepaque,,,sin_coordenada,Hacienda de Tlaquepaque,98194.0,1.0,False
+CIST013,cisterna_municipal,,EMILIO CARRANZA # 1253,45500.0,Colonial Tlaquepaque,,,sin_coordenada,Colonial Tlaquepaque,98201.0,1.0,False
+CIST014,cisterna_municipal,,CALLE ARGENTINA # 315,,,,,sin_coordenada,,,0.0,True
+CIST015,cisterna_municipal,,ALFAREROS Y FRANCISCO DE MIRANDA,45579.0,C. Francisco de Miranda & C. AlfarerosHacienda de ,,,sin_coordenada,Hacienda de Tlaquepaque,,0.95,False
+CIST016,cisterna_municipal,,CALZADA CORDOBA #50,45560.0,El Alamo,,,sin_coordenada,El Álamo,98198.0,1.0,False
+CIST017,cisterna_municipal,,GLENDALE #253,45500.0,Centro,,,sin_coordenada,Centro,98142.0,1.0,False
+CIST018,cisterna_municipal,,MARIO MORENO #33,45606.0,Buenos Aires,,,sin_coordenada,Buenos Aires,98006.0,1.0,False
+CIST019,cisterna_municipal,,SAN JOSE PONIENTE #204,45530.0,Nueva Santa María,,,sin_coordenada,Nueva Santa María,98011.0,1.0,False
+CIST020,cisterna_municipal,,VILLA FONTANA NORTE #235,,,,,sin_coordenada,Villa Fontana,,0.9,True
+CIST021,cisterna_municipal,,CALLE ARBOLEDAS 11,45627.0,El Zalate,,,sin_coordenada,,98022.0,0.71,True
+CIST022,cisterna_municipal,,,,,,,sin_coordenada,,,0.0,True
+CIST031,cisterna_municipal,,,,,-103.382151,20.598318,coordenada_exacta,Guayabitos,98012.0,0.0,False
+CIST032,cisterna_municipal,,,,,-103.303442,20.634524,coordenada_exacta,Centro,98142.0,0.0,False
+CIST036,cisterna_municipal,Porfirio Cortés Silva &amp; Calle Jorge,,,,-103.32234,20.605376,coordenada_exacta,El Tapatío,98218.0,0.0,False
+CIST037,cisterna_municipal,Mirasol 503,,,,-103.313055,20.599075,coordenada_exacta,El Órgano,98131.0,0.0,False
+CIST038,cisterna_municipal,Calle Sta Monica 178,,,,-103.384803,20.607099,coordenada_exacta,Nueva Santa María,98011.0,0.0,False
+CIST039,cisterna_municipal,Materias Primas Rodríguez Sánchez,,,,-103.303333,20.636814,coordenada_exacta,Centro,98142.0,0.0,False
+CIST040,cisterna_municipal,Priv. De Cabañas 73,,,,-103.305289,20.634001,coordenada_exacta,Quintero,98141.0,0.0,False
+CIST041,cisterna_municipal,Emiliano Zapata 22,,,,-103.260644,20.587785,coordenada_exacta,Los Santibáñez,98136.0,0.0,False
+CIST042,cisterna_municipal,25 de Diciembre,,,,-103.264408,20.582222,coordenada_exacta,La Cofradía,98246.0,0.0,False
+CIST043,cisterna_municipal,Cam. a la Cofradía 28,,,,-103.262698,20.58167,coordenada_exacta,San Juan,98241.0,0.0,False
+CIST044,cisterna_municipal,C. Tonalá 462,,,,-103.299686,20.635855,coordenada_exacta,Centro,98142.0,0.0,False
+CIST045,cisterna_municipal,Carlos Salinas de Forrar &amp; Torrecillas,,,,-103.367828,20.602049,coordenada_exacta,Francisco I Madero,98009.0,0.0,False
+CIST046,cisterna_municipal,Calle 14 de Febrero &amp; Bellavista,,,,-103.265271,20.580508,coordenada_exacta,La Cofradía,98246.0,0.0,False
+CIST047,cisterna_municipal,Arroyo Colorado &amp; Privada Lirio,,,,-103.257841,20.584579,coordenada_exacta,San Juan,98137.0,0.0,False
+CIST048,cisterna_municipal,Josefa Ortiz de Domínguez &amp; Juan Escutia,,,,-103.329556,20.604466,coordenada_exacta,Las Juntas,98195.0,0.0,False
+CIST049,cisterna_municipal,Buenos Aires 75,,,,-103.266582,20.580143,coordenada_exacta,La Cofradía,98246.0,0.0,False
+CIST050,cisterna_municipal,Prados de Tlaquepaque,,,,-103.301434,20.629957,coordenada_exacta,Prados Tlaquepaque,98047.0,0.0,False
+CIST051,cisterna_municipal,comedor comunitario parques de la victoria,,,,-103.267295,20.587779,coordenada_exacta,Parques de La Victoria,98250.0,0.0,False
+CIST052,cisterna_municipal,Golondrino &amp; Alazan,,,,-103.383361,20.577972,coordenada_exacta,Haciendas del Real,98079.0,0.0,False
+CIST053,cisterna_municipal,Puerto Tampico 423,,,,-103.288886,20.607309,coordenada_exacta,El Morito,98105.0,0.0,False
+CIST054,cisterna_municipal,Ingeniero David Reynoso &amp; José Sauz,,,,-103.308918,20.607891,coordenada_exacta,Alfredo Barba,98123.0,0.0,False
+CIST055,cisterna_municipal,C. Ricardo Flores Magón 1249,,,,-103.289761,20.605976,coordenada_exacta,El Morito,98105.0,0.0,False
+CIST056,cisterna_municipal,Papantla &amp; Puerto Príncipe,,,,-103.287828,20.609496,coordenada_exacta,San Pedrito,98254.0,0.0,False
+CIST057,cisterna_municipal,Mercado Nueva Santa Maria,,,,-103.3779,20.60546,coordenada_exacta,Nueva Santa María,98011.0,0.0,False
+CIST058,cisterna_municipal,Mártires de Río Blanco 227,,,,-103.304757,20.639876,coordenada_exacta,Revolución,98115.0,0.0,False
+CIST059,cisterna_municipal,Jimeno 623,,,,-103.352956,20.61361,coordenada_exacta,Fovissste Miravalle,98156.0,0.0,False
+SIAPA001,cisterna_siapa,Niño Artillero 64,,,,-103.3202837,20.6075846,coordenada_exacta,El Tapatío,98218.0,0.0,False
+SIAPA002,cisterna_siapa,Jesús González Gallo & Gómez Farias,,,,-103.3245296,20.6038774,coordenada_exacta,El Tapatío,98218.0,0.0,False
+SIAPA003,cisterna_siapa,Carrillo Puerto & Miguel Hidalgo,,,,-103.3085936,20.6061931,coordenada_exacta,Jardines del Tapatío,98118.0,0.0,False
+PROP001,propuesta_municipio,Las Fuentes El Tapatío 6,,,,-103.3137163,20.6073212,coordenada_exacta,Lomas del Tapatío,98182.0,0.0,False
+PROP002,propuesta_municipio,Antonio Álvarez Esparza & Calle 9,,,,-103.2629555,20.6007598,coordenada_exacta,Los Puestos,98253.0,0.0,False
+PROP003,propuesta_municipio,Calle Santos Degollado & Calle Matamoros,,,,-103.3125317,20.6349424,coordenada_exacta,Santa María,98133.0,0.0,False
+PROP004,propuesta_municipio,Miramar 39,,,,-103.2971261,20.6120132,coordenada_exacta,Canal 58,98170.0,0.0,False
+PROP005,propuesta_municipio,Privada Clavel & Laurel,,,,-103.3132851,20.6015169,coordenada_exacta,El Órgano,98131.0,0.0,False
+PROP006,propuesta_municipio,Calle Patria & Calle Paseo de las Rosas,,,,-103.3108311,20.6024506,coordenada_exacta,Jardines de San Martin,98119.0,0.0,False
+PROP007,propuesta_municipio,Calle Azalea & Dalia,,,,-103.3120111,20.6037593,coordenada_exacta,Jardines de San Martin,98119.0,0.0,False
+PROP008,propuesta_municipio,José Banales & Calle Mezquite,,,,-103.3463942,20.5889518,coordenada_exacta,Lomas del Cuatro,98089.0,0.0,False
+PROP009,propuesta_municipio,Hilario Reyes 16,,,,-103.2616166,20.5879005,coordenada_exacta,Los Santibáñez,98136.0,0.0,False
+PROP010,propuesta_municipio,Calle Sta Monica 11,,,,-103.3779726,20.6055112,coordenada_exacta,Nueva Santa María,98011.0,0.0,False

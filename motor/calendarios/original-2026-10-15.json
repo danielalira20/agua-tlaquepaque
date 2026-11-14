@@ -1,0 +1,42 @@
+{
+  "version": "original",
+  "vigente_desde": "2026-10-15",
+  "vigente_hasta": "2026-11-03",
+  "fuente": "Portal oficial del SIAPA, rotaciondeserviciosiapa.jalisco.gob.mx, archivo /data/colonias-ajustes.json",
+  "actualizado_por_siapa": "2026-10-16T21:54:02.430Z",
+  "consultado": "2026-11-11",
+  "esquema": {
+    "1": [
+      "miercoles",
+      "viernes",
+      "domingo"
+    ],
+    "2": [
+      "martes",
+      "jueves",
+      "domingo"
+    ],
+    "3": [
+      "miercoles",
+      "sabado"
+    ],
+    "4": [
+      "lunes",
+      "jueves"
+    ],
+    "5": [
+      "martes",
+      "miercoles",
+      "sabado"
+    ],
+    "6": [
+      "lunes",
+      "viernes"
+    ],
+    "7": [
+      "sabado",
+      "domingo"
+    ]
+  },
+  "nota_vigencia": "Vigencia: del arranque del programa hasta la actualizacion del portal."
+}

@@ -20,3 +20,8 @@ node_modules/
 
 # sistema
 .DS_Store
+
+#Contexto 
+context/ 
+CLAUDE.local.md
+.pr-suggestions/

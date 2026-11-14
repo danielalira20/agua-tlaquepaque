@@ -1,0 +1,50 @@
+{
+  "descripcion": "Registro de evidencia propia. Reemplaza a `mediciones` (la encuesta, cancelada en la decision 1). Cada renglon es una pieza de evidencia con su procedencia y su nivel de verificacion; sirve para el contraste, para citar sin inventar y para la tabla de datasets del reporte (Anexos B y E).",
+  "formato": "CSV",
+  "llave": "id",
+  "ubicacion": "datos/evidencia.csv, generado por scripts/genera_evidencia.py",
+  "version": "v2 — decision 1 aprobada: se cancela la encuesta; la evidencia sale del contraste con las cisternas del municipio y de literatura citada, mas el analisis de sensibilidad.",
+  "campos": {
+    "id": "string unico. CIST### cisterna del municipio, SIAPA### cisterna del SIAPA, PROP### ubicacion propuesta, E### literatura, P### prensa",
+    "fuente": "cisternas_municipio | estudio_rubino | imdec | prensa | literatura. `imdec` esta en la decision 1 y todavia no tiene renglones. `literatura` agrupa lo que no es el estudio de Guadalajara (Maputo, OMS, normas, artículos)",
+    "tipo": "ubicacion | valor | cita_textual | contexto",
+    "descripcion": "string: que es, o la cita textual si tipo = cita_textual",
+    "valor": "string, vacio si no aplica. Numerico o cualitativo ('la mitad')",
+    "unidad": "string, vacio si no aplica",
+    "ubicacion_calidad": "solo tipo = ubicacion: coordenada_exacta | centro_de_colonia | sin_ubicar. Es la MISMA regla del baseline del priorizador",
+    "colonia": "string, solo para mostrar",
+    "lon": "float, solo si ubicacion_calidad = coordenada_exacta",
+    "lat": "float, solo si ubicacion_calidad = coordenada_exacta",
+    "archivo": "string: donde esta el dato completo en el repo, si lo hay",
+    "cita": "string en formato APA",
+    "url_o_doi": "string",
+    "arbitrada": "si | no | nd (no determinada) | vacio si el renglon no es un articulo. Si el articulo paso revision por pares. Es DISTINTO de verificacion: una cosa es la revista y otra cuanto se leyo",
+    "verificacion": "fuente_primaria | resumen_oficial | suplemento | solo_resumen | norma | no_verificada (ver 'verificacion' abajo)",
+    "uso": "string: para que se usa en el proyecto, o NO USAR",
+    "fecha_consulta": "YYYY-MM-DD",
+    "nota": "string: limitaciones o tensiones que hay que declarar"
+  },
+  "verificacion": {
+    "fuente_primaria": "se leyo el dato en la fuente original: el archivo del municipio, el texto completo del articulo o de la nota de prensa",
+    "resumen_oficial": "solo se leyo el resumen oficial (PubMed o el editor). Se puede citar lo que el resumen dice literalmente, y nada mas",
+    "suplemento": "solo se leyo el material suplementario del articulo (Supporting Information), no el articulo. Se puede citar lo que el suplemento dice, indicando que es suplemento, y NO cuenta como texto completo",
+    "solo_resumen": "solo se vio un fragmento de busqueda. Hay que abrir la fuente antes de citarlo",
+    "norma": "es una norma o reglamento",
+    "no_verificada": "viene de una fuente secundaria o sin identificar. No se debe citar tal cual"
+  },
+  "reglas": [
+    "No se cita en el reporte nada con verificacion distinta de fuente_primaria, resumen_oficial o suplemento (solo lo que ese resumen o suplemento dice) ni de norma.",
+    "Un renglon con uso que empieza por NO USAR no entra a ningun calculo ni al reporte.",
+    "Las 10 propuestas del municipio (PROP###) no cuentan como cobertura ni entran al baseline.",
+    "La ubicacion_calidad de las cisternas coincide con el baseline del plan: 35 coordenada_exacta, 12 centro_de_colonia, 3 sin_ubicar.",
+    "Las 5 referencias arbitradas que exige el formato del reporte son los articulos con arbitrada = si y verificacion = fuente_primaria. Hoy hay 6: Rubino 2019, Ercumen 2015, Taylor 2018, Wu 2023, Leifels 2025 y Sosa-Moreno 2025. Kumpel y Nelson 2014 y 2016 son arbitradas pero solo con resumen oficial: se pueden citar por lo que dice su resumen."
+  ],
+  "notas": [
+    "El reporte debe decir, en una linea, que se cancelo la encuesta y por que: una encuesta contestada por quien no vive en las colonias delimitadas es peor que ninguna.",
+    "Matsinhe 2014 (VATTEN) NO es arbitrada: la revista dice 'A referee system is not applied in the formal meaning'. Es una fuente cientifica citable, pero no cuenta entre las 5.",
+    "La OMS y las normas son autoridad, no articulos arbitrados.",
+    "Mapa de cisternas del municipio: https://www.google.com/maps/d/viewer?mid=1RDUyGrhgZPHMVaRZDfdnN0RZvI8HL6U. El Ayuntamiento lo publico en su informe del 22-oct (renglon P009).",
+    "Las notas de prensa se leyeron completas en La Crónica de Hoy. La de Milenio sobre las 55 cisternas no se pudo abrir (el sitio bloquea la descarga automatica) y no se cita.",
+    "Kumpel y Nelson 2014 y 2016: se leyo el material suplementario (renglones E021 a E023) pero no los articulos, asi que siguen sin contar como leidos completos. Vaidya et al. 2023 (Urban Water Journal) esta DESCARTADA (decision de Dani, 12-nov): solo de pago, sin suplementario, y nada del reporte depende de ella."
+  ]
+}

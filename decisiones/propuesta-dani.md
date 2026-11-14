@@ -98,82 +98,112 @@ Esto **quita** trabajo, no lo agrega:
 
 ---
 
-## Decisión 2 · `estado.schema.json`: el enum y el umbral
+## Decisión 2 · `estado.schema.json`: la unidad de análisis, el enum y el umbral
 
-### El problema del enum que tenemos hoy
+### Lo que cambió desde la primera versión de esta propuesta
 
-El enum del plan v2 es `segura | agua_guardada_desinfectar | sin_agua | fuente_riesgosa`.
-Tiene dos defectos que van a estorbar:
+Al validar la geometría se descubrió que los campos derivados `litros_almacen_est` y
+`horas_autonomia_50Lpd` estaban calculados **agregando toda la manzana**: sumaban el
+almacenamiento y lo dividían entre la población total. Eso supone que **el agua se
+comparte entre viviendas**, y contradice la tesis del proyecto.
 
-**Defecto 1: mezcla tres ejes distintos en una sola lista.** `sin_agua` habla de
-cantidad, `agua_guardada_desinfectar` habla de calidad, y `fuente_riesgosa` habla de
-conducta. Una manzana puede estar sin agua **y** con gente yendo a otra fuente al
-mismo tiempo. Un enum plano obliga a inventar una prioridad entre categorías que no
-compiten entre sí.
+El efecto era visible: una manzana con 29 tinacos y 22 cisternas para 113 personas
+salía con 602 horas de autonomía, es decir 25 días. Ninguna vivienda de esa manzana
+aguanta 25 días.
 
-**Defecto 2, y este es el serio: `fuente_riesgosa` afirma algo que no podemos
-sostener.** Nosotros no sabemos a dónde va la gente cuando no le llega el agua. Lo
-estamos infiriendo. Si un jurado pregunta "¿cómo saben que recurren a una fuente
-riesgosa?", la respuesta honesta es "no lo sabemos, lo suponemos". Ese es un hoyo
-innecesario, porque el dato que **sí** tenemos es igual de fuerte.
+**La corrección no debilita la tesis: la aplica.** Pero cambia la unidad de análisis,
+y por eso esta decisión se replantea.
 
-### Opciones
+### La unidad pasa de la manzana al estrato de vivienda
 
-**Opción A — dejar el enum del v2.** Rápido, pero cargamos con los dos defectos.
+Una manzana **no tiene una autonomía**: tiene una **composición**.
 
-**Opción B — dos campos ortogonales** (`tiene_agua` y `calidad`). Correcto
-conceptualmente, pero obliga a Migue a pintar dos dimensiones en un mapa, y en una
-demo de 15 minutos dos dimensiones se leen peor que una.
+| Estrato | Litros disponibles |
+|---|---|
+| Con tinaco y cisterna | capacidad de ambos |
+| Solo tinaco | capacidad del tinaco |
+| Solo cisterna | capacidad de la cisterna |
+| **Sin almacenamiento** | **cero: se queda sin agua al momento del corte** |
 
-**Opción C (recomendada) — una escalera de severidad con precedencia explícita, y
-los números crudos conservados en campos aparte.** Migue pinta un color por manzana,
-nadie pierde información, y ningún nombre afirma lo que no podemos probar.
+Como el Censo no cruza tinaco con cisterna, **el tamaño de cada estrato solo se
+conoce en rango**. Si `V` son las viviendas, `T` las que tienen tinaco y `C` las que
+tienen cisterna, las que tienen ambos están en el intervalo
+`[max(0, T+C−V), min(T, C)]`. De ahí salen todas las cotas min y max.
+
+La salida por manzana deja de ser un número de horas y pasa a ser
+**qué proporción de sus viviendas se queda sin agua en cada día del ciclo.**
+
+Esto **mejora** el proyecto por tres razones:
+
+1. Un promedio por manzana esconde justo la desigualdad que el proyecto denuncia.
+   Mantenerlo sería cometer en nuestro modelo el mismo error que le criticamos a la
+   ciudad.
+2. La salida se vuelve operativa. *"En esta manzana, 12 de 30 viviendas se quedan sin
+   agua el miércoles"* es una instrucción para un coordinador de pipas. *"Esta manzana
+   tiene 14 horas de autonomía"* no lo es.
+3. Hace más preciso el priorizador: una pipa entrega 200 L a unos 50 hogares. Ahora
+   se sabe **cuáles**.
+
+### El enum se simplifica solo
+
+En la versión anterior propuse una escalera de cuatro niveles con
+`sin_agua_sin_respaldo`, para evitar que el nombre de una categoría contuviera una
+hipótesis. **Con proporciones, ese estado ya no hace falta:** una manzana donde
+nadie tiene dónde guardar simplemente aparece con 100% sin agua desde el primer día.
+La proporción *es* la información.
+
+Y se resuelve también el defecto de mezclar ejes distintos en una sola lista:
 
 ```
-estado  (se asigna el peor que aplique, en este orden)
+estado  (ordinal, derivado de pct_sin_agua_min, solo para el color del mapa)
+   con_agua              menos de 10% de viviendas sin agua
+   quiebre_parcial       entre 10% y 50%
+   quiebre_mayoritario   más de 50%
 
-  1. sin_agua_sin_respaldo   se le acabó el almacenamiento Y la mayoría de las
-                             viviendas de la manzana no tiene dónde guardar
-  2. sin_agua                se le acabó antes del siguiente turno
-  3. agua_guardada           tiene agua, pero lleva más de U horas almacenada
-  4. con_agua                recibió agua hace poco
+requiere_desinfeccion   (booleano, eje INDEPENDIENTE)
+   hay agua, pero lleva más de U horas almacenada
 ```
 
-Campos que acompañan y que conservan todo lo demás:
-`horas_restantes`, `horas_guardada`, `rango_autonomia` (`<12h` / `12-48h` / `>48h`),
-`pct_sin_almacen_min`, `pct_sin_almacen_max`, `severidad`.
-
-**Por qué `sin_agua_sin_respaldo` es mejor que `fuente_riesgosa`:** dice exactamente
-lo que el Censo nos permite afirmar — que no tienen dónde guardar — y deja la
-inferencia sobre a dónde van para el texto del reporte, donde puede ir acompañada de
-la literatura y del contraste con las cisternas. El nombre de una categoría no debe contener una
-hipótesis.
+Cantidad y calidad dejan de competir por el mismo campo. El mapa colorea por
+`pct_sin_agua` en escala continua; el enum es la leyenda, no el dato.
 
 ### El umbral U
 
-Es el número que define cuándo el agua pasa de `con_agua` a `agua_guardada`.
+Sin cambios: **U = 48 horas, como parámetro de configuración**, con sensibilidad
+reportada a 24, 48 y 72. Los tres anclajes ya están verificados en su fuente
+primaria (ver `verificacion-citas.md`):
 
-| Anclaje | Qué dice | Estado |
+| Anclaje | Qué aporta |
+|---|---|
+| Estudio de Guadalajara, 51 casas | Remidieron cloro a las **120 horas**. La mitad de los tinacos de azotea excedió el límite de coliformes, y solo 35% de las casas tenía cloro dentro de norma |
+| Matsinhe, Juízo y Persson, VATTEN 2014 (Maputo) | Caída de ~60% del cloro durante almacenamiento, y **tiempos de retención reales de 0.4 a 6.3 días** en tinacos domésticos. Esto es lo que sostiene U = 48 h |
+| NOM-127-SSA1-2021 | Cloro residual libre entre 0.2 y 1.5 mg/L |
+
+> La cifra de Maputo que traíamos antes (85% en 2 a 3 días) era incorrecta. El
+> valor real es 60%, y el artículo no asocia la caída a ningún plazo. Lo que sí
+> sostiene el umbral son los tiempos de retención, no el porcentaje.
+
+### ⚠️ Hallazgo del fixture: el supuesto de consumo pesa más de lo que creíamos
+
+Al generar el fixture con datos reales salió algo que cambia prioridades:
+
+**Con 50 L por persona al día, un tinaco de 1,100 litros dura unas 142 horas** para
+un hogar de 3.7 ocupantes. Eso es más que el intervalo máximo del ciclo (72 horas).
+Es decir: **bajo ese supuesto, ninguna vivienda con tinaco se queda sin agua, y todo
+el problema se concentra en el estrato sin almacenamiento.**
+
+Pero el supuesto es frágil:
+
+| Consumo | Autonomía de un tinaco | ¿Falla dentro del ciclo? |
 |---|---|---|
-| Estudio de Guadalajara (51 casas) | Remidieron cloro a las **120 horas** | Citable, con enlace |
-| Estudio de Maputo | Caída de hasta 85% del cloro en **2 a 3 días** | ⚠️ **sin verificar** |
-| NOM-127-SSA1-2021 | Cloro residual libre entre 0.2 y 1.5 mg/L | Norma mexicana, citable |
+| 50 L/persona/día | ≈ 142 h | No |
+| 100 L/persona/día | ≈ 71 h | Apenas, al tercer día |
+| 150 L/persona/día | ≈ 47 h | Sí, desde el segundo día |
 
-**Recomendación: U = 48 horas, como parámetro de configuración, no como número
-escrito en el código.** Y reportar sensibilidad a 24, 48 y 72 horas.
-
-Razones: 120 horas es más largo que casi cualquier intervalo de tandeo, así que casi
-ninguna manzana se marcaría y el estado sería inútil. 48 horas cae dentro del rango
-de Maputo y es menor al intervalo típico de 3 días, así que discrimina. Y si la cita
-de Maputo no se confirma, 48 sigue siendo defendible como supuesto declarado con
-análisis de sensibilidad, que es exactamente lo que el kit pide cuando algo es
-estimado.
-
-> **Requisito de implementación:** U vive en un archivo de configuración. Si está
-> escrito dentro del código, el análisis de sensibilidad se vuelve tres reescrituras
-> en lugar de un ciclo, y el jueves no va a haber tiempo.
-
----
+**El análisis de sensibilidad sobre el consumo no es un trámite: decide quién
+aparece en el mapa.** A 50 L el mensaje es "el problema es de quien no tiene dónde
+guardar"; a 150 L es "el problema alcanza también a quien sí tiene". Las dos
+lecturas son defendibles y hay que presentar ambas, no escoger la que convenga.
 
 ## Decisión 3 · `dia_ciclo` contra hora
 
@@ -265,7 +295,7 @@ asignacion_pipas = [{
   colonia,
   cvegeo_centro,                  manzana donde se estaciona
   manzanas_cubiertas: [cvegeo],   las que quedan dentro del radio
-  viviendas_objetivo,
+  viviendas_objetivo,              las que estan sin agua ese dia, no el total
   litros,
   viajes,
   personas_beneficiadas,
@@ -416,7 +446,7 @@ que se cambia un contrato, nunca después.**
 | # | Decisión | Propuesta |
 |---|---|---|
 | 1 | Evidencia propia | **Se cancela la encuesta.** En su lugar: contraste contra las 60 cisternas ya colocadas y análisis de sensibilidad. `mediciones` pasa a ser `evidencia` |
-| 2 | Enum de estado | Escalera de 4 niveles con `sin_agua_sin_respaldo` en vez de `fuente_riesgosa`. U = 48 h como configuración, con sensibilidad |
+| 2 | Unidad y enum de estado | **La unidad pasa de la manzana al estrato de vivienda.** El enum se reduce a un ordinal de 3 niveles sobre `pct_sin_agua`, más `requiere_desinfeccion` como eje aparte. U = 48 h como configuración |
 | 3 | Granularidad | Día en el contrato y la interfaz, horas en el cálculo interno. Campo opcional de hora para el futuro |
 | 4 | Salida del plan | Punto de entrega como unidad de decisión, manzanas cubiertas como justificación. **Baseline observado: las 60 cisternas actuales.** Agregar `propuesta_cisternas` |
 

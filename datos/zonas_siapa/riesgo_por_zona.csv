@@ -1,0 +1,25 @@
+nivel,zona,manzanas,pob,viviendas,sin_almacen_min,sin_almacen_max,grupo,respaldo
+zona,3,871,109628,29827.0,1894,5224,,
+zona,"3,4",111,13250,3999.0,9,112,,
+zona,"3,5",29,3020,818.0,314,416,,
+zona,4,1022,121418,30333.0,2468,6859,,
+zona,"4,6",14,701,174.0,93,119,,
+zona,5,933,107834,27830.0,5573,10315,,
+zona,"5,6",193,24940,5922.0,415,1580,,
+zona,6,588,81403,24503.0,6654,9804,,
+grupo,,43,3721,992.0,407,535,mixtas,
+grupo,,2004,244296,64159.0,4371,12195,zonas 3-4,
+grupo,,1714,214177,58255.0,12642,21699,zonas 5-6,
+zona_respaldo,3,726,90916,24443.0,1844,4520,,lista
+zona_respaldo,3,145,18712,5384.0,50,704,,solo_portal
+zona_respaldo,"3,4",111,13250,3999.0,9,112,,lista
+zona_respaldo,"3,5",29,3020,818.0,314,416,,solo_portal
+zona_respaldo,4,746,88864,21661.0,1933,5542,,lista
+zona_respaldo,4,276,32554,8672.0,535,1317,,solo_portal
+zona_respaldo,"4,6",14,701,174.0,93,119,,lista
+zona_respaldo,5,799,92171,23682.0,5197,9438,,lista
+zona_respaldo,5,134,15663,4148.0,376,877,,solo_portal
+zona_respaldo,"5,6",174,23043,5460.0,379,1448,,lista
+zona_respaldo,"5,6",19,1897,462.0,36,132,,solo_portal
+zona_respaldo,6,396,59166,17417.0,5023,6920,,lista
+zona_respaldo,6,192,22237,7086.0,1631,2884,,solo_portal

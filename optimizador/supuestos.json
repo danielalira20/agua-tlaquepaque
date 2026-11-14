@@ -1,0 +1,42 @@
+{
+  "_nota": "Parametros del priorizador. La fuente o el razonamiento de cada valor esta en README.md (tabla de supuestos) o en docs/decisiones/. Si cambia un valor aqui, cambia en todas las implementaciones.",
+  "pipas": 32,
+  "litros_por_viaje": 10000,
+  "litros_por_hogar": 200,
+  "viajes_por_dia": 63,
+  "radio_cobertura_m": 300,
+  "cota_para_ordenar": "min",
+  "modo_racha": "desempate",
+  "baseline_cisternas": "todas",
+  "baseline_turnos": "todas",
+  "costo_viaje_mxn": 1200,
+  "sensibilidad": {
+    "radio_cobertura_m": [
+      200,
+      300,
+      500
+    ],
+    "cota_para_ordenar": [
+      "min",
+      "max"
+    ],
+    "modo_racha": [
+      "desempate",
+      "peso",
+      "no"
+    ],
+    "baseline_cisternas": [
+      "todas",
+      "exactas"
+    ],
+    "baseline_turnos": [
+      "todas",
+      "con_necesidad"
+    ],
+    "costo_viaje_mxn": [
+      700,
+      1200,
+      2000
+    ]
+  }
+}
