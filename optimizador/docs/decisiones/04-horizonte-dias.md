@@ -1,6 +1,6 @@
 # 04 · Horizonte: día por día con racha
 
-Estado: Propuesta
+Estado: Aceptada
 
 ## Contexto
 
