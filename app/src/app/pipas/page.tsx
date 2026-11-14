@@ -49,17 +49,17 @@ export default function Pipas() {
   const dia = (regla: string, c: string) => d.plan.corridas.find((x: any) => x.regla === regla && x.cota_para_ordenar === c).fechas.find((x: any) => x.fecha === fecha).resumen;
 
   return (
-    <div className="grid h-[calc(100vh-3.5rem)] grid-cols-[1fr_27rem]">
-      <div className="relative">
+    <div className="md:grid md:h-[calc(100vh-3.5rem)] md:grid-cols-[1fr_27rem]">
+      <div className="relative z-0 h-[50vh] md:h-auto">
         <HexMap celdas={res.celdas} puntos={puntos} tresD={false} resaltar={resaltar} seleccion={sel} onSeleccion={setSel} />
-        <div className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-xs shadow">Resaltados: hexágonos con pipa hoy · <span className="text-slate-900">●</span> punto de pipa · <span className="text-orange-500">●</span> cisterna</div>
+        <div className="absolute left-2 right-12 top-2 rounded-xl bg-white px-3 py-1 text-xs shadow md:left-4 md:right-auto md:top-4 md:rounded-full">Resaltados: hexágonos con pipa hoy · <span className="text-slate-900">●</span> punto de pipa · <span className="text-orange-500">●</span> cisterna</div>
       </div>
-      <aside className="overflow-y-auto border-l bg-white p-5">
+      <aside className="border-t bg-white p-4 md:overflow-y-auto md:border-l md:border-t-0 md:p-5">
         <div className="flex items-center justify-between"><div className="text-xs font-semibold uppercase tracking-wider text-blue-700">Operador de pipas</div><Badge tipo="estimado" /></div>
         <div className="text-lg font-bold capitalize">{fechaLarga(fecha)}</div>
         <div className="mt-3"><SelectorFecha cal={cal} fecha={fecha} onFecha={setFecha} /></div>
         <div className="mt-3 flex rounded-full bg-slate-100 p-1 text-xs">
-          {(["min", "max"] as const).map((c) => <button key={c} onClick={() => setCota(c)} className={`flex-1 rounded-full py-1 font-medium ${cota === c ? "bg-white shadow" : ""}`}>Ordenar por cota {c === "min" ? "mínima" : "máxima"}</button>)}
+          {(["min", "max"] as const).map((c) => <button key={c} onClick={() => setCota(c)} className={`flex-1 rounded-full py-2 font-medium md:py-1 ${cota === c ? "bg-white shadow" : ""}`}>Ordenar por cota {c === "min" ? "mínima" : "máxima"}</button>)}
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
