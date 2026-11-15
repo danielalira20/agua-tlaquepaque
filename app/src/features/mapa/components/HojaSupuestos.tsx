@@ -1,8 +1,8 @@
 import type { SupuestosMotor } from "@/lib/motor";
 import { Supuestos, diasTinaco } from "@/components/Controles";
-import { Hoja, LetraChica } from "@/ui";
+import { Hoja, Aclaraciones } from "@/ui";
 
-/** Los supuestos que mueven el mapa, y la letra chica de la pantalla. */
+/** Los supuestos que mueven el mapa, y los avisos para leer el mapa. */
 export function HojaSupuestos({ abierta, onCerrar, s, onCambio, cambiado, onRestablecer, advertencias }: {
   abierta: boolean; onCerrar: () => void; s: SupuestosMotor; onCambio: (s: SupuestosMotor) => void;
   cambiado: boolean; onRestablecer: () => void; advertencias: string[];
@@ -17,9 +17,9 @@ export function HojaSupuestos({ abierta, onCerrar, s, onCambio, cambiado, onRest
       <div className="mt-4 rounded-2xl bg-white p-4 shadow-suave"><Supuestos s={s} onChange={onCambio} /></div>
       <p className="mt-3 text-xs leading-relaxed text-tinta-suave">Con 6 días o más, el orden de las manzanas es casi el del caso base; con menos de 4 cambia bastante. El caso base (50 L por persona, tinaco de 1,100 L) es el más cómodo.</p>
       {cambiado && <button type="button" onClick={onRestablecer} className="mt-3 min-h-10 rounded-full bg-agua-600 px-4 text-sm font-semibold text-white">Volver al caso base</button>}
-      <LetraChica className="mt-5" lista={advertencias}>
+      <Aclaraciones className="mt-5" titulo="Qué tener en cuenta al leer el mapa" resumen={`${advertencias.length} avisos`} lista={advertencias}>
         <p>Cada hexágono agrupa las manzanas reales que caen en él (H3, resolución 8).</p>
-      </LetraChica>
+      </Aclaraciones>
     </Hoja>
   );
 }

@@ -1,4 +1,4 @@
-// Real / Estimado / Simulado: un punto y una palabra. La explicación vive en la Letra chica.
+// Real / Estimado / Simulado: un punto y una palabra. La explicación vive en el desplegable de cada pantalla.
 export type TipoDato = "real" | "estimado" | "simulado";
 const ESTILO: Record<TipoDato, { punto: string; texto: string; titulo: string }> = {
   real: { punto: "bg-emerald-500", texto: "Dato real", titulo: "Sale de una fuente oficial (Censo, SIAPA, CONAPO, municipio)" },

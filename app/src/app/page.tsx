@@ -1,8 +1,8 @@
-// Inicio: ¿qué quieres saber? Un héroe, tres puertas y tres cifras. Lo demás, en la letra chica.
+// Inicio: ¿qué quieres saber? Un héroe, tres puertas y tres cifras. Lo demás, en un desplegable al final.
 import PanalHero from "@/components/PanalHero";
 import { Puertas } from "@/features/inicio/components/Puertas";
 import { CifrasClave } from "@/features/inicio/components/CifrasClave";
-import { Antetitulo, IconoGota, IconoMapa, IconoPipa, LetraChica } from "@/ui";
+import { Antetitulo, IconoGota, IconoMapa, IconoPipa, Aclaraciones } from "@/ui";
 
 const PASOS = [
   { Icono: IconoGota, t: "Medimos", d: "Quién tiene tinaco, cisterna o nada, manzana por manzana." },
@@ -39,11 +39,11 @@ export default function Inicio() {
         ))}
       </section>
 
-      <LetraChica className="mt-10">
+      <Aclaraciones className="mt-10" titulo="¿Qué tan firmes son estos números?" resumen="límites y etiquetas">
         <p>Un día de racionamiento se modela como cero agua: es la cota alta del daño (el SIAPA dice que es baja de presión). El 16 % de la población tiene zona solo por el polígono del portal. El Censo es de 2020 y no dice de cuántos litros son los tinacos. El calendario del SIAPA ya cambió una vez y puede volver a cambiar.</p>
         <p>Por eso todo número va como rango y cada uno lleva su etiqueta: <b>Dato real</b> (fuente oficial), <b>Estimado</b> (lo calcula el modelo) o <b>Simulado</b> (maqueta).</p>
         <p className="text-xs">Hackathon Jalisco Internacional 2026 · Reto 01 Ciudades inteligentes.</p>
-      </LetraChica>
+      </Aclaraciones>
     </main>
   );
 }

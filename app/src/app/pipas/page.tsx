@@ -1,5 +1,5 @@
 "use client";
-// Plan de pipas: ¿a dónde mando las pipas hoy? Paradas del día, una comparación en una imagen y los límites en letra chica.
+// Plan de pipas: ¿a dónde mando las pipas hoy? Paradas del día, una comparación en una imagen y los límites del plan en un desplegable.
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { latLngToCell } from "h3-js";
