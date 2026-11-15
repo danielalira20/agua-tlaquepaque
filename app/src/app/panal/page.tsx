@@ -1,11 +1,11 @@
 "use client";
 // Mapa de hoy: ¿quién se queda sin agua hoy? Un héroe (la tarjeta del día), el mapa y el detalle detrás de un toque.
 import dynamic from "next/dynamic";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useReal, calcular } from "@/lib/real";
 import type { SupuestosMotor } from "@/lib/motor";
 import { puntosCisternas } from "@/components/HexMap";
-import { BotonPildora, Cargando, Consejo, IconoAjustes, IconoCapas } from "@/ui";
+import { BotonPildora, Cargando, ETAPAS_MAPA, Consejo, IconoAjustes, IconoCapas } from "@/ui";
 import { nivelesSemana, riesgoZonas56 } from "@/features/mapa/calculos";
 import { TarjetaHoy } from "@/features/mapa/components/TarjetaHoy";
 import { Leyenda } from "@/features/mapa/components/Leyenda";
@@ -13,7 +13,7 @@ import { MenuCapas, type Capas } from "@/features/mapa/components/MenuCapas";
 import { HojaSupuestos } from "@/features/mapa/components/HojaSupuestos";
 import { HojaHexagono } from "@/features/mapa/components/HojaHexagono";
 
-const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loading: () => <Cargando texto="Cargando el mapa…" /> });
+const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loading: () => <Cargando etapas={ETAPAS_MAPA} etapa={2} sinMascota /> });
 
 export default function MapaDeHoy() {
   const d = useReal();
@@ -26,11 +26,15 @@ export default function MapaDeHoy() {
   const [verAjustes, setVerAjustes] = useState(false);
   const [consejo, setConsejo] = useState(true); // el consejo de la mascota se va al cerrarlo o al tocar un hexágono
 
+  // Se deja pintar la etapa «Calculando» antes del cálculo, que bloquea la pantalla un momento.
+  const [listo, setListo] = useState(!!d);
+  useEffect(() => { if (!d) return; const t = setTimeout(() => setListo(true), 60); return () => clearTimeout(t); }, [d]);
+
   const sup = s ?? d?.meta.supuestos ?? null;
   const cal = d?.calendarios[capas.version];
-  const res = useMemo(() => (d && cal && sup ? calcular(d, cal, fecha, sup) : null), [d, cal, fecha, sup]);
-  const dias = useMemo(() => (d && cal && sup ? nivelesSemana(d, cal, sup) : []), [d, cal, sup]);
-  const z56 = useMemo(() => (d ? riesgoZonas56(d) : null), [d]);
+  const res = useMemo(() => (d && listo && cal && sup ? calcular(d, cal, fecha, sup) : null), [d, listo, cal, fecha, sup]);
+  const dias = useMemo(() => (d && listo && cal && sup ? nivelesSemana(d, cal, sup) : []), [d, listo, cal, sup]);
+  const z56 = useMemo(() => (d && listo ? riesgoZonas56(d) : null), [d, listo]);
   const nNucleo = useMemo(() => d?.manzanas.filter((m) => m.nucleo_robusto).length ?? 0, [d]);
   const resaltar = useMemo(() => (capas.nucleo && res ? new Set(res.celdas.filter((c) => c.nucleo > 0).map((c) => c.h3)) : undefined), [capas.nucleo, res]);
   const puntos = useMemo(() => (d && capas.cisternas ? puntosCisternas(d.cisternas, capas.propuestas) : []), [d, capas.cisternas, capas.propuestas]);
@@ -38,7 +42,7 @@ export default function MapaDeHoy() {
   const cerrarCapas = useCallback(() => setVerCapas(false), []);
   const cerrarAjustes = useCallback(() => setVerAjustes(false), []);
 
-  if (!d || !cal || !sup || !res) return <Cargando />;
+  if (!d || !cal || !sup || !res) return <Cargando etapas={ETAPAS_MAPA} etapa={d ? 1 : 0} />;
   const dia = cal.dias.find((x) => x.fecha === fecha);
   const nCisternas = d.cisternas.filter((c) => c.tipo !== "propuesta_municipio").length;
 
