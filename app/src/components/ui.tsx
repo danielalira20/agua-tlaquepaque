@@ -19,13 +19,13 @@ const rutas = [
 export function Nav() {
   const p = usePathname();
   return (
-    <header className="flex h-14 items-center gap-6 border-b border-slate-200 bg-white px-5">
-      <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-slate-900">
-        <Hex className="h-6 w-6 text-blue-600" /> Aguanta
+    <header className="flex h-14 items-center gap-2 border-b border-slate-200 bg-white px-3 sm:gap-6 sm:px-5">
+      <Link href="/" aria-label="Aguanta, inicio" className="flex shrink-0 items-center gap-2 font-bold text-xl tracking-tight text-slate-900">
+        <Hex className="h-6 w-6 text-blue-600" /> <span className="hidden sm:inline">Aguanta</span>
       </Link>
-      <nav className="flex gap-1">
+      <nav className="flex min-w-0 gap-0.5 overflow-x-auto sm:gap-1">
         {rutas.map(([href, t]) => (
-          <Link key={href} href={href} className={`rounded-full px-4 py-1.5 text-sm font-medium ${p === href ? "bg-blue-600 text-white" : "text-slate-700 hover:bg-slate-100"}`}>{t}</Link>
+          <Link key={href} href={href} className={`whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium sm:px-4 sm:py-1.5 ${p === href ? "bg-blue-600 text-white" : "text-slate-700 hover:bg-slate-100"}`}>{t}</Link>
         ))}
       </nav>
       <span className="ml-auto hidden text-sm text-slate-500 md:block">¿Cuánto aguanta tu casa?</span>
