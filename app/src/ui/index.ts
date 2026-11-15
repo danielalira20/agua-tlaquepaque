@@ -1,0 +1,8 @@
+export { Tarjeta, Antetitulo, BotonPildora } from "./Tarjeta";
+export { Info } from "./Info";
+export { BarraRango, textoRango } from "./BarraRango";
+export { Etiqueta, type TipoDato } from "./Etiqueta";
+export { LetraChica } from "./LetraChica";
+export { Gota, SemanaGotas, type DiaGota } from "./SemanaGotas";
+export { Hoja } from "./Hoja";
+export * from "./Iconos";
