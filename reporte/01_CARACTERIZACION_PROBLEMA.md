@@ -1,11 +1,11 @@
 # 1. Introducción y Caracterización del Problema
 *(Texto para las Secciones 1.1 y 1.2 del Formato Oficial de Reporte Científico de SOLACYT)*
-*Extensión controlada: ~420 palabras.*
+*Extensión: 496 palabras (contadas el 14-nov, sin este encabezado).*
 
 ---
 
 ### 1.1 Justificación: La Trampa del Tubo
-En el Área Metropolitana de Guadalajara (ZMG), la gestión del agua potable enfrenta un déficit estructural recurrente durante los periodos de estiaje. Ante la insuficiencia en fuentes de abastecimiento y fallas en la Planta Potabilizadora Miravalle, el Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) aplica programas de rotación del suministro. Aunque oficialmente se anuncian como esquemas de "baja de presión", en la práctica operativa y en los sectores desfavorables de la red se traducen en periodos de dos a cuatro días continuos sin agua en la llave.
+Desde el 15 de octubre de 2026, el Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA) aplica en el Área Metropolitana de Guadalajara (ZMG) un programa de rotación del servicio en 627 colonias, agrupadas en siete zonas que abastecen los acueductos de la Planta Potabilizadora No. 1 de Miravalle (alrededor del 42% de su cobertura; El Informador, 5-nov-2026). Con el calendario vigente desde el 4 de noviembre, las zonas de Tlaquepaque tienen de tres a cuatro días seguidos de racionamiento por semana. El SIAPA lo describe como baja de presión, no como corte total, y advierte que las colonias más alejadas o más altas tardan más en recuperar el servicio. Cuánta agua llega en esos días no está medido: el modelo supone, como peor caso, que no llega nada, y en la sensibilidad deja llegar hasta la mitad.
 
 No obstante, las políticas públicas y los índices oficiales evalúan el acceso al agua mediante una métrica de infraestructura estática: la conexión física a la red pública entubada. En San Pedro Tlaquepaque, el Consejo Nacional de Población (CONAPO, 2020) clasifica al municipio con marginación "Muy Baja" y reporta que solo el 0.57% de los ocupantes carece de agua entubada (indicador OVSAE). Esta premisa asume que contar con tubería garantiza la disponibilidad del recurso. Sin embargo, bajo un régimen de suministro intermitente, la tubería no abastece en los periodos de corte; la disponibilidad efectiva del agua depende exclusivamente de la capacidad de almacenamiento doméstico (tinacos y cisternas).
 

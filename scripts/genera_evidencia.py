@@ -392,6 +392,17 @@ def literatura_y_prensa():
              verificacion="solo_resumen", fecha_consulta="2026-11-14", uso="Confirma que TlaqueChat existe (/mi-casa)",
              nota="Visto en el resultado de búsqueda, falta leer la nota completa. Número citado: 33 2804 8171 (una nota trae 2805, parece errata). "
                   "Confirmar con el sitio oficial del municipio."),
+        fila(id="P018", fuente="prensa", tipo="contexto",
+             descripcion="Las 627 colonias del esquema de tandeos actualizado del SIAPA forman parte de siete zonas abastecidas por los "
+                         "acueductos de la Planta Potabilizadora número 1 de Miravalle, que suministra el agua de alrededor del 42% de la "
+                         "zona de cobertura del SIAPA",
+             valor="627", unidad="colonias", cita="Hernández, M. (2026, 5 de noviembre). Conoce el nuevo esquema de tandeos en la ZMG; "
+                                                  "revisa qué días te quedarás sin agua. El Informador.",
+             url_o_doi="https://www.informador.mx/jalisco/siapa-modifica-calendario-de-tandeos-lista-completa-de-las-627-colonias-de-la-zmg-con-rotacion-del-servicio-6-zonas-aumentan-dias-sin-agua-20261104-0202.html",
+             verificacion=fp, fecha_consulta="2026-11-14", uso="Contexto de la sección 1.1 (Planta Miravalle, 627 colonias, 42%)",
+             nota="Nota completa leída. Programa desde el 15 de octubre; calendario actualizado el 4 de noviembre, igual al de "
+                  "motor/calendarios/vigente-2026-11-03.json. Cita a Ismael Jáuregui: la recuperación de presión varía con la distancia "
+                  "y la topografía de cada colonia. La nota usa 'suspende' para los días de rotación; el SIAPA lo describe como baja de presión."),
     ]
 
 

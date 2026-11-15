@@ -53,3 +53,20 @@ Resultado el 14-nov: **59 pruebas, OK** (42 de `test_referencia.py` + las de sen
    a `fuente_primaria`, o quitar el número y dejar solo "TlaqueChat, el WhatsApp del ayuntamiento".
    Que TlaqueChat **existe** sí está respaldado: la nota del 15-oct, leída completa, lo menciona.
 3. **Cloro:** contrastar la dosis del CDC con una guía de la Secretaría de Salud (lo dice la nota de S001).
+
+
+---
+
+# Segunda ronda (noche del 14-nov), 
+
+| # | Corrección | Qué se hizo |
+|---|---|---|
+| a | Anexo B decía que la equivalencia del Dataset 01 "se consultó con el comité de SOLACYT". No hay constancia (`auditoria/auditoria-kit.md`: "Falta preguntar a SOLACYT") | Ya no menciona al comité. La salvedad explica, en términos técnicos, que se usó el producto "Principales resultados por AGEB y manzana urbana" del mismo Censo 2020, con las mismas variables de vivienda y más resolución. La nota 1 del anexo también se corrigió: decía que el respaldo era el "Dataset 02 (Marco Geoestadístico)", pero el #02 del catálogo es el CNGMD 2023 y aún no está en el repo. Ahora dice que se usan el #01 y el #17, y que el #02 se revisó pero no se incorporó |
+| b | Sección 1.1 decía "dos a cuatro días continuos sin agua en la llave" | Reescrita: con el calendario vigente las zonas de Tlaquepaque (3 a 6) tienen **tres a cuatro** días seguidos de racionamiento; el SIAPA lo llama baja de presión, no corte total; "sin agua" es el **peor caso del modelo** y la sensibilidad deja llegar hasta la mitad (`f` de 0 a 0.5). Se quitó "fallas en la Planta Miravalle", que ninguna fuente del repo respalda |
+| c | Anexo C hablaba de "dinámica del cloro residual", de "integrar" la NOM-127 y de recomendaciones de la OMS en *Mi Casa* | Ahora dice que el modelo **no simula cloro**: U = 48 h es un parámetro (sensibilidad 24 a 72 h) y la NOM-127 es el marco de referencia. *Mi Casa* cita al **CDC** (S001), no a la OMS. También se precisó Rubino: "la mitad de los tinacos de azotea muestreados excedió coliformes totales", piloto de 51 casas |
+| d | Anexo C presentaba "1.4× y 5.6×" como general | Ahora: es del **escenario base** (`optimizador/resultados/resumen.md`); en las esquinas adversas baja a **1.2×** (cota mínima) y **1.1×** (cota máxima), igual que `optimizador/docs/viabilidad-presupuestal.md` |
+| e | "Planta Miravalle" sin renglón de evidencia | Nuevo renglón **P018** (El Informador, 5-nov-2026, nota completa leída): 627 colonias, siete zonas, Planta Potabilizadora No. 1 de Miravalle, ~42% de la cobertura del SIAPA. Se cita en la sección 1.1 y en el Anexo C |
+| f | La sección 1 decía ~420 palabras y medía 446 | Recontada después de los cambios: **496 palabras**; el encabezado lo dice así |
+
+`datos/evidencia.csv` pasa de 101 a **102 renglones** (fixture: 47), regenerado con `scripts/genera_evidencia.py`.
+Pruebas: **59, OK**. No se tocó ningún contrato.
