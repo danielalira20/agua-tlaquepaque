@@ -39,6 +39,28 @@ export const IconoTelefono = ({ className = "h-5 w-5" }: P) => (
   <svg {...base} className={className}><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" /><path d="M10.5 18h3" /></svg>
 );
 
+export const IconoTinaco = ({ className = "h-5 w-5" }: P) => (
+  <svg {...base} className={className}><path d="M6 9.5c0-2.2 2.7-4 6-4s6 1.8 6 4V18c0 1.1-2.7 2-6 2s-6-.9-6-2z" /><path d="M6 9.5c0 1.1 2.7 2 6 2s6-.9 6-2" /><path d="M12 3v2.5" /><path d="M8.5 20v1.5M15.5 20v1.5" /></svg>
+);
+export const IconoLupa = ({ className = "h-5 w-5" }: P) => (
+  <svg {...base} className={className}><circle cx="10.5" cy="10.5" r="6" /><path d="m15 15 5 5" /></svg>
+);
+export const IconoMas = ({ className = "h-5 w-5" }: P) => (
+  <svg {...base} className={className}><path d="M12 5v14M5 12h14" /></svg>
+);
+export const IconoMenos = ({ className = "h-5 w-5" }: P) => (
+  <svg {...base} className={className}><path d="M5 12h14" /></svg>
+);
+export const IconoAtras = ({ className = "h-5 w-5" }: P) => (
+  <svg {...base} className={className}><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+);
+export const IconoPersona = ({ className = "h-5 w-5" }: P) => (
+  <svg {...base} className={className}><circle cx="12" cy="7.5" r="3.3" /><path d="M5.5 20c.4-3.6 3-5.8 6.5-5.8s6.1 2.2 6.5 5.8" /></svg>
+);
+export const IconoCheck = ({ className = "h-5 w-5" }: P) => (
+  <svg {...base} className={className}><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+);
+
 /** El hexágono de la marca. */
 export const Hex = ({ className = "h-6 w-6", style }: P & { style?: React.CSSProperties }) => (
   <svg viewBox="0 0 24 24" className={className} style={style} fill="currentColor" aria-hidden><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" /></svg>
