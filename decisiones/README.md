@@ -65,7 +65,7 @@ de prensa leídas completas, y 1 sin verificar: el factor 1.5 de decaimiento del
 la hipótesis de la propuesta, que el orden de las manzanas casi no cambia entre los extremos, **no se sostiene** para el orden
 individual de cada manzana (rho de Spearman mediano 0.65 con los rangos de la decisión). Sí se sostienen conclusiones más
 específicas: un núcleo de 186 manzanas que queda entre las 250 más críticas en el 90% de las simulaciones, El Sauz como
-primera colonia en todas, y una ventaja del priorizador de al menos 2.6 veces el baseline. Lo que decide todo es cuántos días
+primera colonia en todas, y una ventaja del priorizador que se sostiene en todos los escenarios probados, aunque su tamaño depende de la cota y del baseline (de 1.1 a 6.4 veces; ver `datos/HALLAZGOS_sensibilidad.md`). Lo que decide todo es cuántos días
 aguanta un tinaco, y eso el Censo no lo dice.
 
 **Lo único que no se puede hacer** sigue siendo lo que dice la propuesta: quitar la encuesta en silencio

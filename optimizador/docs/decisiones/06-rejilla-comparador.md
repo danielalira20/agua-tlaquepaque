@@ -13,7 +13,7 @@ responda tres preguntas:
 2. Si la comparación más conservadora (baseline con necesidad, cota máxima: 1.4 veces) se
    sostiene cuando el motor supone que los tinacos aguantan menos. La sensibilidad del
    motor (`datos/HALLAZGOS_sensibilidad.md`) midió la ventaja solo contra el baseline por
-   turnos (2.6 a 4.9 veces en Monte Carlo); contra el baseline con necesidad no se midió.
+   turnos y con la cota mínima (2.6 a 4.9 veces en Monte Carlo); contra el baseline con necesidad y con la cota máxima no se midió.
 3. A quién llegan los viajes según el grado de marginación de su AGEB. Es la condición de
    la opción A de la decisión abierta 4 del motor (`decisiones/README.md`): la marginación
    no pesa en la prioridad, así que la equidad se mide aparte, con las dos cotas.
