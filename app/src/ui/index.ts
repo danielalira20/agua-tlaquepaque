@@ -6,5 +6,6 @@ export { Aclaraciones } from "./Aclaraciones";
 export { Gota, SemanaGotas, type DiaGota } from "./SemanaGotas";
 export { Hoja } from "./Hoja";
 export * from "./Iconos";
-export { Cargando } from "./Cargando";
+export { Cargando, ETAPAS_MAPA } from "./Cargando";
+export { MascotaChica, Mascota, Consejo } from "./Mascota";
 export { Interruptor, Segmentado } from "./Interruptor";

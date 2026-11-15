@@ -49,6 +49,10 @@ input[type="range"] { accent-color: var(--color-agua-600); }
 /* entrada suave, una sola vez por pantalla */
 @keyframes aparecer { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .aparecer { animation: aparecer 0.5s var(--ease-agua) both; }
+/* Barra de avance de la navegación: indeterminada, para que un clic nunca parezca muerto. */
+@keyframes progreso-nav { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
+.progreso-nav { animation: progreso-nav 1.1s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .progreso-nav { animation: none; transform: none; width: 100%; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }

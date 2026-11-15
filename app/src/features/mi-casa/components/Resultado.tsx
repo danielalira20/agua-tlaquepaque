@@ -3,7 +3,7 @@ import type { Datos } from "@/lib/real";
 import { Antetitulo, Etiqueta, Gota, IconoAjustes, IconoCheck, SemanaGotas, Tarjeta, type DiaGota } from "@/ui";
 import { ETIQUETA_ALMACEN, textoReserva, type Almacen, type ResultadoCasa } from "../calculos";
 import { Acciones } from "./Acciones";
-import { AvisoWhatsApp } from "./AvisoWhatsApp";
+import { Avisos } from "./Avisos";
 import { Tinaco } from "./Tinaco";
 
 function Resumen({ colonia, alm, personas, onEditar }: { colonia: string; alm: Almacen; personas: number; onEditar: (paso: number) => void }) {
@@ -70,8 +70,8 @@ export function Resultado({ d, r, alm, personas, consumo, onEditar, onAjustar, o
         </div>
 
         <div className="space-y-4">
-          <Acciones colonia={r.col.nombre} cisternas={r.cis} />
-          <AvisoWhatsApp r={r} />
+          <Acciones r={r} personas={personas} />
+          <Avisos r={r} consultado={d.calendarios.vigente.consultado} />
         </div>
       </div>
 

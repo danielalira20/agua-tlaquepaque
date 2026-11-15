@@ -2,7 +2,7 @@
 import PanalHero from "@/components/PanalHero";
 import { Puertas } from "@/features/inicio/components/Puertas";
 import { CifrasClave } from "@/features/inicio/components/CifrasClave";
-import { Antetitulo, IconoGota, IconoMapa, IconoPipa, Aclaraciones } from "@/ui";
+import { Antetitulo, IconoGota, IconoMapa, IconoPipa, Mascota, Aclaraciones } from "@/ui";
 
 const PASOS = [
   { Icono: IconoGota, t: "Medimos", d: "Quién tiene tinaco, cisterna o nada, manzana por manzana." },
@@ -21,7 +21,10 @@ export default function Inicio() {
           </h1>
           <p className="mt-4 max-w-xl text-lg text-tinta-suave">Aguanta te dice qué casas se quedan sin agua cada día y a dónde mandar las pipas primero.</p>
         </div>
-        <div className="justify-self-center"><PanalHero /></div>
+        <div className="relative justify-self-center">
+          <PanalHero />
+          <Mascota className="pointer-events-none absolute -bottom-6 -left-14 hidden w-32 md:block lg:-left-20 lg:w-40" />
+        </div>
       </section>
 
       <Puertas />

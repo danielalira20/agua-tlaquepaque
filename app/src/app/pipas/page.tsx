@@ -1,17 +1,17 @@
 "use client";
 // Plan de pipas: ¿a dónde mando las pipas hoy? Paradas del día, una comparación en una imagen y los límites del plan en un desplegable.
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { latLngToCell } from "h3-js";
 import { useReal, calcular, fechaLarga } from "@/lib/real";
 import { puntosCisternas, type Punto, type Rotulo } from "@/components/HexMap";
-import { Antetitulo, Cargando, Etiqueta, Info, SemanaGotas, Segmentado, textoRango } from "@/ui";
+import { Antetitulo, Cargando, ETAPAS_MAPA, Etiqueta, Info, SemanaGotas, Segmentado, textoRango } from "@/ui";
 import { diaDe, paradas, semanaDe, type Cota } from "@/features/pipas/plan";
 import { Comparacion } from "@/features/pipas/components/Comparacion";
 import { ListaParadas } from "@/features/pipas/components/ListaParadas";
 import { Limites } from "@/features/pipas/components/Limites";
 
-const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loading: () => <Cargando texto="Cargando el mapa…" /> });
+const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loading: () => <Cargando etapas={ETAPAS_MAPA} etapa={2} sinMascota /> });
 
 export default function PlanDePipas() {
   const d = useReal();
@@ -20,8 +20,12 @@ export default function PlanDePipas() {
   const [sel, setSel] = useState<string | null>(null);
   const [selN, setSelN] = useState<number | null>(null);
 
+  // Se deja pintar la etapa «Calculando» antes del cálculo, que bloquea la pantalla un momento.
+  const [listo, setListo] = useState(!!d);
+  useEffect(() => { if (!d) return; const t = setTimeout(() => setListo(true), 60); return () => clearTimeout(t); }, [d]);
+
   const cal = d?.calendarios.vigente;
-  const res = useMemo(() => (d && cal ? calcular(d, cal, fecha, d.meta.supuestos) : null), [d, cal, fecha]);
+  const res = useMemo(() => (d && listo && cal ? calcular(d, cal, fecha, d.meta.supuestos) : null), [d, listo, cal, fecha]);
   const hoy = d ? diaDe(d.plan, "priorizado", cota, fecha) : undefined;
   const viajes = useMemo(() => hoy?.viajes ?? [], [hoy]);
   const lista = useMemo(() => paradas(viajes), [viajes]);
@@ -38,7 +42,7 @@ export default function PlanDePipas() {
     return { fecha: x.fecha, dia: x.dia, nivel: (r?.cobertura_pct ?? 0) / 100, nota: r ? `Las pipas llegan al ${r.cobertura_pct.toFixed(0)} % de las casas sin agua` : undefined };
   }) : []), [d, cal, cota]);
 
-  if (!d || !cal || !res || !hoy) return <Cargando />;
+  if (!d || !cal || !res || !hoy) return <Cargando etapas={ETAPAS_MAPA} etapa={d ? 1 : 0} />;
   const at = (regla: "priorizado" | "baseline", c: Cota) => diaDe(d.plan, regla, c, fecha)!.resumen;
   const sMin = semanaDe(d.plan, "min"), sMax = semanaDe(d.plan, "max");
 
