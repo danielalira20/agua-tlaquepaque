@@ -22,7 +22,7 @@ export function MenuCapas({ abierto, onCerrar, capas, onCapas, nCisternas, nNucl
         <Interruptor etiqueta={`Cisternas comunitarias (${nCisternas})`} ayuda="Naranja claro: ubicación aproximada" activo={capas.cisternas} onCambio={(v) => set({ cisternas: v })} muestra={punto("rgb(249,115,22)")} />
         <Interruptor etiqueta="10 cisternas propuestas" ayuda="Las que el municipio planea instalar" activo={capas.propuestas} onCambio={(v) => set({ propuestas: v, cisternas: v || capas.cisternas })} muestra={punto("rgb(168,85,247)")} />
         <Interruptor etiqueta={nNucleo ? `Núcleo robusto (${nNucleo})` : "Núcleo robusto"} activo={capas.nucleo} onCambio={(v) => set({ nucleo: v })} deshabilitado={!nNucleo}
-          ayuda={nNucleo ? "Manzanas entre las 250 más críticas en al menos el 90 % de las simulaciones" : "Pendiente: los datos de la app aún no traen este campo"} muestra={punto("rgb(245,158,11)")} />
+          ayuda={nNucleo ? "Manzanas entre las 250 más críticas en al menos el 90 % de 300 simulaciones con los rangos de supuestos de la decisión 1" : "Pendiente: los datos de la app aún no traen este campo"} muestra={punto("rgb(245,158,11)")} />
       </section>
       <section className="mt-5">
         <h3 className="mb-2 text-sm font-bold">Calendario del SIAPA</h3>
