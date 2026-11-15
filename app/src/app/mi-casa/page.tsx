@@ -90,8 +90,8 @@ export default function MiCasa() {
           <div className="text-sm font-semibold">Si te quedas sin agua</div>
           <ul className="mt-2 space-y-1 text-sm text-slate-700">
             <li>🚰 Cisternas comunitarias en {r.col.nombre}: <b>{r.cis}</b> {r.cis === 0 && <span className="text-slate-500">(revisa la colonia vecina en el Panal)</span>}</li>
-            <li>📱 Pide pipa por TlaqueChat, el WhatsApp del ayuntamiento (33 2804 8171, de 7:00 a 22:00)</li>
-            <li>🧴 Agua guardada más de 2 días: <b>2 gotas de cloro sin aroma por litro (8 por galón) y reposar 30 min</b> antes de beberla o cocinar. <span className="text-xs text-slate-500">Fuente: CDC; con cloro de 8.25 % usa menos, lee la etiqueta.</span></li>
+            <li>📱 Pide pipa por TlaqueChat (WhatsApp del ayuntamiento)</li>
+            <li>🧴 Agua guardada más de 2 días: <b>2 gotas de cloro sin aroma por litro (8 por galón) y reposar 30 min</b> antes de beberla o cocinar. <span className="text-xs text-slate-500">Fuente: CDC, para cloro sin aroma de 5 a 9 %.</span></li>
           </ul>
         </Tarjeta>
 
