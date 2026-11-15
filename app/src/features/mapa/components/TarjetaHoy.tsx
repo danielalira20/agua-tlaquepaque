@@ -12,7 +12,7 @@ export function TarjetaHoy({ fecha, dias, onFecha, r, zonasHoy, z56, uHoras, ori
         <Antetitulo>Mapa de hoy</Antetitulo>
         <Etiqueta tipo="estimado" />
       </div>
-      <h1 className="mt-1 text-2xl font-bold capitalize">{fechaLarga(fecha)}</h1>
+      <h1 className="mt-1 text-2xl font-bold first-letter:uppercase">{fechaLarga(fecha)}</h1>
       <p className="text-sm text-tinta-suave">
         Sin servicio: zonas {zonasHoy}{original && <b className="ml-1 rounded-full bg-barro-100 px-2 py-0.5 text-xs text-barro-700">calendario original</b>}
       </p>

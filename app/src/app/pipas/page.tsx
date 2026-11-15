@@ -56,7 +56,7 @@ export default function PlanDePipas() {
       <aside className="space-y-4 bg-crema p-4 md:overflow-y-auto md:overflow-x-hidden md:border-l md:border-tinta/10 md:p-5">
         <section className="aparecer">
           <div className="flex items-center justify-between"><Antetitulo>Plan de pipas</Antetitulo><Etiqueta tipo="estimado" /></div>
-          <h1 className="mt-1 text-2xl font-bold capitalize">{fechaLarga(fecha)}</h1>
+          <h1 className="mt-1 text-2xl font-bold first-letter:uppercase">{fechaLarga(fecha)}</h1>
           <p className="text-sm text-tinta-suave">{hoy.resumen.viajes_usados} viajes · {lista.length} colonias · casas sin agua en el programa: {textoRango(at("priorizado", "min").necesidad_total, at("priorizado", "max").necesidad_total)}</p>
           <SemanaGotas className="mt-3" dias={gotas} valor={fecha} onCambio={(f) => { setFecha(f); setSel(null); setSelN(null); }} />
           <div className="mt-3 flex items-center gap-2">
