@@ -424,6 +424,14 @@ class TestContratos(unittest.TestCase):
         self.assertTrue(all(len(m["cvegeo"]) == 16 for m in man))
         self.assertFalse(meta["simulado"])
         self.assertEqual(meta["conteos"]["personas_en_programa"], 462194)
+        # nucleo robusto: lo que la app dibuja en la capa "Nucleo robusto" (sale de datos/sensibilidad/manzanas_robustas.csv)
+        self.assertTrue(all(isinstance(m["nucleo_robusto"], bool) for m in man))
+        nucleo = {m["cvegeo"] for m in man if m["nucleo_robusto"]}
+        self.assertEqual(len(nucleo), 186)
+        self.assertEqual(meta["conteos"]["manzanas_nucleo_robusto"], 186)
+        self.assertTrue(all(m["en_programa"] for m in man if m["nucleo_robusto"]))
+        with open(self.RAIZ / "datos" / "sensibilidad" / "manzanas_robustas.csv", newline="", encoding="utf-8") as fh:
+            self.assertEqual(nucleo, {r["cvegeo"] for r in csv.DictReader(fh) if r["nucleo_robusto"] == "True"})
         for f in est["fechas"]:
             for k, v in f.items():
                 if isinstance(v, list):

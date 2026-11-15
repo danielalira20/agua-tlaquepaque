@@ -1,6 +1,6 @@
 # 02 · Cota mínima o máxima para ordenar
 
-Estado: Propuesta
+Estado: Aceptada
 
 ## Contexto
 

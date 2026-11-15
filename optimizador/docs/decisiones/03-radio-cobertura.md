@@ -1,6 +1,6 @@
 # 03 · Radio de cobertura de un punto de entrega
 
-Estado: Propuesta
+Estado: Aceptada
 
 ## Contexto
 

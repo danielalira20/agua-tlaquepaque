@@ -3,7 +3,7 @@
 Carril de Jass (rol B). Decide, para cada fecha, **a dónde mandar los viajes de pipa**
 con los recursos reales del municipio, y mide cuánto mejora eso frente al reparto actual.
 
-**Lo que manda es `ESPECIFICACION.md`** (versión 0.6, borrador). Este README solo orienta.
+**Lo que manda es `ESPECIFICACION.md`** (versión 0.7). Este README solo orienta.
 
 ## Qué lee y qué escribe
 
@@ -70,7 +70,9 @@ van en `resultados/`.
 | `feat/priorizador-baseline` | Baseline estilizado por turnos entre las cisternas | Hecho |
 | `fix/priorizador-centro-fsum` | Centro de colonia con `math.fsum`, igual en cualquier versión de Python | Hecho |
 | `feat/priorizador-comparador` | Rejilla de sensibilidad, escenarios del motor, equidad por grado y tablas en `resultados/` | Hecho |
-| `feat/viabilidad-presupuestal` | Costo de un viaje (decisión 07), costo por vivienda-día en el comparador y `docs/viabilidad-presupuestal.md` | En curso |
+| `feat/viabilidad-presupuestal` | Costo de un viaje (decisión 07), costo por vivienda-día en el comparador y `docs/viabilidad-presupuestal.md` | Hecho |
+| `fix/viabilidad-alcance` | Sección de alcance de la viabilidad (qué se costea y qué no) y la cota de la ventaja en esquinas adversas | Hecho |
+| `docs/reporte-resultados-analisis` | Secciones 4 y 5 del reporte, en `reporte/04_RESULTADOS.md` y `reporte/05_ANALISIS_Y_DISCUSIONES.md` | Hecho |
 
 ## Cómo correrlo
 

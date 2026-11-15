@@ -1,6 +1,6 @@
 # 07 · Costo de un viaje de pipa
 
-Estado: Propuesta
+Estado: Aceptada
 
 ## Contexto
 
