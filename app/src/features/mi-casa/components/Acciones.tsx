@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Antetitulo, IconoCisterna, IconoGota, IconoTelefono, Info } from "@/ui";
+import type { ResultadoCasa } from "../calculos";
+import { TLAQUECHAT, enlaceWhatsApp, mensajePipa } from "../enlaces";
 
 function Accion({ Icono, tono, titulo, children }: { Icono: typeof IconoGota; tono: string; titulo: string; children: React.ReactNode }) {
   return (
@@ -14,7 +16,8 @@ function Accion({ Icono, tono, titulo, children }: { Icono: typeof IconoGota; to
 }
 
 /** Tres cosas que sí puedes hacer si te quedas sin agua. */
-export function Acciones({ colonia, cisternas }: { colonia: string; cisternas: number }) {
+export function Acciones({ r, personas }: { r: ResultadoCasa; personas: number }) {
+  const colonia = r.col.nombre, cisternas = r.cis;
   return (
     <section>
       <Antetitulo className="mb-2">Si te quedas sin agua</Antetitulo>
@@ -23,7 +26,9 @@ export function Acciones({ colonia, cisternas }: { colonia: string; cisternas: n
           {cisternas > 0 ? "Cisternas comunitarias de tu colonia." : <>Busca cisternas de colonias vecinas en el <Link href="/panal" className="font-semibold text-agua-700 underline underline-offset-2">Mapa de hoy</Link>.</>}
         </Accion>
         <Accion Icono={IconoTelefono} tono="bg-barro-100 text-barro-700" titulo="Pide una pipa por TlaqueChat">
-          WhatsApp del ayuntamiento: <b className="text-tinta">33 2804 8171</b>, de 7:00 a 22:00.
+          <span>WhatsApp del ayuntamiento: <b className="text-tinta">{TLAQUECHAT.visible}</b>, {TLAQUECHAT.horario}. El mensaje va listo; solo agrega tu calle y número.</span>
+          <a href={enlaceWhatsApp(mensajePipa(r, personas), TLAQUECHAT.telefono)} target="_blank" rel="noopener noreferrer"
+            className="mt-3 flex min-h-11 w-full items-center justify-center rounded-full bg-agua-600 px-4 text-sm font-bold text-white transition-colors hover:bg-agua-700">Escribir a TlaqueChat</a>
         </Accion>
         <Accion Icono={IconoGota} tono="bg-agua-50 text-agua-700" titulo="Cloro al agua guardada">
           <span>Si lleva más de 2 días guardada: <b className="text-tinta">2 gotas de cloro sin aroma por litro</b> (8 por galón) y reposar 30 min.{" "}
