@@ -4,7 +4,8 @@ Cada integrante escribe su propia propuesta para las 4 decisiones que hay que
 cerrar antes de programar. Después se comparan en la junta y se elige.
 
     propuesta-dani.md
-    propuesta-jass.md      (pendiente)
+    propuesta-jass.md      (no se escribió aparte: las decisiones del carril B están en
+                           `optimizador/docs/decisiones/`, 01 a 07)
     propuesta-magui.md     (pendiente)
     propuesta-migue.md
 

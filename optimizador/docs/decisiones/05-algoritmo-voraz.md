@@ -1,6 +1,6 @@
 # 05 · Algoritmo voraz con comparación contra el máximo
 
-Estado: Propuesta
+Estado: Aceptada
 
 ## Contexto
 

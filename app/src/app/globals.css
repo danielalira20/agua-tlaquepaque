@@ -1,6 +1,54 @@
 @import "tailwindcss";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
-:root { --azul: #1d4ed8; }
-body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-input[type="range"] { accent-color: var(--azul); }
+/* Aguanta · paleta "agua y barro": lo que tiene agua es azul, lo que se secó es barro. */
+@theme {
+  --color-agua-50: #eef7fc;
+  --color-agua-100: #cfe8f5;
+  --color-agua-200: #a9d4ec;
+  --color-agua-300: #79b8de;
+  --color-agua-400: #4b98cc;
+  --color-agua-500: #2e7bbe;
+  --color-agua-600: #1f5fae;
+  --color-agua-700: #1a4c8e;
+  --color-agua-800: #173e72;
+  --color-agua-900: #14315a;
+
+  --color-barro-50: #fbf1ea;
+  --color-barro-100: #f1dcc4;
+  --color-barro-200: #e8c3a2;
+  --color-barro-300: #dca27a;
+  --color-barro-400: #d07f55;
+  --color-barro-500: #c4623a;
+  --color-barro-600: #a84e2c;
+  --color-barro-700: #873e24;
+
+  --color-crema: #fbf6ee;
+  --color-crema-2: #f3eadc;
+  --color-tinta: #1e2a3a;
+  --color-tinta-suave: #5b6675;
+
+  --radius-tarjeta: 1.5rem;
+  --shadow-suave: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 14px 30px -18px rgb(26 76 142 / 0.35), 0 2px 6px -2px rgb(30 42 58 / 0.08);
+  --shadow-flota: 0 24px 48px -20px rgb(26 76 142 / 0.45), 0 4px 12px -4px rgb(30 42 58 / 0.12);
+  --ease-agua: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-texto), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-titulo), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root { --azul: var(--color-agua-600); }
+html { background: var(--color-crema); }
+body { font-family: var(--font-sans); }
+h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.01em; }
+input[type="range"] { accent-color: var(--color-agua-600); }
+:focus-visible { outline: 3px solid var(--color-agua-300); outline-offset: 2px; }
+
+/* entrada suave, una sola vez por pantalla */
+@keyframes aparecer { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.aparecer { animation: aparecer 0.5s var(--ease-agua) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

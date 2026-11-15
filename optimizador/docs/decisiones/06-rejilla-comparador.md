@@ -1,6 +1,6 @@
 # 06 · Rejilla del comparador: qué se corre y qué tablas salen
 
-Estado: Propuesta
+Estado: Aceptada
 
 ## Contexto
 
