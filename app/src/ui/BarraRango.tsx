@@ -8,11 +8,11 @@ export function textoRango(min: number, max: number, dec = 0) {
 
 export function BarraRango({ min, max, total, etiqueta, dec = 0, tam = "lg", tono = "barro", sufijo = "", className = "" }: {
   min: number; max: number; total?: number; etiqueta?: React.ReactNode; dec?: number; tam?: "xl" | "lg" | "md";
-  tono?: "barro" | "agua"; sufijo?: string; className?: string;
+  tono?: "barro" | "agua" | "neutro"; sufijo?: string; className?: string;
 }) {
   const txt = { xl: "text-5xl md:text-6xl", lg: "text-3xl", md: "text-xl" }[tam];
-  const solido = tono === "barro" ? "bg-barro-500" : "bg-agua-600";
-  const claro = tono === "barro" ? "bg-barro-200" : "bg-agua-200";
+  const solido = { barro: "bg-barro-500", agua: "bg-agua-600", neutro: "bg-tinta-suave" }[tono];
+  const claro = { barro: "bg-barro-200", agua: "bg-agua-200", neutro: "bg-tinta/20" }[tono];
   const a = total ? Math.min(100, (100 * min) / total) : 0;
   const b = total ? Math.min(100, (100 * max) / total) : 0;
   return (

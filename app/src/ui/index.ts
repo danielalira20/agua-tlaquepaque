@@ -6,3 +6,5 @@ export { LetraChica } from "./LetraChica";
 export { Gota, SemanaGotas, type DiaGota } from "./SemanaGotas";
 export { Hoja } from "./Hoja";
 export * from "./Iconos";
+export { Cargando } from "./Cargando";
+export { Interruptor, Segmentado } from "./Interruptor";

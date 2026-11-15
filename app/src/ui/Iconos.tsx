@@ -40,6 +40,6 @@ export const IconoTelefono = ({ className = "h-5 w-5" }: P) => (
 );
 
 /** El hexágono de la marca. */
-export const Hex = ({ className = "h-6 w-6" }: P) => (
-  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" /></svg>
+export const Hex = ({ className = "h-6 w-6", style }: P & { style?: React.CSSProperties }) => (
+  <svg viewBox="0 0 24 24" className={className} style={style} fill="currentColor" aria-hidden><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" /></svg>
 );
