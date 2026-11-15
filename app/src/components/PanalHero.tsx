@@ -1,6 +1,5 @@
 "use client";
 import { useMemo } from "react";
-import { Badge } from "./ui";
 
 /** Panal animado para el inicio: cada celda se vacía y se vuelve a llenar como el agua, a su propio ritmo. */
 export default function PanalHero({ radio = 5, tam = 22 }: { radio?: number; tam?: number }) {
@@ -35,7 +34,7 @@ export default function PanalHero({ radio = 5, tam = 22 }: { radio?: number; tam
         ))}
       </svg>
       <div className="mx-auto -mt-2 flex w-fit items-center gap-2 whitespace-nowrap rounded-full bg-white/90 px-3 py-1 text-xs shadow backdrop-blur">
-        <span className="h-2 w-2 rounded-full bg-emerald-500" /> Datos reales de Tlaquepaque <Badge tipo="real" />
+        <span className="h-2 w-2 rounded-full bg-emerald-500" /> Datos reales de Tlaquepaque
       </div>
     </div>
   );
