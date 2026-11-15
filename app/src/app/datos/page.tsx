@@ -1,9 +1,9 @@
 "use client";
 // Cómo funciona: cuatro pasos, seis hallazgos y de dónde sale cada dato. Las cuentas viven en features/datos/calculos.ts.
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { fmt, useReal } from "@/lib/real";
 import { Aclaraciones, Antetitulo, Cargando } from "@/ui";
-import { calcularDatos } from "@/features/datos/calculos";
+import { datosCalculados, datosCalculadosYa, type DatosCalculados } from "@/features/datos/calculos";
 import { CifrasDatos } from "@/features/datos/components/CifrasDatos";
 import { Colonias } from "@/features/datos/components/Colonias";
 import { Equidad } from "@/features/datos/components/Equidad";
@@ -16,7 +16,14 @@ import { Sello } from "@/features/datos/components/Sello";
 
 export default function Datos() {
   const d = useReal();
-  const g = useMemo(() => (d ? calcularDatos(d) : null), [d]);
+  // El cálculo es pesado: se hace por partes y con la pantalla de carga a la vista, no dentro del render.
+  const [g, setG] = useState<DatosCalculados | null>(() => (d ? datosCalculadosYa(d) : null));
+  useEffect(() => {
+    if (!d) return;
+    let vivo = true;
+    datosCalculados(d).then((r) => { if (vivo) setG(r); });
+    return () => { vivo = false; };
+  }, [d]);
   if (!d || !g) return <Cargando texto="Calculando con el motor oficial…" />;
   const s = d.meta.supuestos;
   const cuenta = [
@@ -47,7 +54,7 @@ export default function Datos() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <GraficaCalendarios g={g} />
-        <GraficaSensibilidad g={g} />
+        <GraficaSensibilidad d={d} />
       </div>
       <div className="grid gap-6 md:grid-cols-2">
         <GraficaZonas g={g} />
