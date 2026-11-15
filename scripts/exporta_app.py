@@ -93,6 +93,25 @@ def cargar_manzanas():
     return filas
 
 
+def marcar_nucleo_robusto(manzanas):
+    """Agrega `nucleo_robusto` (true/false) a cada manzana, desde datos/sensibilidad/manzanas_robustas.csv.
+
+    Es un paso aparte de cargar_manzanas() a proposito: ese CSV es una SALIDA de scripts/sensibilidad_orden.py, que a su vez
+    importa cargar_manzanas(). Si se leyera adentro, una primera corrida de la sensibilidad dependeria de si misma.
+    El nucleo son las manzanas que quedan entre las 250 de mayor riesgo en al menos el 90% de los 300 sorteos de la familia A
+    (los rangos de la decision 1). Una manzana que no esta en el CSV nunca entro al top 250 en ningun sorteo: no es nucleo.
+    Devuelve cuantas son.
+    """
+    nucleo = {r["cvegeo"] for r in leer("datos/sensibilidad/manzanas_robustas.csv") if r["nucleo_robusto"] == "True"}
+    ajenas = nucleo - {m["cvegeo"] for m in manzanas}
+    if ajenas:
+        raise ValueError(f"manzanas_robustas.csv trae {len(ajenas)} manzanas que no estan en el Censo (CSV desactualizado): "
+                         f"{sorted(ajenas)[:3]}")
+    for m in manzanas:
+        m["nucleo_robusto"] = m["cvegeo"] in nucleo
+    return len(nucleo)
+
+
 def calendario_expandido(archivo, fechas):
     cal = R.leer_json(RAIZ / "motor" / "calendarios" / archivo)
     dias = []
@@ -217,7 +236,9 @@ manzanas), `zona` (`"4"`, `"3,4"` si abarca varias, `""` si esta **fuera del pro
 (centroide; `null` en las 8 manzanas sin geometria), `viviendas`, `pob`, `ocupantes_prom`, `viv_tinaco`,
 `viv_cisterna`, `sin_almacen_min`/`sin_almacen_max` (cotas: el Censo no cruza tinaco con cisterna),
 `grado_marginacion` (`Muy alto` a `Muy bajo` o `sin dato`; **mas alto = mas marginacion**; es una capa aparte, no entra
-en `severidad`).
+en `severidad`), `nucleo_robusto` (`true` en las 186 manzanas que quedan entre las 250 de mayor riesgo en al menos el 90% de
+los 300 sorteos de la familia A de `datos/sensibilidad/`; es la parte del orden que **no depende de los supuestos**. Sale de
+`datos/sensibilidad/manzanas_robustas.csv`; `false` si nunca entro al top 250).
 
 ## `estado.json`
 
@@ -258,6 +279,7 @@ def main(argv=None):
     a = p.parse_args(argv)
     fechas = R.rango_fechas(a.desde, a.hasta)
     manzanas = cargar_manzanas()
+    n_nucleo = marcar_nucleo_robusto(manzanas)
     sup = R.leer_json(RAIZ / "motor" / "supuestos.json")
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -273,6 +295,7 @@ def main(argv=None):
         "formato": 1, "simulado": False, "ventana": {"desde": a.desde, "hasta": a.hasta, "fechas": len(fechas)},
         "calendario_usado": cal["vigente"]["version"], "supuestos": sup,
         "conteos": {"manzanas": len(manzanas), "manzanas_en_programa": len(en_prog),
+                    "manzanas_nucleo_robusto": n_nucleo,
                     "personas": sum(m["pob"] for m in manzanas), "personas_en_programa": sum(m["pob"] for m in en_prog),
                     "personas_en_programa_con_respaldo_de_la_lista": sum(m["pob"] for m in en_prog if m["zona_confianza"] in ("alta", "media", "conflicto")),
                     "cisternas": sum(1 for c in cist if not c["id"].startswith("PROP")), "propuestas": sum(1 for c in cist if c["id"].startswith("PROP"))},

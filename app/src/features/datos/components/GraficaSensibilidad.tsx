@@ -20,8 +20,8 @@ export function GraficaSensibilidad({ d }: { d: Datos }) {
   }, [d]);
   return (
     <PanelGrafica
-      hallazgo="Lo que más mueve el resultado es cuánta agua se gasta, no cuánta llega"
-      nota="Personas-día sin agua en la semana (cota mínima). A 50 L por persona, f casi no cambia nada: quien no tiene dónde guardar se seca igual.">
+      hallazgo="Lo que más mueve el resultado es el consumo neto: lo que se gasta menos lo que sí llega"
+      nota="Personas-día sin agua en la semana (cota mínima). Cuenta el consumo × (1 − f): gastar 100 L con f = 50 % da lo mismo que gastar 50 L con f = 0. A 50 L, en cambio, f casi no cambia nada: quien no tiene dónde guardar se seca igual.">
       <div ref={caja} className="h-[250px]">
         {datos ? (
           <ResponsiveContainer width="100%" height={250}>
