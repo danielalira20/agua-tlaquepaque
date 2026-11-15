@@ -5,7 +5,7 @@ import { useReal, calcular, rango, fmt, fechaLarga } from "@/lib/real";
 import type { SupuestosMotor } from "@/lib/motor";
 import { Badge } from "@/components/ui";
 import { Advertencias, SelectorFecha, Supuestos, diasTinaco } from "@/components/Controles";
-import { COLOR_MARG, colorPct, puntosCisternas } from "@/components/HexMap";
+import { COLOR_MARG, GRADIENTE_AGUA, colorPct, puntosCisternas } from "@/components/HexMap";
 
 const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loading: () => <div className="grid h-full place-items-center text-slate-400">Cargando mapa…</div> });
 
@@ -138,9 +138,9 @@ export default function Panal() {
           {modo === "agua" ? (
             <>
               <div className="font-semibold">Color: % de viviendas sin agua (cota mín.) · altura: personas</div>
-              <div className="mt-1 h-2 rounded" style={{ background: "linear-gradient(90deg, rgb(29,78,216), rgb(226,232,240))" }} />
+              <div className="mt-1 h-2 rounded" style={{ background: GRADIENTE_AGUA }} />
               <div className="flex justify-between text-xs text-slate-500"><span>todas con agua</span><span>50 % o más secas</span></div>
-              <div className="mt-1 text-xs text-slate-500">Gris muy claro: fuera del programa de racionamiento.</div>
+              <div className="mt-1 text-xs text-slate-500">Gris: fuera del programa de racionamiento.</div>
             </>
           ) : (
             <>

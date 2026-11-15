@@ -9,17 +9,28 @@ import type { Celda, Cisterna } from "@/lib/real";
 const ESTILO = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 type RGB = [number, number, number];
 
-/** Azul lleno = con agua; pálido = seco. Se satura en 50 % (umbral de quiebre mayoritario). */
+/** Agua llena = azul; seco = barro. Se satura en 50 % (umbral de quiebre mayoritario). */
 export const SATURA = 0.5;
+// paradas de la escala: agua-600 → agua-200 → barro-200 → barro-500
+const PARADAS: [number, RGB][] = [[0, [31, 95, 174]], [0.4, [169, 212, 236]], [0.7, [232, 195, 162]], [1, [196, 98, 58]]];
 export function colorPct(p: number): RGB {
-  const a: RGB = [29, 78, 216], b: RGB = [226, 232, 240];
-  const t = Math.sqrt(Math.min(1, p / SATURA));
-  return [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * t)) as RGB;
+  const t = Math.sqrt(Math.min(1, Math.max(0, p) / SATURA));
+  for (let i = 1; i < PARADAS.length; i++) {
+    const [t1, b] = PARADAS[i];
+    if (t <= t1) {
+      const [t0, a] = PARADAS[i - 1];
+      const k = (t - t0) / (t1 - t0);
+      return [0, 1, 2].map((j) => Math.round(a[j] + (b[j] - a[j]) * k)) as RGB;
+    }
+  }
+  return PARADAS[PARADAS.length - 1][1];
 }
+/** La misma escala como degradado CSS, para la leyenda. */
+export const GRADIENTE_AGUA = `linear-gradient(90deg, ${PARADAS.map(([t, c]) => `rgb(${c.join(",")}) ${t * 100}%`).join(", ")})`;
 export const COLOR_MARG: Record<string, RGB> = {
   "Muy alto": [127, 29, 29], Alto: [220, 38, 38], Medio: [251, 146, 60], Bajo: [254, 215, 170], "Muy bajo": [255, 247, 237], "sin dato": [203, 213, 225],
 };
-const FUERA: RGB = [241, 245, 249];
+const FUERA: RGB = [214, 214, 208]; // fuera del programa: gris neutro, no se confunde con barro
 
 export type Punto = { id: string; lon: number; lat: number; tipo: "cisterna" | "aproximada" | "propuesta" | "pipa"; texto: string };
 const COLOR_PUNTO: Record<Punto["tipo"], [number, number, number, number]> = {
