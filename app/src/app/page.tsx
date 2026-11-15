@@ -2,8 +2,7 @@
 import PanalHero from "@/components/PanalHero";
 import { Puertas } from "@/features/inicio/components/Puertas";
 import { CifrasClave } from "@/features/inicio/components/CifrasClave";
-import Link from "next/link";
-import { Antetitulo, Consejo, IconoGota, IconoMapa, IconoPipa, Mascota, Aclaraciones } from "@/ui";
+import { Antetitulo, IconoGota, IconoMapa, IconoPipa, Mascota, Aclaraciones } from "@/ui";
 
 const PASOS = [
   { Icono: IconoGota, t: "Medimos", d: "Quién tiene tinaco, cisterna o nada, manzana por manzana." },
@@ -21,7 +20,6 @@ export default function Inicio() {
             El mismo corte de agua no le pega igual a <span className="text-barro-500">todas las casas</span>.
           </h1>
           <p className="mt-4 max-w-xl text-lg text-tinta-suave">Aguanta te dice qué casas se quedan sin agua cada día y a dónde mandar las pipas primero.</p>
-          <Consejo className="mt-5 max-w-xl" cara="h-16 md:hidden">Empieza por tu casa: son tres preguntas cortas. <Link href="/mi-casa" className="font-semibold text-agua-700 underline underline-offset-2">Calcular mi casa</Link></Consejo>
         </div>
         <div className="relative justify-self-center">
           <PanalHero />
