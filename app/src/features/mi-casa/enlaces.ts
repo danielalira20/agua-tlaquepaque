@@ -1,11 +1,13 @@
 import type { ResultadoCasa } from "./calculos";
 
 /**
- * WhatsApp de TlaqueChat, el canal del ayuntamiento de Tlaquepaque para pedir pipas.
- * El número y el horario salen de la prensa (Crónica, 14 y 15 de octubre de 2026); falta confirmarlos en el sitio oficial.
- * `telefono` va con lada de país y sin espacios, que es lo que pide wa.me.
+ * TlaqueChat, el canal de WhatsApp del ayuntamiento de Tlaquepaque para pedir pipas. Su existencia está
+ * confirmada (La Crónica, 15-oct-2026, nota leída completa: "Solicitudes por TlaqueChat"), pero NO su número:
+ * las notas del 15 y del 22 de octubre publican números que difieren en un dígito
+ * (`decisiones/referencias-y-prensa.md`, "Discrepancias que hay que declarar"). Por eso no se cita ningún
+ * número ni horario aquí; solo se ofrece el mensaje ya redactado para copiar y pegar donde corresponda.
  */
-export const TLAQUECHAT = { telefono: "523328048171", visible: "33 2804 8171", horario: "de 7:00 a 22:00" } as const;
+export const TLAQUECHAT = { nombre: "TlaqueChat" } as const;
 
 /** Enlace que abre WhatsApp con el texto ya escrito. Sin teléfono, la persona elige a quién mandarlo. */
 export const enlaceWhatsApp = (texto: string, telefono?: string) => `https://wa.me/${telefono ?? ""}?text=${encodeURIComponent(texto)}`;
