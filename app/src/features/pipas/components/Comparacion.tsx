@@ -12,7 +12,17 @@ export function Comparacion({ pri, base, viajes, semPri, semBase }: {
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-base font-bold">Las mismas {viajes} pipas, dos repartos</h2>
         <Info etiqueta="Cómo se compara">
-          Los dos repartos usan los mismos viajes. El <b>reparto por turnos</b> es un <b>baseline estilizado</b>: los viajes rotan entre las cisternas instaladas; no es lo que hace hoy el municipio. En 120 simulaciones con otros supuestos, priorizar atiende entre 2.6 y 4.9 veces lo del reparto por turnos; contra un reparto que solo visita las cisternas con necesidad ese día, la ventaja va de 1.1 a 3.1 veces, según la cota y el escenario.
+          <p className="font-semibold">Los dos repartos usan los mismos viajes.</p>
+          <ul className="mt-2 space-y-2">
+            <li><b>Primero donde más casas están secas:</b> el plan del priorizador.</li>
+            <li><b>Por turnos:</b> un baseline estilizado. Los viajes rotan entre las cisternas instaladas; no es lo que hace hoy el municipio.</li>
+          </ul>
+          <p className="mt-3 border-t border-white/20 pt-3 font-semibold">En 120 simulaciones con otros supuestos, priorizar atiende:</p>
+          <ul className="mt-1 list-disc space-y-1 pl-5">
+            <li>de <b>2.6 a 4.9 veces</b> lo del reparto por turnos;</li>
+            <li>de <b>1.1 a 3.1 veces</b> lo de un reparto que solo visita las cisternas con necesidad ese día.</li>
+          </ul>
+          <p className="mt-2 text-xs text-white/70">Según la cota y el escenario.</p>
         </Info>
       </div>
       <div className="mt-4 space-y-4">
@@ -26,9 +36,15 @@ export function Comparacion({ pri, base, viajes, semPri, semBase }: {
         </div>
       </div>
       <p className="mt-3 text-xs text-tinta-suave">casas sin agua que reciben pipa hoy</p>
-      <p className="mt-3 rounded-xl bg-agua-50 p-3 text-sm text-agua-900">
-        Hoy, priorizar llega a <b>{r(razones[0])} – {r(razones[1])} veces</b> más casas que el reparto por turnos. En la semana suma <b>{textoRango(semPri[0], semPri[1])}</b> casas atendidas contra {textoRango(semBase[0], semBase[1])} (cada casa cuenta una vez por día). Sin pedir más agua ni más pipas.
-      </p>
+      <div className="mt-3 rounded-xl bg-agua-50 p-3 text-agua-900">
+        <div className="text-xs font-semibold uppercase tracking-wide text-agua-700">Hoy, priorizar llega a</div>
+        <div className="font-display text-2xl font-bold">{r(razones[0])} – {r(razones[1])} veces <span className="text-base font-semibold">más casas</span></div>
+        <dl className="mt-2 space-y-1 border-t border-agua-100 pt-2 text-sm">
+          <div className="flex flex-wrap justify-between gap-x-3"><dt className="text-agua-700">En la semana, priorizar</dt><dd className="font-bold">{textoRango(semPri[0], semPri[1])} casas</dd></div>
+          <div className="flex flex-wrap justify-between gap-x-3"><dt className="text-tinta-suave">En la semana, por turnos</dt><dd className="font-bold text-tinta-suave">{textoRango(semBase[0], semBase[1])} casas</dd></div>
+        </dl>
+        <p className="mt-1 text-xs text-tinta-suave">Cada casa cuenta una vez por día.</p>
+      </div>
     </section>
   );
 }

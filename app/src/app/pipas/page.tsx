@@ -53,7 +53,7 @@ export default function PlanDePipas() {
         </div>
       </div>
 
-      <aside className="space-y-4 bg-crema p-4 md:overflow-y-auto md:border-l md:border-tinta/10 md:p-5">
+      <aside className="space-y-4 bg-crema p-4 md:overflow-y-auto md:overflow-x-hidden md:border-l md:border-tinta/10 md:p-5">
         <section className="aparecer">
           <div className="flex items-center justify-between"><Antetitulo>Plan de pipas</Antetitulo><Etiqueta tipo="estimado" /></div>
           <h1 className="mt-1 text-2xl font-bold capitalize">{fechaLarga(fecha)}</h1>
