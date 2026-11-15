@@ -2,7 +2,7 @@
 // Mi casa: tres preguntas cortas y un resultado. La cuenta vive en features/mi-casa/calculos.ts.
 import { useMemo, useState } from "react";
 import { useReal } from "@/lib/real";
-import { Antetitulo, Cargando, IconoAtras, IconoFlecha } from "@/ui";
+import { Antetitulo, Cargando, Consejo, IconoAtras, IconoFlecha } from "@/ui";
 import { coloniasDe, resultadoCasa, type Almacen } from "@/features/mi-casa/calculos";
 import { HojaConsumo } from "@/features/mi-casa/components/HojaConsumo";
 import { PasoAlmacen } from "@/features/mi-casa/components/PasoAlmacen";
@@ -12,9 +12,9 @@ import { Progreso } from "@/features/mi-casa/components/Progreso";
 import { Resultado } from "@/features/mi-casa/components/Resultado";
 
 const PASOS = [
-  { corto: "Colonia", pregunta: "¿En qué colonia vives?", ayuda: "Escríbela o elígela de la lista." },
-  { corto: "Agua guardada", pregunta: "¿Cómo guardas agua en casa?", ayuda: "Elige lo que tienes." },
-  { corto: "Personas", pregunta: "¿Cuántas personas viven en tu casa?", ayuda: "Cuenta a todas las que toman agua en casa." },
+  { corto: "Colonia", pregunta: "¿En qué colonia vives?", ayuda: "Escribe las primeras letras y toca tu colonia en la lista." },
+  { corto: "Agua guardada", pregunta: "¿Cómo guardas agua en casa?", ayuda: "Elige lo que tienes hoy en casa. Si no tienes ni tinaco ni cisterna, elige «Nada»." },
+  { corto: "Personas", pregunta: "¿Cuántas personas viven en tu casa?", ayuda: "Cuenta a todas las personas que toman agua en tu casa." },
 ];
 
 export default function MiCasa() {
@@ -50,7 +50,7 @@ export default function MiCasa() {
       <div key={paso} className="aparecer mt-4">
         <Antetitulo>¿Cuánto aguanta tu casa?</Antetitulo>
         <h1 className="mt-1 text-3xl font-bold leading-tight">{p.pregunta}</h1>
-        <p className="mb-4 mt-1 text-tinta-suave">{p.ayuda}</p>
+        <Consejo className="mb-4 mt-3">{p.ayuda}</Consejo>
         {paso === 0 && <PasoColonia colonias={colonias} valor={colonia} onElegir={(n) => { setColonia(n); setPaso(1); }} />}
         {paso === 1 && <PasoAlmacen valor={alm} onElegir={(a) => { setAlm(a); setPaso(2); }} tinacoL={d.meta.supuestos.tinaco_l} cisternaL={d.meta.supuestos.cisterna_l} />}
         {paso === 2 && <PasoPersonas valor={personas} onCambio={setPersonas} />}

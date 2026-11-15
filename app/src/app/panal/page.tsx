@@ -5,7 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useReal, calcular } from "@/lib/real";
 import type { SupuestosMotor } from "@/lib/motor";
 import { puntosCisternas } from "@/components/HexMap";
-import { BotonPildora, Cargando, IconoAjustes, IconoCapas } from "@/ui";
+import { BotonPildora, Cargando, Consejo, IconoAjustes, IconoCapas } from "@/ui";
 import { nivelesSemana, riesgoZonas56 } from "@/features/mapa/calculos";
 import { TarjetaHoy } from "@/features/mapa/components/TarjetaHoy";
 import { Leyenda } from "@/features/mapa/components/Leyenda";
@@ -24,6 +24,7 @@ export default function MapaDeHoy() {
   const [s, setS] = useState<SupuestosMotor | null>(null);
   const [verCapas, setVerCapas] = useState(false);
   const [verAjustes, setVerAjustes] = useState(false);
+  const [consejo, setConsejo] = useState(true); // el consejo de la mascota se va al cerrarlo o al tocar un hexágono
 
   const sup = s ?? d?.meta.supuestos ?? null;
   const cal = d?.calendarios[capas.version];
@@ -50,6 +51,11 @@ export default function MapaDeHoy() {
           <BotonPildora onClick={() => setTresD(!tresD)} titulo={tresD ? "Ver el mapa plano" : "Ver el mapa en 3D"}>{tresD ? "2D" : "3D"}</BotonPildora>
           <BotonPildora onClick={() => setVerAjustes(true)}><IconoAjustes className="h-4 w-4" />Ajustar</BotonPildora>
         </div>
+        {consejo && !sel && (
+          <div className="absolute left-3 right-16 top-14 z-10 md:bottom-4 md:left-auto md:right-4 md:top-auto md:w-64">
+            <Consejo cara="h-14" onCerrar={() => setConsejo(false)}>Toca un hexágono para ver el detalle de esa zona.</Consejo>
+          </div>
+        )}
         <Leyenda modo={capas.modo} className="absolute bottom-9 left-3 z-10 md:bottom-4 md:left-[24.5rem]" />
       </div>
 
