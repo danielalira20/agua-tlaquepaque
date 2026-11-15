@@ -56,7 +56,7 @@ Salieron de los datos de hoy y cambian lo que se puede afirmar:
    cisternas instaladas, no el reparto real del municipio, del que no hay registro.
 5. **El orden exacto de las manzanas depende de los supuestos** (cuántos días aguanta un tinaco): rho mediano 0.65 con
    los rangos de la decisión 1. Lo que aguanta es un **núcleo de 186 manzanas**, El Sauz como primera colonia y una ventaja
-   del priorizador de al menos 2.6 veces el baseline. Y las zonas 5 y 6 son la mayoría del riesgo (siempre más del 50%), no
+   del priorizador que se sostiene en todos los escenarios probados (de 1.1 a 6.4 veces según la cota y el baseline; el "al menos 2.6" solo valía con la cota mínima y contra el reparto por turnos). Y las zonas 5 y 6 son la mayoría del riesgo (siempre más del 50%), no
    "tres cuartas partes" salvo en el caso base (`datos/HALLAZGOS_sensibilidad.md`).
 
 ---

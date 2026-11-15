@@ -26,7 +26,9 @@ manzanas), `zona` (`"4"`, `"3,4"` si abarca varias, `""` si esta **fuera del pro
 (centroide; `null` en las 8 manzanas sin geometria), `viviendas`, `pob`, `ocupantes_prom`, `viv_tinaco`,
 `viv_cisterna`, `sin_almacen_min`/`sin_almacen_max` (cotas: el Censo no cruza tinaco con cisterna),
 `grado_marginacion` (`Muy alto` a `Muy bajo` o `sin dato`; **mas alto = mas marginacion**; es una capa aparte, no entra
-en `severidad`).
+en `severidad`), `nucleo_robusto` (`true` en las 186 manzanas que quedan entre las 250 de mayor riesgo en al menos el 90% de
+los 300 sorteos de la familia A de `datos/sensibilidad/`; es la parte del orden que **no depende de los supuestos**. Sale de
+`datos/sensibilidad/manzanas_robustas.csv`; `false` si nunca entro al top 250).
 
 ## `estado.json`
 

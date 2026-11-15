@@ -381,7 +381,7 @@ def literatura_y_prensa():
              descripcion="Desinfección de emergencia con cloro: 8 gotas de cloro doméstico sin aroma por galón (unos 2 por litro) de agua "
                          "clara, mezclar y esperar al menos 30 minutos; el doble si el agua está turbia",
              valor="8", unidad="gotas por galón", cita="CDC. How to Make Water Safe in an Emergency.",
-             url_o_doi="https://www.cdc.gov/water-emergency/about/", verificacion="fuente_primaria",
+             url_o_doi="https://www.cdc.gov/water-emergency/about/", verificacion=fp,
              fecha_consulta="2026-11-15", uso="Fuente de salud de la recomendación de cloro en /mi-casa",
              nota="Página del CDC leída completa el 15-nov: 8 gotas por galón (2 por litro) con cloro de 5 a 9 por ciento; esperar al menos 30 minutos; "
                   "el doble si el agua está turbia. Es guía de EE. UU. Pendiente: contrastar con guía de la Secretaría de Salud."),
@@ -389,9 +389,20 @@ def literatura_y_prensa():
              descripcion="TlaqueChat: canal de WhatsApp del ayuntamiento para pedir pipas, de 7:00 a 22:00 todos los días",
              valor="", unidad="", cita="La Crónica de Hoy (2026, 14 de octubre). Refuerza Tlaquepaque abasto de agua con 32 pipas ante tandeos del SIAPA.",
              url_o_doi="https://www.cronica.com.mx/jalisco/guadalajara/2026/10/14/refuerza-tlaquepaque-abasto-de-agua-con-32-pipas-ante-tandeos-del-siapa/",
-             verificacion="resumen_oficial", fecha_consulta="2026-11-14", uso="Confirma que TlaqueChat existe (/mi-casa)",
+             verificacion="solo_resumen", fecha_consulta="2026-11-14", uso="Confirma que TlaqueChat existe (/mi-casa)",
              nota="Visto en el resultado de búsqueda, falta leer la nota completa. NO CITAR EL NÚMERO en la app hasta confirmarlo en el sitio oficial "
                   "del municipio (las notas traen 33 2804 8171 y una trae 2805, parece errata)."),
+        fila(id="P018", fuente="prensa", tipo="contexto",
+             descripcion="Las 627 colonias del esquema de tandeos actualizado del SIAPA forman parte de siete zonas abastecidas por los "
+                         "acueductos de la Planta Potabilizadora número 1 de Miravalle, que suministra el agua de alrededor del 42% de la "
+                         "zona de cobertura del SIAPA",
+             valor="627", unidad="colonias", cita="Hernández, M. (2026, 5 de noviembre). Conoce el nuevo esquema de tandeos en la ZMG; "
+                                                  "revisa qué días te quedarás sin agua. El Informador.",
+             url_o_doi="https://www.informador.mx/jalisco/siapa-modifica-calendario-de-tandeos-lista-completa-de-las-627-colonias-de-la-zmg-con-rotacion-del-servicio-6-zonas-aumentan-dias-sin-agua-20261104-0202.html",
+             verificacion=fp, fecha_consulta="2026-11-14", uso="Contexto de la sección 1.1 (Planta Miravalle, 627 colonias, 42%)",
+             nota="Nota completa leída. Programa desde el 15 de octubre; calendario actualizado el 4 de noviembre, igual al de "
+                  "motor/calendarios/vigente-2026-11-03.json. Cita a Ismael Jáuregui: la recuperación de presión varía con la distancia "
+                  "y la topografía de cada colonia. La nota usa 'suspende' para los días de rotación; el SIAPA lo describe como baja de presión."),
     ]
 
 

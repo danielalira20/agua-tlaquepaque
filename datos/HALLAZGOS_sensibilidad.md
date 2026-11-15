@@ -18,7 +18,7 @@ de los supuestos. Hay que decir las dos cosas.
 | **El Sauz como colonia número uno** | **Sí.** Primero en los 600 sorteos y en 35 de 36 escenarios (segundo en el más extremo) |
 | **Que Muy bajo sea el grado con más riesgo** | **Casi siempre.** 582 de 600 sorteos y 33 de 36 escenarios. Cede ante Medio solo cuando el tinaco aguanta entre 2.0 y 3.3 días, y aun ahí es la excepción (15 de los 123 sorteos con menos de 3 días) |
 | **Que las zonas 5 y 6 sean la mayoría del riesgo** | **Sí, pero no "casi tres cuartas partes".** Siempre más del 50% (mínimo 50.3%), pero su parte baja de 72% a unos 60% cuando el tinaco aguanta menos |
-| **La ventaja del priorizador** | **Sí.** Atiende entre 2.2 y 6.4 veces lo que el baseline en los 35 escenarios donde se corrió (entre 2.6 y 4.9 en las 120 simulaciones de Monte Carlo donde se corrió), con eficiencia de 99.4% a 100% |
+| **La ventaja del priorizador** | **Sí, pero su tamaño depende de la cota y del baseline.** Con la cota mínima y contra el reparto por turnos, atiende entre 2.2 y 6.4 veces lo que el baseline en los 35 escenarios donde se corrió (entre 2.6 y 4.9 en las 120 simulaciones de Monte Carlo). Con la cota máxima baja a 1.9 a 2.2 veces en los cuatro escenarios del motor, y contra un reparto que solo visita las cisternas con necesidad ese día queda entre 1.1 y 3.1 (`optimizador/resultados/resumen.md`, sección 3). Eficiencia de 99.4% a 100% |
 | **Dónde se estacionan las pipas** | **No.** Solo el 37% de las manzanas atendidas coincide en promedio con el caso base (familia A) |
 
 ## 1. Qué se hizo
@@ -123,8 +123,9 @@ la 3. Por colonia, la que más pone es **El Sauz, con 28 manzanas y 8,850 vivien
 Parques de Santa Cruz del Valle (11), Villa Fontana (10) y Haciendas del Real (10). La lista completa, con la frecuencia de cada manzana, está en `sensibilidad/manzanas_robustas.csv`.
 
 **El beneficio agregado del priorizador.** Con las mismas 63 pipas, atiende 22,050 viviendas-día en todos los escenarios (es el tope de capacidad: 63 viajes × 50 hogares × 7 días),
-excepto con el calendario original (18,114, porque hay menos necesidad). Frente al baseline estilizado, atiende **entre 2.2 veces (esquina adversa extrema) y 6.4 veces (calendario original)** en los 35 escenarios donde se corrió.
-En las 120 simulaciones de Monte Carlo donde se corrió, entre 2.6 y 4.9 veces. La razón baja cuando el tinaco aguanta menos porque el baseline atiende más (de 4,532 a 6,508 viviendas-día con 100 L), no porque el priorizador atienda menos.
+excepto con el calendario original (18,114, porque hay menos necesidad). Frente al baseline estilizado por turnos (47 cisternas) y **con la cota mínima**, atiende **entre 2.2 veces (esquina adversa extrema) y 6.4 veces (calendario original)** en los 35 escenarios donde se corrió.
+En las 120 simulaciones de Monte Carlo donde se corrió, entre 2.6 y 4.9 veces, también con la cota mínima (`prio_veces_baseline_min`).
+**Esas razones no valen para la cota máxima ni para otros baselines.** Con la cota máxima, el caso base da 2.2 veces y la esquina adversa extrema 1.9. Contra el reparto que solo visita las cisternas con necesidad ese día, da 3.1 (cota mínima) y 1.4 (máxima) en el caso base, y 1.1 con la cota máxima en las esquinas adversas (`optimizador/resultados/resumen.md`, sección 3). El criterio de estabilidad del priorizador (`UMBRAL_PRIORIZADOR`, 2.0 veces) solo se evaluó con la cota mínima; con la máxima, la esquina adversa extrema (1.9) no lo cumpliría. La razón baja cuando el tinaco aguanta menos porque el baseline atiende más (de 4,532 a 6,508 viviendas-día con 100 L), no porque el priorizador atienda menos.
 
 **Zonas, calendario y cota.**
 - *Calendario original contra vigente:* el orden casi no cambia (rho 0.98, cobertura 0.995).
@@ -168,7 +169,7 @@ población), pero tampoco que no tenga relación.
 > con rangos de consumo (50 a 100 L/persona/día), tinaco (750 a 1,100 L) y umbral de agua guardada (24 a 72 h). El orden exacto de las manzanas depende de cuántos días aguanta un tinaco: con 6 días o más
 > es casi idéntico al caso base; con menos de 4, cambia sustancialmente. Por eso no presentamos un ranking de manzanas, sino un **núcleo de 186 manzanas** (el 3.8% del total, con el 54% de las viviendas-día
 > sin agua del caso base) que permanece entre las 250 más críticas en al menos el 90% de las simulaciones. El Sauz es la primera colonia en todas. El priorizador atiende entre 2.6 y 4.9 veces lo que un reparto por turnos entre
-> las cisternas instaladas en las 120 simulaciones en que se corrió, pero **los puntos donde se estacionan las pipas dependen de los supuestos**, por lo que el plan debe recalcularse al cambiar un supuesto. Los resultados se reportan siempre
+> las cisternas instaladas en las 120 simulaciones en que se corrió, con la cota mínima (con la máxima, el caso base da 2.2 veces, y contra un reparto que solo visita las cisternas con necesidad, de 1.1 a 3.1 según el escenario), pero **los puntos donde se estacionan las pipas dependen de los supuestos**, por lo que el plan debe recalcularse al cambiar un supuesto. Los resultados se reportan siempre
 > con cota mínima y máxima.
 
 **Lo que no se puede decir:** "el orden de las manzanas no depende de los supuestos"; "las zonas 5 y 6 concentran tres cuartas partes del riesgo" sin decir que es la cota mínima y el caso base; "la mitad del riesgo está en las AGEB menos

@@ -1,8 +1,8 @@
 # Especificación del priorizador de pipas
 
-Versión 0.6, borrador. Es el documento que manda: cualquier implementación (la de
-referencia en Python y, si se acuerda, una en TypeScript dentro de la app) se escribe
-**a partir de esto**, no una de la otra.
+Versión 0.7. Es el documento que manda: cualquier implementación (hoy la de referencia
+en Python; la app no tiene priorizador propio y lee el `plan.json` que ese programa
+calcula) se escribe **a partir de esto**, no una de la otra.
 
 Si una regla no está aquí, no existe. Si una implementación difiere de un caso resuelto a
 mano de la sección 10, el error está en la implementación.
@@ -274,8 +274,9 @@ Cada viaje:
 - `orden_eleccion` es el orden en que se eligieron los viajes. **No es una ruta**: no hay
   datos de calles ni de tiempos.
 - Además del contrato, la salida trae `parametros.baseline_cisternas`,
-  `parametros.baseline_turnos` y `viajes_vacios` en cada resumen. Hay que proponer
-  agregarlos al contrato.
+  `parametros.baseline_turnos` y `viajes_vacios` en cada resumen. No están en el
+  contrato v2: se acordó con Dani declararlos aquí y no cambiar `contratos/`. Quien lea
+  `plan.json` puede ignorarlos.
 - `pruebas/test_salida.py` compara la forma de la salida contra
   `fixtures/plan.fixture.json`: si el contrato cambia, esa prueba falla.
 
@@ -366,13 +367,15 @@ Hay que declararlo en el reporte:
 
 ## 12. Decisiones abiertas
 
-| # | Qué | Propuesta | Quién decide |
+Todas están resueltas; se dejan aquí con su resolución.
+
+| # | Qué | Resolución | Quién decide |
 |---|---|---|---|
 | 1 | Baseline | **Acordada con Dani:** baseline estilizado, mismos viajes por turnos entre las cisternas (sección 7) | Jass y Dani |
-| 2 | Modo de la racha | `desempate` por defecto; `peso` como escenario de equidad | Jass |
-| 3 | Si un centro puede estar en una manzana sin necesidad | No | Jass |
-| 4 | Campos extra de `plan.json` (`viajes_vacios`, `baseline_cisternas`, `baseline_turnos`) | Agregarlos al contrato v2 | Jass y Dani |
-| 5 | Dónde vive la implementación oficial (Python o TypeScript) | Por acordar | Jass y Migue |
+| 2 | Modo de la racha | **Resuelta:** `desempate` por defecto; `peso` como escenario de equidad (decisión 04) | Jass |
+| 3 | Si un centro puede estar en una manzana sin necesidad | **Resuelta:** no; solo pueden ser centro las manzanas con viviendas sin agua (sección 6) | Jass |
+| 4 | Campos extra de `plan.json` (`viajes_vacios`, `baseline_cisternas`, `baseline_turnos`) | **Resuelta con Dani:** se declaran en la sección 9 y no se agregan al contrato v2 | Jass y Dani |
+| 5 | Dónde vive la implementación oficial (Python o TypeScript) | **Resuelta en los hechos:** la de referencia en Python genera `plan.json` (`scripts/exporta_app.py`) y la app lo lee ya calculado; no hay priorizador en TypeScript | Jass y Migue |
 
 ## 13. Implementaciones
 
@@ -394,5 +397,5 @@ armar las tablas de `resultados/`: no cambia el comando ni la salida.
 
 Las pruebas están en `pruebas/`: los casos A a I en `test_casos.py` y propiedades
 generales con datos al azar en `test_propiedades.py`, y los casos J a M en
-`test_baseline.py`. Si se acuerda portarla a la app, la
-versión en TypeScript debe pasar los mismos casos.
+`test_baseline.py`. La app no tiene una versión en TypeScript del priorizador: lee el
+`plan.json` ya calculado. Si algún día se porta, debe pasar los mismos casos.

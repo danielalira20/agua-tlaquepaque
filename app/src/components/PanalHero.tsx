@@ -1,6 +1,5 @@
 "use client";
 import { useMemo } from "react";
-import { Badge } from "./ui";
 
 /** Panal animado para el inicio: cada celda se vacía y se vuelve a llenar como el agua, a su propio ritmo. */
 export default function PanalHero({ radio = 5, tam = 22 }: { radio?: number; tam?: number }) {
@@ -21,21 +20,21 @@ export default function PanalHero({ radio = 5, tam = 22 }: { radio?: number; tam
   return (
     <div>
       <style>{`
-        @keyframes vaciar { 0%,15% { fill:#1d4ed8 } 45% { fill:#93c5fd } 60%,70% { fill:#e2e8f0 } 85%,100% { fill:#1d4ed8 } }
+        @keyframes vaciar { 0%,15% { fill:#1f5fae } 45% { fill:#a9d4ec } 60%,70% { fill:#dca27a } 85%,100% { fill:#1f5fae } }
         @keyframes flotar { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
         .celda { animation: vaciar var(--dur) ease-in-out infinite; animation-delay: var(--d); }
         .panal { animation: flotar 7s ease-in-out infinite; }
       `}</style>
-      <svg viewBox={`${-w / 2} ${-h / 2} ${w} ${h}`} className="panal w-full max-w-md drop-shadow-[0_20px_40px_rgba(29,78,216,0.25)]" aria-hidden>
-        <defs><radialGradient id="brillo"><stop offset="0" stopColor="#60a5fa" stopOpacity="0.5" /><stop offset="1" stopColor="#60a5fa" stopOpacity="0" /></radialGradient></defs>
+      <svg viewBox={`${-w / 2} ${-h / 2} ${w} ${h}`} className="panal w-full max-w-md drop-shadow-[0_20px_40px_rgba(31,95,174,0.25)]" aria-hidden>
+        <defs><radialGradient id="brillo"><stop offset="0" stopColor="#79b8de" stopOpacity="0.5" /><stop offset="1" stopColor="#79b8de" stopOpacity="0" /></radialGradient></defs>
         <circle r={w / 2.2} fill="url(#brillo)" />
         {celdas.map((c, i) => (
-          <polygon key={i} points={pts} transform={`translate(${c.x} ${c.y})`} className="celda" fill="#1d4ed8"
+          <polygon key={i} points={pts} transform={`translate(${c.x} ${c.y})`} className="celda" fill="#1f5fae"
             style={{ ["--d" as string]: `${c.d - c.k * 3}s`, ["--dur" as string]: `${c.dur}s`, opacity: 0.95 - c.k * 0.35 }} />
         ))}
       </svg>
       <div className="mx-auto -mt-2 flex w-fit items-center gap-2 whitespace-nowrap rounded-full bg-white/90 px-3 py-1 text-xs shadow backdrop-blur">
-        <span className="h-2 w-2 rounded-full bg-emerald-500" /> Datos reales de Tlaquepaque <Badge tipo="real" />
+        <span className="h-2 w-2 rounded-full bg-emerald-500" /> Datos reales de Tlaquepaque
       </div>
     </div>
   );
