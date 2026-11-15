@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useReal, calcular, rango, fmt, fechaLarga } from "@/lib/real";
 import type { SupuestosMotor } from "@/lib/motor";
 import { Badge } from "@/components/ui";
@@ -22,6 +22,11 @@ export default function Panal() {
   const [verCis, setVerCis] = useState(true);
   const [verProp, setVerProp] = useState(false);
   const [verNucleo, setVerNucleo] = useState(false);
+  const panel = useRef<HTMLElement>(null);
+  // en celular el detalle queda debajo del mapa: al tocar un hexágono, bajar hasta él
+  useEffect(() => {
+    if (sel && typeof window !== "undefined" && window.innerWidth < 768) panel.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [sel]);
 
   const sup = s ?? d?.meta.supuestos ?? null;
   const cal = d?.calendarios[version];
@@ -61,30 +66,32 @@ export default function Panal() {
   })();
 
   return (
-    <div className="relative h-[calc(100vh-3.5rem)]">
-      <HexMap celdas={res.celdas} puntos={puntos} tresD={tresD} modo={modo} seleccion={sel} onSeleccion={setSel} resaltar={resaltar} />
-
-      <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-        <div className="flex rounded-full bg-white p-1 shadow">
+    <div className="md:relative md:h-[calc(100vh-3.5rem)]">
+      <div className="z-10 flex gap-2 overflow-x-auto bg-slate-50 p-2 md:absolute md:left-4 md:right-[25rem] md:top-4 md:flex-wrap md:overflow-visible md:bg-transparent md:p-0">
+        <div className="flex shrink-0 rounded-full bg-white p-1 shadow">
           {(["vigente", "original"] as const).map((v) => (
-            <button key={v} onClick={() => setVersion(v)} className={`rounded-full px-3 py-1 text-sm font-medium ${version === v ? "bg-slate-900 text-white" : "text-slate-700"}`}>
+            <button key={v} onClick={() => setVersion(v)} className={`whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium md:py-1 ${version === v ? "bg-slate-900 text-white" : "text-slate-700"}`}>
               {v === "vigente" ? "Calendario vigente (4-nov)" : "Original (15-oct)"}
             </button>
           ))}
         </div>
-        <div className="flex rounded-full bg-white p-1 shadow">
+        <div className="flex shrink-0 rounded-full bg-white p-1 shadow">
           {(["agua", "marginacion"] as const).map((v) => (
-            <button key={v} onClick={() => setModo(v)} className={`rounded-full px-3 py-1 text-sm font-medium ${modo === v ? "bg-blue-700 text-white" : "text-slate-700"}`}>{v === "agua" ? "Sin agua" : "Marginación"}</button>
+            <button key={v} onClick={() => setModo(v)} className={`whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium md:py-1 ${modo === v ? "bg-blue-700 text-white" : "text-slate-700"}`}>{v === "agua" ? "Sin agua" : "Marginación"}</button>
           ))}
         </div>
-        <button onClick={() => setTresD(!tresD)} className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">{tresD ? "Ver 2D" : "Ver 3D"}</button>
-        <button onClick={() => setVerCis(!verCis)} className={`rounded-full px-3 py-1 text-sm font-medium shadow ${verCis ? "bg-orange-500 text-white" : "bg-white"}`}>Cisternas</button>
+        <button onClick={() => setTresD(!tresD)} className="shrink-0 whitespace-nowrap rounded-full bg-white px-3 py-2 text-sm font-medium shadow md:py-1">{tresD ? "Ver 2D" : "Ver 3D"}</button>
+        <button onClick={() => setVerCis(!verCis)} className={`shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium shadow md:py-1 ${verCis ? "bg-orange-500 text-white" : "bg-white"}`}>Cisternas</button>
         <button disabled={!hayNucleo} onClick={() => setVerNucleo(!verNucleo)} title={hayNucleo ? "Manzanas que quedan entre las 250 más críticas en al menos el 90 % de las simulaciones" : "Pendiente: falta el campo nucleo_robusto en manzanas.json"}
-          className={`rounded-full px-3 py-1 text-sm font-medium shadow disabled:opacity-50 ${verNucleo ? "bg-amber-500 text-white" : "bg-white"}`}>Núcleo robusto{hayNucleo ? ` (${nNucleo})` : ""}</button>
-        <button onClick={() => setVerProp(!verProp)} className={`rounded-full px-3 py-1 text-sm font-medium shadow ${verProp ? "bg-purple-600 text-white" : "bg-white"}`}>10 propuestas</button>
+          className={`shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium shadow disabled:opacity-50 md:py-1 ${verNucleo ? "bg-amber-500 text-white" : "bg-white"}`}>Núcleo robusto{hayNucleo ? ` (${nNucleo})` : ""}</button>
+        <button onClick={() => setVerProp(!verProp)} className={`shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium shadow md:py-1 ${verProp ? "bg-purple-600 text-white" : "bg-white"}`}>10 propuestas</button>
       </div>
 
-      <aside className="absolute bottom-4 right-4 top-4 w-[23rem] overflow-y-auto rounded-2xl bg-white/95 p-5 shadow-xl backdrop-blur">
+      <div className="relative z-0 h-[55vh] md:absolute md:inset-0 md:h-auto">
+        <HexMap celdas={res.celdas} puntos={puntos} tresD={tresD} modo={modo} seleccion={sel} onSeleccion={setSel} resaltar={resaltar} />
+      </div>
+
+      <aside ref={panel} className="z-10 bg-white p-4 md:absolute md:bottom-4 md:right-4 md:top-4 md:w-[23rem] md:overflow-y-auto md:rounded-2xl md:bg-white/95 md:p-5 md:shadow-xl md:backdrop-blur">
         <div className="flex items-center justify-between">
           <div className="text-xs font-semibold uppercase tracking-wider text-blue-700">Panal · Tlaquepaque</div>
           <Badge tipo="real" />
