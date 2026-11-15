@@ -32,7 +32,7 @@ export function Acciones({ r, personas }: { r: ResultadoCasa; personas: number }
         </Accion>
         <Accion Icono={IconoGota} tono="bg-agua-50 text-agua-700" titulo="Cloro al agua guardada">
           <span>Si lleva más de 2 días guardada: <b className="text-tinta">2 gotas de cloro sin aroma por litro</b> (8 por galón) y reposar 30 min.{" "}
-            <Info etiqueta="De dónde sale la dosis" className="ml-1">Fuente: CDC. Con cloro de 8.25 % usa menos: lee la etiqueta de tu botella.</Info>
+            <Info etiqueta="De dónde sale la dosis" className="ml-1">Fuente: CDC, para cloro sin aroma de 5 a 9 %.</Info>
           </span>
         </Accion>
       </ul>
