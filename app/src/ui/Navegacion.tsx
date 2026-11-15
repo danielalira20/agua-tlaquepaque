@@ -1,7 +1,8 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Hex, IconoCasa, IconoInicio, IconoLibro, IconoMapa, IconoPipa } from "./Iconos";
+import { IconoCasa, IconoInicio, IconoLibro, IconoMapa, IconoPipa } from "./Iconos";
 
 // Las URL no cambian (manual, video y reporte las usan); solo cambian los nombres.
 const RUTAS = [
@@ -19,7 +20,7 @@ export function Navegacion() {
     <>
       <header className="sticky top-0 z-30 flex h-14 items-center gap-6 border-b border-tinta/10 bg-crema/90 px-4 backdrop-blur md:px-6">
         <Link href="/" aria-label="Aguanta, inicio" className="flex shrink-0 items-center gap-2">
-          <Hex className="h-7 w-7 text-agua-600" />
+          <Image src="/mascota/cara.png" alt="" width={32} height={32} className="h-8 w-8 rounded-full" priority />
           <span className="font-display text-xl font-bold tracking-tight">Aguanta</span>
         </Link>
         <nav className="hidden gap-1 md:flex" aria-label="Secciones">
