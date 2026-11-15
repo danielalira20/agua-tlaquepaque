@@ -23,6 +23,9 @@ const cargar = () =>
     ([manzanas, calendarios, cisternas, meta, plan]) => (cache = { manzanas, calendarios, cisternas, meta, plan })
   ));
 
+/** Empieza a bajar los datos antes de entrar a una pantalla que los usa (al acercar el dedo o el cursor a su botón). */
+export const precargarDatos = () => { if (!cache) void cargar(); };
+
 export function useReal() {
   const [d, setD] = useState<Datos | null>(cache);
   useEffect(() => { if (!cache) cargar().then(setD); }, []);
