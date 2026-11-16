@@ -1,30 +1,100 @@
 {
-  "M1":  {"voz": "Para las familias, Aguanta responde una sola pregunta: cuánto aguanta tu casa.",
-          "sub": "Para las familias, Aguanta responde una sola pregunta: ¿cuánto aguanta tu casa?"},
-  "M2":  {"voz": "Primero, eliges tu colonia.",
-          "sub": "Primero, eliges tu colonia."},
-  "M3":  {"voz": "Luego, cómo guardas el agua: nada, tinaco, cisterna, o los dos.",
-          "sub": "Luego, cómo guardas el agua: nada, tinaco, cisterna o los dos."},
-  "M4":  {"voz": "Y cuántas personas viven contigo.",
-          "sub": "Y cuántas personas viven contigo."},
-  "M5":  {"voz": "En Artesanos hay buena noticia: la colonia no está en el programa de racionamiento.",
-          "sub": "En Artesanos hay buena noticia: la colonia no está en el programa de racionamiento."},
-  "M6a": {"voz": "Aun así, te dice qué hacer si te quedas sin agua: dónde buscar la cisterna comunitaria más cercana,",
-          "sub": "Aun así, te dice qué hacer si te quedas sin agua: dónde buscar la cisterna comunitaria más cercana,"},
-  "M6b": {"voz": "cómo pedir una pipa por TlaqueChat,",
-          "sub": "cómo pedir una pipa por TlaqueChat"},
-  "M6c": {"voz": "y cómo clorar el agua que guardas.",
-          "sub": "y cómo clorar el agua que guardas."},
-  "M7":  {"voz": "Y puedes avisarle a tus vecinos por WhatsApp.",
-          "sub": "Y puedes avisarle a tus vecinos por WhatsApp."},
-  "M8":  {"voz": "Si en tu casa se gasta más, cambias los litros por persona, y el cálculo se ajusta al instante.",
-          "sub": "Si en tu casa se gasta más, cambias los litros por persona y el cálculo se ajusta al instante."},
-  "M9":  {"voz": "Pero en El Sauz, la colonia de mayor riesgo, la historia es otra.",
-          "sub": "Pero en El Sauz, la colonia de mayor riesgo, la historia es otra."},
-  "M10": {"voz": "Ahí viven casi doce mil personas, y casi ninguna tiene dónde guardar agua.",
-          "sub": "Ahí viven 11,889 personas, y casi ninguna tiene dónde guardar agua."},
-  "M11": {"voz": "Sin tinaco ni cisterna, el primer día de corte ya es un día sin agua. Por eso Aguanta les dice qué días prepararse.",
-          "sub": "Sin tinaco ni cisterna, el primer día de corte ya es un día sin agua. Por eso Aguanta les dice qué días prepararse."},
-  "M12": {"voz": "Aguanta. Saber cuánto aguantas, antes de que se acabe.",
-          "sub": "Aguanta. Saber cuánto aguantas, antes de que se acabe."}
+ "_pasajes": [
+  {
+   "id": "A",
+   "claves": [
+    "M0"
+   ]
+  },
+  {
+   "id": "B",
+   "claves": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ]
+  },
+  {
+   "id": "C",
+   "claves": [
+    "M5",
+    "M6a",
+    "M6b",
+    "M6c"
+   ],
+   "texto": "En Artesanos hay buena noticia: la colonia no está en el programa de racionamiento. Aun así, te dice qué hacer si te quedas sin agua: dónde buscar la cisterna comunitaria más cercana, cómo pedir una pipa por TlaqueChat, y cómo clorar el agua que guardas."
+  },
+  {
+   "id": "D",
+   "claves": [
+    "M7",
+    "M8"
+   ]
+  },
+  {
+   "id": "E",
+   "claves": [
+    "M9",
+    "M10",
+    "M11"
+   ]
+  }
+ ],
+ "M0": {
+  "voz": "¿Cuánto aguanta tu casa?",
+  "sub": ""
+ },
+ "M1": {
+  "voz": "Para las familias, Aguanta responde una sola pregunta: cuánto aguanta tu casa.",
+  "sub": "Para las familias, Aguanta responde una sola pregunta: ¿cuánto aguanta tu casa?"
+ },
+ "M2": {
+  "voz": "Primero, eliges tu colonia en la lista; junto a cada una, ves su zona de tandeo.",
+  "sub": "Primero, eliges tu colonia en la lista; junto a cada una ves su zona de tandeo."
+ },
+ "M3": {
+  "voz": "Luego, cómo guardas el agua: nada, tinaco, cisterna, o los dos.",
+  "sub": "Luego, cómo guardas el agua: nada, tinaco, cisterna o los dos."
+ },
+ "M4": {
+  "voz": "Y cuántas personas toman agua en tu casa.",
+  "sub": "Y cuántas personas toman agua en tu casa."
+ },
+ "M5": {
+  "voz": "En Artesanos hay buena noticia: la colonia no está en el programa de racionamiento.",
+  "sub": "En Artesanos hay buena noticia: la colonia no está en el programa de racionamiento."
+ },
+ "M6a": {
+  "voz": "Aun así, te dice qué hacer si te quedas sin agua: dónde buscar la cisterna comunitaria más cercana,",
+  "sub": "Aun así, te dice qué hacer si te quedas sin agua: dónde buscar la cisterna comunitaria más cercana,"
+ },
+ "M6b": {
+  "voz": "cómo pedir una pipa por TlaqueChat,",
+  "sub": "cómo pedir una pipa por TlaqueChat"
+ },
+ "M6c": {
+  "voz": "y cómo clorar el agua que guardas.",
+  "sub": "y cómo clorar el agua que guardas."
+ },
+ "M7": {
+  "voz": "Y puedes avisarle a tus vecinos por WhatsApp.",
+  "sub": "Y puedes avisarle a tus vecinos por WhatsApp."
+ },
+ "M8": {
+  "voz": "Si en tu casa se gasta más, cambias los litros por persona, y el cálculo se ajusta al instante.",
+  "sub": "Si en tu casa se gasta más, cambias los litros por persona y el cálculo se ajusta al instante."
+ },
+ "M9": {
+  "voz": "Pero en El Sauz, la colonia de mayor riesgo, la historia es otra.",
+  "sub": "Pero en El Sauz, la colonia de mayor riesgo, la historia es otra."
+ },
+ "M10": {
+  "voz": "Ahí viven casi doce mil personas, y casi ninguna tiene dónde guardar agua.",
+  "sub": "Ahí viven 11,889 personas, y casi ninguna tiene dónde guardar agua."
+ },
+ "M11": {
+  "voz": "Sin tinaco ni cisterna, el primer día de corte ya es un día sin agua. Por eso Aguanta les dice qué días prepararse.",
+  "sub": "Sin tinaco ni cisterna, el primer día de corte ya es un día sin agua. Por eso Aguanta les dice qué días prepararse."
+ }
 }

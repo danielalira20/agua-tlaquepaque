@@ -172,21 +172,21 @@ Abre con la portada de la tesis (fondo navy, "TANDEO EN SAN PEDRO TLAQUEPAQUE" e
 
 ### Video 2 · Mi casa ("¿Cuánto aguanta tu casa?")
 
-**Para quién:** familias. **Duración objetivo:** 55–65 s. **Salida:** `editados/MiCasa_editado.mp4`
+**Para quién:** familias. **Duración objetivo:** 55–65 s. **Salida:** `editados/MiCasa_editado.mp4` (57 s) · Script: `editor/hacer_micasa.py` · Guion: `editor/guion_micasa.json`
+**Pasajes de voz:** A = M0 · B = M1–M4 · C = M5, M6a, M6b, M6c · D = M7, M8 · E = M9, M10, M11.
 **Decisión del equipo:** se narra el caso grabado (**Artesanos**, colonia fuera del programa de racionamiento) tal cual, y al final se cuenta rápido el **otro caso, El Sauz** (colonia de mayor riesgo, casi sin tinacos), solo con tarjetas de datos, porque no está grabado.
 
 **Mapa de la grabación `MiCasa.mov` (58.4 s):**
-- 0–2.3 transición con glitch → **cortar**
-- 2.5–6.5 Paso 1 "¿En qué colonia vives?": escribe y elige **Artesanos**
-- 7–10.5 Paso 2 "¿Cómo guardas agua en casa?": Nada / Tinaco (calculamos 1,100 L) / Cisterna / Los dos → elige **Tinaco**
-- 12–14.5 Paso 3 "¿Cuántas personas viven en tu casa?": contador → **3 personas** ⚠️ (en un cuadro se ve 4; el resultado dice 3), botón "Ver mi resultado"
-- 15–23.5 Resultado: "Tu casa en Artesanos · **Tu colonia no está en el programa de racionamiento**", "Tu semana" (gotas por día), "Si te quedas sin agua": cisterna comunitaria (enlace al Mapa de hoy), **pide una pipa por TlaqueChat** (botón "Escribir a TlaqueChat"), **cloro al agua guardada** (2 gotas por litro, reposar 30 min ⚠️), "Que no te agarre desprevenido · Avísale a tus vecinos · Compartir por WhatsApp"
-- 24–34.5 negro, blanco, página de WhatsApp y diálogo del sistema → **cortar todo**
-- 35–37 resultado otra vez (sirve de relleno) · ~37.5–39.5 página "Compartir en WhatsApp" → **cortar**
-- 41–49 panel "**Ajustar el cálculo**": consumo por persona de **50 → 75 L/día**; "Qué supone este cálculo · 3 puntos"
+- 0–6 Paso 1 "¿En qué colonia vives?": no escribe, **baja por la lista** (cada colonia trae su zona) y elige **Artesanos** (no hay glitch al inicio)
+- 6.4–10.8 Paso 2 "¿Cómo guardas agua en casa?": Nada / Tinaco (1,100 L) / Cisterna (5,000 L) / Los dos (6,100 L) → elige **Los dos** (el resultado dice "Tinaco y cisterna")
+- 11.3–14.2 Paso 3 "¿Cuántas personas viven en tu casa?": contador → **3 personas** (verificado: baja de 4 a 3), botón "Ver mi resultado"
+- 14.6–20.8 Resultado limpio (de 21 a 23 sale el tooltip `localhost`): "Tu casa en Artesanos · **Tu colonia no está en el programa de racionamiento**", "Tu semana" (gotas por día), "Si te quedas sin agua": "**Sin** cisterna comunitaria en Artesanos" (manda a buscar en colonias vecinas en el Mapa de hoy), **pide una pipa por TlaqueChat** (botón "Escribir a TlaqueChat"), **cloro al agua guardada** (2 gotas por litro, reposar 30 min, verificado), "Que no te agarre desprevenido · Avísale a tus vecinos · Compartir por WhatsApp"
+- 23.5–33.5 negro, blanco, página de WhatsApp y diálogo del sistema → **cortar todo**
+- 33.6–36 resultado otra vez, con el cursor en "Compartir por WhatsApp" (sirve para M7) · 36.5–39.5 página "Compartir en WhatsApp" → **cortar**
+- 42.6–47.4 panel "**Ajustar el cálculo**": consumo por persona de **50 → 75 L/día**; "Qué supone este cálculo · 3 puntos"
 - 50–51.5 resultado con "Ajustar · 75 L por persona"
 - 52–57 "Empezar de nuevo" (paso 1) → opcional · ≥57 barra de grabación → **cortar**
-- ⚠️ El número de TlaqueChat se ve en la grabación: no lo leas en voz ni lo pongas en grande hasta confirmar que es el oficial.
+- ⚠️ El número de TlaqueChat se ve en la grabación y no está confirmado (rama `fix/tlaquechat-sin-numero`): `hacer_micasa.py` lo difumina en todos los cuadros y la voz no lo lee.
 
 **Estructura:**
 
@@ -195,24 +195,24 @@ Abre con la portada de la tesis (fondo navy, "TANDEO EN SAN PEDRO TLAQUEPAQUE" e
 | 1 | Apertura | La voz lee la pregunta: "¿Cuánto aguanta / **tu casa?**" (entrada 3D de la app detrás, en cuanto termina) | M0 |
 | 2 | Intro | Entrada 3D de la app en el paso 1; encabezado "Mi casa: **tres preguntas, una respuesta.**" | M1 |
 | 3 | Colonia | Zoom al buscador mientras escribe "Artesanos"; recuadro CELESTE | M2 |
-| 4 | Almacenamiento | Zoom a las 4 opciones; recuadro en "Tinaco"; chip "Calculamos 1,100 L" | M3 |
+| 4 | Almacenamiento | App a la izquierda con las 4 opciones; recuadro en "Los dos"; a la derecha "Tinaco y cisterna · **6,100 L**" | M3 |
 | 5 | Personas | Zoom al contador; recuadro | M4 |
 | 6 | Resultado | App con zoom a "Tu colonia no está en el programa de racionamiento"; leyenda "ARTESANOS: **SIN RACIONAMIENTO**" | M5 |
 | 7 | Si te quedas sin agua | `layout="head"`, encabezado "Si te quedas sin agua: **qué hacer.**"; 3 recuadros en secuencia (cisterna comunitaria → TlaqueChat → cloro) | M6a, M6b, M6c |
 | 8 | Vecinos | Zoom a "Avísale a tus vecinos · Compartir por WhatsApp" (NO mostrar la página de WhatsApp) | M7 |
 | 9 | Ajustar | App a la izquierda con el panel "Ajustar el cálculo"; a la derecha, número grande **50 → 75** "litros por persona al día" | M8 |
-| 10 | El Sauz | Dato fuera de la app: "EL SAUZ · ZONA 6 ⚠️" + contador **11,889** "personas, casi todas **sin dónde guardar agua**" + chip "Dato real · INEGI, Censo 2020" | M9, M10 |
+| 10 | El Sauz | Dato fuera de la app: "EL SAUZ · ZONA 6" (lista oficial del SIAPA; el portal pone un pedazo en zona 4) + contador **11,889** "personas, casi todas **sin dónde guardar agua**" + chip "Dato real · INEGI, Censo 2020" | M9, M10 |
 | 11 | Contraste | Comparación lado a lado: casa con tinaco (BLANCO, "aguanta días") contra casa sin nada (NARANJA, "Día 1 = sin agua"); reutiliza las casitas de `b_uno_de_cuatro` | M11 |
 
 | Clave | Voz (TTS) | Subtítulo |
 |---|---|---|
 | M0 | ¿Cuánto aguanta tu casa? | (ninguno: ya está escrito en pantalla) |
 | M1 | Para las familias, Aguanta responde una sola pregunta: cuánto aguanta tu casa. | Para las familias, Aguanta responde una sola pregunta: ¿cuánto aguanta tu casa? |
-| M2 | Primero, eliges tu colonia. | Primero, eliges tu colonia. |
+| M2 | Primero, eliges tu colonia en la lista; junto a cada una, ves su zona de tandeo. | Primero, eliges tu colonia en la lista; junto a cada una ves su zona de tandeo. |
 | M3 | Luego, cómo guardas el agua: nada, tinaco, cisterna, o los dos. | Luego, cómo guardas el agua: nada, tinaco, cisterna o los dos. |
-| M4 | Y cuántas personas viven contigo. | Y cuántas personas viven contigo. |
+| M4 | Y cuántas personas toman agua en tu casa. | Y cuántas personas toman agua en tu casa. |
 | M5 | En Artesanos hay buena noticia: la colonia no está en el programa de racionamiento. | En Artesanos hay buena noticia: la colonia no está en el programa de racionamiento. |
-| M6a | Aun así, te dice qué hacer si te quedas sin agua: dónde está la cisterna comunitaria más cercana, | Aun así, te dice qué hacer si te quedas sin agua: dónde está la cisterna comunitaria más cercana, |
+| M6a | Aun así, te dice qué hacer si te quedas sin agua: dónde buscar la cisterna comunitaria más cercana, | Aun así, te dice qué hacer si te quedas sin agua: dónde buscar la cisterna comunitaria más cercana, |
 | M6b | cómo pedir una pipa por TlaqueChat, | cómo pedir una pipa por TlaqueChat |
 | M6c | y cómo clorar el agua que guardas. | y cómo clorar el agua que guardas. |
 | M7 | Y puedes avisarle a tus vecinos por WhatsApp. | Y puedes avisarle a tus vecinos por WhatsApp. |
