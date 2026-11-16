@@ -2,7 +2,14 @@
 """
 Exporta los datos REALES para la app (Next.js estatica) y los vectores de prueba del motor en TypeScript.
 
-    python3 scripts/exporta_app.py [--desde 2026-11-09] [--hasta 2026-11-15]
+    python3 scripts/exporta_app.py                                   # semana de referencia del reporte
+    python3 scripts/exporta_app.py --desde 2026-11-16 --hasta 2026-11-22  # cualquier otra semana
+    python3 scripts/exporta_app.py --desde ... --hasta ... --dia-inicial 2026-11-19
+
+Sin argumentos exporta la semana de referencia del reporte (9 al 15 de noviembre de 2026), que abre en el
+jueves 12, el dia que usan el reporte y sus figuras. Con otra ventana, la app abre en el dia de hoy si cae dentro
+de la ventana; si no, en --dia-inicial; y si no se da, en el primer dia. La ventana no puede empezar antes de que
+entrara en vigor el calendario vigente (motor/calendarios/vigente-2026-11-03.json).
 
 Corre el motor de referencia (motor/referencia.py) y el priorizador de referencia (optimizador/) sobre las
 4,871 manzanas y escribe, en app/public/datos/real/:
@@ -38,6 +45,9 @@ DESTINO = RAIZ / "app" / "public" / "datos" / "real"
 VECTORES = RAIZ / "motor" / "vectores" / "vectores.json"
 GRADOS = ["Muy alto", "Alto", "Medio", "Bajo", "Muy bajo"]
 # Conjuntos de supuestos de los vectores: cada uno ejercita una rama distinta del motor
+# Semana que usan el reporte cientifico y sus figuras: lo que se exporta sin argumentos.
+SEMANA_REFERENCIA = {"desde": "2026-11-09", "hasta": "2026-11-15", "dia_inicial": "2026-11-12"}
+CALENDARIO_VIGENTE = "vigente-2026-11-03.json"
 CONJUNTOS_VECTORES = {
     "base": {},
     "consumo_100": {"consumo_l_persona_dia": 100},
@@ -129,6 +139,7 @@ def correr_motor_y_priorizador(desde, hasta, tmp):
     plan = Path(tmp) / "plan.json"
     R.main(["--manzanas", str(RAIZ / "datos" / "manzanas_tlaquepaque.csv"),
             "--zonas", str(RAIZ / "datos" / "zonas_siapa" / "manzana_zona.csv"),
+            "--calendario", str(RAIZ / "motor" / "calendarios" / CALENDARIO_VIGENTE),
             "--desde", desde, "--hasta", hasta, "--salida", str(estado)])
     subprocess.run([sys.executable, "-m", "optimizador.priorizador", "--estado", str(estado), "--salida", str(plan)],
                    cwd=RAIZ, check=True, capture_output=True)
@@ -189,7 +200,7 @@ def construir_vectores(manzanas, fechas, sup_base):
     zonas = {m["cvegeo"]: m["zona"] for m in elegidas}
     filas_ref = [{"cvegeo": m["cvegeo"], "viviendas": m["viviendas"], "viv_tinaco": m["viv_tinaco"],
                   "viv_cisterna": m["viv_cisterna"], "ocupantes_prom": m["ocupantes_prom"]} for m in elegidas]
-    esquema = R.leer_json(RAIZ / "motor" / "calendarios" / "vigente-2026-11-03.json")["esquema"]
+    esquema = R.leer_json(RAIZ / "motor" / "calendarios" / CALENDARIO_VIGENTE)["esquema"]
     conjuntos = {}
     for nombre, cambios in CONJUNTOS_VECTORES.items():
         sup = dict(sup_base, **cambios)
@@ -201,8 +212,8 @@ def construir_vectores(manzanas, fechas, sup_base):
     return {
         "descripcion": "Vectores para el motor oficial (TypeScript). Cada conjunto trae los supuestos y la salida esperada de la implementacion de "
                        "referencia (motor/referencia.py) para las mismas entradas. Los conteos de viviendas deben coincidir EXACTAMENTE; las "
-                       "horas tambien. Calendario: motor/calendarios/vigente-2026-11-03.json. Especificacion: motor/ESPECIFICACION.md.",
-        "calendario": "vigente-2026-11-03", "fechas": [f.isoformat() for f in fechas],
+                       f"horas tambien. Calendario: motor/calendarios/{CALENDARIO_VIGENTE}. Especificacion: motor/ESPECIFICACION.md.",
+        "calendario": CALENDARIO_VIGENTE.removesuffix(".json"), "fechas": [f.isoformat() for f in fechas],
         "casos": {"entradas": len(entradas), "con_varias_zonas": sum(1 for m in elegidas if "," in m["zona"]),
                   "fuera_del_programa": sum(1 for m in elegidas if m["zona"] == "")},
         "entradas": entradas, "conjuntos": conjuntos}
@@ -214,8 +225,9 @@ Generados por `scripts/exportar_app.py` (`python3 scripts/exporta_app.py`). **No
 Reemplazan a los datos simulados de `app/public/datos/` (`colonias.json`, `calendario.json`), que siguen ahi
 mientras la app no cambie; nada de esta carpeta los toca.
 
-Ventana: **{desde} a {hasta}**. Calendario: **{calendario}**. Para otra ventana:
-`python3 scripts/exporta_app.py --desde AAAA-MM-DD --hasta AAAA-MM-DD`.
+Ventana: **{desde} a {hasta}**; la app abre en **{dia_inicial}** si hoy no cae en la ventana. Calendario: **{calendario}**.
+Para otra ventana: `python3 scripts/exporta_app.py --desde AAAA-MM-DD --hasta AAAA-MM-DD [--dia-inicial AAAA-MM-DD]`.
+Sin argumentos se exporta la semana de referencia del reporte.
 
 ## Archivos
 
@@ -274,10 +286,28 @@ formula esta en `motor/ESPECIFICACION.md`.
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--desde", default="2026-11-09")
-    p.add_argument("--hasta", default="2026-11-15")
+    p.add_argument("--desde", default=SEMANA_REFERENCIA["desde"])
+    p.add_argument("--hasta", default=SEMANA_REFERENCIA["hasta"])
+    p.add_argument("--dia-inicial", default=None, help="dia con el que abre la app si hoy no cae en la ventana")
+    p.add_argument("--destino", default=str(DESTINO), help="carpeta de salida (por omision, la de la app)")
+    p.add_argument("--vectores", default=str(VECTORES), help="archivo de vectores del motor")
     a = p.parse_args(argv)
+    destino, vectores = Path(a.destino), Path(a.vectores)
     fechas = R.rango_fechas(a.desde, a.hasta)
+    if not fechas:
+        raise SystemExit(f"--hasta ({a.hasta}) es anterior a --desde ({a.desde})")
+    vigente = R.leer_json(RAIZ / "motor" / "calendarios" / CALENDARIO_VIGENTE)
+    if a.desde < vigente["vigente_desde"]:
+        raise SystemExit(f"El calendario vigente rige desde el {vigente['vigente_desde']}: no se puede exportar desde el {a.desde}. "
+                         "Para fechas anteriores hay que agregar ese calendario en motor/calendarios/.")
+    if vigente.get("vigente_hasta") and a.hasta > vigente["vigente_hasta"]:
+        raise SystemExit(f"El calendario vigente rige hasta el {vigente['vigente_hasta']}: no se puede exportar hasta el {a.hasta}.")
+    dia_inicial = a.dia_inicial
+    if dia_inicial is None:
+        es_referencia = (a.desde, a.hasta) == (SEMANA_REFERENCIA["desde"], SEMANA_REFERENCIA["hasta"])
+        dia_inicial = SEMANA_REFERENCIA["dia_inicial"] if es_referencia else a.desde
+    if dia_inicial not in {f.isoformat() for f in fechas}:
+        raise SystemExit(f"--dia-inicial ({dia_inicial}) no esta entre {a.desde} y {a.hasta}")
     manzanas = cargar_manzanas()
     n_nucleo = marcar_nucleo_robusto(manzanas)
     sup = R.leer_json(RAIZ / "motor" / "supuestos.json")
@@ -287,12 +317,12 @@ def main(argv=None):
         estado = construir_estado(estado_csv, manzanas, fechas)
         plan = json.loads(plan_json.read_text(encoding="utf-8"))
 
-    cal = {"vigente": calendario_expandido("vigente-2026-11-03.json", fechas),
+    cal = {"vigente": calendario_expandido(CALENDARIO_VIGENTE, fechas),
            "original": calendario_expandido("original-2026-10-15.json", fechas)}
     cist = construir_cisternas(plan)
     en_prog = [m for m in manzanas if m["en_programa"]]
     meta = {
-        "formato": 1, "simulado": False, "ventana": {"desde": a.desde, "hasta": a.hasta, "fechas": len(fechas)},
+        "formato": 1, "simulado": False, "ventana": {"desde": a.desde, "hasta": a.hasta, "fechas": len(fechas), "dia_inicial": dia_inicial},
         "calendario_usado": cal["vigente"]["version"], "supuestos": sup,
         "conteos": {"manzanas": len(manzanas), "manzanas_en_programa": len(en_prog),
                     "manzanas_nucleo_robusto": n_nucleo,
@@ -306,18 +336,23 @@ def main(argv=None):
                          "Censo 2020; el Censo no dice la capacidad de tinacos ni cisternas.",
                          "El calendario del SIAPA puede volver a cambiar.",
                          "El baseline del priorizador es estilizado: no es el reparto real del municipio."]}
-    volcar(DESTINO / "meta.json", meta, indent=2)
-    volcar(DESTINO / "manzanas.json", manzanas)
-    volcar(DESTINO / "estado.json", estado)
-    volcar(DESTINO / "calendarios.json", cal)
-    volcar(DESTINO / "cisternas.json", cist)
-    volcar(DESTINO / "plan.json", plan)
-    (DESTINO / "LEEME.md").write_text(LEEME.replace("scripts/exportar_app.py", "scripts/exporta_app.py")
-                                      .format(desde=a.desde, hasta=a.hasta, calendario=cal["vigente"]["version"]), encoding="utf-8")
-    volcar(VECTORES, construir_vectores(manzanas, fechas, sup), indent=None)
-    for f in sorted(DESTINO.iterdir()) + [VECTORES]:
-        print(f"{f.relative_to(RAIZ)}  {f.stat().st_size / 1024:.0f} KB")
-
+    destino.mkdir(parents=True, exist_ok=True)
+    volcar(destino / "meta.json", meta, indent=2)
+    volcar(destino / "manzanas.json", manzanas)
+    volcar(destino / "estado.json", estado)
+    volcar(destino / "calendarios.json", cal)
+    volcar(destino / "cisternas.json", cist)
+    volcar(destino / "plan.json", plan)
+    (destino / "LEEME.md").write_text(LEEME.replace("scripts/exportar_app.py", "scripts/exporta_app.py")
+                                      .format(desde=a.desde, hasta=a.hasta, dia_inicial=dia_inicial, calendario=cal["vigente"]["version"]),
+                                      encoding="utf-8")
+    volcar(vectores, construir_vectores(manzanas, fechas, sup), indent=None)
+    for f in sorted(destino.iterdir()) + [vectores]:
+        try:
+            nombre = f.resolve().relative_to(RAIZ)
+        except ValueError:
+            nombre = f
+        print(f"{nombre}  {f.stat().st_size / 1024:.0f} KB")
 
 if __name__ == "__main__":
     main()

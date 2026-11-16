@@ -1,4 +1,4 @@
-import { fmt, type Datos } from "@/lib/real";
+import { fmt, textoVentana, type Datos } from "@/lib/real";
 import { BarraRango, Etiqueta, Tarjeta, textoRango } from "@/ui";
 import type { DatosCalculados } from "../calculos";
 
@@ -18,7 +18,7 @@ export function CifrasDatos({ d, g }: { d: Datos; g: DatosCalculados }) {
       </Tarjeta>
       <Tarjeta>
         <div className="font-display text-3xl font-bold leading-none tabular-nums">{textoRango(g.sem.vig.min, g.sem.vig.max)}</div>
-        <div className="mt-2 text-sm leading-snug text-tinta-suave">personas-día sin agua en la semana del 9 al 15 de nov, con el calendario vigente</div>
+        <div className="mt-2 text-sm leading-snug text-tinta-suave">personas-día sin agua en la semana {textoVentana(d.meta)}, con el calendario vigente</div>
         <Etiqueta tipo="estimado" className="mt-3" />
       </Tarjeta>
     </section>

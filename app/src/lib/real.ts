@@ -13,7 +13,7 @@ export type Manzana = {
 export type DiaCal = { fecha: string; dia: string; zonas_sin_servicio: (string | number)[] };
 export type Calendario = { version: string; vigente_desde: string; vigente_hasta: string | null; consultado: string; esquema: Esquema; dias: DiaCal[]; nota_vigencia?: string };
 export type Cisterna = { id: string; tipo: string; colonia: string; ubicacion: string; lon: number | null; lat: number | null; cuenta_como_cobertura: boolean };
-export type Meta = { ventana: { desde: string; hasta: string }; calendario_usado: string; supuestos: SupuestosMotor; conteos: Record<string, number>; fuentes: string[]; advertencias: string[] };
+export type Meta = { ventana: { desde: string; hasta: string; dia_inicial?: string }; calendario_usado: string; supuestos: SupuestosMotor; conteos: Record<string, number>; fuentes: string[]; advertencias: string[] };
 export type Datos = { manzanas: Manzana[]; calendarios: Record<string, Calendario>; cisternas: Cisterna[]; meta: Meta; plan: any };
 
 let cache: Datos | null = null;
@@ -38,6 +38,29 @@ export const rango = (a: number, b: number, dec = 0) => {
   return a === b ? `${f(a)} (mín = máx)` : `${f(a)} – ${f(b)}`;
 };
 export const fmt = (n: number) => Math.round(n).toLocaleString("es-MX");
+/** Fecha local de hoy, AAAA-MM-DD. */
+const hoyISO = () => { const h = new Date(); return `${h.getFullYear()}-${String(h.getMonth() + 1).padStart(2, "0")}-${String(h.getDate()).padStart(2, "0")}`; };
+
+/**
+ * Día con el que abren Mapa de hoy y Plan de pipas: hoy, si cae en la semana exportada; si no, el día que fijó la
+ * exportación (meta.ventana.dia_inicial); si no, el primer día de la semana. Así la app sirve para cualquier semana
+ * que exporte scripts/exporta_app.py, sin fechas escritas en el código.
+ */
+export function fechaInicial(d: Datos): string {
+  const fechas = d.calendarios.vigente.dias.map((x) => x.fecha);
+  const hoy = hoyISO();
+  if (fechas.includes(hoy)) return hoy;
+  const ref = d.meta.ventana.dia_inicial;
+  return ref && fechas.includes(ref) ? ref : fechas[0];
+}
+
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+/** La semana exportada en palabras: «del 9 al 15 de nov» o «del 30 de nov al 6 de dic». */
+export function textoVentana(m: Meta): string {
+  const [, m1, d1] = m.ventana.desde.split("-").map(Number), [, m2, d2] = m.ventana.hasta.split("-").map(Number);
+  return m1 === m2 ? `del ${d1} al ${d2} de ${MESES[m2 - 1]}` : `del ${d1} de ${MESES[m1 - 1]} al ${d2} de ${MESES[m2 - 1]}`;
+}
+
 export const fechaLarga = (f: string) => new Date(f + "T12:00:00").toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "short" });
 
 export type Celda = {

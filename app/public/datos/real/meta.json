@@ -4,7 +4,8 @@
   "ventana": {
     "desde": "2026-11-09",
     "hasta": "2026-11-15",
-    "fechas": 7
+    "fechas": 7,
+    "dia_inicial": "2026-11-12"
   },
   "calendario_usado": "vigente",
   "supuestos": {

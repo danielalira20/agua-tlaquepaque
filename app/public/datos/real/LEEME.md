@@ -4,8 +4,9 @@ Generados por `scripts/exporta_app.py` (`python3 scripts/exporta_app.py`). **No 
 Reemplazan a los datos simulados de `app/public/datos/` (`colonias.json`, `calendario.json`), que siguen ahi
 mientras la app no cambie; nada de esta carpeta los toca.
 
-Ventana: **2026-11-09 a 2026-11-15**. Calendario: **vigente**. Para otra ventana:
-`python3 scripts/exporta_app.py --desde AAAA-MM-DD --hasta AAAA-MM-DD`.
+Ventana: **2026-11-09 a 2026-11-15**; la app abre en **2026-11-12** si hoy no cae en la ventana. Calendario: **vigente**.
+Para otra ventana: `python3 scripts/exporta_app.py --desde AAAA-MM-DD --hasta AAAA-MM-DD [--dia-inicial AAAA-MM-DD]`.
+Sin argumentos se exporta la semana de referencia del reporte.
 
 ## Archivos
 
