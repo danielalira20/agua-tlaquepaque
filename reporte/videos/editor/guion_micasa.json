@@ -39,6 +39,12 @@
     "M10",
     "M11"
    ]
+  },
+  {
+   "id": "F",
+   "claves": [
+    "M12"
+   ]
   }
  ],
  "M0": {
@@ -96,5 +102,9 @@
  "M11": {
   "voz": "Sin tinaco ni cisterna, el primer día de corte ya es un día sin agua. Por eso Aguanta les dice qué días prepararse.",
   "sub": "Sin tinaco ni cisterna, el primer día de corte ya es un día sin agua. Por eso Aguanta les dice qué días prepararse."
+ },
+ "M12": {
+  "voz": "Aguanta. Saber cuánto aguantas, antes de que se acabe.",
+  "sub": ""
  }
 }

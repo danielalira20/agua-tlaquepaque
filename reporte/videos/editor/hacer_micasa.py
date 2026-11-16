@@ -12,10 +12,14 @@ Lo que se ve en la grabación (verificado a resolución completa, manda sobre la
 import sys, json, os
 AQUI = os.path.dirname(os.path.abspath(__file__)); os.chdir(AQUI); sys.path.insert(0, AQUI)
 from motor2 import *
+from motor2 import _gota, contorno_gota
 
 SRC = os.path.join(AQUI, "..", "MiCasa.mov")
 G = json.load(open("guion_micasa.json", encoding="utf-8"))
 VERDE = (110, 220, 150)
+MASC = Image.open(os.path.join(AQUI, "..", "..", "..", "app", "public", "mascota", "tlacuache.webp")).convert("RGBA")
+LAYOUTS["paso"] = (300, 150, 1320, 792)   # tarjeta un poco más chica para que quepa el indicador de pasos arriba
+PASOS = ["Colonia", "Agua guardada", "Personas"]
 
 # Tramos limpios de la grabación (s). Fuera quedan: transición de 23.5 a 33.5 (negro, blanco, WhatsApp),
 # 36.5 a 39.5 (WhatsApp otra vez), el tooltip localhost de 21 a 23 y la barra de grabación desde 57.
@@ -44,11 +48,30 @@ def T(k, m, d=0.0): return m.get(k, 0) + d
 def F(k, m, d=0.0): return m.get(k + "_fin", 0) + d
 
 # ---------- beats ----------
+def gota_que_se_vacia(img, cx, cy, R, nivel, t, k):
+    """Gota grande con agua adentro; `nivel` de 0 (vacía) a 1 (llena), con una ola en la superficie."""
+    if k <= 0: return
+    caja = (int(cx - R * 1.3), int(cy - R * 2.0), int(cx + R * 1.3), int(cy + R * 1.3)); w, h = caja[2] - caja[0], caja[3] - caja[1]
+    cxl, cyl = w / 2, h - R * 1.3 + R * 0.1
+    pts = contorno_gota(cxl, cyl, R)
+    mk = Image.new("L", (w, h), 0); ImageDraw.Draw(mk).polygon(pts, fill=255)
+    arriba, abajo = min(p[1] for p in pts), max(p[1] for p in pts)
+    ysup = abajo - nivel * (abajo - arriba)
+    capa = Image.new("RGBA", (w, h), (0, 0, 0, 0)); dr = ImageDraw.Draw(capa)
+    dr.polygon([(x, ysup + 9 * math.sin(x / 38 + t * 4.5)) for x in range(0, w + 8, 8)] + [(w, h), (0, h)], fill=CELESTE + (int(200 * k),))
+    agua = Image.new("RGBA", (w, h), (0, 0, 0, 0)); agua.paste(capa, (0, 0), mk)
+    borde = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(borde).line(pts + [pts[0], pts[1]], fill=CELESTE + (int(255 * k),), width=8, joint="curve")
+    base = Image.alpha_composite(Image.alpha_composite(img.crop(caja).convert("RGBA"), agua), borde)
+    img.paste(base.convert("RGB"), (caja[0], caja[1] + int(30 * (1 - k))))
+
 def b_apertura(t, d, m):
-    img = fondo()
-    texto_animado(img, [[("MI CASA · PARA LAS FAMILIAS", CELESTE)]], fuente(TXT, 36), t, 0.05, y=300)
-    texto_animado(img, [[("¿Cuánto aguanta", BLANCO)], [("tu casa?", NARANJA)]], fuente(TIT, 124), t, 0.1, y=370, stagger=0.09)
-    return img
+    img = fondo(); gotas_flotantes(img, t)
+    texto_animado(img, [[("MI CASA · PARA LAS FAMILIAS", CELESTE)]], fuente(TXT, 34), t, 0.05, x=260, y=330, alinear="izq")
+    texto_animado(img, [[("¿Cuánto aguanta", BLANCO)]], fuente(TIT, 124), t, 0.15, x=260, y=385, alinear="izq", stagger=0.08)
+    texto_animado(img, [[("tu casa?", NARANJA)]], fuente(TIT, 124), t, 0.45, x=260, y=530, alinear="izq", stagger=0.08)
+    gota_que_se_vacia(img, 1560, 610, 160, 0.92 - 0.55 * ease(t / max(d, 0.1)), t, ease_out((t - 0.3) / 0.5))
+    return respirar(img, t, d)
 
 def b_intro(t, d, m):
     img = fondo(); cam = camara([(0, (100, 60, 2730, 1638)), (0.55, COLUMNA), (1, (640, 170, 1640, 984))], t / d)
@@ -61,15 +84,17 @@ BUSCADOR, ARTESANOS = (880, 630, 2040, 735), (892, 900, 2028, 990)
 def b_colonia(t, d, m):
     img = fondo(); u = t / d
     cam = camara([(0, COLUMNA), (0.35, (760, 520, 1400, 840)), (1, (760, 560, 1400, 840))], u)
-    pantalla(img, fu["paso1"].cuadro(t, d), cam, "full")
+    pasos_progreso(img, 1, t, PASOS)
+    pantalla(img, fu["paso1"].cuadro(t, d), cam, "paso")
     t_art = d - 1.5
-    if t < t_art: recuadro(img, a_pantalla(BUSCADOR, cam), t, 0.5, CELESTE)
-    else: recuadro(img, a_pantalla(ARTESANOS, cam), t, t_art, CELESTE)
+    if t < t_art: recuadro(img, a_pantalla(BUSCADOR, cam, "paso"), t, 0.5, CELESTE)
+    else: recuadro(img, a_pantalla(ARTESANOS, cam, "paso"), t, t_art, CELESTE)
     return img
 
 LOS_DOS = (1474, 974, 2040, 1288)
 def b_almacen(t, d, m):
     img = fondo(); cam = camara([(0, COLUMNA), (0.4, (840, 590, 1220, 732)), (1, (840, 590, 1220, 732))], t / d)
+    pasos_progreso(img, 2, t, PASOS)
     pantalla(img, fu["paso2"].cuadro(t, d), cam, "left")
     t_dos = F("M3", m, -1.0)
     recuadro(img, a_pantalla(LOS_DOS, cam, "left"), t, t_dos, CELESTE)
@@ -82,8 +107,9 @@ def b_almacen(t, d, m):
 CONTADOR = (880, 632, 2040, 1016)
 def b_personas(t, d, m):
     img = fondo(); cam = camara([(0, (700, 270, 1520, 912)), (1, (730, 300, 1460, 876))], t / d)
-    pantalla(img, fu["paso3"].cuadro(t, d), cam, "full")
-    recuadro(img, a_pantalla(CONTADOR, cam), t, 0.4, CELESTE)
+    pasos_progreso(img, 3, t, PASOS)
+    pantalla(img, fu["paso3"].cuadro(t, d), cam, "paso")
+    recuadro(img, a_pantalla(CONTADOR, cam, "paso"), t, 0.4, CELESTE)
     return img
 
 TU_COLONIA = (388, 300, 1512, 672)
@@ -127,19 +153,20 @@ def b_ajustar(t, d, m):
     return img
 
 def b_sauz_titulo(t, d, m):
-    img = fondo()
+    img = fondo(); gotas_flotantes(img, t)
     texto_animado(img, [[("LA COLONIA DE MAYOR RIESGO", CELESTE)]], fuente(TXT, 36), t, 0.05, y=300)
     texto_animado(img, [[("Pero en El Sauz,", BLANCO)], [("la historia es otra.", NARANJA)]], fuente(TIT, 116), t, 0.1, y=370, stagger=0.08)
-    return img
+    return respirar(img, t, d)
 
 def b_sauz_dato(t, d, m):
-    img = fondo()
+    img = fondo(); gotas_flotantes(img, t + 5)
+    brillo(img, 960, 330, 560, NARANJA, 0.10, t, 0.2)
     texto_animado(img, [[("EL SAUZ · ZONA 6", CELESTE)]], fuente(TXT, 36), t, 0.1, y=150)
     texto_animado(img, [[(miles(contador(11889, t, 0.25, 1.5)), NARANJA)]], fuente(TIT, 300), t, 0.2, y=190, stagger=0)
     texto_animado(img, [[("personas, casi todas ", BLANCO), ("sin dónde guardar agua", NARANJA)]], fuente(TIT, 68), t, 0.8, y=540)
     texto_animado(img, [[("Al menos 2,950 de sus 3,546 viviendas no tienen tinaco ni cisterna", GRIS)]], fuente(TXTR, 32), t, 1.3, y=650)
     chip(img, "Dato real · INEGI, Censo 2020", None, 740, t, 1.6, color=VERDE)
-    return img
+    return respirar(img, t, d, 0.025)
 
 def casa(dr, cx, cy, s, color, tinaco, k):
     """Misma casita que en hacer_inicio.py (b_uno_de_cuatro)."""
@@ -158,8 +185,16 @@ def casa(dr, cx, cy, s, color, tinaco, k):
 def _centrado(img, txt, fnt, cx):
     return cx - ImageDraw.Draw(img).textlength(txt, font=fnt) / 2
 
+def reserva(img, cx, y, nivel, color, k):
+    """Barra de reserva de agua debajo de una casita."""
+    if k <= 0: return
+    capa = Image.new("RGBA", (W, H), (0, 0, 0, 0)); dr = ImageDraw.Draw(capa); a = int(255 * k); ancho = 300
+    dr.rounded_rectangle([cx - ancho / 2, y, cx + ancho / 2, y + 22], 11, outline=color + (a,), width=3)
+    if nivel > 0.02: dr.rounded_rectangle([cx - ancho / 2 + 5, y + 5, cx - ancho / 2 + 5 + (ancho - 10) * nivel, y + 17], 6, fill=color + (a,))
+    img.paste(Image.alpha_composite(img.convert("RGBA"), capa).convert("RGB"))
+
 def b_contraste(t, d, m):
-    img = fondo(); IZQ, DER = 620, 1300
+    img = fondo(); gotas_flotantes(img, t + 9); IZQ, DER = 620, 1300
     capa = Image.new("RGBA", (W, H), (0, 0, 0, 0)); dr = ImageDraw.Draw(capa)
     casa(dr, IZQ, 330, 200, CELESTE, True, ease_out((t - 0.2) / 0.45))
     casa(dr, DER, 330, 200, NARANJA, False, ease_out((t - 0.7) / 0.45))
@@ -168,8 +203,24 @@ def b_contraste(t, d, m):
     for cx, l1, l2, c2, t0 in [(IZQ, "Con tinaco", "aguanta días", BLANCO, 0.5), (DER, "Sin tinaco ni cisterna", "Día 1 = sin agua", NARANJA, 1.0)]:
         texto_animado(img, [[(l1, GRIS)]], f1, t, t0, x=_centrado(img, l1, f1, cx), y=500, alinear="izq")
         texto_animado(img, [[(l2, c2)]], f2, t, t0 + 0.15, x=_centrado(img, l2, f2, cx), y=550, alinear="izq")
+    reserva(img, IZQ, 665, 1.0 - 0.3 * ease((t - 0.8) / (d - 0.8)), CELESTE, ease_out((t - 0.6) / 0.4))
+    reserva(img, DER, 665, 1.0 - ease((t - 1.4) / 0.9), NARANJA, ease_out((t - 1.1) / 0.4))
+    texto_animado(img, [[("RESERVA", GRIS)]], fuente(TXT, 22), t, 0.7, x=_centrado(img, "RESERVA", fuente(TXT, 22), IZQ), y=700, alinear="izq")
+    texto_animado(img, [[("RESERVA", GRIS)]], fuente(TXT, 22), t, 1.2, x=_centrado(img, "RESERVA", fuente(TXT, 22), DER), y=700, alinear="izq")
     t2 = m.get("M11", 0) + 3.3
-    texto_animado(img, [[("Aguanta les dice ", BLANCO), ("qué días prepararse.", NARANJA)]], fuente(TIT, 72), t, t2, y=760)
+    texto_animado(img, [[("Aguanta les dice ", BLANCO), ("qué días prepararse.", NARANJA)]], fuente(TIT, 72), t, t2, y=790)
+    return respirar(img, t, d, 0.025)
+
+def b_final(t, d, m):
+    """Tarjeta final: el tlacuache se despide."""
+    img = fondo(); gotas_flotantes(img, t + 13, alpha=50)
+    brillo(img, 960, 330, 420, NARANJA, 0.16, t, 0.1)
+    pegar_rebote(img, MASC, 960, 300, t, 0.1, 300)
+    texto_animado(img, [[("Aguanta", BLANCO)]], fuente(TIT, 120), t, 0.45, y=470)
+    texto_animado(img, [[("Saber cuánto aguantas, ", BLANCO), ("antes de que se acabe.", NARANJA)]], fuente(TIT, 56), t, 0.8, y=625)
+    chip(img, "Siguiente: El mapa de hoy", None, 740, t, 1.5, color=CELESTE)
+    texto_animado(img, [[("Equipo #15 · Hackathon Jalisco Internacional 2026 · Reto 01", GRIS)]], fuente(TXTR, 26), t, 1.9, y=905)
+    texto_animado(img, [[("Voz generada con inteligencia artificial", GRIS)]], fuente(TXTR, 24), t, 2.1, y=945)
     return img
 
 beats = [
@@ -185,12 +236,14 @@ beats = [
     {"nombre": "sauz", "render": b_sauz_titulo, "voz": ["M9"]},
     {"nombre": "sauz dato", "render": b_sauz_dato, "voz": ["M10"]},
     {"nombre": "contraste", "render": b_contraste, "voz": ["M11"]},
+    {"nombre": "final", "render": b_final, "voz": ["M12"]},
 ]
+COLA = 2.2   # la tarjeta final se queda en pantalla un poco después de la voz
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "rev":
         momentos = [(i, f) for i in range(len(beats)) for f in (0.15, 0.55, 0.95)]
         plan, total = previsualizar_continuo(beats, "voz_micasa", G, momentos, sys.argv[2] if len(sys.argv) > 2 else "rev_micasa.jpg")
         print(round(total, 1)); print(plan)
     else:
-        total, plan = montar_continuo(beats, "voz_micasa", G, os.path.join("..", "editados", "MiCasa_editado.mp4"))
+        total, plan = montar_continuo(beats, "voz_micasa", G, os.path.join("..", "editados", "MiCasa_editado.mp4"), tail=COLA, fundido=0.9)
         print(round(total, 1)); print(plan)

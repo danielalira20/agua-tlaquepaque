@@ -326,3 +326,87 @@ def previsualizar_continuo(beats, voz_dir, guion, momentos, salida):
     cols = 3; filas = (len(ims) + cols - 1) // cols; hoja = Image.new("RGB", (cols * 646, filas * 366), "white")
     for k, im in enumerate(ims): hoja.paste(im, ((k % cols) * 646, (k // cols) * 366))
     hoja.save(salida); return [(round(a, 2), round(d, 2), b.get("nombre", "")) for a, d, b in plan], total
+
+
+# ---------- detalles cálidos (agregados con el video 2) ----------
+def ease_out_back(u, s=1.7):
+    u = max(0.0, min(1.0, u)); u -= 1; return 1 + u * u * ((s + 1) * u + s)
+
+def respirar(img, t, d, zoom=0.035):
+    """Acercamiento muy lento de toda la toma (efecto Ken Burns), para que las tomas de texto no se sientan quietas."""
+    z = 1 + zoom * ease(t / d) if d > 0 else 1
+    if z <= 1.0005: return img
+    w, h = W / z, H / z; x0, y0 = (W - w) / 2, (H - h) / 2
+    return img.crop((int(x0), int(y0), int(x0 + w), int(y0 + h))).resize((W, H), Image.BICUBIC)
+
+def contorno_gota(cx, cy, r, n=90):
+    """Puntos de una gota de agua de un solo trazo (punta arriba). (cx, cy) es el centro de la parte redonda."""
+    pts = []
+    for i in range(n):
+        a = 2 * math.pi * i / n
+        pts.append((cx + r * 1.08 * math.sin(a) * math.sin(a / 2) ** 1.3, cy - r * 0.35 - r * 1.45 * math.cos(a)))
+    return pts
+
+def _gota(dr, cx, cy, r, fill=None, outline=None, width=1):
+    """Gota de agua rellena (y con borde si se pide)."""
+    pts = contorno_gota(cx, cy, r)
+    dr.polygon(pts, fill=fill)
+    if outline is not None: dr.line(pts + [pts[0]], fill=outline, width=width, joint="curve")
+
+_GOTAS = None
+def gotas_flotantes(img, t, alpha=40, n=16):
+    """Gotitas CELESTE que suben despacio sobre el fondo navy (siempre detrás del texto: llamarla justo después de fondo())."""
+    global _GOTAS
+    if _GOTAS is None:
+        rng = np.random.default_rng(15)
+        _GOTAS = [(rng.uniform(80, W - 80), rng.uniform(0, H), rng.uniform(5, 13), rng.uniform(18, 42), rng.uniform(0, 6.28)) for _ in range(n)]
+    capa = Image.new("RGBA", (W, H), (0, 0, 0, 0)); dr = ImageDraw.Draw(capa)
+    for x, y, r, vel, fase in _GOTAS:
+        yy = (y - vel * t) % (H + 80) - 40; xx = x + 14 * math.sin(t * 0.8 + fase)
+        a = int(alpha * (0.6 + 0.4 * math.sin(t * 1.3 + fase)))
+        _gota(dr, xx, yy, r, fill=CELESTE + (a,))
+    img.paste(Image.alpha_composite(img.convert("RGBA"), capa).convert("RGB"))
+
+def pegar_rebote(img, imagen_rgba, cx, cy, t, t_in, ancho, flotar=6):
+    """Como pegar(), pero entra con rebote y después flota suavemente."""
+    u = (t - t_in) / 0.6
+    if u <= 0: return
+    esc = 0.6 + 0.4 * ease_out_back(u); alfa = min(1.0, u * 2.5)
+    w = int(ancho * esc); h = int(imagen_rgba.height * w / imagen_rgba.width)
+    im = imagen_rgba.resize((w, h), Image.LANCZOS); im.putalpha(im.split()[3].point(lambda v: int(v * alfa)))
+    dy = flotar * math.sin((t - t_in) * 2.2) if u >= 1 else 0
+    img.paste(im, (int(cx - w / 2), int(cy - h / 2 + dy)), im)
+
+def brillo(img, cx, cy, radio, color, fuerza, t, t_in):
+    """Halo suave de color detrás de un elemento (aparece en 0.6 s)."""
+    k = ease_out((t - t_in) / 0.6)
+    if k <= 0: return
+    y, x = np.mgrid[0:H:4, 0:W:4]
+    m = np.clip(1 - np.sqrt((x - cx) ** 2 + (y - cy) ** 2) / radio, 0, 1) ** 2 * fuerza * k
+    mascara = Image.fromarray((m * 255).astype(np.uint8)).resize((W, H), Image.BILINEAR)
+    img.paste(color, (0, 0), mascara)
+
+def pasos_progreso(img, actual, t, nombres, cy=62, sep=230, t_in=0.0):
+    """Indicador arriba al centro: hexágonos numerados unidos por una línea. Los pasos anteriores en CELESTE,
+    el actual entra con rebote en NARANJA y los siguientes en GRIS."""
+    capa = Image.new("RGBA", (W, H), (0, 0, 0, 0)); dr = ImageDraw.Draw(capa)
+    n = len(nombres); x0 = W / 2 - sep * (n - 1) / 2; r = 28
+    k_lin = ease_out((t - t_in) / 0.5)
+    for i in range(n - 1):
+        xa, xb = x0 + i * sep + r + 6, x0 + (i + 1) * sep - r - 6
+        dr.line([(xa, cy), (xb, cy)], fill=GRIS + (90,), width=4)
+        lleno = 1.0 if i + 1 < actual - 1 else (k_lin if i + 1 == actual - 1 else 0)
+        if lleno > 0: dr.line([(xa, cy), (xa + (xb - xa) * lleno, cy)], fill=CELESTE + (255,), width=4)
+    for i, nom in enumerate(nombres):
+        cx = x0 + i * sep; paso = i + 1
+        if paso < actual: col, esc, rel = CELESTE, 1.0, True
+        elif paso == actual: col, esc, rel = NARANJA, 0.6 + 0.4 * ease_out_back((t - t_in - 0.25) / 0.5), False
+        else: col, esc, rel = GRIS, 1.0, False
+        rr = r * max(0.0, esc) * (1.15 if paso == actual else 1.0)
+        pts = [(cx + rr * math.cos(math.radians(60 * j - 30)), cy + rr * math.sin(math.radians(60 * j - 30))) for j in range(6)]
+        dr.polygon(pts, fill=(col + (255,)) if rel else TARJETA_OSCURA + (255,), outline=col + (255,), width=4)
+        fnt = fuente(TIT, 30); tw = dr.textlength(str(paso), font=fnt)
+        dr.text((cx - tw / 2, cy - 19), str(paso), font=fnt, fill=(NAVY1 if rel else col) + (255,))
+        fl = fuente(TXT, 22); tl = dr.textlength(nom, font=fl)
+        dr.text((cx - tl / 2, cy + 36), nom, font=fl, fill=(BLANCO if paso == actual else GRIS) + (255,))
+    img.paste(Image.alpha_composite(img.convert("RGBA"), capa).convert("RGB"))

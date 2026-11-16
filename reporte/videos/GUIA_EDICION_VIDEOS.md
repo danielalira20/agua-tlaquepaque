@@ -172,8 +172,9 @@ Abre con la portada de la tesis (fondo navy, "TANDEO EN SAN PEDRO TLAQUEPAQUE" e
 
 ### Video 2 · Mi casa ("¿Cuánto aguanta tu casa?")
 
-**Para quién:** familias. **Duración objetivo:** 55–65 s. **Salida:** `editados/MiCasa_editado.mp4` (57 s) · Script: `editor/hacer_micasa.py` · Guion: `editor/guion_micasa.json`
-**Pasajes de voz:** A = M0 · B = M1–M4 · C = M5, M6a, M6b, M6c · D = M7, M8 · E = M9, M10, M11.
+**Para quién:** familias. **Duración objetivo:** 55–65 s. **Salida:** `editados/MiCasa_editado.mp4` (62 s) · Script: `editor/hacer_micasa.py` · Guion: `editor/guion_micasa.json`
+**Pasajes de voz:** A = M0 · B = M1–M4 · C = M5, M6a, M6b, M6c · D = M7, M8 · E = M9, M10, M11 · F = M12.
+**Detalles cálidos (pedidos por el equipo el 16-nov):** gota que se vacía en la apertura, indicador de pasos 1-2-3 arriba de la app, gotitas que suben y acercamiento lento en las tomas de texto, barras de "reserva" en el contraste y **tarjeta final con el tlacuache** ("Aguanta · Saber cuánto aguantas, antes de que se acabe.", chip "Siguiente: El mapa de hoy", créditos y "Voz generada con inteligencia artificial"). Si el equipo lo aprueba, conviene llevar la tarjeta final al resto de la serie para que quede pareja. 62 s.
 **Decisión del equipo:** se narra el caso grabado (**Artesanos**, colonia fuera del programa de racionamiento) tal cual, y al final se cuenta rápido el **otro caso, El Sauz** (colonia de mayor riesgo, casi sin tinacos), solo con tarjetas de datos, porque no está grabado.
 
 **Mapa de la grabación `MiCasa.mov` (58.4 s):**
@@ -402,6 +403,7 @@ Los modelos pesan unos 300 MB y **no se suben a git** (agrega `reporte/videos/ed
 - `contador(valor, t, t_in, dur)` + `miles(n)` → "17,420".
 - `encabezado(img, [[(...)]], t)` · `leyenda_grande(img, [(...)], t, t_in, layout)` · `chip(img, texto, x|None, y, t, t_in, color)` · `pegar(img, rgba, cx, cy, t, t_in, ancho)`
 - `montar_continuo(beats, voz_dir, guion, salida)`: coloca los pasajes de voz sin cortarlos, hace que cada toma dure lo que dura su voz (los cortes caen en las pausas), pone subtítulos y disolvencias de 0.3 s, normaliza a −16 LUFS lineal, cierra con fundido y codifica (libx264 veryfast, CRF 18; AAC 192k). `previsualizar_continuo(...)` hace lo mismo pero solo saca cuadros sueltos. (`montar` y `previsualizar` son la versión vieja con tomas mudas: no usar.)
+- Detalles cálidos: `gotas_flotantes(img, t)` (justo después de `fondo()`), `respirar(img, t, d)` (al final de una toma de texto), `pegar_rebote(...)`, `brillo(...)`, `pasos_progreso(img, actual, t, nombres)` y `contorno_gota(...)`. Ejemplos en `hacer_micasa.py`.
 - Dentro de un beat, `m["CLAVE"]` da el segundo en que empieza esa frase y `m["CLAVE_fin"]` el segundo en que termina: úsalos para sincronizar recuadros y textos con la voz.
 
 ---
