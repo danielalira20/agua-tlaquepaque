@@ -25,3 +25,12 @@ node_modules/
 context/ 
 CLAUDE.local.md
 .pr-suggestions/
+
+# videos: los .mov pesan mas de 100 MB (limite de GitHub), van por Drive
+reporte/videos/*.mov
+reporte/videos/inspo/
+reporte/videos/editor/modelos/
+reporte/videos/editor/cuadros_*/
+reporte/videos/editor/voz_*/
+reporte/videos/editor/__pycache__/
+reporte/videos/editados/*.wav

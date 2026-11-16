@@ -1,0 +1,27 @@
+{
+ "_pasajes": [
+  {"id": "A", "claves": ["N0"]},
+  {"id": "B", "claves": ["N1", "N2", "N3"]},
+  {"id": "C", "claves": ["NQ", "N4"]},
+  {"id": "D", "claves": ["N5", "N6", "N7", "N8"],
+   "texto": "Tiene una puerta para cada quien: las familias saben qué días se quedan sin agua, quien coordina las pipas ve dónde se secan las casas hoy, y el jurado puede revisar cómo se calcula cada número."},
+  {"id": "E", "claves": ["N9", "N10"]},
+  {"id": "F", "claves": ["N11a", "N11b", "N11c", "N12"]}
+ ],
+ "N0": {"voz": "El mismo corte de agua no le pega igual a todas las casas.", "sub": ""},
+ "N1": {"voz": "Desde octubre, el SIAPA raciona el agua en seiscientas veintisiete colonias del área metropolitana de Guadalajara.", "sub": "Desde octubre, el SIAPA raciona el agua en 627 colonias del área metropolitana de Guadalajara."},
+ "N2": {"voz": "En Tlaquepaque, entre catorce y veintiséis de cada cien casas no tienen tinaco ni cisterna.", "sub": "En Tlaquepaque, entre 14 y 26 de cada 100 casas no tienen tinaco ni cisterna."},
+ "N3": {"voz": "Para ellas, el primer día de corte ya es un día sin agua.", "sub": "Para ellas, el primer día de corte ya es un día sin agua."},
+ "NQ": {"voz": "¿Y quién se queda sin agua hoy?", "sub": "¿Y quién se queda sin agua hoy?"},
+ "N4": {"voz": "Aguanta cruza el Censo con el calendario oficial del SIAPA, para saber, manzana por manzana, quién se queda sin agua cada día.", "sub": "Aguanta cruza el Censo con el calendario oficial del SIAPA para saber, manzana por manzana, quién se queda sin agua cada día."},
+ "N5": {"voz": "Tiene una puerta para cada quien:", "sub": "Tiene una puerta para cada quien:"},
+ "N6": {"voz": "las familias saben qué días se quedan sin agua,", "sub": "las familias saben qué días se quedan sin agua,"},
+ "N7": {"voz": "quien coordina las pipas ve dónde se secan las casas hoy,", "sub": "quien coordina las pipas ve dónde se secan las casas hoy,"},
+ "N8": {"voz": "y el jurado puede revisar cómo se calcula cada número.", "sub": "y el jurado puede revisar cómo se calcula cada número."},
+ "N9": {"voz": "Todo, con datos reales: entre diecisiete mil y treinta y cuatro mil casas sin dónde guardar agua, en las zonas con tandeo.", "sub": "Todo con datos reales: entre 17,420 y 34,429 casas sin dónde guardar agua en las zonas con tandeo."},
+ "N10": {"voz": "Y El Sauz, la colonia de mayor riesgo: once mil ochocientas ochenta y nueve personas, casi todas sin dónde guardar agua.", "sub": "Y El Sauz, la colonia de mayor riesgo: 11,889 personas, casi todas sin dónde guardar agua."},
+ "N11a": {"voz": "Medimos quién tiene tinaco o cisterna.", "sub": "Medimos quién tiene tinaco o cisterna."},
+ "N11b": {"voz": "Anticipamos qué día se seca cada casa.", "sub": "Anticipamos qué día se seca cada casa."},
+ "N11c": {"voz": "Y actuamos: a dónde mandar primero las mismas pipas.", "sub": "Y actuamos: a dónde mandar primero las mismas pipas."},
+ "N12": {"voz": "Y cada número dice qué tan firme es: dato real, estimado o simulado.", "sub": "Y cada número dice qué tan firme es: dato real, estimado o simulado."}
+}
