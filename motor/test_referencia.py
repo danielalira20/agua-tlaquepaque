@@ -414,7 +414,10 @@ class TestContratos(unittest.TestCase):
         archivos = [d / n for n in ("meta.json", "manzanas.json", "estado.json", "calendarios.json", "cisternas.json", "plan.json", "LEEME.md")]
         archivos.append(self.RAIZ / "motor" / "vectores" / "vectores.json")
         antes = [a.read_text(encoding="utf-8") for a in archivos]
-        subprocess.run([sys.executable, "-I", str(self.RAIZ / "scripts" / "exporta_app.py")], check=True, capture_output=True)
+        # se reproduce la semana que este exportada en el repo, sea la de referencia o cualquier otra
+        v = self._json(d / "meta.json")["ventana"]
+        args = ["--desde", v["desde"], "--hasta", v["hasta"], "--dia-inicial", v["dia_inicial"]]
+        subprocess.run([sys.executable, "-I", str(self.RAIZ / "scripts" / "exporta_app.py"), *args], check=True, capture_output=True)
         self.assertEqual([a.read_text(encoding="utf-8") for a in archivos], antes, "la exportacion no es determinista")
         man = self._json(d / "manzanas.json")
         est = self._json(d / "estado.json")
@@ -433,11 +436,20 @@ class TestContratos(unittest.TestCase):
         with open(self.RAIZ / "datos" / "sensibilidad" / "manzanas_robustas.csv", newline="", encoding="utf-8") as fh:
             self.assertEqual(nucleo, {r["cvegeo"] for r in csv.DictReader(fh) if r["nucleo_robusto"] == "True"})
         for f in est["fechas"]:
-            for k, v in f.items():
-                if isinstance(v, list):
-                    self.assertEqual(len(v), len(man), k)
-        self.assertEqual(sum(sum(f["viv_sin_agua_min"]) for f in est["fechas"]), 58906)
-        self.assertEqual(sum(sum(f["viv_sin_agua_max"]) for f in est["fechas"]), 128460)
+            for k, val in f.items():
+                if isinstance(val, list):
+                    self.assertEqual(len(val), len(man), k)
+        fechas = [f["fecha"] for f in est["fechas"]]
+        self.assertEqual(len(fechas), meta["ventana"]["fechas"])
+        self.assertIn(meta["ventana"]["dia_inicial"], fechas)   # la app abre en un dia que existe en los datos
+        cal = self._json(d / "calendarios.json")
+        self.assertEqual([x["fecha"] for x in cal["vigente"]["dias"]], fechas)
+        self.assertEqual([x["fecha"] for x in self._json(d / "plan.json")["corridas"][0]["fechas"]], fechas)
+        es_referencia = (meta["ventana"]["desde"], meta["ventana"]["hasta"]) == ("2026-11-09", "2026-11-15")
+        if es_referencia:
+            self.assertEqual(meta["ventana"]["dia_inicial"], "2026-11-12")
+            self.assertEqual(sum(sum(f["viv_sin_agua_min"]) for f in est["fechas"]), 58906)
+            self.assertEqual(sum(sum(f["viv_sin_agua_max"]) for f in est["fechas"]), 128460)
         cis = self._json(d / "cisternas.json")
         self.assertEqual(len(cis), 60)
         self.assertEqual(len({c["id"] for c in cis}), 60)
@@ -446,9 +458,51 @@ class TestContratos(unittest.TestCase):
         self.assertEqual(sorted(c["ubicacion"] for c in reales).count("centro_de_colonia"), 12)
         self.assertEqual(sum(c["cuenta_como_cobertura"] for c in cis), 47)
         plan = self._json(d / "plan.json")
-        self.assertEqual(plan["comparacion"][0]["semana"]["viviendas_atendidas"]["priorizado"], 22050)
+        if es_referencia:
+            self.assertEqual(plan["comparacion"][0]["semana"]["viviendas_atendidas"]["priorizado"], 22050)
         # los archivos simulados de la app no se tocan
         self.assertIn("SIMULADO", self._json(self.RAIZ / "app" / "public" / "datos" / "colonias.json")["nota"])
+
+    def _exporta(self, tmp, *args):
+        import subprocess
+        return subprocess.run([sys.executable, "-I", str(self.RAIZ / "scripts" / "exporta_app.py"), *args,
+                               "--destino", str(Path(tmp) / "real"), "--vectores", str(Path(tmp) / "vectores.json")],
+                              capture_output=True, text=True)
+
+    def test_exportacion_de_otra_semana(self):
+        # La app no depende de la semana de referencia: se exporta otra a una carpeta temporal y se revisa.
+        real = self.RAIZ / "app" / "public" / "datos" / "real"
+        meta_repo = (real / "meta.json").read_text(encoding="utf-8")
+        with tempfile.TemporaryDirectory() as tmp:
+            r = self._exporta(tmp, "--desde", "2026-11-16", "--hasta", "2026-11-22")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            d = Path(tmp) / "real"
+            meta = self._json(d / "meta.json")
+            est = self._json(d / "estado.json")
+            plan = self._json(d / "plan.json")
+            fechas = [f"2026-11-{n}" for n in range(16, 23)]
+            self.assertEqual(meta["ventana"], {"desde": "2026-11-16", "hasta": "2026-11-22", "fechas": 7, "dia_inicial": "2026-11-16"})
+            self.assertEqual([f["fecha"] for f in est["fechas"]], fechas)
+            self.assertEqual([x["fecha"] for x in plan["corridas"][0]["fechas"]], fechas)
+            # El calendario se repite cada semana y el motor mira los dias anteriores, asi que cada dia de la semana
+            # da lo mismo que el mismo dia de la semana de referencia (si esa es la que esta en el repo).
+            ref = self._json(real / "estado.json")
+            if [f["fecha"] for f in ref["fechas"]] == [f"2026-11-{n:02d}" for n in range(9, 16)]:
+                for a, b in zip(ref["fechas"], est["fechas"]):
+                    self.assertEqual(a["dia"], b["dia"])
+                    self.assertEqual(a["viv_sin_agua_min"], b["viv_sin_agua_min"], b["fecha"])
+                    self.assertEqual(a["viv_sin_agua_max"], b["viv_sin_agua_max"], b["fecha"])
+                self.assertEqual(plan["comparacion"][0]["semana"]["viviendas_atendidas"]["priorizado"], 22050)
+        self.assertEqual((real / "meta.json").read_text(encoding="utf-8"), meta_repo, "no debe tocar los datos de la app")
+
+    def test_exportacion_rechaza_fechas_fuera_del_calendario(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r = self._exporta(tmp, "--desde", "2026-11-01", "--hasta", "2026-11-07")
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn("rige desde", r.stderr)
+            r = self._exporta(tmp, "--desde", "2026-11-16", "--hasta", "2026-11-22", "--dia-inicial", "2026-11-30")
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn("--dia-inicial", r.stderr)
 
     def test_vectores_del_motor_coinciden_con_la_referencia(self):
         vec = self._json(self.RAIZ / "motor" / "vectores" / "vectores.json")

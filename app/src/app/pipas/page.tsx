@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { latLngToCell } from "h3-js";
-import { useReal, calcular, fechaLarga } from "@/lib/real";
+import { useReal, calcular, fechaInicial, fechaLarga } from "@/lib/real";
 import { puntosCisternas, type Punto, type Rotulo } from "@/components/HexMap";
 import { Antetitulo, Cargando, ETAPAS_MAPA, Etiqueta, Info, SemanaGotas, Segmentado, textoRango } from "@/ui";
 import { diaDe, paradas, semanaDe, type Cota } from "@/features/pipas/plan";
@@ -15,7 +15,8 @@ const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loadin
 
 export default function PlanDePipas() {
   const d = useReal();
-  const [fecha, setFecha] = useState("2026-11-12");
+  const [fechaElegida, setFecha] = useState<string | null>(null);
+  const fecha = fechaElegida ?? (d ? fechaInicial(d) : "");
   const [cota, setCota] = useState<Cota>("min");
   const [sel, setSel] = useState<string | null>(null);
   const [selN, setSelN] = useState<number | null>(null);

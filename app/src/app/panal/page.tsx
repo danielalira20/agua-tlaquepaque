@@ -2,7 +2,7 @@
 // Mapa de hoy: ¿quién se queda sin agua hoy? Un héroe (la tarjeta del día), el mapa y el detalle detrás de un toque.
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useReal, calcular } from "@/lib/real";
+import { useReal, calcular, fechaInicial } from "@/lib/real";
 import type { SupuestosMotor } from "@/lib/motor";
 import { puntosCisternas } from "@/components/HexMap";
 import { BotonPildora, Cargando, ETAPAS_MAPA, Consejo, IconoAjustes, IconoCapas } from "@/ui";
@@ -17,7 +17,8 @@ const HexMap = dynamic(() => import("@/components/HexMap"), { ssr: false, loadin
 
 export default function MapaDeHoy() {
   const d = useReal();
-  const [fecha, setFecha] = useState("2026-11-12");
+  const [fechaElegida, setFecha] = useState<string | null>(null);
+  const fecha = fechaElegida ?? (d ? fechaInicial(d) : "");
   const [tresD, setTresD] = useState(true);
   const [capas, setCapas] = useState<Capas>({ modo: "agua", cisternas: true, propuestas: false, nucleo: false, version: "vigente" });
   const [sel, setSel] = useState<string | null>(null);
