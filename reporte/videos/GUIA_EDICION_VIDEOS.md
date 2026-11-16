@@ -174,7 +174,7 @@ Abre con la portada de la tesis (fondo navy, "TANDEO EN SAN PEDRO TLAQUEPAQUE" e
 
 **Para quién:** familias. **Duración objetivo:** 55–65 s. **Salida:** `editados/MiCasa_editado.mp4` (62 s) · Script: `editor/hacer_micasa.py` · Guion: `editor/guion_micasa.json`
 **Pasajes de voz:** A = M0 · B = M1–M4 · C = M5, M6a, M6b, M6c · D = M7, M8 · E = M9, M10, M11 · F = M12.
-**Detalles cálidos (pedidos por el equipo el 16-nov):** gota que se vacía en la apertura, indicador de pasos 1-2-3 arriba de la app, gotitas que suben y acercamiento lento en las tomas de texto, barras de "reserva" en el contraste y **tarjeta final con el tlacuache** ("Aguanta · Saber cuánto aguantas, antes de que se acabe.", chip "Siguiente: El mapa de hoy", créditos y "Voz generada con inteligencia artificial"). Si el equipo lo aprueba, conviene llevar la tarjeta final al resto de la serie para que quede pareja. 62 s.
+**Detalles cálidos (pedidos por el equipo el 16-nov):** gota que se vacía en la apertura, indicador de pasos 1-2-3 arriba de la app, gotitas que suben y acercamiento lento en las tomas de texto, barras de "reserva" en el contraste y **tarjeta final con el tlacuache** ("Aguanta · Saber cuánto aguantas, antes de que se acabe.", créditos y "Voz generada con inteligencia artificial"). Si el equipo lo aprueba, conviene llevar la tarjeta final al resto de la serie para que quede pareja. 62 s.
 **Decisión del equipo:** se narra el caso grabado (**Artesanos**, colonia fuera del programa de racionamiento) tal cual, y al final se cuenta rápido el **otro caso, El Sauz** (colonia de mayor riesgo, casi sin tinacos), solo con tarjetas de datos, porque no está grabado.
 
 **Mapa de la grabación `MiCasa.mov` (58.4 s):**

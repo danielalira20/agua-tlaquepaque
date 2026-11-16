@@ -218,7 +218,6 @@ def b_final(t, d, m):
     pegar_rebote(img, MASC, 960, 300, t, 0.1, 300)
     texto_animado(img, [[("Aguanta", BLANCO)]], fuente(TIT, 120), t, 0.45, y=470)
     texto_animado(img, [[("Saber cuánto aguantas, ", BLANCO), ("antes de que se acabe.", NARANJA)]], fuente(TIT, 56), t, 0.8, y=625)
-    chip(img, "Siguiente: El mapa de hoy", None, 740, t, 1.5, color=CELESTE)
     texto_animado(img, [[("Equipo #15 · Hackathon Jalisco Internacional 2026 · Reto 01", GRIS)]], fuente(TXTR, 26), t, 1.9, y=905)
     texto_animado(img, [[("Voz generada con inteligencia artificial", GRIS)]], fuente(TXTR, 24), t, 2.1, y=945)
     return img
